@@ -18,6 +18,7 @@ import { AssetNamingStrategy } from './asset-naming-strategy/asset-naming-strate
 import { AssetPreviewStrategy } from './asset-preview-strategy/asset-preview-strategy';
 import { AssetStorageStrategy } from './asset-storage-strategy/asset-storage-strategy';
 import { AuthenticationStrategy } from './auth/authentication-strategy';
+import { CustomerChannelAssignmentStrategy } from './auth/customer-channel-assignment-strategy';
 import { EntityAccessControlStrategy } from './auth/entity-access-control-strategy';
 import { PasswordHashingStrategy } from './auth/password-hashing-strategy';
 import { PasswordValidationStrategy } from './auth/password-validation-strategy';
@@ -553,6 +554,27 @@ export interface AuthOptions {
      * @experimental
      */
     entityAccessControlStrategy?: EntityAccessControlStrategy;
+    /**
+     * @description
+     * Controls how a Customer becomes a member of, and is permitted to access, a Channel:
+     *
+     * - `canAssignCustomerToChannel()` — whether the AuthGuard silently auto-assigns an
+     *   authenticated Customer to the active Channel.
+     * - `canCustomerAccessChannel()` — whether a Customer may access or join a Channel at all
+     *   (denied requests receive a ForbiddenError). Enforced by the AuthGuard; the Shop API
+     *   account-creation flows (registration, verification, external auth, guest checkout) are not
+     *   gated.
+     *
+     * The default strategy allows both, preserving the existing behaviour.
+     *
+     * Note this gates membership and authenticated operations, not a Channel's public catalog: a
+     * denied Customer can still browse the gated Channel's products and pricing via anonymous
+     * storefront queries. Use {@link EntityAccessControlStrategy} for row-level catalog isolation.
+     *
+     * @default DefaultCustomerChannelAssignmentStrategy
+     * @since 3.7.0
+     */
+    customerChannelAssignmentStrategy?: CustomerChannelAssignmentStrategy;
 }
 
 /**

@@ -1,6 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Permission } from '@vendure/common/lib/generated-types';
+import { DEFAULT_CHANNEL_CODE } from '@vendure/common/lib/shared-constants';
+import { ID } from '@vendure/common/lib/shared-types';
 import { Request, Response } from 'express';
 import { GraphQLResolveInfo } from 'graphql';
 import ms, { type StringValue } from 'ms';
@@ -58,6 +60,7 @@ export class AuthGuard implements CanActivate {
         }
         const authDisabled = this.configService.authOptions.disableAuth;
         const hasOwnerPermission = !!permissions && permissions.includes(Permission.Owner);
+        const isPublicOperation = !permissions || permissions.every(p => p === Permission.Public);
         let requestContext: RequestContext;
         if (targetIsFieldResolver) {
             requestContext = internal_getRequestContext(req);
@@ -65,7 +68,11 @@ export class AuthGuard implements CanActivate {
             const session = await this.getSession(req, res, hasOwnerPermission, info);
             requestContext = await this.requestContextService.fromRequest(req, info, permissions, session);
 
-            const requestContextShouldBeReinitialized = await this.setActiveChannel(requestContext, session);
+            const requestContextShouldBeReinitialized = await this.setActiveChannel(
+                requestContext,
+                session,
+                isPublicOperation,
+            );
             if (requestContextShouldBeReinitialized) {
                 requestContext = await this.requestContextService.fromRequest(
                     req,
@@ -91,7 +98,8 @@ export class AuthGuard implements CanActivate {
 
     private async setActiveChannel(
         requestContext: RequestContext,
-        session?: CachedSession,
+        session: CachedSession | undefined,
+        isPublicOperation: boolean,
     ): Promise<boolean> {
         if (!session) {
             return false;
@@ -100,39 +108,105 @@ export class AuthGuard implements CanActivate {
         // does not correspond to the current channel, the activeChannelId on the session is set
         const activeChannelShouldBeSet =
             !session.activeChannelId || session.activeChannelId !== requestContext.channelId;
-        if (activeChannelShouldBeSet) {
-            await this.sessionService.setActiveChannel(session, requestContext.channel);
-            if (requestContext.activeUserId) {
-                const customer = await this.customerService.findOneByUserId(
+        if (!activeChannelShouldBeSet) {
+            return false;
+        }
+        let shouldPersistActiveChannel = true;
+        if (requestContext.activeUserId) {
+            const authDisabled = this.configService.authOptions.disableAuth;
+            if (authDisabled || requestContext.channel.code === DEFAULT_CHANNEL_CODE) {
+                await this.assignCustomerToActiveChannel(requestContext);
+            } else {
+                shouldPersistActiveChannel = await this.applyChannelAssignmentStrategy(
                     requestContext,
-                    requestContext.activeUserId,
-                    false,
+                    isPublicOperation,
                 );
-                // To avoid assigning the customer to the active channel on every request,
-                // it is only done on the first request and whenever the channel changes
-                if (customer) {
-                    try {
-                        await this.channelService.assignToChannels(requestContext, Customer, customer.id, [
-                            requestContext.channelId,
-                        ]);
-                    } catch (e: any) {
-                        const isDuplicateError =
-                            e.code === 'ER_DUP_ENTRY' /* mySQL/MariaDB */ ||
-                            e.code === '23505'; /* postgres */
-                        if (isDuplicateError) {
-                            // For a duplicate error, this means that concurrent requests have resulted in attempting to
-                            // assign the Customer to the channel more than once. In this case we can safely ignore the
-                            // error as the Customer was successfully assigned in the earlier call.
-                            // See https://github.com/vendurehq/vendure/issues/834
-                        } else {
-                            throw e;
-                        }
-                    }
-                }
             }
+        }
+        if (shouldPersistActiveChannel) {
+            await this.sessionService.setActiveChannel(session, requestContext.channel);
+        }
+        return shouldPersistActiveChannel;
+    }
+
+    /**
+     * Consults the configured {@link CustomerChannelAssignmentStrategy} for an authenticated
+     * Customer who is not yet a member of the active (non-default) channel. Returns whether the
+     * active channel should be persisted onto the session. Throws a ForbiddenError when access is
+     * refused for an operation that requires authentication; for a Public operation a refused
+     * Customer is allowed to proceed, but the channel is left unpinned so the gate re-fires on the
+     * next request that requires authentication. Members and users without a Customer record are
+     * left untouched.
+     */
+    private async applyChannelAssignmentStrategy(
+        requestContext: RequestContext,
+        isPublicOperation: boolean,
+    ): Promise<boolean> {
+        const userId = requestContext.activeUserId;
+        if (!userId) {
             return true;
         }
-        return false;
+        const isMember = await this.customerService.findOneByUserId(requestContext, userId, true);
+        if (isMember) {
+            return true;
+        }
+        const customer = await this.customerService.findOneByUserId(requestContext, userId, false);
+        if (!customer) {
+            return true;
+        }
+        const strategy = this.configService.authOptions.customerChannelAssignmentStrategy;
+        const canAccess = await strategy.canCustomerAccessChannel(
+            requestContext,
+            customer,
+            requestContext.channelId,
+        );
+        if (!canAccess) {
+            if (isPublicOperation) {
+                return false;
+            }
+            throw new ForbiddenError(LogLevel.Verbose);
+        }
+        const canAssign = await strategy.canAssignCustomerToChannel(
+            requestContext,
+            customer,
+            requestContext.channelId,
+        );
+        if (canAssign) {
+            await this.assignCustomerToActiveChannel(requestContext, customer.id);
+        }
+        return true;
+    }
+
+    private async assignCustomerToActiveChannel(
+        requestContext: RequestContext,
+        customerId?: ID,
+    ): Promise<void> {
+        let id = customerId;
+        if (id == null) {
+            const userId = requestContext.activeUserId;
+            if (!userId) {
+                return;
+            }
+            const customer = await this.customerService.findOneByUserId(requestContext, userId, false);
+            if (!customer) {
+                return;
+            }
+            id = customer.id;
+        }
+        try {
+            await this.channelService.assignToChannels(requestContext, Customer, id, [
+                requestContext.channelId,
+            ]);
+        } catch (e: any) {
+            const isDuplicateError =
+                e.code === 'ER_DUP_ENTRY' /* mySQL/MariaDB */ || e.code === '23505'; /* postgres */
+            if (!isDuplicateError) {
+                throw e;
+            }
+            // Concurrent requests can race to assign the Customer to the channel; the duplicate is
+            // safe to ignore because the earlier call already succeeded.
+            // See https://github.com/vendurehq/vendure/issues/834
+        }
     }
 
     private async getSession(
