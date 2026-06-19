@@ -1,8 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Permission } from '@vendure/common/lib/generated-types';
-import { DEFAULT_CHANNEL_CODE } from '@vendure/common/lib/shared-constants';
-import { ID } from '@vendure/common/lib/shared-types';
 import { Request, Response } from 'express';
 import { GraphQLResolveInfo } from 'graphql';
 import ms, { type StringValue } from 'ms';
@@ -12,11 +10,9 @@ import { API_KEY_AUTH_STRATEGY_NAME } from '../../config';
 import { ConfigService } from '../../config/config.service';
 import { Logger, LogLevel } from '../../config/logger/vendure-logger';
 import { CachedSession } from '../../config/session-cache/session-cache-strategy';
-import { Customer } from '../../entity/customer/customer.entity';
+import { CustomerChannelAssignmentService } from '../../service/helpers/customer-channel-assignment/customer-channel-assignment.service';
 import { RequestContextService } from '../../service/helpers/request-context/request-context.service';
 import { ApiKeyService } from '../../service/services/api-key.service';
-import { ChannelService } from '../../service/services/channel.service';
-import { CustomerService } from '../../service/services/customer.service';
 import { SessionService } from '../../service/services/session.service';
 import { extractSessionToken, ExtractTokenResult } from '../common/extract-session-token';
 import { getApiType } from '../common/get-api-type';
@@ -46,8 +42,7 @@ export class AuthGuard implements CanActivate {
         private configService: ConfigService,
         private requestContextService: RequestContextService,
         private sessionService: SessionService,
-        private customerService: CustomerService,
-        private channelService: ChannelService,
+        private customerChannelAssignmentService: CustomerChannelAssignmentService,
         private apiKeyService: ApiKeyService,
     ) {}
 
@@ -113,100 +108,21 @@ export class AuthGuard implements CanActivate {
         }
         let shouldPersistActiveChannel = true;
         if (requestContext.activeUserId) {
-            const authDisabled = this.configService.authOptions.disableAuth;
-            if (authDisabled || requestContext.channel.code === DEFAULT_CHANNEL_CODE) {
-                await this.assignCustomerToActiveChannel(requestContext);
-            } else {
-                shouldPersistActiveChannel = await this.applyChannelAssignmentStrategy(
-                    requestContext,
-                    isPublicOperation,
-                );
+            const outcome = await this.customerChannelAssignmentService.resolve(requestContext);
+            if (outcome === 'denied') {
+                if (isPublicOperation) {
+                    // Don't block logout / anonymous catalog, and leave the channel unpinned so a
+                    // subsequent request that requires authentication re-enters this gate.
+                    shouldPersistActiveChannel = false;
+                } else {
+                    throw new ForbiddenError(LogLevel.Verbose);
+                }
             }
         }
         if (shouldPersistActiveChannel) {
             await this.sessionService.setActiveChannel(session, requestContext.channel);
         }
         return shouldPersistActiveChannel;
-    }
-
-    /**
-     * Consults the configured {@link CustomerChannelAssignmentStrategy} for an authenticated
-     * Customer who is not yet a member of the active (non-default) channel. Returns whether the
-     * active channel should be persisted onto the session. Throws a ForbiddenError when access is
-     * refused for an operation that requires authentication; for a Public operation a refused
-     * Customer is allowed to proceed, but the channel is left unpinned so the gate re-fires on the
-     * next request that requires authentication. Members and users without a Customer record are
-     * left untouched.
-     */
-    private async applyChannelAssignmentStrategy(
-        requestContext: RequestContext,
-        isPublicOperation: boolean,
-    ): Promise<boolean> {
-        const userId = requestContext.activeUserId;
-        if (!userId) {
-            return true;
-        }
-        const isMember = await this.customerService.findOneByUserId(requestContext, userId, true);
-        if (isMember) {
-            return true;
-        }
-        const customer = await this.customerService.findOneByUserId(requestContext, userId, false);
-        if (!customer) {
-            return true;
-        }
-        const strategy = this.configService.authOptions.customerChannelAssignmentStrategy;
-        const canAccess = await strategy.canCustomerAccessChannel(
-            requestContext,
-            customer,
-            requestContext.channelId,
-        );
-        if (!canAccess) {
-            if (isPublicOperation) {
-                return false;
-            }
-            throw new ForbiddenError(LogLevel.Verbose);
-        }
-        const canAssign = await strategy.canAssignCustomerToChannel(
-            requestContext,
-            customer,
-            requestContext.channelId,
-        );
-        if (canAssign) {
-            await this.assignCustomerToActiveChannel(requestContext, customer.id);
-        }
-        return true;
-    }
-
-    private async assignCustomerToActiveChannel(
-        requestContext: RequestContext,
-        customerId?: ID,
-    ): Promise<void> {
-        let id = customerId;
-        if (id == null) {
-            const userId = requestContext.activeUserId;
-            if (!userId) {
-                return;
-            }
-            const customer = await this.customerService.findOneByUserId(requestContext, userId, false);
-            if (!customer) {
-                return;
-            }
-            id = customer.id;
-        }
-        try {
-            await this.channelService.assignToChannels(requestContext, Customer, id, [
-                requestContext.channelId,
-            ]);
-        } catch (e: any) {
-            const isDuplicateError =
-                e.code === 'ER_DUP_ENTRY' /* mySQL/MariaDB */ || e.code === '23505'; /* postgres */
-            if (!isDuplicateError) {
-                throw e;
-            }
-            // Concurrent requests can race to assign the Customer to the channel; the duplicate is
-            // safe to ignore because the earlier call already succeeded.
-            // See https://github.com/vendurehq/vendure/issues/834
-        }
     }
 
     private async getSession(
