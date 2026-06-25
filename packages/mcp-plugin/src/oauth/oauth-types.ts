@@ -1,0 +1,68 @@
+import { McpToolset } from '../types';
+
+// Request and response shapes for the MCP OAuth HTTP endpoints. Field names are
+// snake_case to match the OAuth 2.1 wire contract. Shared by OAuthService and the
+// OAuth HTTP controller.
+
+export interface RegisterClientInput {
+    client_name?: string;
+    client_uri?: string;
+    logo_uri?: string;
+    redirect_uris?: string[];
+    grant_types?: string[];
+    token_endpoint_auth_method?: string;
+}
+
+export interface AuthorizeInput {
+    response_type?: string;
+    client_id?: string;
+    redirect_uri?: string;
+    state?: string;
+    code_challenge?: string;
+    code_challenge_method?: string;
+    resource?: string;
+}
+
+export interface TokenInput {
+    grant_type?: string;
+    code?: string;
+    refresh_token?: string;
+    client_id?: string;
+    redirect_uri?: string;
+    code_verifier?: string;
+    resource?: string;
+}
+
+export interface StorefrontCallbackInput {
+    session?: string;
+    vendureAuthToken?: string;
+    channelToken?: string;
+    approved?: boolean;
+}
+
+export interface AuthorizationRequestInfo {
+    client_id: string;
+    client_name: string;
+    client_uri?: string;
+    logo_uri?: string;
+    redirect_uri: string;
+    resource: string;
+    toolset: McpToolset;
+}
+
+export interface RegisteredClientResponse {
+    client_id: string;
+    client_name: string;
+    client_uri?: string;
+    logo_uri?: string;
+    redirect_uris: string[];
+    grant_types: string[];
+    token_endpoint_auth_method: string;
+}
+
+export interface OAuthTokenResponse {
+    access_token: string;
+    refresh_token: string;
+    token_type: 'Bearer';
+    expires_in: number;
+}

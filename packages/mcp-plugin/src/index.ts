@@ -1,1 +1,1 @@
-export {};
+export * from './oauth/oauth.service';

@@ -1,4 +1,6 @@
 import { McpToolHandler, RequestContext } from '@vendure/core';
+import type { McpOauthToken } from './entities/mcp-oauth-token.entity';
+import type { McpSession } from './entities/mcp-session.entity';
 
 /**
  * @description
@@ -29,7 +31,65 @@ export interface McpOauthOptions {
      * tokens.
      */
     tokenSecret: string;
+    /**
+     * @description
+     * Public base URL of the Vendure server, used as the OAuth issuer and to build
+     * authorization-server / protected-resource metadata URLs.
+     *
+     * @default 'http://localhost:3500'
+     */
+    issuer?: string;
+    /**
+     * @description
+     * Lifetime of an issued access token, in seconds.
+     *
+     * @default 900
+     */
+    accessTokenTtlSeconds?: number;
+    /**
+     * @description
+     * Lifetime of an issued refresh token, in seconds.
+     *
+     * @default 2592000
+     */
+    refreshTokenTtlSeconds?: number;
+    /**
+     * @description
+     * Lifetime of an authorization code before it must be exchanged, in seconds.
+     *
+     * @default 60
+     */
+    authorizationCodeTtlSeconds?: number;
+    /**
+     * @description
+     * Lifetime of a pending authorization request (consent window), in seconds.
+     *
+     * @default 600
+     */
+    authorizationRequestTtlSeconds?: number;
+    /**
+     * @description
+     * Path (relative to `issuer`) of the admin consent page that approves
+     * admin-scoped authorization requests.
+     *
+     * @default '/dashboard/mcp/authorize'
+     */
+    adminConsentPath?: string;
+    /**
+     * @description
+     * Absolute URL of the storefront consent page that approves customer-scoped
+     * authorization requests.
+     *
+     * @default 'http://localhost:3000/mcp/authorize'
+     */
+    storefrontConsentUrl?: string;
 }
+
+/**
+ * OAuth options with all optional fields resolved to their defaults. Built by
+ * {@link McpPlugin.init} and consumed by the internal `OAuthService`.
+ */
+export type ResolvedMcpOauthOptions = Required<McpOauthOptions>;
 
 /**
  * @description
@@ -81,6 +141,16 @@ export interface McpServerToolHandler<I = unknown, O = unknown> extends McpToolH
  * Identifies the type of Vendure actor (user) associated with an MCP OAuth grant.
  */
 export type McpActorType = 'customer' | 'admin' | 'anonymous';
+
+/**
+ * Result of authenticating a bearer token: the resolved `RequestContext` plus the
+ * backing MCP OAuth token and session records. Consumed by the Phase 2 transport.
+ */
+export interface McpAuthenticatedContext {
+    ctx: RequestContext;
+    token: McpOauthToken;
+    session: McpSession;
+}
 
 /**
  * Discriminates between access and refresh tokens in {@link McpOauthToken}.

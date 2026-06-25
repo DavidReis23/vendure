@@ -1,0 +1,698 @@
+import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+    AuthenticatedSession,
+    ChannelService,
+    ID,
+    RequestContext,
+    RequestContextService,
+    Session,
+    SessionService,
+    TransactionalConnection,
+    User,
+    UserService,
+} from '@vendure/core';
+
+import { MCP_PLUGIN_OPTIONS } from '../constants';
+import { McpAuthorizationCode } from '../entities/mcp-authorization-code.entity';
+import { McpAuthorizationRequest } from '../entities/mcp-authorization-request.entity';
+import { McpOauthClient } from '../entities/mcp-oauth-client.entity';
+import { McpOauthToken } from '../entities/mcp-oauth-token.entity';
+import { McpSession } from '../entities/mcp-session.entity';
+import {
+    McpActorType,
+    McpAuthenticatedContext,
+    McpPluginOptions,
+    McpToolset,
+    ResolvedMcpOauthOptions,
+} from '../types';
+
+import { deriveHashKey, hashToken } from './crypto';
+import {
+    AuthorizationRequestInfo,
+    AuthorizeInput,
+    OAuthTokenResponse,
+    RegisterClientInput,
+    RegisteredClientResponse,
+    StorefrontCallbackInput,
+    TokenInput,
+} from './oauth-types';
+import { addSeconds, appendOAuthParams, randomToken, verifyPkceChallenge } from './oauth-utils';
+
+/**
+ * Name recorded against the dedicated Vendure session minted for an MCP grant.
+ */
+const MCP_SESSION_STRATEGY = 'mcp-dedicated-session';
+
+/**
+ * Implements the MCP OAuth 2.1 authorization server: Dynamic Client Registration,
+ * the authorize/consent flow, the token endpoint (authorization-code and
+ * refresh-token grants), revocation, and `.well-known` metadata.
+ *
+ * Unlike storing a copy of the user's Vendure session token, each grant mints a
+ * dedicated Vendure session whose token is `hashToken(accessToken)`. The minted
+ * session's id is recorded on {@link McpSession.vendureSessionId} so it can be
+ * looked up, re-minted when the backing session lapses, and deleted on revoke.
+ */
+@Injectable()
+export class OAuthService {
+    private cachedHashKey: Buffer | undefined;
+
+    constructor(
+        private connection: TransactionalConnection,
+        private requestContextService: RequestContextService,
+        private sessionService: SessionService,
+        private channelService: ChannelService,
+        private userService: UserService,
+        @Inject(MCP_PLUGIN_OPTIONS) private options: McpPluginOptions,
+    ) {}
+
+    async registerClient(input: RegisterClientInput): Promise<RegisteredClientResponse> {
+        if (!input.client_name) {
+            throw new BadRequestException('client_name is required');
+        }
+        if (!input.redirect_uris || input.redirect_uris.length === 0) {
+            throw new BadRequestException('redirect_uris is required');
+        }
+        for (const redirectUri of input.redirect_uris) {
+            this.assertSafeRedirectUri(redirectUri);
+        }
+        const ctx = await this.createAdminCtx();
+        const client = await this.connection.getRepository(ctx, McpOauthClient).save(
+            new McpOauthClient({
+                clientId: randomToken(),
+                clientName: input.client_name,
+                clientUri: input.client_uri ?? null,
+                logoUri: input.logo_uri ?? null,
+                redirectUris: input.redirect_uris,
+                grantTypes: input.grant_types ?? ['authorization_code', 'refresh_token'],
+                tokenEndpointAuthMethod: input.token_endpoint_auth_method ?? 'none',
+                lastUsedAt: null,
+            }),
+        );
+
+        return {
+            client_id: client.clientId,
+            client_name: client.clientName,
+            ...(client.clientUri ? { client_uri: client.clientUri } : {}),
+            ...(client.logoUri ? { logo_uri: client.logoUri } : {}),
+            redirect_uris: client.redirectUris,
+            grant_types: client.grantTypes,
+            token_endpoint_auth_method: client.tokenEndpointAuthMethod,
+        };
+    }
+
+    metadata() {
+        const issuer = this.issuerOrigin();
+        return {
+            issuer,
+            authorization_endpoint: `${issuer}/mcp/oauth/authorize`,
+            token_endpoint: `${issuer}/mcp/oauth/token`,
+            registration_endpoint: `${issuer}/mcp/oauth/register`,
+            revocation_endpoint: `${issuer}/mcp/oauth/revoke`,
+            response_types_supported: ['code'],
+            grant_types_supported: ['authorization_code', 'refresh_token'],
+            code_challenge_methods_supported: ['S256'],
+            token_endpoint_auth_methods_supported: ['none'],
+        };
+    }
+
+    protectedResourceMetadata(endpoint: McpToolset) {
+        const issuer = this.issuerOrigin();
+        return {
+            resource: this.resourceForToolset(endpoint),
+            authorization_servers: [issuer],
+            bearer_methods_supported: ['header'],
+            resource_name: `Vendure ${endpoint} MCP`,
+        };
+    }
+
+    protectedResourceMetadataUrl(endpoint: McpToolset): string {
+        return `${this.issuerOrigin()}/.well-known/oauth-protected-resource/mcp/${endpoint}`;
+    }
+
+    async createAuthorizationRedirect(input: AuthorizeInput): Promise<string> {
+        if (input.response_type !== 'code') {
+            throw new BadRequestException('Only response_type=code is supported');
+        }
+        if (!input.client_id || !input.redirect_uri || !input.code_challenge) {
+            throw new BadRequestException('client_id, redirect_uri and code_challenge are required');
+        }
+        if (input.code_challenge_method !== 'S256') {
+            throw new BadRequestException('Only PKCE S256 is supported');
+        }
+        const ctx = await this.createAdminCtx();
+        const client = await this.findClient(ctx, input.client_id);
+        if (!client.redirectUris.includes(input.redirect_uri)) {
+            throw new BadRequestException('redirect_uri is not registered for client');
+        }
+        const { resource, toolset } = this.resolveResource(input.resource);
+        const requestToken = randomToken();
+        await this.connection.getRepository(ctx, McpAuthorizationRequest).save(
+            new McpAuthorizationRequest({
+                requestToken,
+                oauthClient: client,
+                oauthClientId: client.id,
+                redirectUri: input.redirect_uri,
+                state: input.state ?? null,
+                codeChallenge: input.code_challenge,
+                codeChallengeMethod: 'S256',
+                toolset,
+                resource,
+                expiresAt: addSeconds(new Date(), this.resolvedOauth().authorizationRequestTtlSeconds),
+                consumedAt: null,
+            }),
+        );
+        const consentUrl =
+            toolset === 'admin'
+                ? new URL(this.resolvedOauth().adminConsentPath, this.resolvedOauth().issuer)
+                : new URL(this.resolvedOauth().storefrontConsentUrl);
+        consentUrl.searchParams.set('session', requestToken);
+        return consentUrl.toString();
+    }
+
+    async getAuthorizationRequestInfo(requestToken: string | undefined): Promise<AuthorizationRequestInfo> {
+        if (!requestToken) {
+            throw new BadRequestException('session is required');
+        }
+        const request = await this.findActiveAuthorizationRequest(requestToken);
+        const client = request.oauthClient;
+        return {
+            client_id: client.clientId,
+            client_name: client.clientName,
+            ...(client.clientUri ? { client_uri: client.clientUri } : {}),
+            ...(client.logoUri ? { logo_uri: client.logoUri } : {}),
+            redirect_uri: request.redirectUri,
+            resource: request.resource,
+            toolset: request.toolset,
+        };
+    }
+
+    async approveAdminRequest(
+        ctx: RequestContext,
+        requestToken: string,
+        approved: boolean,
+    ): Promise<{ redirectUrl: string }> {
+        if (!ctx.activeUserId || !ctx.session?.token) {
+            throw new UnauthorizedException('Admin consent requires an authenticated administrator session');
+        }
+        return this.completeAuthorizationRequest(requestToken, approved, ctx.activeUserId, 'admin');
+    }
+
+    async completeStorefrontRequest(input: StorefrontCallbackInput): Promise<{ redirectUrl: string }> {
+        if (!input.session) {
+            throw new BadRequestException('session is required');
+        }
+        if (input.approved === false) {
+            return this.completeAuthorizationRequest(input.session, false, null, 'customer');
+        }
+        if (!input.vendureAuthToken) {
+            throw new BadRequestException('vendureAuthToken is required');
+        }
+        const vendureSession = await this.sessionService.getSessionFromToken(input.vendureAuthToken);
+        if (!vendureSession?.user) {
+            throw new UnauthorizedException('Invalid Vendure storefront session');
+        }
+        const channelId = input.channelToken ? await this.resolveChannelId(input.channelToken) : null;
+        return this.completeAuthorizationRequest(
+            input.session,
+            true,
+            vendureSession.user.id,
+            'customer',
+            channelId,
+        );
+    }
+
+    async exchangeToken(input: TokenInput) {
+        if (input.grant_type === 'authorization_code') {
+            return this.exchangeAuthorizationCode(input);
+        }
+        if (input.grant_type === 'refresh_token') {
+            return this.exchangeRefreshToken(input);
+        }
+        throw new BadRequestException('Unsupported grant_type');
+    }
+
+    async revoke(token: string | undefined): Promise<Record<string, never>> {
+        if (!token) {
+            return {};
+        }
+        const ctx = await this.createAdminCtx();
+        const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
+        const entity = await tokenRepo.findOne({ where: { token } });
+        if (entity) {
+            await this.deleteMintedSessionForToken(ctx, entity.id);
+            await tokenRepo.remove(entity);
+        }
+        return {};
+    }
+
+    async authenticateBearerToken(token: string, apiType: McpToolset): Promise<McpAuthenticatedContext> {
+        const adminCtx = await this.createAdminCtx();
+        const oauthToken = await this.connection.getRepository(adminCtx, McpOauthToken).findOne({
+            where: { token, tokenType: 'access' },
+            relations: ['oauthClient'],
+        });
+        if (!oauthToken || oauthToken.revokedAt || oauthToken.expiresAt <= new Date()) {
+            throw new UnauthorizedException('Invalid or expired access token');
+        }
+        if (
+            (apiType === 'admin' && oauthToken.userType !== 'admin') ||
+            (apiType === 'shop' && oauthToken.userType !== 'customer')
+        ) {
+            throw new UnauthorizedException('Access token does not allow this MCP endpoint');
+        }
+        if (oauthToken.resource !== this.resourceForToolset(apiType)) {
+            throw new UnauthorizedException('Access token was not issued for this MCP resource');
+        }
+
+        const mcpSession = await this.connection.getRepository(adminCtx, McpSession).findOne({
+            where: { oauthTokenId: oauthToken.id },
+        });
+        if (!mcpSession || mcpSession.expiresAt <= new Date()) {
+            throw new UnauthorizedException('MCP session is expired');
+        }
+        if (oauthToken.userId == null) {
+            throw new UnauthorizedException('Access token is not bound to a Vendure user');
+        }
+
+        // Option-D session bridge: the dedicated Vendure session's token is
+        // hashToken(accessToken). Its TTL is independent of the MCP token, so it may
+        // have lapsed even while the MCP token is still valid — in that case re-mint.
+        const sessionToken = hashToken(token, this.getHashKey());
+        let vendureSession = await this.sessionService.getSessionFromToken(sessionToken);
+        if (!vendureSession) {
+            const user = await this.userService.getUserById(adminCtx, oauthToken.userId);
+            if (!user) {
+                throw new UnauthorizedException('Vendure user no longer exists');
+            }
+            // The lapsed session row may still be in the table — Vendure clears expired
+            // sessions with a background job, not on read — and it holds the same unique
+            // token we are about to mint, so we delete.
+            await this.deleteVendureSession(adminCtx, mcpSession.vendureSessionId);
+            const minted = await this.mintVendureSession(adminCtx, user, token);
+            mcpSession.vendureSessionId = minted.id;
+            vendureSession = await this.sessionService.getSessionFromToken(sessionToken);
+            if (!vendureSession) {
+                throw new UnauthorizedException('Failed to establish Vendure session');
+            }
+        }
+
+        const channel = mcpSession.channelId
+            ? await this.channelService.findOne(adminCtx, mcpSession.channelId)
+            : await this.channelService.getDefaultChannel(adminCtx);
+        const ctx = new RequestContext({
+            apiType,
+            channel: channel ?? (await this.channelService.getDefaultChannel(adminCtx)),
+            session: vendureSession,
+            isAuthorized: true,
+            authorizedAsOwnerOnly: false,
+        });
+        mcpSession.lastActivityAt = new Date();
+        await this.connection.getRepository(adminCtx, McpSession).save(mcpSession);
+        return { ctx, token: oauthToken, session: mcpSession };
+    }
+
+    async createAnonymousShopContext(sessionToken?: string): Promise<RequestContext> {
+        const existingSession = sessionToken
+            ? await this.sessionService.getSessionFromToken(sessionToken)
+            : undefined;
+        const vendureSession =
+            existingSession && !existingSession.user
+                ? existingSession
+                : await this.sessionService.createAnonymousSession();
+        const adminCtx = await this.createAdminCtx();
+        const channel = await this.channelService.getDefaultChannel(adminCtx);
+        return new RequestContext({
+            apiType: 'shop',
+            channel,
+            session: vendureSession,
+            isAuthorized: false,
+            authorizedAsOwnerOnly: true,
+        });
+    }
+
+    private async completeAuthorizationRequest(
+        requestToken: string,
+        approved: boolean,
+        userId: ID | null,
+        userType: McpActorType,
+        channelId: ID | null = null,
+    ): Promise<{ redirectUrl: string }> {
+        const ctx = await this.createAdminCtx();
+        const request = await this.findActiveAuthorizationRequest(requestToken, ctx);
+        request.consumedAt = new Date();
+        await this.connection.getRepository(ctx, McpAuthorizationRequest).save(request);
+
+        if (!approved) {
+            return {
+                redirectUrl: appendOAuthParams(request.redirectUri, {
+                    error: 'access_denied',
+                    state: request.state ?? undefined,
+                }),
+            };
+        }
+        if (userId == null) {
+            throw new UnauthorizedException('Authenticated Vendure session required');
+        }
+        const code = randomToken();
+        await this.connection.getRepository(ctx, McpAuthorizationCode).save(
+            new McpAuthorizationCode({
+                code,
+                oauthClient: request.oauthClient,
+                oauthClientId: request.oauthClientId,
+                userId,
+                userType,
+                redirectUri: request.redirectUri,
+                resource: request.resource,
+                codeChallenge: request.codeChallenge,
+                codeChallengeMethod: request.codeChallengeMethod,
+                channelId,
+                expiresAt: addSeconds(new Date(), this.resolvedOauth().authorizationCodeTtlSeconds),
+                consumedAt: null,
+            }),
+        );
+        return {
+            redirectUrl: appendOAuthParams(request.redirectUri, {
+                code,
+                state: request.state ?? undefined,
+            }),
+        };
+    }
+
+    private async exchangeAuthorizationCode(input: TokenInput) {
+        if (
+            !input.code ||
+            !input.client_id ||
+            !input.redirect_uri ||
+            !input.code_verifier ||
+            !input.resource
+        ) {
+            throw new BadRequestException(
+                'code, client_id, redirect_uri, code_verifier and resource are required',
+            );
+        }
+        const { resource } = this.resolveResource(input.resource);
+        const ctx = await this.createAdminCtx();
+        const codeRepo = this.connection.getRepository(ctx, McpAuthorizationCode);
+        const code = await codeRepo.findOne({ where: { code: input.code }, relations: ['oauthClient'] });
+        if (!code || code.consumedAt || code.expiresAt <= new Date()) {
+            throw new BadRequestException('Authorization code invalid or expired');
+        }
+        if (code.oauthClient.clientId !== input.client_id || code.redirectUri !== input.redirect_uri) {
+            throw new BadRequestException('Authorization code does not match client or redirect_uri');
+        }
+        if (code.resource !== resource) {
+            throw new BadRequestException('Authorization code does not match token request resource');
+        }
+        if (!verifyPkceChallenge(input.code_verifier, code.codeChallenge)) {
+            throw new BadRequestException('Invalid PKCE verifier');
+        }
+        code.consumedAt = new Date();
+        await codeRepo.save(code);
+        return this.issueTokenPair(
+            ctx,
+            code.oauthClient,
+            code.userId,
+            code.userType,
+            code.resource,
+            code.channelId,
+        );
+    }
+
+    private async exchangeRefreshToken(input: TokenInput) {
+        if (!input.refresh_token || !input.client_id || !input.resource) {
+            throw new BadRequestException('refresh_token, client_id and resource are required');
+        }
+        const { resource } = this.resolveResource(input.resource);
+        const ctx = await this.createAdminCtx();
+        const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
+        const refreshToken = await tokenRepo.findOne({
+            where: { token: input.refresh_token, tokenType: 'refresh' },
+            relations: ['oauthClient'],
+        });
+        if (!refreshToken || refreshToken.revokedAt || refreshToken.expiresAt <= new Date()) {
+            throw new BadRequestException('Refresh token invalid or expired');
+        }
+        if (refreshToken.oauthClient.clientId !== input.client_id) {
+            throw new BadRequestException('Refresh token does not match client');
+        }
+        if (refreshToken.resource !== resource) {
+            throw new BadRequestException('Refresh token does not match token request resource');
+        }
+
+        // The channel scope lives on the McpSession of the access token issued
+        // alongside this refresh token. Recover it before deleting that session, so the
+        // rotated grant keeps the same channel. (T12 hardens rotation atomicity.)
+        const oldAccess = await this.connection.getRepository(ctx, McpOauthToken).findOne({
+            where: {
+                oauthClientId: refreshToken.oauthClientId,
+                tokenType: 'access',
+                resource: refreshToken.resource,
+                userId: refreshToken.userId ?? undefined,
+            },
+        });
+        let channelId: ID | null = null;
+        if (oldAccess) {
+            const oldMcpSession = await this.connection
+                .getRepository(ctx, McpSession)
+                .findOne({ where: { oauthTokenId: oldAccess.id } });
+            channelId = oldMcpSession?.channelId ?? null;
+            await this.deleteMintedSessionForToken(ctx, oldAccess.id);
+            await tokenRepo.remove(oldAccess);
+        }
+        refreshToken.revokedAt = new Date();
+        await tokenRepo.save(refreshToken);
+        return this.issueTokenPair(
+            ctx,
+            refreshToken.oauthClient,
+            refreshToken.userId,
+            refreshToken.userType,
+            refreshToken.resource,
+            channelId,
+        );
+    }
+
+    private async issueTokenPair(
+        ctx: RequestContext,
+        client: McpOauthClient,
+        userId: ID | null,
+        userType: McpActorType | null,
+        resource: string,
+        channelId: ID | null = null,
+    ): Promise<OAuthTokenResponse> {
+        if (userId == null) {
+            throw new BadRequestException('No Vendure user bound to authorization grant');
+        }
+        const user = await this.userService.getUserById(ctx, userId);
+        if (!user) {
+            throw new BadRequestException('Vendure user no longer exists');
+        }
+        const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
+        const now = new Date();
+        const accessToken = await tokenRepo.save(
+            new McpOauthToken({
+                token: randomToken(),
+                tokenType: 'access',
+                oauthClient: client,
+                oauthClientId: client.id,
+                userId,
+                userType,
+                resource,
+                expiresAt: addSeconds(now, this.resolvedOauth().accessTokenTtlSeconds),
+                revokedAt: null,
+            }),
+        );
+        const refreshToken = await tokenRepo.save(
+            new McpOauthToken({
+                token: randomToken(),
+                tokenType: 'refresh',
+                oauthClient: client,
+                oauthClientId: client.id,
+                userId,
+                userType,
+                resource,
+                expiresAt: addSeconds(now, this.resolvedOauth().refreshTokenTtlSeconds),
+                revokedAt: null,
+            }),
+        );
+
+        // Option-D: mint one dedicated Vendure session for the grant, keyed by the
+        // hash of the access token, and record its id against the access token.
+        const mintedSession = await this.mintVendureSession(ctx, user, accessToken.token);
+        await this.connection.getRepository(ctx, McpSession).save(
+            new McpSession({
+                oauthToken: accessToken,
+                oauthTokenId: accessToken.id,
+                vendureSessionId: mintedSession.id,
+                channelId,
+                lastActivityAt: now,
+                expiresAt: refreshToken.expiresAt,
+            }),
+        );
+
+        client.lastUsedAt = now;
+        await this.connection.getRepository(ctx, McpOauthClient).save(client);
+        return {
+            access_token: accessToken.token,
+            refresh_token: refreshToken.token,
+            token_type: 'Bearer',
+            expires_in: this.resolvedOauth().accessTokenTtlSeconds,
+        };
+    }
+
+    /**
+     * Mints a dedicated Vendure session whose token is `hashToken(accessToken)`.
+     */
+    private mintVendureSession(
+        ctx: RequestContext,
+        user: User,
+        accessToken: string,
+    ): Promise<AuthenticatedSession> {
+        return this.sessionService.createNewAuthenticatedSession(
+            ctx,
+            user,
+            MCP_SESSION_STRATEGY,
+            hashToken(accessToken, this.getHashKey()),
+        );
+    }
+
+    /**
+     * Deletes the dedicated Vendure session minted for the given MCP token, looked up
+     * via {@link McpSession.vendureSessionId}. The `McpSession` row itself is removed
+     * by the cascade when the owning `McpOauthToken` is deleted.
+     */
+    private async deleteMintedSessionForToken(ctx: RequestContext, oauthTokenId: ID): Promise<void> {
+        const mcpSession = await this.connection
+            .getRepository(ctx, McpSession)
+            .findOne({ where: { oauthTokenId } });
+        if (mcpSession) {
+            await this.deleteVendureSession(ctx, mcpSession.vendureSessionId);
+        }
+    }
+
+    /** Removes a Vendure session row by id, if it still exists. */
+    private async deleteVendureSession(ctx: RequestContext, sessionId: ID): Promise<void> {
+        const session = await this.connection
+            .getRepository(ctx, Session)
+            .findOne({ where: { id: sessionId } });
+        if (session) {
+            await this.connection.getRepository(ctx, Session).remove(session);
+        }
+    }
+
+    private async findClient(ctx: RequestContext, clientId: string): Promise<McpOauthClient> {
+        const client = await this.connection.getRepository(ctx, McpOauthClient).findOne({
+            where: { clientId },
+        });
+        if (!client) {
+            throw new BadRequestException('Unknown OAuth client');
+        }
+        return client;
+    }
+
+    private async findActiveAuthorizationRequest(
+        requestToken: string,
+        ctx?: RequestContext,
+    ): Promise<McpAuthorizationRequest> {
+        const requestCtx = ctx ?? (await this.createAdminCtx());
+        const request = await this.connection.getRepository(requestCtx, McpAuthorizationRequest).findOne({
+            where: { requestToken },
+            relations: ['oauthClient'],
+        });
+        if (!request || request.consumedAt || request.expiresAt <= new Date()) {
+            throw new BadRequestException('Authorization request invalid or expired');
+        }
+        return request;
+    }
+
+    private createAdminCtx(): Promise<RequestContext> {
+        return this.requestContextService.create({ apiType: 'admin' });
+    }
+
+    private resolveResource(resource?: string): { resource: string; toolset: McpToolset } {
+        if (!resource) {
+            throw new BadRequestException('resource is required');
+        }
+        try {
+            const url = new URL(resource);
+            if (url.search || url.hash) {
+                throw new Error('OAuth resource must not include query parameters or fragments');
+            }
+            for (const toolset of ['shop', 'admin'] as const) {
+                if (this.sameResourceUrl(url, new URL(this.resourceForToolset(toolset)))) {
+                    return { resource: this.resourceForToolset(toolset), toolset };
+                }
+            }
+        } catch {
+            throw new BadRequestException('Unsupported OAuth resource');
+        }
+        throw new BadRequestException('Unsupported OAuth resource');
+    }
+
+    private sameResourceUrl(left: URL, right: URL): boolean {
+        return (
+            left.protocol.toLowerCase() === right.protocol.toLowerCase() &&
+            left.hostname.toLowerCase() === right.hostname.toLowerCase() &&
+            left.port === right.port &&
+            this.normalizeResourcePath(left.pathname) === this.normalizeResourcePath(right.pathname)
+        );
+    }
+
+    private normalizeResourcePath(pathname: string): string {
+        return pathname.length > 1 ? pathname.replace(/\/$/, '') : pathname;
+    }
+
+    /** The configured issuer URL with any trailing slash removed. */
+    private issuerOrigin(): string {
+        return this.resolvedOauth().issuer.replace(/\/$/, '');
+    }
+
+    private resourceForToolset(toolset: McpToolset): string {
+        return `${this.issuerOrigin()}/mcp/${toolset}`;
+    }
+
+    private assertSafeRedirectUri(redirectUri: string): void {
+        let url: URL;
+        try {
+            url = new URL(redirectUri);
+        } catch {
+            throw new BadRequestException('redirect_uri must be an absolute URL');
+        }
+        const hostname = url.hostname.toLowerCase();
+        const isLoopback =
+            hostname === 'localhost' ||
+            hostname === '127.0.0.1' ||
+            hostname === '::1' ||
+            hostname === '[::1]';
+        if (url.protocol !== 'https:' && !(url.protocol === 'http:' && isLoopback)) {
+            throw new BadRequestException('redirect_uri must use HTTPS or localhost HTTP');
+        }
+    }
+
+    private async resolveChannelId(channelToken: string): Promise<ID> {
+        const ctx = await this.createAdminCtx();
+        return (await this.channelService.getChannelFromToken(ctx, channelToken)).id;
+    }
+
+    /**
+     * Returns the resolved OAuth options, throwing if OAuth was not configured
+     * (i.e. no `oauth.tokenSecret` was supplied to the plugin).
+     */
+    private resolvedOauth(): ResolvedMcpOauthOptions {
+        if (!this.options.oauth?.tokenSecret) {
+            throw new BadRequestException('MCP OAuth is not configured (oauth.tokenSecret is required)');
+        }
+        return this.options.oauth as ResolvedMcpOauthOptions;
+    }
+
+    /**
+     * Derives (once) and returns the HMAC key used to compute Vendure session tokens
+     * from MCP access tokens for the Option-D session bridge.
+     */
+    private getHashKey(): Buffer {
+        if (!this.cachedHashKey) {
+            this.cachedHashKey = deriveHashKey(this.resolvedOauth().tokenSecret);
+        }
+        return this.cachedHashKey;
+    }
+}

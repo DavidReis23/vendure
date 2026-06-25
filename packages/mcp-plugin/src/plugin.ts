@@ -2,7 +2,7 @@ import { Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
 import { PluginCommonModule, VendurePlugin } from '@vendure/core';
 
-import { DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
+import { DEFAULT_OAUTH_OPTIONS, DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
 import {
     McpAuthorizationCode,
     McpAuthorizationRequest,
@@ -11,6 +11,7 @@ import {
     McpSession,
     McpToolCallLog,
 } from './entities';
+import { OAuthService } from './oauth/oauth.service';
 import { McpPluginOptions } from './types';
 
 /**
@@ -36,7 +37,7 @@ import { McpPluginOptions } from './types';
  */
 @VendurePlugin({
     imports: [PluginCommonModule, DiscoveryModule],
-    providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }],
+    providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, OAuthService],
     entities: [
         McpOauthClient,
         McpOauthToken,
@@ -53,7 +54,7 @@ export class McpPlugin {
     static init(options: McpPluginOptions = {}): Type<McpPlugin> {
         this.options = {
             toolExposure: options.toolExposure ?? DEFAULT_TOOL_EXPOSURE,
-            oauth: options.oauth,
+            oauth: options.oauth && { ...DEFAULT_OAUTH_OPTIONS, ...options.oauth },
         };
         return McpPlugin;
     }
