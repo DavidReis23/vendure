@@ -11,6 +11,7 @@ import {
     McpSession,
     McpToolCallLog,
 } from './entities';
+import { McpOAuthController } from './oauth/oauth.controller';
 import { OAuthService } from './oauth/oauth.service';
 import { McpPluginOptions } from './types';
 
@@ -37,6 +38,7 @@ import { McpPluginOptions } from './types';
  */
 @VendurePlugin({
     imports: [PluginCommonModule, DiscoveryModule],
+    controllers: [McpOAuthController],
     providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, OAuthService],
     entities: [
         McpOauthClient,
