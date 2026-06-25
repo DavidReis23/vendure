@@ -15,6 +15,24 @@ export type McpToolExposureMode = 'direct' | 'discovery';
 
 /**
  * @description
+ * OAuth-related options for {@link McpPlugin}.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export interface McpOauthOptions {
+    /**
+     * @description
+     * Server secret used to HMAC-hash OAuth tokens at rest. Generate once via
+     * `openssl rand -base64 32`. Required to enable OAuth. Supply via an
+     * environment variable. Rotating the secret invalidates all stored MCP OAuth
+     * tokens.
+     */
+    tokenSecret: string;
+}
+
+/**
+ * @description
  * Options passed to {@link McpPlugin.init}.
  *
  * @docsCategory core plugins/McpPlugin
@@ -28,6 +46,11 @@ export interface McpPluginOptions {
      * @default 'discovery'
      */
     toolExposure?: McpToolExposureMode;
+    /**
+     * @description
+     * OAuth options. When omitted, the OAuth surface is disabled.
+     */
+    oauth?: McpOauthOptions;
 }
 
 /**
@@ -53,3 +76,22 @@ export interface McpExecutionContext {
 export interface McpServerToolHandler<I = unknown, O = unknown> extends McpToolHandler<I, O> {
     execute(ctx: RequestContext, input: I, executionContext?: McpExecutionContext): Promise<O> | O;
 }
+
+/**
+ * Identifies the type of Vendure actor (user) associated with an MCP OAuth grant.
+ */
+export type McpActorType = 'customer' | 'admin' | 'anonymous';
+
+/**
+ * Discriminates between access and refresh tokens in {@link McpOauthToken}.
+ */
+export type McpOauthTokenType = 'access' | 'refresh';
+
+// Re-exported from core so plugin entities can import McpToolset from '../types'
+// without creating a duplicate declaration.
+export type { McpToolset } from '@vendure/core';
+
+/**
+ * Terminal outcome of a single MCP tool call recorded in {@link McpToolCallLog}.
+ */
+export type McpToolCallStatus = 'success' | 'error';

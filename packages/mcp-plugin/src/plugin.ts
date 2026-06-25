@@ -3,6 +3,14 @@ import { DiscoveryModule } from '@nestjs/core';
 import { PluginCommonModule, VendurePlugin } from '@vendure/core';
 
 import { DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
+import {
+    McpAuthorizationCode,
+    McpAuthorizationRequest,
+    McpOauthClient,
+    McpOauthToken,
+    McpSession,
+    McpToolCallLog,
+} from './entities';
 import { McpPluginOptions } from './types';
 
 /**
@@ -29,6 +37,14 @@ import { McpPluginOptions } from './types';
 @VendurePlugin({
     imports: [PluginCommonModule, DiscoveryModule],
     providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }],
+    entities: [
+        McpOauthClient,
+        McpOauthToken,
+        McpAuthorizationCode,
+        McpAuthorizationRequest,
+        McpSession,
+        McpToolCallLog,
+    ],
     compatibility: '^3.8.0',
 })
 export class McpPlugin {
@@ -37,6 +53,7 @@ export class McpPlugin {
     static init(options: McpPluginOptions = {}): Type<McpPlugin> {
         this.options = {
             toolExposure: options.toolExposure ?? DEFAULT_TOOL_EXPOSURE,
+            oauth: options.oauth,
         };
         return McpPlugin;
     }
