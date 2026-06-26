@@ -11,6 +11,7 @@ import {
     User,
     UserService,
 } from '@vendure/core';
+import { IsNull } from 'typeorm';
 
 import { MCP_PLUGIN_OPTIONS } from '../constants';
 import { McpAuthorizationCode } from '../entities/mcp-authorization-code.entity';
@@ -460,16 +461,30 @@ export class OAuthService {
             throw new BadRequestException('Refresh token does not match token request resource');
         }
 
-        // The channel scope lives on the McpSession of the access token issued
-        // alongside this refresh token. Recover it before deleting that session, so the
-        // rotated grant keeps the same channel. (T12 hardens rotation atomicity.)
+        // Atomically revoke the token. If two requests arrive with the same refresh token at once, only one succeeds,
+        // preventing a double-rotation replay attack.
+        const claim = await tokenRepo
+            .createQueryBuilder()
+            .update(McpOauthToken)
+            .set({ revokedAt: () => 'CURRENT_TIMESTAMP' })
+            .where('id = :id', { id: refreshToken.id })
+            .andWhere('revokedAt IS NULL')
+            .execute();
+        if (!claim.affected) {
+            throw new BadRequestException('Refresh token invalid or expired');
+        }
+
+        // Inherit the channel scope from the latest sibling session before destroying it,
+        // ensuring the rotated grant preserves the correct channel.
         const oldAccess = await this.connection.getRepository(ctx, McpOauthToken).findOne({
             where: {
                 oauthClientId: refreshToken.oauthClientId,
                 tokenType: 'access',
                 resource: refreshToken.resource,
                 userId: refreshToken.userId ?? undefined,
+                revokedAt: IsNull(),
             },
+            order: { createdAt: 'DESC' },
         });
         let channelId: ID | null = null;
         if (oldAccess) {
@@ -480,8 +495,6 @@ export class OAuthService {
             await this.deleteMintedSessionForToken(ctx, oldAccess.id);
             await tokenRepo.remove(oldAccess);
         }
-        refreshToken.revokedAt = new Date();
-        await tokenRepo.save(refreshToken);
         return this.issueTokenPair(
             ctx,
             refreshToken.oauthClient,
