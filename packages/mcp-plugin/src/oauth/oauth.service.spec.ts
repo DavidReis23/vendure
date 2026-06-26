@@ -1,9 +1,10 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_OAUTH_OPTIONS } from '../constants';
 import { McpPluginOptions } from '../types';
 
+import { deriveHashKey, hashToken } from './crypto';
 import { OAuthService } from './oauth.service';
 
 const ISSUER = 'https://shop.example.com';
@@ -102,5 +103,48 @@ describe('OAuthService PKCE / grant gating', () => {
         await expect(service.exchangeToken({ grant_type: 'password' })).rejects.toThrow(
             'Unsupported grant_type',
         );
+    });
+});
+
+describe('OAuthService bearer-token lookup hashing', () => {
+    it('hashes the incoming bearer with domain separation before lookup', async () => {
+        const tokenSecret = 'test-secret';
+        let capturedWhere: { token?: string } | undefined;
+        // findOne returns null so authenticateBearerToken throws right after the
+        // first lookup, after recording the where-clause it built.
+        const connection = {
+            getRepository: () => ({
+                findOne: (findOneArgs: { where?: { token?: string } }) => {
+                    capturedWhere = findOneArgs.where;
+                    return Promise.resolve(null);
+                },
+            }),
+        };
+        const requestContextService = {
+            create: () => Promise.resolve({} as any),
+        };
+        const options: McpPluginOptions = {
+            oauth: { ...DEFAULT_OAUTH_OPTIONS, issuer: ISSUER, tokenSecret },
+        };
+        const service = new OAuthService(
+            connection as any,
+            requestContextService as any,
+            undefined as any,
+            undefined as any,
+            undefined as any,
+            options,
+        );
+
+        await expect(service.authenticateBearerToken('plain-token', 'admin')).rejects.toThrow(
+            UnauthorizedException,
+        );
+
+        const hashKey = deriveHashKey(tokenSecret);
+        // Stored/looked-up value is the domain-separated 'lookup:' hash...
+        expect(capturedWhere?.token).toBe(hashToken('lookup:plain-token', hashKey));
+        // ...never the plaintext...
+        expect(capturedWhere?.token).not.toBe('plain-token');
+        // ...and distinct from the unprefixed session-token derivation.
+        expect(capturedWhere?.token).not.toBe(hashToken('plain-token', hashKey));
     });
 });

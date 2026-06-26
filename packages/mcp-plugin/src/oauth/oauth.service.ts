@@ -44,14 +44,17 @@ import { addSeconds, appendOAuthParams, randomToken, verifyPkceChallenge } from 
 const MCP_SESSION_STRATEGY = 'mcp-dedicated-session';
 
 /**
- * Implements the MCP OAuth 2.1 authorization server: Dynamic Client Registration,
- * the authorize/consent flow, the token endpoint (authorization-code and
- * refresh-token grants), revocation, and `.well-known` metadata.
+ * Implements the MCP OAuth 2.1 authorization server.
  *
- * Unlike storing a copy of the user's Vendure session token, each grant mints a
- * dedicated Vendure session whose token is `hashToken(accessToken)`. The minted
- * session's id is recorded on {@link McpSession.vendureSessionId} so it can be
- * looked up, re-minted when the backing session lapses, and deleted on revoke.
+ * Core Features:
+ * - Handles Dynamic Client Registration, authorize/consent flows, revocation, and `.well-known` metadata.
+ * - Supports authorization-code and refresh-token grants.
+ *
+ * Session & Security Mechanics:
+ * - Dedicated Sessions: Each grant mints a new, isolated Vendure session instead of copying the user's session token.
+ * - Token Hashing: Uses an unprefixed hash of the access token.
+ *   This intentionally differs from Vendure's `lookup:`-prefixed database entries so a compromised column value cannot be weaponized as a session.
+ * - Lifecycle: Tracks the session via {@link McpSession.vendureSessionId} to handle automated lookups, re-minting on expiration, and cleanup on revocation.
  */
 @Injectable()
 export class OAuthService {
@@ -146,10 +149,10 @@ export class OAuthService {
             throw new BadRequestException('redirect_uri is not registered for client');
         }
         const { resource, toolset } = this.resolveResource(input.resource);
-        const requestToken = randomToken();
+        const requestTokenPlaintext = randomToken();
         await this.connection.getRepository(ctx, McpAuthorizationRequest).save(
             new McpAuthorizationRequest({
-                requestToken,
+                requestToken: this.hashLookup(requestTokenPlaintext),
                 oauthClient: client,
                 oauthClientId: client.id,
                 redirectUri: input.redirect_uri,
@@ -166,7 +169,7 @@ export class OAuthService {
             toolset === 'admin'
                 ? new URL(this.resolvedOauth().adminConsentPath, this.resolvedOauth().issuer)
                 : new URL(this.resolvedOauth().storefrontConsentUrl);
-        consentUrl.searchParams.set('session', requestToken);
+        consentUrl.searchParams.set('session', requestTokenPlaintext);
         return consentUrl.toString();
     }
 
@@ -238,7 +241,7 @@ export class OAuthService {
         }
         const ctx = await this.createAdminCtx();
         const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
-        const entity = await tokenRepo.findOne({ where: { token } });
+        const entity = await tokenRepo.findOne({ where: { token: this.hashLookup(token) } });
         if (entity) {
             await this.deleteMintedSessionForToken(ctx, entity.id);
             await tokenRepo.remove(entity);
@@ -249,7 +252,7 @@ export class OAuthService {
     async authenticateBearerToken(token: string, apiType: McpToolset): Promise<McpAuthenticatedContext> {
         const adminCtx = await this.createAdminCtx();
         const oauthToken = await this.connection.getRepository(adminCtx, McpOauthToken).findOne({
-            where: { token, tokenType: 'access' },
+            where: { token: this.hashLookup(token), tokenType: 'access' },
             relations: ['oauthClient'],
         });
         if (!oauthToken || oauthToken.revokedAt || oauthToken.expiresAt <= new Date()) {
@@ -275,9 +278,6 @@ export class OAuthService {
             throw new UnauthorizedException('Access token is not bound to a Vendure user');
         }
 
-        // Option-D session bridge: the dedicated Vendure session's token is
-        // hashToken(accessToken). Its TTL is independent of the MCP token, so it may
-        // have lapsed even while the MCP token is still valid — in that case re-mint.
         const sessionToken = hashToken(token, this.getHashKey());
         let vendureSession = await this.sessionService.getSessionFromToken(sessionToken);
         if (!vendureSession) {
@@ -354,10 +354,10 @@ export class OAuthService {
         if (userId == null) {
             throw new UnauthorizedException('Authenticated Vendure session required');
         }
-        const code = randomToken();
+        const codePlaintext = randomToken();
         await this.connection.getRepository(ctx, McpAuthorizationCode).save(
             new McpAuthorizationCode({
-                code,
+                code: this.hashLookup(codePlaintext),
                 oauthClient: request.oauthClient,
                 oauthClientId: request.oauthClientId,
                 userId,
@@ -373,7 +373,7 @@ export class OAuthService {
         );
         return {
             redirectUrl: appendOAuthParams(request.redirectUri, {
-                code,
+                code: codePlaintext,
                 state: request.state ?? undefined,
             }),
         };
@@ -394,7 +394,10 @@ export class OAuthService {
         const { resource } = this.resolveResource(input.resource);
         const ctx = await this.createAdminCtx();
         const codeRepo = this.connection.getRepository(ctx, McpAuthorizationCode);
-        const code = await codeRepo.findOne({ where: { code: input.code }, relations: ['oauthClient'] });
+        const code = await codeRepo.findOne({
+            where: { code: this.hashLookup(input.code) },
+            relations: ['oauthClient'],
+        });
         if (!code || code.consumedAt || code.expiresAt <= new Date()) {
             throw new BadRequestException('Authorization code invalid or expired');
         }
@@ -427,7 +430,7 @@ export class OAuthService {
         const ctx = await this.createAdminCtx();
         const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
         const refreshToken = await tokenRepo.findOne({
-            where: { token: input.refresh_token, tokenType: 'refresh' },
+            where: { token: this.hashLookup(input.refresh_token), tokenType: 'refresh' },
             relations: ['oauthClient'],
         });
         if (!refreshToken || refreshToken.revokedAt || refreshToken.expiresAt <= new Date()) {
@@ -489,9 +492,11 @@ export class OAuthService {
         }
         const tokenRepo = this.connection.getRepository(ctx, McpOauthToken);
         const now = new Date();
+        const accessPlaintext = randomToken();
+        const refreshPlaintext = randomToken();
         const accessToken = await tokenRepo.save(
             new McpOauthToken({
-                token: randomToken(),
+                token: this.hashLookup(accessPlaintext),
                 tokenType: 'access',
                 oauthClient: client,
                 oauthClientId: client.id,
@@ -504,7 +509,7 @@ export class OAuthService {
         );
         const refreshToken = await tokenRepo.save(
             new McpOauthToken({
-                token: randomToken(),
+                token: this.hashLookup(refreshPlaintext),
                 tokenType: 'refresh',
                 oauthClient: client,
                 oauthClientId: client.id,
@@ -517,8 +522,8 @@ export class OAuthService {
         );
 
         // Option-D: mint one dedicated Vendure session for the grant, keyed by the
-        // hash of the access token, and record its id against the access token.
-        const mintedSession = await this.mintVendureSession(ctx, user, accessToken.token);
+        // hash of the access-token plaintext, and record its id against the access token.
+        const mintedSession = await this.mintVendureSession(ctx, user, accessPlaintext);
         await this.connection.getRepository(ctx, McpSession).save(
             new McpSession({
                 oauthToken: accessToken,
@@ -533,26 +538,28 @@ export class OAuthService {
         client.lastUsedAt = now;
         await this.connection.getRepository(ctx, McpOauthClient).save(client);
         return {
-            access_token: accessToken.token,
-            refresh_token: refreshToken.token,
+            access_token: accessPlaintext,
+            refresh_token: refreshPlaintext,
             token_type: 'Bearer',
             expires_in: this.resolvedOauth().accessTokenTtlSeconds,
         };
     }
 
     /**
-     * Mints a dedicated Vendure session whose token is `hashToken(accessToken)`.
+     * Mints a dedicated Vendure session whose token is the unprefixed hash of the
+     * access-token plaintext. This is NOT the `lookup:`-prefixed hash stored in the
+     * token column, so a stored column value can't be replayed as a session token.
      */
     private mintVendureSession(
         ctx: RequestContext,
         user: User,
-        accessToken: string,
+        accessTokenPlaintext: string,
     ): Promise<AuthenticatedSession> {
         return this.sessionService.createNewAuthenticatedSession(
             ctx,
             user,
             MCP_SESSION_STRATEGY,
-            hashToken(accessToken, this.getHashKey()),
+            hashToken(accessTokenPlaintext, this.getHashKey()),
         );
     }
 
@@ -596,7 +603,7 @@ export class OAuthService {
     ): Promise<McpAuthorizationRequest> {
         const requestCtx = ctx ?? (await this.createAdminCtx());
         const request = await this.connection.getRepository(requestCtx, McpAuthorizationRequest).findOne({
-            where: { requestToken },
+            where: { requestToken: this.hashLookup(requestToken) },
             relations: ['oauthClient'],
         });
         if (!request || request.consumedAt || request.expiresAt <= new Date()) {
@@ -686,13 +693,23 @@ export class OAuthService {
     }
 
     /**
-     * Derives (once) and returns the HMAC key used to compute Vendure session tokens
-     * from MCP access tokens for the Option-D session bridge.
+     * Derives (once) and returns the HMAC key used to hash MCP tokens — both the
+     * `lookup:`-prefixed values stored in the token/code/request columns and the
+     * unprefixed session-token derivation for the Option-D session bridge.
      */
     private getHashKey(): Buffer {
         if (!this.cachedHashKey) {
             this.cachedHashKey = deriveHashKey(this.resolvedOauth().tokenSecret);
         }
         return this.cachedHashKey;
+    }
+
+    /**
+     * Hashes a credential for storage and lookup in a token/code lookup column. The
+     * 'lookup:' prefix keeps this distinct from the session-token derivation (plain
+     * hashToken), so a stored column value can never be reused as a Vendure session token.
+     */
+    private hashLookup(value: string): string {
+        return hashToken(`lookup:${value}`, this.getHashKey());
     }
 }
