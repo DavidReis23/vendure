@@ -34,4 +34,30 @@ describe('McpPlugin OAuth routes', () => {
         expect(body).toHaveProperty('token_endpoint');
         expect(body.code_challenge_methods_supported).toEqual(['S256']);
     });
+
+    // EE-180 — OAuth POST routes must accept application/x-www-form-urlencoded
+    // bodies (RFC 6749). Without the urlencoded parser the body would arrive
+    // empty and the controller would reject with 'client_name is required'.
+    it('POST /mcp/oauth/register parses a form-urlencoded body', async () => {
+        const port = config.apiOptions.port;
+        // redirect_uris is an array, so send the key twice; with
+        // urlencoded({ extended: false }) repeated keys parse into an array.
+        const form = new URLSearchParams();
+        form.append('client_name', 'Form Client');
+        form.append('redirect_uris', 'https://example.com/cb');
+        form.append('redirect_uris', 'https://example.com/cb2');
+
+        const res = await fetch(`http://localhost:${port}/mcp/oauth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: form.toString(),
+        });
+
+        expect(res.status).toBeGreaterThanOrEqual(200);
+        expect(res.status).toBeLessThan(300);
+        const body = await res.json();
+        expect(body).toHaveProperty('client_id');
+        expect(body.client_name).toBe('Form Client');
+        expect(body.redirect_uris).toEqual(['https://example.com/cb', 'https://example.com/cb2']);
+    });
 });

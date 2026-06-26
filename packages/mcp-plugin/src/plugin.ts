@@ -1,6 +1,7 @@
-import { Type } from '@nestjs/common';
+import { OnApplicationBootstrap, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
-import { PluginCommonModule, VendurePlugin } from '@vendure/core';
+import { PluginCommonModule, ProcessContext, VendurePlugin } from '@vendure/core';
+import { urlencoded } from 'express';
 
 import { DEFAULT_OAUTH_OPTIONS, DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
 import {
@@ -49,9 +50,21 @@ import { McpPluginOptions } from './types';
         McpToolCallLog,
     ],
     compatibility: '^3.8.0',
+    configuration: config => {
+        // OAuth clients send the token/register/revoke bodies as form data, not
+        // JSON, so Vendure's default parser would receive them empty. Parse form
+        // data on the OAuth routes.
+        config.apiOptions.middleware.push({
+            handler: urlencoded({ extended: false }),
+            route: 'mcp/oauth',
+        });
+        return config;
+    },
 })
-export class McpPlugin {
+export class McpPlugin implements OnApplicationBootstrap {
     static options: McpPluginOptions;
+
+    constructor(private processContext: ProcessContext) {}
 
     static init(options: McpPluginOptions = {}): Type<McpPlugin> {
         this.options = {
@@ -59,5 +72,39 @@ export class McpPlugin {
             oauth: options.oauth && { ...DEFAULT_OAUTH_OPTIONS, ...options.oauth },
         };
         return McpPlugin;
+    }
+
+    onApplicationBootstrap(): void {
+        // Only the main server serves the OAuth routes, so only it needs this check.
+        if (!this.processContext.isServer) {
+            return;
+        }
+        const oauth = McpPlugin.options.oauth;
+        if (!oauth) {
+            return;
+        }
+
+        const isProduction = process.env.NODE_ENV === 'production';
+        if (isProduction && this.isLoopbackUrl(oauth.issuer)) {
+            throw new Error(
+                `McpPlugin: oauth.issuer cannot be a loopback URL ("${oauth.issuer ?? ''}") in production. ` +
+                    `Set it to your public Vendure server URL so clients can reach it.`,
+            );
+        }
+    }
+
+    private isLoopbackUrl(url?: string): boolean {
+        if (!url) return true;
+
+        let hostname: string;
+        try {
+            hostname = new URL(url).hostname;
+        } catch {
+            // Not a valid URL, so not a real public address either — treat as unsafe.
+            return true;
+        }
+        return (
+            hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '::1' || hostname === '[::1]'
+        );
     }
 }
