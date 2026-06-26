@@ -340,8 +340,17 @@ export class OAuthService {
     ): Promise<{ redirectUrl: string }> {
         const ctx = await this.createAdminCtx();
         const request = await this.findActiveAuthorizationRequest(requestToken, ctx);
-        request.consumedAt = new Date();
-        await this.connection.getRepository(ctx, McpAuthorizationRequest).save(request);
+        const claim = await this.connection
+            .getRepository(ctx, McpAuthorizationRequest)
+            .createQueryBuilder()
+            .update(McpAuthorizationRequest)
+            .set({ consumedAt: () => 'CURRENT_TIMESTAMP' })
+            .where('requestToken = :requestToken', { requestToken: this.hashLookup(requestToken) })
+            .andWhere('consumedAt IS NULL')
+            .execute();
+        if (!claim.affected) {
+            throw new BadRequestException('Authorization request invalid or expired');
+        }
 
         if (!approved) {
             return {
@@ -410,8 +419,16 @@ export class OAuthService {
         if (!verifyPkceChallenge(input.code_verifier, code.codeChallenge)) {
             throw new BadRequestException('Invalid PKCE verifier');
         }
-        code.consumedAt = new Date();
-        await codeRepo.save(code);
+        const claim = await codeRepo
+            .createQueryBuilder()
+            .update(McpAuthorizationCode)
+            .set({ consumedAt: () => 'CURRENT_TIMESTAMP' })
+            .where('code = :code', { code: this.hashLookup(input.code) })
+            .andWhere('consumedAt IS NULL')
+            .execute();
+        if (!claim.affected) {
+            throw new BadRequestException('Authorization code invalid or expired');
+        }
         return this.issueTokenPair(
             ctx,
             code.oauthClient,
