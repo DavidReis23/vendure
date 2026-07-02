@@ -35,13 +35,11 @@ describe('McpPlugin OAuth routes', () => {
         expect(body.code_challenge_methods_supported).toEqual(['S256']);
     });
 
-    // EE-180 — OAuth POST routes must accept application/x-www-form-urlencoded
-    // bodies (RFC 6749). Without the urlencoded parser the body would arrive
-    // empty and the controller would reject with 'client_name is required'.
+    // OAuth POST routes must accept application/x-www-form-urlencoded
+    // bodies (RFC 6749).
     it('POST /mcp/oauth/register parses a form-urlencoded body', async () => {
         const port = config.apiOptions.port;
-        // redirect_uris is an array, so send the key twice; with
-        // urlencoded({ extended: false }) repeated keys parse into an array.
+        // redirect_uris is an array, so send the key twice; repeated keys parse into an array.
         const form = new URLSearchParams();
         form.append('client_name', 'Form Client');
         form.append('redirect_uris', 'https://example.com/cb');

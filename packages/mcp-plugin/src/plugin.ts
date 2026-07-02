@@ -1,7 +1,6 @@
 import { OnApplicationBootstrap, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
 import { PluginCommonModule, ProcessContext, VendurePlugin } from '@vendure/core';
-import { urlencoded } from 'express';
 
 import { DEFAULT_OAUTH_OPTIONS, DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
 import {
@@ -50,16 +49,6 @@ import { McpPluginOptions } from './types';
         McpToolCallLog,
     ],
     compatibility: '^3.8.0',
-    configuration: config => {
-        // OAuth clients send the token/register/revoke bodies as form data, not
-        // JSON, so Vendure's default parser would receive them empty. Parse form
-        // data on the OAuth routes.
-        config.apiOptions.middleware.push({
-            handler: urlencoded({ extended: false }),
-            route: 'mcp/oauth',
-        });
-        return config;
-    },
 })
 export class McpPlugin implements OnApplicationBootstrap {
     static options: McpPluginOptions;

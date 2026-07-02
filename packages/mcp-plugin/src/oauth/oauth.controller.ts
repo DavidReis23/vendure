@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { Ctx, RequestContext } from '@vendure/core';
-import { Response } from 'express';
+import type { Response } from 'express';
 
 import { McpToolset } from '../types';
 

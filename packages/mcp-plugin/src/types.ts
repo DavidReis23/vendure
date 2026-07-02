@@ -115,13 +115,18 @@ export interface McpPluginOptions {
 
 /**
  * @description
- * Carries the Vendure request context into a tool's `execute` call.
+ * Carries the Vendure request context into a tool's `execute` call, together with the
+ * OAuth token, session, and client IP resolved for the call when the request was
+ * authenticated over OAuth.
  *
  * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
  */
 export interface McpExecutionContext {
     ctx: RequestContext;
+    token?: McpOauthToken;
+    session?: McpSession;
+    clientIp?: string;
 }
 
 /**
@@ -144,13 +149,9 @@ export type McpActorType = 'customer' | 'admin' | 'anonymous';
 
 /**
  * Result of authenticating a bearer token: the resolved `RequestContext` plus the
- * backing MCP OAuth token and session records. Consumed by the Phase 2 transport.
+ * backing MCP OAuth token and session records.
  */
-export interface McpAuthenticatedContext {
-    ctx: RequestContext;
-    token: McpOauthToken;
-    session: McpSession;
-}
+export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' | 'token' | 'session'>>;
 
 /**
  * Discriminates between access and refresh tokens in {@link McpOauthToken}.

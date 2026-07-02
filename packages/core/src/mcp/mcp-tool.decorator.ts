@@ -53,7 +53,7 @@ export interface McpToolExample {
  * @docsCategory core plugins/McpServerPlugin
  * @since 3.8.0
  */
-export interface McpToolMetadata<I = unknown, O = unknown> {
+export interface McpToolMetadata {
     /** Unique snake_case name within the toolset, e.g. "search_products". */
     name: string;
     /** Optional title. */
@@ -74,9 +74,9 @@ export interface McpToolMetadata<I = unknown, O = unknown> {
     /** True if calling the tool needs explicit confirmation, e.g. deletes. */
     requiresConfirmation?: boolean;
     /** Optional schema used to validate the tool's input. */
-    inputSchema?: McpSchema<I> | McpJsonSchema;
+    inputSchema?: McpSchema | McpJsonSchema;
     /** Optional schema describing the tool's output. */
-    outputSchema?: McpSchema<O> | McpJsonSchema;
+    outputSchema?: McpSchema | McpJsonSchema;
     /** Optional example calls shown to the agent. */
     examples?: McpToolExample[];
 }
@@ -113,7 +113,6 @@ export interface McpToolHandler<I = unknown, O = unknown> {
  *     description: 'Search the product catalog',
  *     toolset: 'shop',
  *     behavior: 'readonly',
- *     readOnly: true,
  *     permissions: [Permission.Public],
  * })
  * export class SearchProductsTool implements McpToolHandler {

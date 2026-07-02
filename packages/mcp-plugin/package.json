@@ -25,6 +25,7 @@
         "access": "public"
     },
     "devDependencies": {
+        "@types/express": "^5.0.1",
         "@vendure/common": "3.6.4",
         "@vendure/core": "3.6.4"
     }
