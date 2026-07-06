@@ -2418,10 +2418,11 @@ export class OrderService {
 
     /**
      * @description
-     * Recalculates the given active Order's prices, promotions, taxes and shipping if the configured
-     * {@link OrderRecalculationStrategy} reports it as stale. Only Orders in the `AddingItems` state
-     * are eligible. No-ops (returning the Order unchanged) otherwise. Invoked on the active-order
-     * read path.
+     * Recalculates the given active Order's prices, promotions and taxes if the configured
+     * {@link OrderRecalculationStrategy} reports it as stale. Shipping (method eligibility, rates and
+     * shipping promotions) is deliberately NOT re-evaluated on this read path — that happens when the
+     * Order transitions to `ArrangingPayment`. Only Orders in the `AddingItems` state are eligible.
+     * No-ops (returning the Order unchanged) otherwise. Invoked on the active-order read path.
      *
      * @since 3.8.0
      */
