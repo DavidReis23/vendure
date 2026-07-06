@@ -108,7 +108,7 @@ import { RefundStateTransitionEvent } from '../../event-bus/events/refund-state-
 import { CustomFieldRelationService } from '../helpers/custom-field-relation/custom-field-relation.service';
 import { FulfillmentState } from '../helpers/fulfillment-state-machine/fulfillment-state';
 import { ListQueryBuilder } from '../helpers/list-query-builder/list-query-builder';
-import { OrderCalculator } from '../helpers/order-calculator/order-calculator';
+import { ApplyPriceAdjustmentsOptions, OrderCalculator } from '../helpers/order-calculator/order-calculator';
 import { OrderMerger } from '../helpers/order-merger/order-merger';
 import { OrderModifier } from '../helpers/order-modifier/order-modifier';
 import { OrderState } from '../helpers/order-state-machine/order-state';
@@ -2313,7 +2313,7 @@ export class OrderService {
         order: Order,
         updatedOrderLines?: OrderLine[],
         relations?: RelationPaths<Order>,
-        options?: { recalculateShipping?: boolean },
+        options?: ApplyPriceAdjustmentsOptions,
     ): Promise<Order> {
         const allPromotions = await this.promotionService.getActivePromotionsInChannel(ctx);
         const activePromotionsPre = await this.promotionService.getActivePromotionsOnOrder(ctx, order.id);
@@ -2430,17 +2430,44 @@ export class OrderService {
             return order;
         }
         const { orderRecalculationStrategy } = this.configService.orderOptions;
-        if (!orderRecalculationStrategy) {
-            return order;
-        }
         const stale = await orderRecalculationStrategy.shouldRecalculate(ctx, order);
         if (!stale) {
             return order;
         }
-        // Ensure the relations needed for recalculation are loaded.
-        const fullOrder = await this.getOrderOrThrow(ctx, order.id);
-        return this.applyPriceAdjustments(ctx, fullOrder, fullOrder.lines, undefined, {
-            recalculateShipping: false,
+        return this.connection.withTransaction(ctx, async txCtx => {
+            // Acquire a pessimistic write lock on the Order row to serialize concurrent reads.
+            // On SQLite the lock is not supported; SQLite serializes writes at the engine level.
+            let lockedOrder: Order | null = null;
+            try {
+                lockedOrder = await this.connection
+                    .getRepository(txCtx, Order)
+                    .createQueryBuilder('order')
+                    .setLock('pessimistic_write')
+                    .where('order.id = :id', { id: order.id })
+                    .getOne();
+            } catch (e) {
+                if (!(e instanceof LockNotSupportedOnGivenDriverError)) {
+                    throw e;
+                }
+                // Lock not supported (e.g. SQLite) — continue without it
+                lockedOrder = await this.connection.getRepository(txCtx, Order).findOne({
+                    where: { id: order.id },
+                });
+            }
+            if (!lockedOrder) {
+                return order;
+            }
+            // Double-checked locking: re-evaluate staleness after acquiring the lock.
+            // Another concurrent request may have already recalculated the order.
+            const stillStale = await orderRecalculationStrategy.shouldRecalculate(ctx, lockedOrder);
+            if (!stillStale) {
+                return assertFound(this.findOne(txCtx, order.id));
+            }
+            // Load full relations required for recalculation.
+            const fullOrder = await this.getOrderOrThrow(txCtx, order.id);
+            return this.applyPriceAdjustments(txCtx, fullOrder, fullOrder.lines, undefined, {
+                recalculateShipping: false,
+            });
         });
     }
 
