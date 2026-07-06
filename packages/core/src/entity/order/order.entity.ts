@@ -91,6 +91,17 @@ export class Order extends VendureEntity implements ChannelAware, HasCustomField
     @Index()
     orderPlacedAt?: Date;
 
+    /**
+     * @description
+     * The date & time that the Order's prices, promotions and shipping were last recalculated via
+     * {@link OrderService.applyPriceAdjustments}. Used by the configured {@link OrderRecalculationStrategy}
+     * to determine whether an active Order is stale and should be recalculated on read.
+     *
+     * @since 3.8.0
+     */
+    @Column({ nullable: true })
+    pricingUpdatedAt?: Date;
+
     @Index()
     @ManyToOne(type => Customer, customer => customer.orders)
     customer?: Customer;
