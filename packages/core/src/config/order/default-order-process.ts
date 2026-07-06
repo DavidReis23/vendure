@@ -342,9 +342,6 @@ export function configureDefaultOrderProcess(options: DefaultOrderProcessOptions
                     if (hasIneligible) {
                         return 'message.cannot-transition-to-payment-with-ineligible-shipping-method';
                     }
-                    // All chosen shipping methods are still eligible: refresh prices, promotions and
-                    // taxes to current values before payment.
-                    await orderService.applyPriceAdjustments(ctx, order, order.lines);
                 }
                 if (options.arrangingPaymentRequiresStock !== false) {
                     const variantsWithInsufficientSaleableStock: ProductVariant[] = [];
@@ -367,6 +364,10 @@ export function configureDefaultOrderProcess(options: DefaultOrderProcessOptions
                             },
                         );
                     }
+                }
+                // All refusal guards passed — refresh prices, promotions and taxes before payment.
+                if (options.arrangingPaymentRequiresShipping !== false && order.shippingLines?.length) {
+                    await orderService.applyPriceAdjustments(ctx, order, order.lines);
                 }
             }
             if (options.checkPaymentsCoverTotal !== false) {
