@@ -79,7 +79,9 @@ new TtlOrderRecalculationStrategy({ ttlMs: 5 * 60 * 1000 })
 
 ### 3. `Order.pricingUpdatedAt` column (new, nullable)
 
-- New nullable `Date` column on the `Order` entity + a TypeORM migration.
+- New nullable `Date` column on the `Order` entity. **No migration file** — `packages/core` ships
+  no migrations; consumers regenerate via `generateMigration`. E2E seed caches
+  (`packages/core/e2e/__data__/`) must be deleted so the schema is re-synced.
 - Set to the current time inside `OrderService.applyPriceAdjustments` (the single recalc entry
   point) so every recalc — mutation-driven or read-time — refreshes it.
 - Rationale: cannot reuse `Order.updatedAt`, which bumps on unrelated saves (address, custom
@@ -102,31 +104,48 @@ new TtlOrderRecalculationStrategy({ ttlMs: 5 * 60 * 1000 })
 
 ### 5. Checkout gate
 
-In `default-order-process.ts` `onTransitionStart`, for `toState === 'ArrangingPayment'`:
+In `default-order-process.ts` `onTransitionStart`, for `toState === 'ArrangingPayment'`, added
+after the existing shipping-line-exists check — **check-then-recalc** order:
 
-1. Capture current shipping method ids from `order.shippingLines`.
-2. Run `applyPriceAdjustments(ctx, order, order.lines)` — always, regardless of the read-time
-   strategy (this is the payment-critical guarantee).
-3. After recalc, if any previously-chosen shipping method was **swapped or removed** by
-   `OrderCalculator` (i.e. it became ineligible), refuse the transition by returning a typed error
-   (see Error handling). Price/promotion changes are adopted silently per
-   `ChangedPriceHandlingStrategy` (existing behavior; this is desired — checkout should apply
-   current prices).
+1. **Eligibility check (read-only, no writes).** Call
+   `orderService.getEligibleShippingMethods(ctx, order.id)` and verify every
+   `order.shippingLines[].shippingMethodId` is in the eligible set. If any chosen method is no
+   longer eligible → **refuse** the transition by returning the translation key
+   `message.cannot-transition-to-payment-with-ineligible-shipping-method`. No recalc has run, so
+   nothing is persisted.
+2. **Recalc (only once eligibility passes).** Call `orderService.applyPriceAdjustments(ctx, order,
+   order.lines)` to refresh prices, taxes and promotions to current values. Because every chosen
+   shipping method is already eligible, `OrderCalculator` performs no shipping swap; the persisted
+   changes are the desired current-price adjustments.
 
-The order process obtains `OrderService` via `injector.get(...)` in `init` (existing pattern);
-watch for circular-dependency init order.
+`OrderService` is obtained in the process's `init(injector)` via the existing lazy-import pattern
+(mirrors `productVariantService`, `stockLevelService`, …), avoiding the DefaultConfig circular
+dependency.
+
+**Why check-then-recalc and not recalc-then-check:** `transitionToState` catches a guard failure
+and *returns* `OrderStateTransitionError` from inside `withTransaction` (it does not re-throw), so
+the transaction **commits**. Recalculating first and then refusing would persist the recalc
+(including any shipping swap) while returning an error — an inconsistent state. Checking first
+guarantees nothing is written on refusal.
 
 ### Error handling
 
-New typed shop-API error `ShippingMethodIneligibleError` (ErrorResult), added to the
-`TransitionOrderToStateResult` union (and wherever the `ArrangingPayment` transition surfaces).
-Returned when the recalc at checkout finds the chosen shipping method(s) ineligible. Mirrors the
-existing `CouponRemovedDuringCheckoutError` precedent: refuse rather than silently change the
-amount the customer pays. Storefront must re-select a shipping method.
+Refusal surfaces through the **existing** `OrderStateTransitionError` mechanism: the guard returns a
+translation-key string which `transitionToState` wraps into
+`OrderStateTransitionError.transitionError`. This matches how every other `ArrangingPayment` guard
+already reports failure (empty order, no customer, no shipping line, insufficient stock).
 
+- **No new typed GraphQL error / no codegen.** A dedicated `ShippingMethodIneligibleError` was
+  considered but rejected: the order-process guard API can only return strings (typed
+  `ErrorResult`s would require moving the recalc out of the process into `OrderService` plus a
+  schema + codegen change), and it would be inconsistent with the sibling checkout guards. Same
+  user-facing outcome (transition refused, descriptive message), less surface area.
 - We deliberately do **not** silently swap to the cheapest eligible method (rejected: violates the
   ticket's "notify the customer immediately" requirement, inconsistent with the coupon precedent,
   and can charge a higher amount without consent).
+- A new translation key `message.cannot-transition-to-payment-with-ineligible-shipping-method` is
+  added to the i18n message files alongside the existing
+  `message.cannot-transition-to-payment-*` keys.
 
 ### Backward compatibility
 
@@ -136,7 +155,8 @@ amount the customer pays. Storefront must re-select a shipping method.
   shipping method now errors instead of proceeding. This is the intended revenue-protection fix and
   must be called out in the changelog / migration notes. (Open question O2: should the checkout
   gate itself be feature-flaggable? Current recommendation: no — it is the core fix.)
-- New nullable column → additive migration, no data backfill required (`null` treated as stale).
+- New nullable column → additive schema change, no data backfill required (`null` treated as
+  stale). Consumers pick it up via their own generated migration.
 
 ## Data flow
 
@@ -150,9 +170,11 @@ Shop reads activeOrder
 
 Shop transitionToState → ArrangingPayment
   → default-order-process onTransitionStart
-    → applyPriceAdjustments(order, order.lines)  [always]
-    → chosen shipping now ineligible? → ShippingMethodIneligibleError (transaction rolls back)
-    → else proceed
+    → getEligibleShippingMethods; chosen method ineligible?
+        → yes: return 'message.cannot-transition-to-payment-with-ineligible-shipping-method'
+               → OrderStateTransitionError (nothing persisted)
+        → no:  applyPriceAdjustments(order, order.lines)  [refresh current prices/promos]
+               → proceed
 ```
 
 ## Testing
@@ -160,7 +182,8 @@ Shop transitionToState → ArrangingPayment
 - **e2e** (`packages/core/e2e/`): stale-cart-recalculation suite —
   - promotion deactivated / threshold changed after add → read-time recalc drops it (TTL elapsed).
   - variant price changed after add → read-time recalc adopts new price.
-  - shipping method made ineligible after add → checkout returns `ShippingMethodIneligibleError`.
+  - shipping method made ineligible after add → checkout returns `OrderStateTransitionError` whose
+    `transitionError` is the ineligible-shipping message; order NOT transitioned, no recalc persisted.
   - default (no-op strategy) → totals unchanged on read (backward-compat guard).
   - checkout with still-eligible everything → transitions normally.
 - **unit**: `TtlOrderRecalculationStrategy.shouldRecalculate` boundary (null / within TTL / past
