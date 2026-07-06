@@ -2388,6 +2388,7 @@ export class OrderService {
         // a race condition where changing one or the other in parallel can
         // overwrite the other's changes. The other omissions prevent the save
         // function from doing more work than necessary.
+        updatedOrder.pricingUpdatedAt = new Date();
         await this.connection
             .getRepository(ctx, Order)
             .save(
@@ -2411,6 +2412,32 @@ export class OrderService {
         await this.connection.getRepository(ctx, ShippingLine).save(order.shippingLines, { reload: false });
 
         return assertFound(this.findOne(ctx, order.id, relations));
+    }
+
+    /**
+     * @description
+     * Recalculates the given active Order's prices, promotions, taxes and shipping if the configured
+     * {@link OrderRecalculationStrategy} reports it as stale. Only Orders in the `AddingItems` state
+     * are eligible. No-ops (returning the Order unchanged) otherwise. Invoked on the active-order
+     * read path.
+     *
+     * @since 3.8.0
+     */
+    async applyPriceAdjustmentsIfStale(ctx: RequestContext, order: Order): Promise<Order> {
+        if (!order.active || order.state !== 'AddingItems') {
+            return order;
+        }
+        const { orderRecalculationStrategy } = this.configService.orderOptions;
+        if (!orderRecalculationStrategy) {
+            return order;
+        }
+        const stale = await orderRecalculationStrategy.shouldRecalculate(ctx, order);
+        if (!stale) {
+            return order;
+        }
+        // Ensure the relations needed for recalculation are loaded.
+        const fullOrder = await this.getOrderOrThrow(ctx, order.id);
+        return this.applyPriceAdjustments(ctx, fullOrder, fullOrder.lines);
     }
 
     /**
