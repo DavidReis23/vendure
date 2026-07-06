@@ -8,7 +8,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
 import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
-import { McpOauthToken } from '../src/entities/mcp-oauth-token.entity';
+import { McpSession } from '../src/entities/mcp-session.entity';
 import { deriveHashKey, hashToken } from '../src/oauth/crypto';
 import { OAuthService } from '../src/oauth/oauth.service';
 import { McpPlugin } from '../src/plugin';
@@ -353,9 +353,9 @@ describe('McpPlugin OAuth edge & security cases', () => {
         const flow = await runAdminFlow();
 
         // Mutate the persisted resource to a different (but well-formed) value.
-        const repo = connection.getRepository(ctx, McpOauthToken);
+        const repo = connection.getRepository(ctx, McpSession);
         const stored = await repo.findOneOrFail({
-            where: { token: lookupHash(flow.access_token), tokenType: 'access' },
+            where: { accessTokenHash: lookupHash(flow.access_token) },
         });
         stored.resource = `${ISSUER}/mcp/shop`;
         await repo.save(stored);
@@ -440,9 +440,9 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
         const authenticated = await oauth.authenticateBearerToken(flow.access_token, 'shop');
         expect(authenticated.ctx.apiType).toBe('shop');
-        expect(authenticated.token.userType).toBe('customer');
-        expect(authenticated.ctx.activeUserId).toBe(authenticated.token.userId);
-        expect(authenticated.token.userId).toBeTruthy();
+        expect(authenticated.session.userType).toBe('customer');
+        expect(authenticated.ctx.activeUserId).toBe(authenticated.session.userId);
+        expect(authenticated.session.userId).toBeTruthy();
     });
 
     // --- helpers that stop before consent ---

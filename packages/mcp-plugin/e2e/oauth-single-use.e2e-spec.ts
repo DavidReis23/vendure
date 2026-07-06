@@ -1,4 +1,4 @@
-import { mergeConfig, RequestContextService, TransactionalConnection, User } from '@vendure/core';
+import { mergeConfig, RequestContextService, Session, TransactionalConnection, User } from '@vendure/core';
 import { createTestEnvironment } from '@vendure/testing';
 import crypto from 'crypto';
 import path from 'path';
@@ -8,7 +8,6 @@ import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
 import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
 import { McpOauthClient } from '../src/entities/mcp-oauth-client.entity';
-import { McpOauthToken } from '../src/entities/mcp-oauth-token.entity';
 import { McpSession } from '../src/entities/mcp-session.entity';
 import { deriveHashKey, hashToken } from '../src/oauth/crypto';
 import { OAuthService } from '../src/oauth/oauth.service';
@@ -106,10 +105,10 @@ describe('McpPlugin OAuth single-use code', () => {
         expect(rejected[0].reason.message).toBe('Authorization code invalid or expired');
     });
 
-    // T12 — refresh-token rotation must be atomic and self-cleaning: rotating revokes the
-    // refresh token, hard-deletes the prior access token and its minted McpSession, and a
-    // replay of the original refresh token is rejected.
-    it('rotates a refresh token atomically and cleans up the prior grant', async () => {
+    // T12 — refresh-token rotation must be atomic and in place: the same grant row swaps
+    // to the new token hashes, remembers the rotated-away refresh hash, and a replay of
+    // the original refresh token is rejected.
+    it('rotates a refresh token atomically in place on the same grant row', async () => {
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
         const oauth = server.app.get(OAuthService);
@@ -169,17 +168,14 @@ describe('McpPlugin OAuth single-use code', () => {
             resource: RESOURCE,
         });
 
-        const priorAccess = await connection.getRepository(ctx, McpOauthToken).findOne({
-            where: { token: lookupHash(first.access_token), tokenType: 'access' },
+        const priorGrant = await connection.getRepository(ctx, McpSession).findOne({
+            where: { accessTokenHash: lookupHash(first.access_token) },
         });
-        if (!priorAccess) {
-            throw new Error('Expected the issued access token to be persisted');
+        if (!priorGrant) {
+            throw new Error('Expected the issued grant to be persisted');
         }
-        const priorAccessId = priorAccess.id;
-        const priorSession = await connection
-            .getRepository(ctx, McpSession)
-            .findOne({ where: { oauthTokenId: priorAccessId } });
-        expect(priorSession).toBeTruthy();
+        const grantId = priorGrant.id;
+        const priorVendureSessionId = priorGrant.vendureSessionId;
 
         const second = await oauth.exchangeToken({
             grant_type: 'refresh_token',
@@ -189,31 +185,138 @@ describe('McpPlugin OAuth single-use code', () => {
         });
         expect(second.access_token).not.toBe(first.access_token);
 
-        // The original refresh token row is now revoked.
-        const rotatedRefresh = await connection.getRepository(ctx, McpOauthToken).findOne({
-            where: { token: lookupHash(first.refresh_token), tokenType: 'refresh' },
+        // Rotation happened in place: the same grant row carries the new hashes and
+        // remembers the rotated-away refresh hash for reuse detection.
+        const rotatedGrant = await connection.getRepository(ctx, McpSession).findOne({
+            where: { accessTokenHash: lookupHash(second.access_token) },
         });
-        if (!rotatedRefresh) {
-            throw new Error('Expected the original refresh token row to still exist');
+        if (!rotatedGrant) {
+            throw new Error('Expected the rotated grant row to exist');
         }
-        expect(rotatedRefresh.revokedAt).toBeTruthy();
+        expect(rotatedGrant.id).toBe(grantId);
+        expect(rotatedGrant.refreshTokenHash).toBe(lookupHash(second.refresh_token));
+        expect(rotatedGrant.previousRefreshTokenHash).toBe(lookupHash(first.refresh_token));
+        expect(rotatedGrant.revokedAt).toBeNull();
 
-        // The prior access token is hard-deleted, and its minted McpSession is gone with it.
-        const goneAccess = await connection
-            .getRepository(ctx, McpOauthToken)
-            .findOne({ where: { id: priorAccessId } });
-        expect(goneAccess).toBeNull();
-        const goneSession = await connection
-            .getRepository(ctx, McpSession)
-            .findOne({ where: { oauthTokenId: priorAccessId } });
-        expect(goneSession).toBeNull();
+        // The prior access token no longer resolves, and the minted Vendure session
+        // was re-keyed to the new access token.
+        const staleAccess = await connection.getRepository(ctx, McpSession).findOne({
+            where: { accessTokenHash: lookupHash(first.access_token) },
+        });
+        expect(staleAccess).toBeNull();
+        expect(rotatedGrant.vendureSessionId).not.toBe(priorVendureSessionId);
 
-        // Replaying the original refresh token is rejected.
+        // Replaying the original refresh token is rejected (and, per OAuth 2.1 reuse
+        // detection, revokes the grant — covered by the dedicated test below).
         await expect(
             oauth.exchangeToken({
                 grant_type: 'refresh_token',
                 refresh_token: first.refresh_token,
                 client_id: 'rotation-client',
+                resource: RESOURCE,
+            }),
+        ).rejects.toThrow('Refresh token invalid or expired');
+    });
+
+    // OAuth 2.1 refresh-token reuse detection — a rotated-away refresh token presented
+    // again means it leaked, so the whole grant is revoked, killing the new tokens too.
+    it('revokes the whole grant when a rotated refresh token is reused', async () => {
+        const connection = server.app.get(TransactionalConnection);
+        const requestContextService = server.app.get(RequestContextService);
+        const oauth = server.app.get(OAuthService);
+        const ctx = await requestContextService.create({ apiType: 'admin' });
+        const hashKey = deriveHashKey(TOKEN_SECRET);
+        const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
+
+        const superadmin = await connection
+            .getRepository(ctx, User)
+            .findOne({ where: { identifier: 'superadmin' } });
+        if (!superadmin) {
+            throw new Error('Expected a seeded superadmin user');
+        }
+
+        const client = await connection.getRepository(ctx, McpOauthClient).save(
+            new McpOauthClient({
+                clientId: 'reuse-client',
+                clientName: 'Reuse Client',
+                clientUri: null,
+                logoUri: null,
+                redirectUris: ['https://example.com/cb'],
+                grantTypes: ['authorization_code', 'refresh_token'],
+                tokenEndpointAuthMethod: 'none',
+                lastUsedAt: null,
+            }),
+        );
+
+        const CODE_PLAINTEXT = 'reuse-code';
+        const verifier = 'c'.repeat(64);
+        const codeChallenge = crypto.createHash('sha256').update(verifier).digest('base64url');
+
+        await connection.getRepository(ctx, McpAuthorizationCode).save(
+            new McpAuthorizationCode({
+                code: lookupHash(CODE_PLAINTEXT),
+                oauthClient: client,
+                oauthClientId: client.id,
+                userId: superadmin.id,
+                userType: 'admin',
+                redirectUri: 'https://example.com/cb',
+                resource: RESOURCE,
+                codeChallenge,
+                codeChallengeMethod: 'S256',
+                channelId: null,
+                expiresAt: new Date(Date.now() + 5 * 60 * 1000),
+                consumedAt: null,
+            }),
+        );
+
+        const first = await oauth.exchangeToken({
+            grant_type: 'authorization_code',
+            code: CODE_PLAINTEXT,
+            client_id: 'reuse-client',
+            redirect_uri: 'https://example.com/cb',
+            code_verifier: verifier,
+            resource: RESOURCE,
+        });
+        const second = await oauth.exchangeToken({
+            grant_type: 'refresh_token',
+            refresh_token: first.refresh_token,
+            client_id: 'reuse-client',
+            resource: RESOURCE,
+        });
+
+        // Reusing the rotated-away refresh token is rejected...
+        await expect(
+            oauth.exchangeToken({
+                grant_type: 'refresh_token',
+                refresh_token: first.refresh_token,
+                client_id: 'reuse-client',
+                resource: RESOURCE,
+            }),
+        ).rejects.toThrow('Refresh token invalid or expired');
+
+        // ...and revokes the whole grant: the row is marked revoked and its minted
+        // Vendure session is deleted.
+        const grant = await connection.getRepository(ctx, McpSession).findOne({
+            where: { accessTokenHash: lookupHash(second.access_token) },
+        });
+        if (!grant) {
+            throw new Error('Expected the grant row to survive revocation');
+        }
+        expect(grant.revokedAt).toBeTruthy();
+        const mintedSession = await connection
+            .getRepository(ctx, Session)
+            .findOne({ where: { id: grant.vendureSessionId } });
+        expect(mintedSession).toBeNull();
+
+        // The rotated-to tokens are dead as well.
+        await expect(oauth.authenticateBearerToken(second.access_token, 'admin')).rejects.toThrow(
+            /invalid or expired/i,
+        );
+        await expect(
+            oauth.exchangeToken({
+                grant_type: 'refresh_token',
+                refresh_token: second.refresh_token,
+                client_id: 'reuse-client',
                 resource: RESOURCE,
             }),
         ).rejects.toThrow('Refresh token invalid or expired');

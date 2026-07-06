@@ -7,7 +7,6 @@ import {
     McpAuthorizationCode,
     McpAuthorizationRequest,
     McpOauthClient,
-    McpOauthToken,
     McpSession,
     McpToolCallLog,
 } from './entities';
@@ -40,14 +39,7 @@ import { McpPluginOptions } from './types';
     imports: [PluginCommonModule, DiscoveryModule],
     controllers: [McpOAuthController],
     providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, OAuthService],
-    entities: [
-        McpOauthClient,
-        McpOauthToken,
-        McpAuthorizationCode,
-        McpAuthorizationRequest,
-        McpSession,
-        McpToolCallLog,
-    ],
+    entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpSession, McpToolCallLog],
     compatibility: '^3.8.0',
 })
 export class McpPlugin implements OnApplicationBootstrap {

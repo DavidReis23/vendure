@@ -12,7 +12,6 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
-import { McpOauthToken } from '../src/entities/mcp-oauth-token.entity';
 import { McpSession } from '../src/entities/mcp-session.entity';
 import { deriveHashKey, hashToken } from '../src/oauth/crypto';
 import { OAuthService } from '../src/oauth/oauth.service';
@@ -87,7 +86,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             throw new Error('Expected a seeded superadmin user');
         }
         expect(authenticated.ctx.activeUserId).toBe(superadmin.id);
-        expect(authenticated.token.userId).toBe(superadmin.id);
+        expect(authenticated.session.userId).toBe(superadmin.id);
     });
 
     it('stores the access token hashed, never in plaintext', async () => {
@@ -97,16 +96,16 @@ describe('McpPlugin OAuth end-to-end flow', () => {
 
         const { access_token } = await runFlow();
 
-        // The stored row is keyed by the lookup hash, not the plaintext.
+        // The stored grant row is keyed by the lookup hash, not the plaintext.
         const stored = await connection
-            .getRepository(ctx, McpOauthToken)
-            .findOne({ where: { token: lookupHash(access_token) } });
+            .getRepository(ctx, McpSession)
+            .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         expect(stored).toBeTruthy();
 
         // The plaintext token must never appear in the token column.
         const plaintextRow = await connection
-            .getRepository(ctx, McpOauthToken)
-            .findOne({ where: { token: access_token } });
+            .getRepository(ctx, McpSession)
+            .findOne({ where: { accessTokenHash: access_token } });
         expect(plaintextRow).toBeNull();
     });
 
@@ -162,17 +161,11 @@ describe('McpPlugin OAuth end-to-end flow', () => {
 
         const { access_token } = await runFlow();
 
-        // Find the McpSession backing this grant via its access token row, and note which
-        // Vendure session currently backs it.
-        const accessRow = await connection
-            .getRepository(ctx, McpOauthToken)
-            .findOne({ where: { token: lookupHash(access_token), tokenType: 'access' } });
-        if (!accessRow) {
-            throw new Error('Expected the issued access token to be persisted');
-        }
+        // Find the grant row backing this access token, and note which Vendure
+        // session currently backs it.
         const mcpSessionBefore = await connection
             .getRepository(ctx, McpSession)
-            .findOne({ where: { oauthTokenId: accessRow.id } });
+            .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionBefore) {
             throw new Error('Expected a minted McpSession for the access token');
         }
@@ -196,11 +189,11 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         // Re-authenticating succeeds by re-minting a new session, and the McpSession now
         // points at a different Vendure session id.
         const reauthenticated = await oauth.authenticateBearerToken(access_token, 'admin');
-        expect(reauthenticated.ctx.activeUserId).toBe(accessRow.userId);
+        expect(reauthenticated.ctx.activeUserId).toBe(mcpSessionBefore.userId);
 
         const mcpSessionAfter = await connection
             .getRepository(ctx, McpSession)
-            .findOne({ where: { oauthTokenId: accessRow.id } });
+            .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionAfter) {
             throw new Error('Expected the McpSession to persist after re-mint');
         }

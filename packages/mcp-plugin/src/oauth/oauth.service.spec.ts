@@ -109,12 +109,12 @@ describe('OAuthService PKCE / grant gating', () => {
 describe('OAuthService bearer-token lookup hashing', () => {
     it('hashes the incoming bearer with domain separation before lookup', async () => {
         const tokenSecret = 'test-secret';
-        let capturedWhere: { token?: string } | undefined;
+        let capturedWhere: { accessTokenHash?: string } | undefined;
         // findOne returns null so authenticateBearerToken throws right after the
         // first lookup, after recording the where-clause it built.
         const connection = {
             getRepository: () => ({
-                findOne: (findOneArgs: { where?: { token?: string } }) => {
+                findOne: (findOneArgs: { where?: { accessTokenHash?: string } }) => {
                     capturedWhere = findOneArgs.where;
                     return Promise.resolve(null);
                 },
@@ -141,10 +141,10 @@ describe('OAuthService bearer-token lookup hashing', () => {
 
         const hashKey = deriveHashKey(tokenSecret);
         // Stored/looked-up value is the domain-separated 'lookup:' hash...
-        expect(capturedWhere?.token).toBe(hashToken('lookup:plain-token', hashKey));
+        expect(capturedWhere?.accessTokenHash).toBe(hashToken('lookup:plain-token', hashKey));
         // ...never the plaintext...
-        expect(capturedWhere?.token).not.toBe('plain-token');
+        expect(capturedWhere?.accessTokenHash).not.toBe('plain-token');
         // ...and distinct from the unprefixed session-token derivation.
-        expect(capturedWhere?.token).not.toBe(hashToken('plain-token', hashKey));
+        expect(capturedWhere?.accessTokenHash).not.toBe(hashToken('plain-token', hashKey));
     });
 });

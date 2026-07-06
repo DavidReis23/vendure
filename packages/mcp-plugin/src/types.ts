@@ -1,5 +1,4 @@
 import { McpToolHandler, RequestContext } from '@vendure/core';
-import type { McpOauthToken } from './entities/mcp-oauth-token.entity';
 import type { McpSession } from './entities/mcp-session.entity';
 
 /**
@@ -116,7 +115,7 @@ export interface McpPluginOptions {
 /**
  * @description
  * Carries the Vendure request context into a tool's `execute` call, together with the
- * OAuth token, session, and client IP resolved for the call when the request was
+ * MCP grant session and client IP resolved for the call when the request was
  * authenticated over OAuth.
  *
  * @docsCategory core plugins/McpPlugin
@@ -124,7 +123,6 @@ export interface McpPluginOptions {
  */
 export interface McpExecutionContext {
     ctx: RequestContext;
-    token?: McpOauthToken;
     session?: McpSession;
     clientIp?: string;
 }
@@ -149,14 +147,9 @@ export type McpActorType = 'customer' | 'admin' | 'anonymous';
 
 /**
  * Result of authenticating a bearer token: the resolved `RequestContext` plus the
- * backing MCP OAuth token and session records.
+ * backing MCP grant session record.
  */
-export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' | 'token' | 'session'>>;
-
-/**
- * Discriminates between access and refresh tokens in {@link McpOauthToken}.
- */
-export type McpOauthTokenType = 'access' | 'refresh';
+export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' | 'session'>>;
 
 // Re-exported from core so plugin entities can import McpToolset from '../types'
 // without creating a duplicate declaration.
