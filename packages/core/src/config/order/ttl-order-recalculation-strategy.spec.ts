@@ -23,4 +23,9 @@ describe('TtlOrderRecalculationStrategy', () => {
     it('is stale past the TTL window', () => {
         expect(strategy.shouldRecalculate(ctx, orderWith(new Date(Date.now() - 120_000)))).toBe(true);
     });
+
+    it('is stale at exactly the TTL boundary (>= comparison)', () => {
+        // At exactly Date.now() - ttlMs the order is considered stale (>= comparison).
+        expect(strategy.shouldRecalculate(ctx, orderWith(new Date(Date.now() - 60_000)))).toBe(true);
+    });
 });

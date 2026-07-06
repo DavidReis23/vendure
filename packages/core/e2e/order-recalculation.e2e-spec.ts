@@ -79,8 +79,11 @@ describe('OrderRecalculationStrategy', () => {
         });
 
         // Reading the active order triggers a recalculation (ttlMs: 0 => always stale).
+        // New price = originalTotal * 2 (base price). Tax 20% applied on top.
+        // expectedTotal = originalTotal * 2 * 1.2 = originalTotal * 2.4
         const { activeOrder } = await shopClient.query(getActiveOrderWithPriceDataDocument);
-        expect(activeOrder!.totalWithTax).not.toBe(originalTotal);
+        const expectedTotal = Math.round(originalTotal * 2 * 1.2);
+        expect(activeOrder!.totalWithTax).toBe(expectedTotal);
     });
 
     // #3510 — promotion discount is removed when promotion is deactivated and order is read with TTL(0) strategy
@@ -127,9 +130,10 @@ describe('OrderRecalculationStrategy', () => {
         });
 
         // Reading the active order with TTL(0) triggers recalculation — discount should be gone.
+        // expectedUndiscountedTotal = discountedTotal * 2 (50% off means discounted = half of full price)
         const { activeOrder } = await shopClient.query(getActiveOrderDocument);
         expect(activeOrder!.discounts.length).toBe(0);
-        expect(activeOrder!.totalWithTax).toBeGreaterThan(discountedTotal);
+        expect(activeOrder!.totalWithTax).toBe(discountedTotal * 2);
 
         // Cleanup
         await adminClient.query(deletePromotionDocument, { id: promotion.id });
@@ -357,6 +361,11 @@ describe('OrderRecalculationStrategy — checkout gate', () => {
         expect((transitionOrderToState as any).state).toBe('ArrangingPayment');
 
         const { activeOrder } = await shopClient.query(getActiveOrderWithPriceDataDocument);
-        expect(activeOrder!.totalWithTax).not.toBe(originalTotal);
+        // New list price: 99999 cents. Tax 20% → item totalWithTax = Math.round(99999 * 1.2) = 119999.
+        // Shipping rate: 500 cents, taxRate: 0 → shippingWithTax = 500.
+        // Expected total = 119999 + 500 = 120499.
+        const expectedNewItemWithTax = Math.round(99999 * 1.2);
+        const expectedShippingWithTax = 500;
+        expect(activeOrder!.totalWithTax).toBe(expectedNewItemWithTax + expectedShippingWithTax);
     });
 });
