@@ -23,6 +23,18 @@ import { prorate } from './prorate';
 
 /**
  * @description
+ * Options passed to {@link OrderService.applyPriceAdjustments} and {@link OrderCalculator.applyPriceAdjustments}.
+ *
+ * @docsCategory orders
+ * @docsPage OrderRecalculationStrategy
+ * @since 3.8.0
+ */
+export interface ApplyPriceAdjustmentsOptions {
+    recalculateShipping?: boolean;
+}
+
+/**
+ * @description
  * This helper is used when making changes to an Order, to apply all applicable price adjustments to that Order,
  * including:
  *
@@ -55,7 +67,7 @@ export class OrderCalculator {
         order: Order,
         promotions: Promotion[],
         updatedOrderLines: OrderLine[] = [],
-        options?: { recalculateShipping?: boolean },
+        options?: ApplyPriceAdjustmentsOptions,
     ): Promise<Order> {
         const { taxZoneStrategy } = this.configService.taxOptions;
         // We reset the promotions array as all promotions

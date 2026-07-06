@@ -23,6 +23,7 @@ import { OrderRecalculationStrategy } from './order-recalculation-strategy';
  * ```
  *
  * @docsCategory orders
+ * @docsPage OrderRecalculationStrategy
  * @since 3.8.0
  */
 export class TtlOrderRecalculationStrategy implements OrderRecalculationStrategy {

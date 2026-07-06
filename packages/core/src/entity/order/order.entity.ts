@@ -93,9 +93,10 @@ export class Order extends VendureEntity implements ChannelAware, HasCustomField
 
     /**
      * @description
-     * The date & time that the Order's prices, promotions and shipping were last recalculated via
+     * The date & time that the Order's prices, promotions and taxes were last recalculated via
      * {@link OrderService.applyPriceAdjustments}. Used by the configured {@link OrderRecalculationStrategy}
      * to determine whether an active Order is stale and should be recalculated on read.
+     * Shipping method eligibility and rates are NOT included in read-time recalculation.
      *
      * @since 3.8.0
      */

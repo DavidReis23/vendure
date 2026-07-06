@@ -7,6 +7,7 @@ import { OrderRecalculationStrategy } from './order-recalculation-strategy';
  * re-calculated on write mutations.
  *
  * @docsCategory orders
+ * @docsPage OrderRecalculationStrategy
  * @since 3.8.0
  */
 export class NoOrderRecalculationStrategy implements OrderRecalculationStrategy {
