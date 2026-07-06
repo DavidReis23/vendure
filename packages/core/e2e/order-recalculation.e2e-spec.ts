@@ -188,6 +188,9 @@ describe('OrderRecalculationStrategy — default (NoOrderRecalculationStrategy)'
 describe('OrderRecalculationStrategy — checkout gate', () => {
     const { server, shopClient, adminClient } = createTestEnvironment(
         mergeConfig(testConfig(), {
+            orderOptions: {
+                orderRecalculationStrategy: new TtlOrderRecalculationStrategy({ ttlMs: 0 }),
+            },
             shippingOptions: {
                 shippingEligibilityCheckers: [defaultShippingEligibilityChecker],
                 shippingCalculators: [defaultShippingCalculator],

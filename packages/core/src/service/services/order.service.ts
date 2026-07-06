@@ -2313,6 +2313,7 @@ export class OrderService {
         order: Order,
         updatedOrderLines?: OrderLine[],
         relations?: RelationPaths<Order>,
+        options?: { recalculateShipping?: boolean },
     ): Promise<Order> {
         const allPromotions = await this.promotionService.getActivePromotionsInChannel(ctx);
         const activePromotionsPre = await this.promotionService.getActivePromotionsOnOrder(ctx, order.id);
@@ -2379,6 +2380,7 @@ export class OrderService {
             order,
             promotions,
             updatedOrderLines ?? [],
+            options,
         );
 
         const shippingLineIdsPost = updatedOrder.shippingLines.map(l => l.id);
@@ -2437,7 +2439,9 @@ export class OrderService {
         }
         // Ensure the relations needed for recalculation are loaded.
         const fullOrder = await this.getOrderOrThrow(ctx, order.id);
-        return this.applyPriceAdjustments(ctx, fullOrder, fullOrder.lines);
+        return this.applyPriceAdjustments(ctx, fullOrder, fullOrder.lines, undefined, {
+            recalculateShipping: false,
+        });
     }
 
     /**
