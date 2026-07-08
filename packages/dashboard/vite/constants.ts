@@ -28,6 +28,8 @@ export const defaultAvailableLanguages = [
     LanguageCode.tr,
     LanguageCode.bg,
     LanguageCode.nl,
+    LanguageCode.ro,
+    LanguageCode.uz,
 ];
 
 export const defaultAvailableLocales = [
