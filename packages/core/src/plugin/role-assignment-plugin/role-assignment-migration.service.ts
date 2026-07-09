@@ -1,14 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import {
-    CUSTOMER_ROLE_CODE,
-    DEFAULT_CHANNEL_CODE,
-    SUPER_ADMIN_ROLE_CODE,
-} from '@vendure/common/lib/shared-constants';
+import { CUSTOMER_ROLE_CODE, SUPER_ADMIN_ROLE_CODE } from '@vendure/common/lib/shared-constants';
 import { ID } from '@vendure/common/lib/shared-types';
 
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
-import { Channel } from '../../entity/channel/channel.entity';
 import { Role } from '../../entity/role/role.entity';
 import { User } from '../../entity/user/user.entity';
 
@@ -30,10 +25,10 @@ export interface MigrateLegacyRolesResult {
  * re-running it only creates whatever RoleAssignments are missing. It runs automatically on
  * server bootstrap while the `experimental.roleAssignments` flag is enabled.
  *
- * System roles are special-cased:
- * - The SuperAdmin role would fan out to every channel, so it is collapsed to a single
- *   RoleAssignment on the default channel.
- * - The Customer role is skipped entirely (it would create a row per customer per channel).
+ * The SuperAdmin and Customer system roles are skipped entirely: migrating them faithfully
+ * would fan out to (users x channels) rows which the target design replaces with check-time
+ * semantics ("holds SuperAdmin / is authenticated" regardless of channel). How they are
+ * represented is deferred to the permission-resolution pass.
  *
  * @internal
  */
@@ -44,16 +39,13 @@ export class RoleAssignmentMigrationService {
     async migrateLegacyRoles(): Promise<MigrateLegacyRolesResult> {
         const rawConnection = this.connection.rawConnection;
         const roles = await rawConnection.getRepository(Role).find({ relations: { channels: true } });
-        const defaultChannel = await rawConnection
-            .getRepository(Channel)
-            .findOne({ where: { code: DEFAULT_CHANNEL_CODE } });
 
         const candidates = new Map<string, { userId: ID; roleId: ID; channelId: ID }>();
         const keyOf = (a: { userId: ID; roleId: ID; channelId: ID }) =>
             `${a.userId}|${a.roleId}|${a.channelId}`;
 
         for (const role of roles) {
-            if (role.code === CUSTOMER_ROLE_CODE) {
+            if (role.code === CUSTOMER_ROLE_CODE || role.code === SUPER_ADMIN_ROLE_CODE) {
                 continue;
             }
             const userRows = await rawConnection
@@ -65,14 +57,8 @@ export class RoleAssignmentMigrationService {
                 .select('user.id', 'userId')
                 .getRawMany<{ userId: ID }>();
 
-            const channels =
-                role.code === SUPER_ADMIN_ROLE_CODE
-                    ? defaultChannel
-                        ? [defaultChannel]
-                        : []
-                    : role.channels;
             for (const { userId } of userRows) {
-                for (const channel of channels) {
+                for (const channel of role.channels) {
                     const candidate = { userId, roleId: role.id, channelId: channel.id };
                     candidates.set(keyOf(candidate), candidate);
                 }
