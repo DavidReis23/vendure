@@ -1,12 +1,29 @@
-import { RoleAssignmentPlugin, TransactionalConnection, mergeConfig } from '@vendure/core';
+import { CurrencyCode, LanguageCode, Permission } from '@vendure/common/lib/generated-types';
+import {
+    DEFAULT_CHANNEL_CODE,
+    SUPER_ADMIN_ROLE_CODE,
+    SUPER_ADMIN_USER_IDENTIFIER,
+} from '@vendure/common/lib/shared-constants';
+import {
+    RoleAssignmentMigrationService,
+    RoleAssignmentPlugin,
+    TransactionalConnection,
+    mergeConfig,
+} from '@vendure/core';
 import { preBootstrapConfig } from '@vendure/core/dist/bootstrap';
-import { createTestEnvironment } from '@vendure/testing';
+import { createErrorResultGuard, createTestEnvironment, ErrorResultGuard } from '@vendure/testing';
 import path from 'path';
 import { QueryRunner } from 'typeorm';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
+
+import {
+    createAdministratorDocument,
+    createChannelDocument,
+    createRoleDocument,
+} from './graphql/shared-definitions';
 
 /**
  * These tests exercise the `experimental.roleAssignments` flag, which is currently only a
@@ -91,6 +108,87 @@ describe('experimental.roleAssignments flag enabled', () => {
             expect(fk.onDelete).toBe('CASCADE');
         }
     });
+
+    describe('legacy role migration', () => {
+        const channelGuard: ErrorResultGuard<{ id: string }> = createErrorResultGuard(input => !!input.id);
+
+        it('backfills a single assignment for the superadmin on boot', async () => {
+            // The seed data contains the superadmin (SuperAdmin role) and one customer
+            // (Customer role). The Customer role is skipped by the migration, and the
+            // SuperAdmin role is collapsed to a single assignment on the default channel,
+            // so exactly one row is expected.
+            expect(await getAssignments(queryRunner)).toEqual([
+                {
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
+                    channelCode: DEFAULT_CHANNEL_CODE,
+                },
+            ]);
+        });
+
+        it('re-running the migration backfills newly created legacy relations', async () => {
+            const { createChannel } = await adminClient.query(createChannelDocument, {
+                input: {
+                    code: 'second-channel',
+                    token: 'second-channel-token',
+                    defaultLanguageCode: LanguageCode.en,
+                    currencyCode: CurrencyCode.GBP,
+                    pricesIncludeTax: true,
+                    defaultShippingZoneId: 'T_1',
+                    defaultTaxZoneId: 'T_1',
+                },
+            });
+            channelGuard.assertSuccess(createChannel);
+            const { createRole } = await adminClient.query(createRoleDocument, {
+                input: {
+                    code: 'catalog-manager',
+                    description: 'Catalog manager',
+                    permissions: [Permission.ReadCatalog],
+                    channelIds: [createChannel.id],
+                },
+            });
+            await adminClient.query(createAdministratorDocument, {
+                input: {
+                    firstName: 'Bob',
+                    lastName: 'Bobson',
+                    emailAddress: 'bob@test.com',
+                    password: 'test',
+                    roleIds: [createRole.id],
+                },
+            });
+
+            const result = await server.app
+                .get(RoleAssignmentMigrationService)
+                .migrateLegacyRoles();
+
+            expect(result.created).toBe(1);
+            const assignments = await getAssignments(queryRunner);
+            expect(assignments).toContainEqual({
+                identifier: 'bob@test.com',
+                roleCode: 'catalog-manager',
+                channelCode: 'second-channel',
+            });
+            // The SuperAdmin role gets auto-assigned to new channels, but the migration
+            // must not fan superadmin assignments out beyond the default channel.
+            expect(assignments.filter(a => a.roleCode === SUPER_ADMIN_ROLE_CODE)).toEqual([
+                {
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
+                    channelCode: DEFAULT_CHANNEL_CODE,
+                },
+            ]);
+            expect(assignments).toHaveLength(2);
+        });
+
+        it('is idempotent', async () => {
+            const result = await server.app
+                .get(RoleAssignmentMigrationService)
+                .migrateLegacyRoles();
+
+            expect(result.created).toBe(0);
+            expect(await getAssignments(queryRunner)).toHaveLength(2);
+        });
+    });
 });
 
 async function getRoleAssignmentTable(queryRunner: QueryRunner) {
@@ -99,4 +197,18 @@ async function getRoleAssignmentTable(queryRunner: QueryRunner) {
         throw new Error('Expected the role_assignment table to exist');
     }
     return table;
+}
+
+async function getAssignments(
+    queryRunner: QueryRunner,
+): Promise<Array<{ identifier: string; roleCode: string; channelCode: string }>> {
+    // Raw sqlite query — fine here since e2e tests always run against sql.js
+    return queryRunner.query(
+        `SELECT u.identifier AS identifier, r.code AS roleCode, c.code AS channelCode
+         FROM role_assignment ra
+         JOIN "user" u ON u.id = ra.userId
+         JOIN role r ON r.id = ra.roleId
+         JOIN channel c ON c.id = ra.channelId
+         ORDER BY ra.id`,
+    );
 }

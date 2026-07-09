@@ -1,6 +1,13 @@
+import { OnApplicationBootstrap } from '@nestjs/common';
+
+import { Logger } from '../../config/logger/vendure-logger';
+import { TransactionalConnection } from '../../connection/transactional-connection';
+import { ProcessContext } from '../../process-context/process-context';
 import { PluginCommonModule } from '../plugin-common.module';
 import { VendurePlugin } from '../vendure-plugin';
 
+import { loggerCtx } from './constants';
+import { RoleAssignmentMigrationService } from './role-assignment-migration.service';
 import { RoleAssignment } from './role-assignment.entity';
 
 /**
@@ -8,15 +15,47 @@ import { RoleAssignment } from './role-assignment.entity';
  * config flag is set to `true` (see `VendureConfig.experimental`). It is never meant to be added
  * manually to the `plugins` array.
  *
- * This is currently a skeleton which only registers the `RoleAssignment` entity — a bridge
- * between User, Role and Channel intended to eventually decouple Role definitions from Channel
- * assignments. The permission-resolution logic, service layer and API are not yet implemented.
+ * This is currently a skeleton which registers the `RoleAssignment` entity — a bridge between
+ * User, Role and Channel intended to eventually decouple Role definitions from Channel
+ * assignments. On server bootstrap it backfills RoleAssignment rows from the legacy
+ * User -> Role -> Channel relations (see {@link RoleAssignmentMigrationService}). The
+ * permission-resolution logic, service layer and API are not yet implemented.
  *
  * @internal
  */
 @VendurePlugin({
     imports: [PluginCommonModule],
     entities: [RoleAssignment],
+    providers: [RoleAssignmentMigrationService],
     compatibility: '>0.0.0',
 })
-export class RoleAssignmentPlugin {}
+export class RoleAssignmentPlugin implements OnApplicationBootstrap {
+    constructor(
+        private connection: TransactionalConnection,
+        private processContext: ProcessContext,
+        private migrationService: RoleAssignmentMigrationService,
+    ) {}
+
+    async onApplicationBootstrap() {
+        if (!this.processContext.isServer) {
+            return;
+        }
+        const tableName = this.connection.rawConnection.getMetadata(RoleAssignment).tableName;
+        const queryRunner = this.connection.rawConnection.createQueryRunner();
+        let tableExists: boolean;
+        try {
+            tableExists = await queryRunner.hasTable(tableName);
+        } finally {
+            await queryRunner.release();
+        }
+        if (!tableExists) {
+            Logger.error(
+                `The experimental.roleAssignments flag is enabled but the "${tableName}" table does not exist. ` +
+                    'Generate and run a database migration to create it.',
+                loggerCtx,
+            );
+            return;
+        }
+        await this.migrationService.migrateLegacyRoles();
+    }
+}
