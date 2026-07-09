@@ -99,6 +99,10 @@ export const devConfig: VendureConfig = {
         migrations: [path.join(__dirname, 'migrations/*.ts')],
         ...getDbConfig(),
     },
+    // Uncomment to enable the experimental RoleAssignmentPlugin (adds the role_assignment table)
+    // experimental: {
+    //     roleAssignments: { enabled: true },
+    // },
     paymentOptions: {
         paymentMethodHandlers: [dummyPaymentHandler],
     },
