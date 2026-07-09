@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CUSTOMER_ROLE_CODE } from '@vendure/common/lib/shared-constants';
 import { ID } from '@vendure/common/lib/shared-types';
 
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
-import { Role } from '../../entity/role/role.entity';
+import { Customer } from '../../entity/customer/customer.entity';
 import { User } from '../../entity/user/user.entity';
 
 import { loggerCtx } from './constants';
@@ -22,15 +21,20 @@ export interface MigrateLegacyRolesResult {
  * The migration is purely additive and idempotent: existing legacy relations are left untouched
  * (they remain the source of truth for permission resolution until the resolver strategy is
  * implemented, and keeping them makes disabling the experimental flag non-destructive), and
- * re-running it only creates whatever RoleAssignments are missing. It runs automatically on
- * server bootstrap while the `experimental.roleAssignments` flag is enabled.
+ * re-running it only creates whatever RoleAssignments are missing. It runs on server
+ * bootstrap while the `experimental.roleAssignments` flag is enabled, but only when the
+ * `role_assignment` table is still empty (see {@link RoleAssignmentPlugin}); it can be
+ * invoked manually to pick up relations created since.
  *
- * The Customer system role is skipped entirely: every registered customer holds it, so a
- * faithful migration would create (customers x channels) rows encoding nothing beyond
- * `Authenticated`. Its handling is deferred to the permission-resolution pass. The SuperAdmin
- * role fans out like any other role — it is auto-assigned to every channel, so superadmin
- * users receive one assignment per channel, and channels created later are picked up by the
- * next run.
+ * The candidate rows are produced by a single join across the legacy tables: for every
+ * (user, role) pair in `user_roles_role`, the role's channels are joined in from
+ * `role_channels_channel`, yielding one (user, role, channel) row each. An additional
+ * membership check is then applied: users which have channel memberships of their own
+ * (customer users, via `customer_channels_channel`) only receive assignments for channels
+ * they actually belong to. Without this check every customer would be assigned to every
+ * channel, because the Customer role itself is auto-assigned to all channels. Administrator
+ * users have no channel membership of their own, so their assignments follow the role's
+ * channels directly.
  *
  * @internal
  */
@@ -40,32 +44,48 @@ export class RoleAssignmentMigrationService {
 
     async migrateLegacyRoles(): Promise<MigrateLegacyRolesResult> {
         const rawConnection = this.connection.rawConnection;
-        const roles = await rawConnection.getRepository(Role).find({ relations: { channels: true } });
 
-        const candidates = new Map<string, { userId: ID; roleId: ID; channelId: ID }>();
         const keyOf = (a: { userId: ID; roleId: ID; channelId: ID }) =>
             `${a.userId}|${a.roleId}|${a.channelId}`;
 
-        for (const role of roles) {
-            // TODO: clarify how this should be done
-            if (role.code === CUSTOMER_ROLE_CODE) {
+        // user_roles_role -> role_channels_channel: one row per (user, role, channel)
+        const rows = await rawConnection
+            .getRepository(User)
+            .createQueryBuilder('user')
+            .innerJoin('user.roles', 'role')
+            .innerJoin('role.channels', 'channel')
+            .where('user.deletedAt IS NULL')
+            .select('user.id', 'userId')
+            .addSelect('role.id', 'roleId')
+            .addSelect('channel.id', 'channelId')
+            .getRawMany<{ userId: ID; roleId: ID; channelId: ID }>();
+
+        // Channel memberships of users which are themselves channel-aware (customer users).
+        // Users without an entry here (administrator users) have no channel membership of
+        // their own and are not filtered.
+        const customerChannelRows = await rawConnection
+            .getRepository(Customer)
+            .createQueryBuilder('customer')
+            .innerJoin('customer.channels', 'channel')
+            .innerJoin('customer.user', 'user')
+            .where('customer.deletedAt IS NULL')
+            .select('user.id', 'userId')
+            .addSelect('channel.id', 'channelId')
+            .getRawMany<{ userId: ID; channelId: ID }>();
+        const userChannelMemberships = new Map<string, Set<string>>();
+        for (const { userId, channelId } of customerChannelRows) {
+            const memberships = userChannelMemberships.get(String(userId)) ?? new Set<string>();
+            memberships.add(String(channelId));
+            userChannelMemberships.set(String(userId), memberships);
+        }
+
+        const candidates = new Map<string, { userId: ID; roleId: ID; channelId: ID }>();
+        for (const row of rows) {
+            const memberships = userChannelMemberships.get(String(row.userId));
+            if (memberships && !memberships.has(String(row.channelId))) {
                 continue;
             }
-            const userRows = await rawConnection
-                .getRepository(User)
-                .createQueryBuilder('user')
-                .innerJoin('user.roles', 'role')
-                .where('role.id = :roleId', { roleId: role.id })
-                .andWhere('user.deletedAt IS NULL')
-                .select('user.id', 'userId')
-                .getRawMany<{ userId: ID }>();
-
-            for (const { userId } of userRows) {
-                for (const channel of role.channels) {
-                    const candidate = { userId, roleId: role.id, channelId: channel.id };
-                    candidates.set(keyOf(candidate), candidate);
-                }
-            }
+            candidates.set(keyOf(row), row);
         }
 
         const existing = await rawConnection.getRepository(RoleAssignment).find({

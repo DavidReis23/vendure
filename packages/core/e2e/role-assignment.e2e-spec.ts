@@ -1,5 +1,6 @@
 import { CurrencyCode, LanguageCode, Permission } from '@vendure/common/lib/generated-types';
 import {
+    CUSTOMER_ROLE_CODE,
     DEFAULT_CHANNEL_CODE,
     SUPER_ADMIN_ROLE_CODE,
     SUPER_ADMIN_USER_IDENTIFIER,
@@ -112,17 +113,20 @@ describe('experimental.roleAssignments flag enabled', () => {
     describe('legacy role migration', () => {
         const channelGuard: ErrorResultGuard<{ id: string }> = createErrorResultGuard(input => !!input.id);
 
-        it('backfills the superadmin per channel and skips the customer role on boot', async () => {
-            // The seed data contains the superadmin (SuperAdmin role, assigned to the only
-            // existing channel) and one customer (Customer role, which is skipped), so
-            // exactly one assignment is expected.
-            expect(await getAssignments(queryRunner)).toEqual([
-                {
-                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
-                    roleCode: SUPER_ADMIN_ROLE_CODE,
-                    channelCode: DEFAULT_CHANNEL_CODE,
-                },
-            ]);
+        it('backfills all roles per channel on boot', async () => {
+            // The seed data contains the superadmin (SuperAdmin role) and one customer
+            // (Customer role), both assigned to the only existing channel, so exactly
+            // two assignments are expected.
+            const assignments = await getAssignments(queryRunner);
+            expect(assignments).toHaveLength(2);
+            expect(assignments).toContainEqual({
+                identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                roleCode: SUPER_ADMIN_ROLE_CODE,
+                channelCode: DEFAULT_CHANNEL_CODE,
+            });
+            expect(
+                assignments.filter(a => a.roleCode === CUSTOMER_ROLE_CODE).map(a => a.channelCode),
+            ).toEqual([DEFAULT_CHANNEL_CODE]);
         });
 
         it('re-running the migration backfills newly created legacy relations', async () => {
@@ -161,7 +165,8 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .migrateLegacyRoles();
 
             // Two new assignments: bob on the new channel, plus the superadmin on the new
-            // channel (the SuperAdmin role is auto-assigned to newly created channels).
+            // channel (the SuperAdmin role is auto-assigned to newly created channels, and
+            // admin users have no channel membership of their own to restrict them).
             expect(result.created).toBe(2);
             const assignments = await getAssignments(queryRunner);
             expect(assignments).toContainEqual({
@@ -181,7 +186,13 @@ describe('experimental.roleAssignments flag enabled', () => {
                     channelCode: 'second-channel',
                 },
             ]);
-            expect(assignments).toHaveLength(3);
+            // The Customer role is also on the new channel, but the customer user only
+            // belongs to the default channel, so the membership check must prevent an
+            // assignment on the new channel.
+            expect(
+                assignments.filter(a => a.roleCode === CUSTOMER_ROLE_CODE).map(a => a.channelCode),
+            ).toEqual([DEFAULT_CHANNEL_CODE]);
+            expect(assignments).toHaveLength(4);
         });
 
         it('is idempotent', async () => {
@@ -190,7 +201,7 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .migrateLegacyRoles();
 
             expect(result.created).toBe(0);
-            expect(await getAssignments(queryRunner)).toHaveLength(3);
+            expect(await getAssignments(queryRunner)).toHaveLength(4);
         });
     });
 });
