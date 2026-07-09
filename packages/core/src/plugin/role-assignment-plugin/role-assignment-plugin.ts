@@ -17,9 +17,10 @@ import { RoleAssignment } from './role-assignment.entity';
  *
  * This is currently a skeleton which registers the `RoleAssignment` entity — a bridge between
  * User, Role and Channel intended to eventually decouple Role definitions from Channel
- * assignments. On server bootstrap it backfills RoleAssignment rows from the legacy
- * User -> Role -> Channel relations (see {@link RoleAssignmentMigrationService}). The
- * permission-resolution logic, service layer and API are not yet implemented.
+ * assignments. On server bootstrap, if the `role_assignment` table is empty, it backfills
+ * RoleAssignment rows from the legacy User -> Role -> Channel relations (see
+ * {@link RoleAssignmentMigrationService}); once the table contains rows the migration is not
+ * run again. The permission-resolution logic, service layer and API are not yet implemented.
  *
  * @internal
  */
@@ -54,6 +55,12 @@ export class RoleAssignmentPlugin implements OnApplicationBootstrap {
                     'Generate and run a database migration to create it.',
                 loggerCtx,
             );
+            return;
+        }
+        const existing = await this.connection.rawConnection
+            .getRepository(RoleAssignment)
+            .find({ take: 1, select: { id: true } });
+        if (existing.length > 0) {
             return;
         }
         await this.migrationService.migrateLegacyRoles();
