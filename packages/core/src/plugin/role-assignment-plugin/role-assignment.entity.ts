@@ -1,8 +1,9 @@
-import { DeepPartial } from '@vendure/common/lib/shared-types';
+import { DeepPartial, ID } from '@vendure/common/lib/shared-types';
 import { Entity, Index, ManyToOne, Unique } from 'typeorm';
 
 import { VendureEntity } from '../../entity/base/base.entity';
 import { Channel } from '../../entity/channel/channel.entity';
+import { EntityId } from '../../entity/entity-id.decorator';
 import { Role } from '../../entity/role/role.entity';
 import { User } from '../../entity/user/user.entity';
 
@@ -22,15 +23,25 @@ export class RoleAssignment extends VendureEntity {
         super(input);
     }
 
-    @Index()
+    // No separate index on userId: the unique constraint's composite index
+    // already covers lookups by user via its leftmost column.
     @ManyToOne(type => User, { onDelete: 'CASCADE' })
     user: User;
+
+    @EntityId()
+    userId: ID;
 
     @Index()
     @ManyToOne(type => Role, { onDelete: 'CASCADE' })
     role: Role;
 
+    @EntityId()
+    roleId: ID;
+
     @Index()
     @ManyToOne(type => Channel, { onDelete: 'CASCADE' })
     channel: Channel;
+
+    @EntityId()
+    channelId: ID;
 }

@@ -71,6 +71,13 @@ describe('experimental.roleAssignments flag enabled', () => {
         );
     });
 
+    it('has non-nullable foreign key columns', async () => {
+        const table = await getRoleAssignmentTable(queryRunner);
+        for (const name of ['userId', 'roleId', 'channelId']) {
+            expect(table.findColumnByName(name)?.isNullable).toBe(false);
+        }
+    });
+
     it('has a unique constraint on (userId, roleId, channelId)', async () => {
         const table = await getRoleAssignmentTable(queryRunner);
         const uniqueColumnSets = table.uniques.map(u => [...u.columnNames].sort());
