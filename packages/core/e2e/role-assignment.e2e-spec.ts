@@ -1,5 +1,9 @@
 import { CurrencyCode, LanguageCode, Permission } from '@vendure/common/lib/generated-types';
-import { SUPER_ADMIN_ROLE_CODE } from '@vendure/common/lib/shared-constants';
+import {
+    DEFAULT_CHANNEL_CODE,
+    SUPER_ADMIN_ROLE_CODE,
+    SUPER_ADMIN_USER_IDENTIFIER,
+} from '@vendure/common/lib/shared-constants';
 import {
     RoleAssignmentMigrationService,
     RoleAssignmentPlugin,
@@ -108,11 +112,17 @@ describe('experimental.roleAssignments flag enabled', () => {
     describe('legacy role migration', () => {
         const channelGuard: ErrorResultGuard<{ id: string }> = createErrorResultGuard(input => !!input.id);
 
-        it('creates no assignments for system roles on boot', async () => {
-            // The seed data contains only the superadmin (SuperAdmin role) and one customer
-            // (Customer role). Both system roles are skipped by the migration, so no
-            // assignments are expected.
-            expect(await getAssignments(queryRunner)).toEqual([]);
+        it('backfills the superadmin per channel and skips the customer role on boot', async () => {
+            // The seed data contains the superadmin (SuperAdmin role, assigned to the only
+            // existing channel) and one customer (Customer role, which is skipped), so
+            // exactly one assignment is expected.
+            expect(await getAssignments(queryRunner)).toEqual([
+                {
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
+                    channelCode: DEFAULT_CHANNEL_CODE,
+                },
+            ]);
         });
 
         it('re-running the migration backfills newly created legacy relations', async () => {
@@ -150,18 +160,28 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .get(RoleAssignmentMigrationService)
                 .migrateLegacyRoles();
 
-            expect(result.created).toBe(1);
+            // Two new assignments: bob on the new channel, plus the superadmin on the new
+            // channel (the SuperAdmin role is auto-assigned to newly created channels).
+            expect(result.created).toBe(2);
             const assignments = await getAssignments(queryRunner);
-            expect(assignments).toEqual([
+            expect(assignments).toContainEqual({
+                identifier: 'bob@test.com',
+                roleCode: 'catalog-manager',
+                channelCode: 'second-channel',
+            });
+            expect(assignments.filter(a => a.roleCode === SUPER_ADMIN_ROLE_CODE)).toEqual([
                 {
-                    identifier: 'bob@test.com',
-                    roleCode: 'catalog-manager',
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
+                    channelCode: DEFAULT_CHANNEL_CODE,
+                },
+                {
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
                     channelCode: 'second-channel',
                 },
             ]);
-            // The SuperAdmin role gets auto-assigned to new channels, but the migration
-            // must still skip it entirely.
-            expect(assignments.filter(a => a.roleCode === SUPER_ADMIN_ROLE_CODE)).toEqual([]);
+            expect(assignments).toHaveLength(3);
         });
 
         it('is idempotent', async () => {
@@ -170,7 +190,7 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .migrateLegacyRoles();
 
             expect(result.created).toBe(0);
-            expect(await getAssignments(queryRunner)).toHaveLength(1);
+            expect(await getAssignments(queryRunner)).toHaveLength(3);
         });
     });
 });

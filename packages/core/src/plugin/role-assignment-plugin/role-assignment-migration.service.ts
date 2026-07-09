@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CUSTOMER_ROLE_CODE, SUPER_ADMIN_ROLE_CODE } from '@vendure/common/lib/shared-constants';
+import { CUSTOMER_ROLE_CODE } from '@vendure/common/lib/shared-constants';
 import { ID } from '@vendure/common/lib/shared-types';
 
 import { Logger } from '../../config/logger/vendure-logger';
@@ -25,10 +25,12 @@ export interface MigrateLegacyRolesResult {
  * re-running it only creates whatever RoleAssignments are missing. It runs automatically on
  * server bootstrap while the `experimental.roleAssignments` flag is enabled.
  *
- * The SuperAdmin and Customer system roles are skipped entirely: migrating them faithfully
- * would fan out to (users x channels) rows which the target design replaces with check-time
- * semantics ("holds SuperAdmin / is authenticated" regardless of channel). How they are
- * represented is deferred to the permission-resolution pass.
+ * The Customer system role is skipped entirely: every registered customer holds it, so a
+ * faithful migration would create (customers x channels) rows encoding nothing beyond
+ * `Authenticated`. Its handling is deferred to the permission-resolution pass. The SuperAdmin
+ * role fans out like any other role — it is auto-assigned to every channel, so superadmin
+ * users receive one assignment per channel, and channels created later are picked up by the
+ * next run.
  *
  * @internal
  */
@@ -45,7 +47,8 @@ export class RoleAssignmentMigrationService {
             `${a.userId}|${a.roleId}|${a.channelId}`;
 
         for (const role of roles) {
-            if (role.code === CUSTOMER_ROLE_CODE || role.code === SUPER_ADMIN_ROLE_CODE) {
+            // TODO: clarify how this should be done
+            if (role.code === CUSTOMER_ROLE_CODE) {
                 continue;
             }
             const userRows = await rawConnection
