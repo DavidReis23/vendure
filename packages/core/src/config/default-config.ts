@@ -263,4 +263,5 @@ export const defaultConfig: RuntimeVendureConfig = {
         errorHandlers: [],
         instrumentationStrategy: new NoopInstrumentationStrategy(),
     },
+    experimental: {},
 };

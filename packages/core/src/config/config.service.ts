@@ -12,6 +12,7 @@ import {
     AssetOptions,
     CatalogOptions,
     EntityOptions,
+    ExperimentalOptions,
     ImportExportOptions,
     JobQueueOptions,
     OrderOptions,
@@ -127,6 +128,10 @@ export class ConfigService implements VendureConfig {
 
     get settingsStoreFields(): SettingsStoreFields {
         return this.activeConfig.settingsStoreFields ?? {};
+    }
+
+    get experimental(): ExperimentalOptions {
+        return this.activeConfig.experimental ?? {};
     }
 
     private getCustomFieldsForAllEntities(): Required<CustomFields> {

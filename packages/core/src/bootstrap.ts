@@ -26,6 +26,7 @@ import { EventBus } from './event-bus';
 import { BootstrappedEvent } from './event-bus/events/bootstrapped-event';
 import { getCompatibility, getConfigurationFunction, getEntitiesFromPlugins } from './plugin/plugin-metadata';
 import { getPluginStartupMessages } from './plugin/plugin-utils';
+import { RoleAssignmentPlugin } from './plugin/role-assignment-plugin/role-assignment-plugin';
 import { setProcessContext } from './process-context/process-context';
 import { isTelemetryDisabled } from './telemetry/helpers/is-telemetry-disabled.helper';
 import { VENDURE_VERSION } from './version';
@@ -287,6 +288,13 @@ export async function bootstrapWorker(
 export async function preBootstrapConfig(
     userConfig: Partial<VendureConfig>,
 ): Promise<Readonly<RuntimeVendureConfig>> {
+    if (userConfig?.experimental?.roleAssignments?.enabled) {
+        userConfig.plugins = userConfig.plugins ?? [];
+        if (!userConfig.plugins.includes(RoleAssignmentPlugin)) {
+            userConfig.plugins.push(RoleAssignmentPlugin);
+        }
+    }
+
     if (userConfig) {
         await setConfig(userConfig);
     }
