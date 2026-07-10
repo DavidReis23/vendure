@@ -100,7 +100,12 @@ export class Order extends VendureEntity implements ChannelAware, HasCustomField
      *
      * @since 3.8.0
      */
-    @Column({ nullable: true })
+    // `precision: 6` stores fractional seconds. Without it, MySQL's `DATETIME` has
+    // second-level precision and *rounds* the stored value, which can push a freshly
+    // stamped timestamp into the future relative to `Date.now()` — making the
+    // OrderRecalculationStrategy staleness check (e.g. TTL 0) incorrectly report "not
+    // stale" and skip the read-time recalculation.
+    @Column({ nullable: true, precision: 6 })
     pricingUpdatedAt?: Date;
 
     @Index()
