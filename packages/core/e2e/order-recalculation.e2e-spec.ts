@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { ErrorCode } from '@vendure/common/lib/generated-shop-types';
 import {
+    configureDefaultOrderProcess,
     defaultShippingCalculator,
     defaultShippingEligibilityChecker,
     freeShipping,
@@ -569,5 +570,60 @@ describe('OrderRecalculationStrategy — checkout gate with default strategy', (
         // The customer's chosen method must never be changed behind their back.
         const { activeOrder } = await shopClient.query(getActiveOrderShippingDocument);
         expect(activeOrder.shippingLines[0].shippingMethod.code).toBe('premium-shipping');
+    });
+});
+
+// #3510 — the pre-payment recalculation must key off the ArrangingPayment transition, not shipping
+// presence, so a shipping-less checkout also gets fresh prices before payment.
+describe('OrderRecalculationStrategy — checkout recalc without shipping', () => {
+    const { server, shopClient, adminClient } = createTestEnvironment(
+        mergeConfig(testConfig(), {
+            orderOptions: {
+                // No read-time recalc, so the checkout transition is the only place prices refresh.
+                orderRecalculationStrategy: new NoOrderRecalculationStrategy(),
+                // Allow transitioning to payment without a shipping method.
+                process: [configureDefaultOrderProcess({ arrangingPaymentRequiresShipping: false })],
+            },
+        }),
+    );
+
+    const transitionGuard: ErrorResultGuard<{ state: string }> = createErrorResultGuard(
+        (input: any) => !!input.state,
+    );
+
+    beforeAll(async () => {
+        await server.init({
+            initialData,
+            productsCsvPath: path.join(__dirname, 'fixtures/e2e-products-full.csv'),
+            customerCount: 1,
+        });
+        await adminClient.asSuperAdmin();
+    }, TEST_SETUP_TIMEOUT_MS);
+
+    afterAll(async () => {
+        await server.destroy();
+    });
+
+    // #3510 — an order with no shipping method still recalculates prices at checkout
+    it('recalculates prices at checkout for an order with no shipping method', async () => {
+        await shopClient.asAnonymousUser();
+        await shopClient.query(addItemToOrderDocument, { productVariantId: 'T_1', quantity: 1 });
+        await shopClient.query(setCustomerDocument, {
+            input: { firstName: 'No', lastName: 'Ship', emailAddress: 'noship@test.com' },
+        });
+
+        // Admin drops the price. With the default strategy there is no read-time recalc, so the
+        // persisted order still holds the stale price until the checkout transition recalculates.
+        await adminClient.query(updateProductVariantsDocument, { input: [{ id: 'T_1', price: 100 }] });
+
+        const { transitionOrderToState } = await shopClient.query(transitionToStateDocument, {
+            state: 'ArrangingPayment',
+        });
+        transitionGuard.assertSuccess(transitionOrderToState);
+        expect((transitionOrderToState as any).state).toBe('ArrangingPayment');
+
+        // New list price 100 + 20% tax = 120, and no shipping line.
+        const { activeOrder } = await shopClient.query(getActiveOrderWithPriceDataDocument);
+        expect(activeOrder!.totalWithTax).toBe(Math.round(100 * 1.2));
     });
 });

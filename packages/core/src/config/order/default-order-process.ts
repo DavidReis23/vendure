@@ -331,16 +331,18 @@ export function configureDefaultOrderProcess(options: DefaultOrderProcessOptions
                 ) {
                     return 'message.cannot-transition-to-payment-without-shipping-method';
                 }
+                // Recalculate prices, promotions and shipping promotions for every transition to
+                // ArrangingPayment — including shipping-less checkouts — so payment always runs
+                // against fresh totals. This is done WITHOUT re-selecting the shipping method, so
+                // eligibility is judged (below) on current prices and the customer's chosen method
+                // is never swapped silently. Doing it before the eligibility check is essential:
+                // otherwise a recalculation that makes the chosen method ineligible slips past the
+                // guard and applyShipping would silently swap it to another method.
+                await orderService.applyPriceAdjustments(ctx, order, order.lines, undefined, {
+                    recalculateShipping: false,
+                    recalculateShippingPromotions: true,
+                });
                 if (options.arrangingPaymentRequiresShipping !== false && order.shippingLines?.length) {
-                    // Recalculate prices, promotions and shipping promotions against current
-                    // data FIRST, but WITHOUT re-selecting the shipping method, so eligibility
-                    // is judged on fresh totals. Doing this before the check is essential:
-                    // otherwise a recalculation that makes the chosen method ineligible slips
-                    // past the guard and applyShipping silently swaps it to another method.
-                    await orderService.applyPriceAdjustments(ctx, order, order.lines, undefined, {
-                        recalculateShipping: false,
-                        recalculateShippingPromotions: true,
-                    });
                     const eligibleMethods = await orderService.getEligibleShippingMethods(ctx, order.id);
                     const eligibleIds = eligibleMethods.map(m => m.id);
                     const hasIneligible = order.shippingLines.some(
