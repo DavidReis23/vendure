@@ -3,7 +3,6 @@ import { ID } from '@vendure/common/lib/shared-types';
 
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
-import { Customer } from '../../entity/customer/customer.entity';
 import { User } from '../../entity/user/user.entity';
 
 import { loggerCtx } from './constants';
@@ -16,25 +15,26 @@ export interface MigrateLegacyRolesResult {
 
 /**
  * Migrates the legacy `User -> Role -> Channel` relations into explicit {@link RoleAssignment}
- * rows: for each (user, role) pair, a RoleAssignment is created for each of the role's channels.
+ * rows: for each (user, role) pair in `user_roles_role`, the role's channels are joined in
+ * from `role_channels_channel`, yielding one RoleAssignment per (user, role, channel).
  *
- * The migration is purely additive and idempotent: existing legacy relations are left untouched
- * (they remain the source of truth for permission resolution until the resolver strategy is
- * implemented, and keeping them makes disabling the experimental flag non-destructive), and
- * re-running it only creates whatever RoleAssignments are missing. It runs on server
- * bootstrap while the `experimental.roleAssignments` flag is enabled, but only when the
- * `role_assignment` table is still empty (see {@link RoleAssignmentPlugin}); it can be
- * invoked manually to pick up relations created since.
+ * All users are treated alike — there is no differentiation between customer and
+ * administrator users. This mirrors the legacy permission resolution exactly: a customer
+ * user holds the Customer role, which is assigned to every channel, so they receive an
+ * assignment on every channel, just as `getUserChannelsPermissions()` grants them
+ * `Authenticated` on every channel today. Note that this means the row count scales with
+ * `users x channels-per-role`, and that once permission resolution switches to this table,
+ * operations which today extend the legacy relations (channel creation auto-assigning the
+ * SuperAdmin/Customer roles, customer registration) must create the corresponding
+ * RoleAssignment rows to stay consistent.
  *
- * The candidate rows are produced by a single join across the legacy tables: for every
- * (user, role) pair in `user_roles_role`, the role's channels are joined in from
- * `role_channels_channel`, yielding one (user, role, channel) row each. An additional
- * membership check is then applied: users which have channel memberships of their own
- * (customer users, via `customer_channels_channel`) only receive assignments for channels
- * they actually belong to. Without this check every customer would be assigned to every
- * channel, because the Customer role itself is auto-assigned to all channels. Administrator
- * users have no channel membership of their own, so their assignments follow the role's
- * channels directly.
+ * The migration is purely additive and idempotent: existing legacy relations are left
+ * untouched (they remain the source of truth for permission resolution until the resolver
+ * strategy is implemented, and keeping them makes disabling the experimental flag
+ * non-destructive), and re-running it only creates whatever RoleAssignments are missing.
+ * It runs on server bootstrap while the `experimental.roleAssignments` flag is enabled,
+ * but only when the `role_assignment` table is still empty (see {@link RoleAssignmentPlugin});
+ * it can be invoked manually to pick up relations created since.
  *
  * @internal
  */
@@ -45,8 +45,10 @@ export class RoleAssignmentMigrationService {
     async migrateLegacyRoles(): Promise<MigrateLegacyRolesResult> {
         const rawConnection = this.connection.rawConnection;
 
+        // String-normalized so that raw query results and entity values compare equal
+        // regardless of how the driver returns id columns (e.g. string vs number).
         const keyOf = (a: { userId: ID; roleId: ID; channelId: ID }) =>
-            `${a.userId}|${a.roleId}|${a.channelId}`;
+            `${String(a.userId)}|${String(a.roleId)}|${String(a.channelId)}`;
 
         // user_roles_role -> role_channels_channel: one row per (user, role, channel)
         const rows = await rawConnection
@@ -60,52 +62,36 @@ export class RoleAssignmentMigrationService {
             .addSelect('channel.id', 'channelId')
             .getRawMany<{ userId: ID; roleId: ID; channelId: ID }>();
 
-        // Channel memberships of users which are themselves channel-aware (customer users).
-        // Users without an entry here (administrator users) have no channel membership of
-        // their own and are not filtered.
-        const customerChannelRows = await rawConnection
-            .getRepository(Customer)
-            .createQueryBuilder('customer')
-            .innerJoin('customer.channels', 'channel')
-            .innerJoin('customer.user', 'user')
-            .where('customer.deletedAt IS NULL')
-            .select('user.id', 'userId')
-            .addSelect('channel.id', 'channelId')
-            .getRawMany<{ userId: ID; channelId: ID }>();
-        const userChannelMemberships = new Map<string, Set<string>>();
-        for (const { userId, channelId } of customerChannelRows) {
-            const memberships = userChannelMemberships.get(String(userId)) ?? new Set<string>();
-            memberships.add(String(channelId));
-            userChannelMemberships.set(String(userId), memberships);
-        }
-
         const candidates = new Map<string, { userId: ID; roleId: ID; channelId: ID }>();
         for (const row of rows) {
-            const memberships = userChannelMemberships.get(String(row.userId));
-            if (memberships && !memberships.has(String(row.channelId))) {
-                continue;
-            }
             candidates.set(keyOf(row), row);
         }
 
         const existing = await rawConnection.getRepository(RoleAssignment).find({
             select: { userId: true, roleId: true, channelId: true },
         });
+
         for (const assignment of existing) {
             candidates.delete(keyOf(assignment));
         }
 
         const toInsert = Array.from(candidates.values());
         const chunkSize = 500;
-        for (let i = 0; i < toInsert.length; i += chunkSize) {
-            await rawConnection
-                .createQueryBuilder()
-                .insert()
-                .into(RoleAssignment)
-                .values(toInsert.slice(i, i + chunkSize))
-                .orIgnore()
-                .execute();
-        }
+        // A single transaction so that a mid-run failure cannot leave the table partially
+        // populated, which would prevent the empty-table bootstrap check from re-running
+        // the migration on the next start.
+        await rawConnection.transaction(async manager => {
+            for (let i = 0; i < toInsert.length; i += chunkSize) {
+                await manager
+                    .createQueryBuilder()
+                    .insert()
+                    .into(RoleAssignment)
+                    .values(toInsert.slice(i, i + chunkSize))
+                    .orIgnore()
+                    .execute();
+            }
+        });
+
         if (toInsert.length > 0) {
             Logger.info(
                 `Created ${toInsert.length} RoleAssignment(s) from legacy user-role relations`,

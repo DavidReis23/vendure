@@ -164,10 +164,11 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .get(RoleAssignmentMigrationService)
                 .migrateLegacyRoles();
 
-            // Two new assignments: bob on the new channel, plus the superadmin on the new
-            // channel (the SuperAdmin role is auto-assigned to newly created channels, and
-            // admin users have no channel membership of their own to restrict them).
-            expect(result.created).toBe(2);
+            // Three new assignments on the new channel: bob (catalog-manager), plus the
+            // superadmin (SuperAdmin role) and the customer (Customer role) — both of those
+            // roles are auto-assigned to newly created channels, and the migration fans out
+            // every user's roles per channel without differentiating between user types.
+            expect(result.created).toBe(3);
             const assignments = await getAssignments(queryRunner);
             expect(assignments).toContainEqual({
                 identifier: 'bob@test.com',
@@ -186,13 +187,13 @@ describe('experimental.roleAssignments flag enabled', () => {
                     channelCode: 'second-channel',
                 },
             ]);
-            // The Customer role is also on the new channel, but the customer user only
-            // belongs to the default channel, so the membership check must prevent an
-            // assignment on the new channel.
+            // The Customer role is on the new channel too, so the customer user receives an
+            // assignment there even though they are not a member of that channel — matching
+            // the legacy resolution, which grants Authenticated on every channel of the role.
             expect(
                 assignments.filter(a => a.roleCode === CUSTOMER_ROLE_CODE).map(a => a.channelCode),
-            ).toEqual([DEFAULT_CHANNEL_CODE]);
-            expect(assignments).toHaveLength(4);
+            ).toEqual([DEFAULT_CHANNEL_CODE, 'second-channel']);
+            expect(assignments).toHaveLength(5);
         });
 
         it('is idempotent', async () => {
@@ -201,7 +202,7 @@ describe('experimental.roleAssignments flag enabled', () => {
                 .migrateLegacyRoles();
 
             expect(result.created).toBe(0);
-            expect(await getAssignments(queryRunner)).toHaveLength(4);
+            expect(await getAssignments(queryRunner)).toHaveLength(5);
         });
     });
 });
