@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { ID } from '@vendure/common/lib/shared-types';
+import { Brackets } from 'typeorm';
 
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
@@ -28,6 +29,10 @@ export interface MigrateLegacyRolesResult {
  * SuperAdmin/Customer roles, customer registration) must create the corresponding
  * RoleAssignment rows to stay consistent.
  *
+ * To keep memory usage bounded regardless of store size, the candidate rows are processed
+ * in keyset-paginated batches, and rows which already have a RoleAssignment are excluded
+ * DB-side via an anti-join rather than being loaded and diffed in memory.
+ *
  * The migration is purely additive and idempotent: existing legacy relations are left
  * untouched (they remain the source of truth for permission resolution until the resolver
  * strategy is implemented, and keeping them makes disabling the experimental flag
@@ -43,61 +48,90 @@ export class RoleAssignmentMigrationService {
     constructor(private connection: TransactionalConnection) {}
 
     async migrateLegacyRoles(): Promise<MigrateLegacyRolesResult> {
+        // TODO: this runs inside `onApplicationBootstrap` and therefore blocks server startup
+        // until the migration completes — on stores with many users x channels this can be a
+        // long delay. Consider moving the backfill to a job-queue job or emitting progress.
+        // TODO: two instances booting concurrently against an empty table will both run the
+        // full migration. On postgres/mysql/sqlite `orIgnore()` makes this safe (duplicate
+        // work only), but on SQL Server `orIgnore()` degrades to a plain INSERT, so the losing
+        // instance hits a unique-constraint violation and its startup aborts. Consider an
+        // advisory lock, or catching the error and logging instead of failing bootstrap.
         const rawConnection = this.connection.rawConnection;
+        const batchSize = 500;
+        let created = 0;
 
-        // String-normalized so that raw query results and entity values compare equal
-        // regardless of how the driver returns id columns (e.g. string vs number).
-        const keyOf = (a: { userId: ID; roleId: ID; channelId: ID }) =>
-            `${String(a.userId)}|${String(a.roleId)}|${String(a.channelId)}`;
-
-        // user_roles_role -> role_channels_channel: one row per (user, role, channel)
-        const rows = await rawConnection
-            .getRepository(User)
-            .createQueryBuilder('user')
-            .innerJoin('user.roles', 'role')
-            .innerJoin('role.channels', 'channel')
-            .where('user.deletedAt IS NULL')
-            .select('user.id', 'userId')
-            .addSelect('role.id', 'roleId')
-            .addSelect('channel.id', 'channelId')
-            .getRawMany<{ userId: ID; roleId: ID; channelId: ID }>();
-
-        const candidates = new Map<string, { userId: ID; roleId: ID; channelId: ID }>();
-        for (const row of rows) {
-            candidates.set(keyOf(row), row);
-        }
-
-        const existing = await rawConnection.getRepository(RoleAssignment).find({
-            select: { userId: true, roleId: true, channelId: true },
-        });
-
-        for (const assignment of existing) {
-            candidates.delete(keyOf(assignment));
-        }
-
-        const toInsert = Array.from(candidates.values());
-        const chunkSize = 500;
         // A single transaction so that a mid-run failure cannot leave the table partially
         // populated, which would prevent the empty-table bootstrap check from re-running
         // the migration on the next start.
         await rawConnection.transaction(async manager => {
-            for (let i = 0; i < toInsert.length; i += chunkSize) {
-                await manager
-                    .createQueryBuilder()
-                    .insert()
-                    .into(RoleAssignment)
-                    .values(toInsert.slice(i, i + chunkSize))
-                    .orIgnore()
-                    .execute();
-            }
+            let lastKey: { userId: ID; roleId: ID; channelId: ID } | undefined;
+            let batch: Array<{ userId: ID; roleId: ID; channelId: ID }>;
+            do {
+                // user_roles_role -> role_channels_channel: one row per (user, role, channel),
+                // excluding rows which already have a RoleAssignment. The keyset pagination
+                // (rather than relying on the anti-join alone) ensures each batch resumes
+                // where the previous one ended instead of re-scanning already-migrated rows.
+                const qb = manager
+                    .getRepository(User)
+                    .createQueryBuilder('user')
+                    .innerJoin('user.roles', 'role')
+                    .innerJoin('role.channels', 'channel')
+                    .select('user.id', 'userId')
+                    .addSelect('role.id', 'roleId')
+                    .addSelect('channel.id', 'channelId')
+                    .where('user.deletedAt IS NULL')
+                    .andWhere(outerQb => {
+                        const sub = outerQb
+                            .subQuery()
+                            .select('1')
+                            .from(RoleAssignment, 'assignment')
+                            .where('assignment.userId = user.id')
+                            .andWhere('assignment.roleId = role.id')
+                            .andWhere('assignment.channelId = channel.id')
+                            .getQuery();
+                        return `NOT EXISTS ${sub}`;
+                    })
+                    .orderBy('user.id', 'ASC')
+                    .addOrderBy('role.id', 'ASC')
+                    .addOrderBy('channel.id', 'ASC')
+                    .limit(batchSize);
+                if (lastKey) {
+                    qb.andWhere(
+                        new Brackets(qb1 => {
+                            qb1.where('user.id > :lastUserId')
+                                .orWhere('user.id = :lastUserId AND role.id > :lastRoleId')
+                                .orWhere(
+                                    'user.id = :lastUserId AND role.id = :lastRoleId AND channel.id > :lastChannelId',
+                                );
+                        }),
+                    ).setParameters({
+                        lastUserId: lastKey.userId,
+                        lastRoleId: lastKey.roleId,
+                        lastChannelId: lastKey.channelId,
+                    });
+                }
+                batch = await qb.getRawMany<{ userId: ID; roleId: ID; channelId: ID }>();
+                if (batch.length > 0) {
+                    await manager
+                        .createQueryBuilder()
+                        .insert()
+                        .into(RoleAssignment)
+                        .values(batch)
+                        .orIgnore()
+                        .execute();
+                    created += batch.length;
+                    lastKey = batch[batch.length - 1];
+                }
+                // A full batch means there may be more rows; a short batch was the last page.
+            } while (batch.length === batchSize);
         });
 
-        if (toInsert.length > 0) {
+        if (created > 0) {
             Logger.info(
-                `Created ${toInsert.length} RoleAssignment(s) from legacy user-role relations`,
+                `Created ${created} RoleAssignment(s) from legacy user-role relations`,
                 loggerCtx,
             );
         }
-        return { created: toInsert.length };
+        return { created };
     }
 }

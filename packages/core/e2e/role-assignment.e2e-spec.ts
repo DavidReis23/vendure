@@ -113,17 +113,32 @@ describe('experimental.roleAssignments flag enabled', () => {
     describe('legacy role migration', () => {
         const channelGuard: ErrorResultGuard<{ id: string }> = createErrorResultGuard(input => !!input.id);
 
-        it('backfills all roles per channel on boot', async () => {
-            // The seed data contains the superadmin (SuperAdmin role) and one customer
-            // (Customer role), both assigned to the only existing channel, so exactly
-            // two assignments are expected.
+        it('backfills the roles present at first boot', async () => {
+            // The migration runs on the first boot with a still-empty role_assignment table.
+            // In the test environment that first boot happens during initial data population,
+            // at which point only the superadmin exists (the seed customer is created later
+            // in the populate flow), so exactly one assignment is expected. Once the table
+            // is non-empty, subsequent boots skip the migration.
+            const assignments = await getAssignments(queryRunner);
+            expect(assignments).toEqual([
+                {
+                    identifier: SUPER_ADMIN_USER_IDENTIFIER,
+                    roleCode: SUPER_ADMIN_ROLE_CODE,
+                    channelCode: DEFAULT_CHANNEL_CODE,
+                },
+            ]);
+        });
+
+        it('manual re-run picks up relations created after the first boot', async () => {
+            // The seed customer (Customer role on the default channel) was created after
+            // the first-boot migration had already run.
+            const result = await server.app
+                .get(RoleAssignmentMigrationService)
+                .migrateLegacyRoles();
+
+            expect(result.created).toBe(1);
             const assignments = await getAssignments(queryRunner);
             expect(assignments).toHaveLength(2);
-            expect(assignments).toContainEqual({
-                identifier: SUPER_ADMIN_USER_IDENTIFIER,
-                roleCode: SUPER_ADMIN_ROLE_CODE,
-                channelCode: DEFAULT_CHANNEL_CODE,
-            });
             expect(
                 assignments.filter(a => a.roleCode === CUSTOMER_ROLE_CODE).map(a => a.channelCode),
             ).toEqual([DEFAULT_CHANNEL_CODE]);
