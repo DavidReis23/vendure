@@ -332,6 +332,15 @@ export function configureDefaultOrderProcess(options: DefaultOrderProcessOptions
                     return 'message.cannot-transition-to-payment-without-shipping-method';
                 }
                 if (options.arrangingPaymentRequiresShipping !== false && order.shippingLines?.length) {
+                    // Recalculate prices, promotions and shipping promotions against current
+                    // data FIRST, but WITHOUT re-selecting the shipping method, so eligibility
+                    // is judged on fresh totals. Doing this before the check is essential:
+                    // otherwise a recalculation that makes the chosen method ineligible slips
+                    // past the guard and applyShipping silently swaps it to another method.
+                    await orderService.applyPriceAdjustments(ctx, order, order.lines, undefined, {
+                        recalculateShipping: false,
+                        recalculateShippingPromotions: true,
+                    });
                     const eligibleMethods = await orderService.getEligibleShippingMethods(ctx, order.id);
                     const eligibleIds = eligibleMethods.map(m => m.id);
                     const hasIneligible = order.shippingLines.some(
@@ -365,7 +374,9 @@ export function configureDefaultOrderProcess(options: DefaultOrderProcessOptions
                         );
                     }
                 }
-                // All refusal guards passed — refresh prices, promotions and taxes before payment.
+                // All refusal guards passed — do a full recalculation (prices, promotions, taxes
+                // and shipping rate) before payment. The chosen method was verified eligible
+                // above, so applyShipping refreshes its rate without swapping the method.
                 if (options.arrangingPaymentRequiresShipping !== false && order.shippingLines?.length) {
                     await orderService.applyPriceAdjustments(ctx, order, order.lines);
                 }

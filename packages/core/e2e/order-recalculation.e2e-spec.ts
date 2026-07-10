@@ -4,6 +4,7 @@ import { ErrorCode } from '@vendure/common/lib/generated-shop-types';
 import {
     defaultShippingCalculator,
     defaultShippingEligibilityChecker,
+    freeShipping,
     LanguageCode,
     manualFulfillmentHandler,
     mergeConfig,
@@ -13,6 +14,7 @@ import {
     TtlOrderRecalculationStrategy,
 } from '@vendure/core';
 import { createErrorResultGuard, createTestEnvironment, ErrorResultGuard } from '@vendure/testing';
+import gql from 'graphql-tag';
 import path from 'path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
@@ -367,5 +369,205 @@ describe('OrderRecalculationStrategy — checkout gate', () => {
         const expectedNewItemWithTax = Math.round(99999 * 1.2);
         const expectedShippingWithTax = 500;
         expect(activeOrder!.totalWithTax).toBe(expectedNewItemWithTax + expectedShippingWithTax);
+    });
+});
+
+const getActiveOrderShippingDocument = gql`
+    query GetActiveOrderShipping {
+        activeOrder {
+            id
+            shippingWithTax
+            shippingLines {
+                shippingMethod {
+                    code
+                }
+            }
+            discounts {
+                description
+            }
+            promotions {
+                name
+            }
+        }
+    }
+`;
+
+const flatRateCalculator = {
+    code: defaultShippingCalculator.code,
+    arguments: [
+        { name: 'rate', value: '500' },
+        { name: 'taxRate', value: '0' },
+        { name: 'includesTax', value: 'auto' },
+    ],
+};
+
+const shippingAddressInput = {
+    fullName: 'Test Customer',
+    streetLine1: '1 Test Street',
+    city: 'Test City',
+    province: 'Test',
+    postalCode: '12345',
+    countryCode: 'US',
+    phoneNumber: '555-0100',
+};
+
+// #3510 — read-time recalc skips applyShippingPromotions, so shipping adjustments are never cleared
+describe('OrderRecalculationStrategy — shipping promotions on read', () => {
+    const { server, shopClient, adminClient } = createTestEnvironment(
+        mergeConfig(testConfig(), {
+            orderOptions: {
+                orderRecalculationStrategy: new TtlOrderRecalculationStrategy({ ttlMs: 0 }),
+            },
+            shippingOptions: {
+                shippingEligibilityCheckers: [defaultShippingEligibilityChecker],
+                shippingCalculators: [defaultShippingCalculator],
+            },
+        }),
+    );
+
+    beforeAll(async () => {
+        await server.init({
+            initialData,
+            productsCsvPath: path.join(__dirname, 'fixtures/e2e-products-full.csv'),
+            customerCount: 1,
+        });
+        await adminClient.asSuperAdmin();
+    }, TEST_SETUP_TIMEOUT_MS);
+
+    afterAll(async () => {
+        await server.destroy();
+    });
+
+    // #3510 — a disabled free-shipping promotion must not keep discounting shipping on read
+    it('clears shipping discounts on read after a shipping promotion is disabled', async () => {
+        await shopClient.asAnonymousUser();
+
+        const { createShippingMethod } = await adminClient.query(createShippingMethodDocument, {
+            input: {
+                code: 'flat-rate-shipping',
+                translations: [{ languageCode: LanguageCode.en, name: 'Flat rate', description: '' }],
+                fulfillmentHandler: manualFulfillmentHandler.code,
+                checker: {
+                    code: defaultShippingEligibilityChecker.code,
+                    arguments: [{ name: 'orderMinimum', value: '0' }],
+                },
+                calculator: flatRateCalculator,
+            },
+        });
+        const shippingMethodId = (createShippingMethod as any).id;
+
+        const { createPromotion } = await adminClient.query(createPromotionDocument, {
+            input: {
+                enabled: true,
+                translations: [{ languageCode: LanguageCode.en, name: 'Free shipping' }],
+                conditions: [
+                    {
+                        code: minimumOrderAmount.code,
+                        arguments: [
+                            { name: 'amount', value: '0' },
+                            { name: 'taxInclusive', value: 'true' },
+                        ],
+                    },
+                ],
+                actions: [{ code: freeShipping.code, arguments: [] }],
+            },
+        });
+        const promotionId = (createPromotion as any).id;
+
+        await shopClient.query(addItemToOrderDocument, { productVariantId: 'T_1', quantity: 1 });
+        await shopClient.query(setShippingAddressDocument, { input: shippingAddressInput });
+        await shopClient.query(setShippingMethodDocument, { id: [shippingMethodId] });
+
+        const before = await shopClient.query(getActiveOrderShippingDocument);
+        expect(before.activeOrder.shippingWithTax).toBe(0);
+        expect(before.activeOrder.promotions.map((p: any) => p.name)).toEqual(['Free shipping']);
+
+        // Admin disables the free-shipping promotion.
+        await adminClient.query(updatePromotionDocument, {
+            input: { id: promotionId, enabled: false },
+        });
+
+        // Reading the active order with TTL(0) recalculates — the shipping discount must be gone.
+        const after = await shopClient.query(getActiveOrderShippingDocument);
+        expect(after.activeOrder.promotions).toEqual([]);
+        expect(after.activeOrder.discounts).toEqual([]);
+        expect(after.activeOrder.shippingWithTax).toBe(500);
+
+        await adminClient.query(deletePromotionDocument, { id: promotionId });
+    });
+});
+
+// #3510 — the checkout gate must catch a method made ineligible by the checkout recalculation itself
+describe('OrderRecalculationStrategy — checkout gate with default strategy', () => {
+    const { server, shopClient, adminClient } = createTestEnvironment(
+        mergeConfig(testConfig(), {
+            orderOptions: {
+                orderRecalculationStrategy: new NoOrderRecalculationStrategy(),
+            },
+            shippingOptions: {
+                shippingEligibilityCheckers: [defaultShippingEligibilityChecker],
+                shippingCalculators: [defaultShippingCalculator],
+            },
+        }),
+    );
+
+    const transitionGuard: ErrorResultGuard<{ state: string }> = createErrorResultGuard(
+        (input: any) => !!input.state,
+    );
+
+    beforeAll(async () => {
+        await server.init({
+            initialData,
+            productsCsvPath: path.join(__dirname, 'fixtures/e2e-products-full.csv'),
+            customerCount: 1,
+        });
+        await adminClient.asSuperAdmin();
+    }, TEST_SETUP_TIMEOUT_MS);
+
+    afterAll(async () => {
+        await server.destroy();
+    });
+
+    // #3510 — a price drop that makes the chosen method ineligible must refuse, not silently swap
+    it('refuses ArrangingPayment when the checkout recalculation makes the method ineligible', async () => {
+        await shopClient.asAnonymousUser();
+
+        // Only eligible while the order total stays above 100000.
+        const { createShippingMethod } = await adminClient.query(createShippingMethodDocument, {
+            input: {
+                code: 'premium-shipping',
+                translations: [{ languageCode: LanguageCode.en, name: 'Premium', description: '' }],
+                fulfillmentHandler: manualFulfillmentHandler.code,
+                checker: {
+                    code: defaultShippingEligibilityChecker.code,
+                    arguments: [{ name: 'orderMinimum', value: '100000' }],
+                },
+                calculator: flatRateCalculator,
+            },
+        });
+        const shippingMethodId = (createShippingMethod as any).id;
+
+        await shopClient.query(addItemToOrderDocument, { productVariantId: 'T_1', quantity: 1 });
+        await shopClient.query(setCustomerDocument, {
+            input: { firstName: 'Test', lastName: 'User', emailAddress: 'swap@test.com' },
+        });
+        await shopClient.query(setShippingAddressDocument, { input: shippingAddressInput });
+        await shopClient.query(setShippingMethodDocument, { id: [shippingMethodId] });
+
+        // Admin slashes the price. With the default strategy there is no read-time recalc, so the
+        // persisted Order still holds the stale (high) totals when the checkout gate runs.
+        await adminClient.query(updateProductVariantsDocument, { input: [{ id: 'T_1', price: 100 }] });
+
+        const { transitionOrderToState } = await shopClient.query(transitionToStateDocument, {
+            state: 'ArrangingPayment',
+        });
+
+        transitionGuard.assertErrorResult(transitionOrderToState);
+        expect((transitionOrderToState as any).errorCode).toBe(ErrorCode.ORDER_STATE_TRANSITION_ERROR);
+        expect((transitionOrderToState as any).transitionError).toContain('no longer eligible');
+
+        // The customer's chosen method must never be changed behind their back.
+        const { activeOrder } = await shopClient.query(getActiveOrderShippingDocument);
+        expect(activeOrder.shippingLines[0].shippingMethod.code).toBe('premium-shipping');
     });
 });

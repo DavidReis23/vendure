@@ -2467,7 +2467,11 @@ export class OrderService {
             // Load full relations required for recalculation.
             const fullOrder = await this.getOrderOrThrow(txCtx, order.id);
             return this.applyPriceAdjustments(txCtx, fullOrder, fullOrder.lines, undefined, {
+                // Freeze the chosen shipping method/rate on read (never swap it silently),
+                // but still re-test shipping promotions so a disabled promotion's discount
+                // is cleared instead of surviving on the order.
                 recalculateShipping: false,
+                recalculateShippingPromotions: true,
             });
         });
     }

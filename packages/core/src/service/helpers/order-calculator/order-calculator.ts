@@ -31,6 +31,16 @@ import { prorate } from './prorate';
  */
 export interface ApplyPriceAdjustmentsOptions {
     recalculateShipping?: boolean;
+    /**
+     * @description
+     * When `recalculateShipping` is `false` (the chosen shipping method & rate are left
+     * untouched), this controls whether shipping *promotions* are still re-tested and their
+     * adjustments cleared/re-applied. Defaults to the value of `recalculateShipping`, so
+     * callers that freeze shipping entirely (e.g. order modification) are unaffected, while
+     * read-time recalculation can drop a now-inactive shipping promotion's discount without
+     * re-selecting the method.
+     */
+    recalculateShippingPromotions?: boolean;
 }
 
 /**
@@ -113,8 +123,16 @@ export class OrderCalculator {
                 await this.applyTaxes(ctx, order, activeTaxZone);
             }
         }
-        if (options?.recalculateShipping !== false) {
+        const recalculateShipping = options?.recalculateShipping !== false;
+        // Shipping promotions default to following `recalculateShipping`, but can be re-tested
+        // independently: read-time recalculation freezes the chosen method/rate yet must still
+        // clear a now-inactive shipping promotion's adjustment (clearAdjustments() only runs
+        // inside applyShippingPromotions).
+        const recalculateShippingPromotions = options?.recalculateShippingPromotions ?? recalculateShipping;
+        if (recalculateShipping) {
             await this.applyShipping(ctx, order);
+        }
+        if (recalculateShippingPromotions) {
             await this.applyShippingPromotions(ctx, order, promotions);
         }
         this.calculateOrderTotals(order);
