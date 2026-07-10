@@ -41,6 +41,11 @@ export interface MigrateLegacyRolesResult {
  * but only when the `role_assignment` table is still empty (see {@link RoleAssignmentPlugin});
  * it can be invoked manually to pick up relations created since.
  *
+ * TODO: consider also exporting this as a standalone `migrateRoleAssignmentData(queryRunner)`
+ * helper in `migration-utils/` (the v3.6 pattern, see `migrateProductOptionGroupData()`), so
+ * users can run the backfill inside the same TypeORM migration that creates the
+ * `role_assignment` table rather than relying on boot-time run-once logic.
+ *
  * @internal
  */
 @Injectable()
