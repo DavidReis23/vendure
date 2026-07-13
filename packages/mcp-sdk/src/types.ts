@@ -3,7 +3,7 @@
  * Which API a tool uses: `shop` tools work over the Shop API, `admin` tools over
  * the Admin API.
  *
- * @docsCategory core plugins/McpServerPlugin
+ * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
  */
 export type McpToolset = 'shop' | 'admin';
@@ -14,7 +14,7 @@ export type McpToolset = 'shop' | 'admin';
  * only read data, `mutating` tools change it, and `destructive` tools ask for
  * confirmation before running.
  *
- * @docsCategory core plugins/McpServerPlugin
+ * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
  */
 export type McpToolBehavior = 'readonly' | 'mutating' | 'destructive';

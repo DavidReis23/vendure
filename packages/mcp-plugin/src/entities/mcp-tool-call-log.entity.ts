@@ -4,17 +4,18 @@ import { Column, Entity, Index, ManyToOne } from 'typeorm';
 import { McpActorType, McpToolCallStatus } from '../types';
 
 import { McpOauthClient } from './mcp-oauth-client.entity';
-import { McpSession } from './mcp-session.entity';
+import { McpOauthGrant } from './mcp-oauth-grant.entity';
 
 /**
  * @description
  * Audit record of a single MCP tool call. Input and output are stored as JSON;
  * PII redaction is applied at write time. Rows are retained even if the associated
- * session or OAuth client is later deleted.
+ * grant or OAuth client is later deleted.
  *
  * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
  */
+@Index(['createdAt'])
 @Entity()
 export class McpToolCallLog extends VendureEntity {
     constructor(input?: DeepPartial<McpToolCallLog>) {
@@ -22,11 +23,11 @@ export class McpToolCallLog extends VendureEntity {
     }
 
     @Index()
-    @ManyToOne(() => McpSession, { nullable: true, onDelete: 'SET NULL' })
-    session: McpSession | null;
+    @ManyToOne(() => McpOauthGrant, { nullable: true, onDelete: 'SET NULL' })
+    grant: McpOauthGrant | null;
 
     @EntityId({ nullable: true })
-    sessionId: ID | null;
+    grantId: ID | null;
 
     @Column({ type: 'varchar', nullable: true })
     actor: string | null;
@@ -51,6 +52,7 @@ export class McpToolCallLog extends VendureEntity {
     @Column({ type: 'simple-json', nullable: true })
     output: unknown | null;
 
+    @Index()
     @Column({ type: 'int', nullable: true })
     durationMs: number | null;
 

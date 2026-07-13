@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { DEFAULT_OAUTH_OPTIONS } from './constants';
 import { McpPlugin } from './plugin';
 import { McpPluginOptions } from './types';
-describe('McpPlugin production issuer guard', () => {
+describe('McpPlugin production config guard', () => {
     let savedOptions: McpPluginOptions;
     let savedNodeEnv: string | undefined;
 
@@ -25,7 +25,7 @@ describe('McpPlugin production issuer guard', () => {
 
     function setOauth(oauth: McpPluginOptions['oauth']): void {
         McpPlugin.options = {
-            toolExposure: 'discovery',
+            toolExposure: 'direct',
             oauth: oauth && { ...DEFAULT_OAUTH_OPTIONS, ...oauth },
         };
     }
@@ -37,11 +37,26 @@ describe('McpPlugin production issuer guard', () => {
         expect(() => plugin.onApplicationBootstrap()).toThrow();
     });
 
-    it('does not throw in production when the issuer is a public URL', () => {
+    it('does not throw in production when issuer and storefrontConsentUrl are public URLs', () => {
         process.env.NODE_ENV = 'production';
-        setOauth({ tokenSecret: 'x', issuer: 'https://shop.example.com' });
+        setOauth({
+            tokenSecret: 'x',
+            issuer: 'https://shop.example.com',
+            storefrontConsentUrl: 'https://shop.example.com/mcp/authorize',
+        });
         const plugin = createPlugin(true);
         expect(() => plugin.onApplicationBootstrap()).not.toThrow();
+    });
+
+    it('throws in production when the storefrontConsentUrl is a localhost URL', () => {
+        process.env.NODE_ENV = 'production';
+        setOauth({
+            tokenSecret: 'x',
+            issuer: 'https://shop.example.com',
+            storefrontConsentUrl: 'http://localhost:3000/mcp/authorize',
+        });
+        const plugin = createPlugin(true);
+        expect(() => plugin.onApplicationBootstrap()).toThrow();
     });
 
     it('does not throw when not running on the server process', () => {

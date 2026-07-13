@@ -14,8 +14,8 @@ import { McpOauthClient } from './mcp-oauth-client.entity';
  * @since 3.8.0
  */
 @Entity()
-export class McpSession extends VendureEntity {
-    constructor(input?: DeepPartial<McpSession>) {
+export class McpOauthGrant extends VendureEntity {
+    constructor(input?: DeepPartial<McpOauthGrant>) {
         super(input);
     }
 

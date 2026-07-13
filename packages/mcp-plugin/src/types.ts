@@ -1,5 +1,6 @@
-import { McpToolHandler, RequestContext } from '@vendure/core';
-import type { McpSession } from './entities/mcp-session.entity';
+import { RequestContext } from '@vendure/core';
+import { McpToolHandler } from '@vendure/mcp-sdk';
+import type { McpOauthGrant } from './entities/mcp-oauth-grant.entity';
 
 /**
  * @description
@@ -86,7 +87,7 @@ export interface McpOauthOptions {
 
 /**
  * OAuth options with all optional fields resolved to their defaults. Built by
- * {@link McpPlugin.init} and consumed by the internal `OAuthService`.
+ * {@link McpPlugin.init} and consumed by the internal `McpOauthService`.
  */
 export type ResolvedMcpOauthOptions = Required<McpOauthOptions>;
 
@@ -102,7 +103,7 @@ export interface McpPluginOptions {
      * Controls which tools are returned by the MCP `tools/list` call.
      * See {@link McpToolExposureMode} for the available modes.
      *
-     * @default 'discovery'
+     * @default 'direct'
      */
     toolExposure?: McpToolExposureMode;
     /**
@@ -115,7 +116,7 @@ export interface McpPluginOptions {
 /**
  * @description
  * Carries the Vendure request context into a tool's `execute` call, together with the
- * MCP grant session and client IP resolved for the call when the request was
+ * MCP OAuth grant and client IP resolved for the call when the request was
  * authenticated over OAuth.
  *
  * @docsCategory core plugins/McpPlugin
@@ -123,7 +124,7 @@ export interface McpPluginOptions {
  */
 export interface McpExecutionContext {
     ctx: RequestContext;
-    session?: McpSession;
+    grant?: McpOauthGrant;
     clientIp?: string;
 }
 
@@ -136,7 +137,7 @@ export interface McpExecutionContext {
  * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
  */
-export interface McpServerToolHandler<I = unknown, O = unknown> extends McpToolHandler<I, O> {
+export interface McpPluginToolHandler<I = unknown, O = unknown> extends McpToolHandler<I, O> {
     execute(ctx: RequestContext, input: I, executionContext?: McpExecutionContext): Promise<O> | O;
 }
 
@@ -147,13 +148,9 @@ export type McpActorType = 'customer' | 'admin' | 'anonymous';
 
 /**
  * Result of authenticating a bearer token: the resolved `RequestContext` plus the
- * backing MCP grant session record.
+ * backing MCP OAuth grant record.
  */
-export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' | 'session'>>;
-
-// Re-exported from core so plugin entities can import McpToolset from '../types'
-// without creating a duplicate declaration.
-export type { McpToolset } from '@vendure/core';
+export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' | 'grant'>>;
 
 /**
  * Terminal outcome of a single MCP tool call recorded in {@link McpToolCallLog}.

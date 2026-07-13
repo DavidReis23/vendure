@@ -8,9 +8,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
 import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
-import { McpSession } from '../src/entities/mcp-session.entity';
-import { deriveHashKey, hashToken } from '../src/oauth/crypto';
-import { OAuthService } from '../src/oauth/oauth.service';
+import { McpOauthGrant } from '../src/entities/mcp-oauth-grant.entity';
+import { McpOauthService } from '../src/oauth/oauth.service';
+import { deriveHashKey, hashToken } from '../src/oauth/token-hash';
 import { McpPlugin } from '../src/plugin';
 
 import { runAuthorizationCodeFlow, runShopAuthorizationCodeFlow } from './utils/oauth-test-client';
@@ -25,7 +25,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
     });
     const { server, adminClient, shopClient } = createTestEnvironment(config);
 
-    // Mirrors OAuthService.hashLookup: the value stored in a token/code column is the
+    // Mirrors McpOauthService.hashLookup: the value stored in a token/code column is the
     // keyed HMAC of `lookup:<plaintext>`. Used to find rows for DB-level tampering.
     const hashKey = deriveHashKey(TOKEN_SECRET);
     const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
@@ -141,7 +141,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a token request with the wrong PKCE verifier is rejected.
     it('rejects token exchange with an invalid PKCE verifier', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await authorizeAdminToCode();
 
         await expect(
@@ -158,7 +158,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a token request whose client_id differs from the code's is rejected.
     it('rejects token exchange with a client_id that does not match the code', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await authorizeAdminToCode();
 
         await expect(
@@ -204,7 +204,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a token request whose redirect_uri differs from the code's is rejected.
     it('rejects token exchange when redirect_uri does not match the authorization code', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         // The code is bound to this redirect_uri at authorize time.
         const flow = await authorizeAdminToCode({ redirectUri: 'https://example.com/code-uri' });
 
@@ -250,7 +250,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a token request without a `resource` is rejected.
     it('rejects token exchange when the resource is missing', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await authorizeAdminToCode();
 
         await expect(
@@ -267,7 +267,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a token request whose resource differs from the code's is rejected.
     it('rejects token exchange when the requested resource does not match the code', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await authorizeAdminToCode(); // code bound to the admin resource
 
         await expect(
@@ -284,7 +284,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — a refresh request whose resource differs from the token's is rejected.
     it('rejects a refresh-token exchange when the resource does not match', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await runAdminFlow(); // admin tokens, resource = ${ISSUER}/mcp/admin
 
         await expect(
@@ -299,7 +299,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — an authorization code past its expiry is rejected on exchange.
     it('rejects an expired authorization code', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
@@ -326,9 +326,14 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // --- Security checks ---
 
-    // Relates to OSS-575 — a revoked access token is rejected at the resource.
-    it('rejects a revoked access token at the resource', async () => {
-        const oauth = server.app.get(OAuthService);
+    // Relates to OSS-575 — revoke() is a soft-revoke: the grant row survives (so
+    // McpToolCallLog audit links are preserved) with revokedAt set, and the token is
+    // rejected at the resource afterwards.
+    it('soft-revokes the grant: keeps the row with revokedAt set and rejects the token', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const requestContextService = server.app.get(RequestContextService);
+        const ctx = await requestContextService.create({ apiType: 'admin' });
         const flow = await runAdminFlow();
 
         // Sanity: the token authenticates before revocation.
@@ -336,6 +341,13 @@ describe('McpPlugin OAuth edge & security cases', () => {
         expect(ok.ctx.apiType).toBe('admin');
 
         await oauth.revoke(flow.access_token);
+
+        // Soft revoke: the row is kept (not deleted) with revokedAt stamped.
+        const grant = await connection
+            .getRepository(ctx, McpOauthGrant)
+            .findOne({ where: { accessTokenHash: lookupHash(flow.access_token) } });
+        expect(grant).toBeTruthy();
+        expect(grant?.revokedAt).toBeTruthy();
 
         await expect(oauth.authenticateBearerToken(flow.access_token, 'admin')).rejects.toThrow(
             /invalid or expired/i,
@@ -345,7 +357,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
     // Relates to OSS-575 — a token whose stored resource has been tampered with is rejected
     // on the resource gate, even though the token itself is otherwise valid.
     it('rejects an access token whose stored resource has been tampered with', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
@@ -353,7 +365,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
         const flow = await runAdminFlow();
 
         // Mutate the persisted resource to a different (but well-formed) value.
-        const repo = connection.getRepository(ctx, McpSession);
+        const repo = connection.getRepository(ctx, McpOauthGrant);
         const stored = await repo.findOneOrFail({
             where: { accessTokenHash: lookupHash(flow.access_token) },
         });
@@ -433,16 +445,16 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
     // Relates to OSS-575 — the full shop flow issues tokens that authenticate as the customer.
     it('issues a shop token via the full storefront flow and authenticates the customer', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const flow = await runShopFlow();
         expect(flow.access_token).toBeTruthy();
         expect(flow.refresh_token).toBeTruthy();
 
         const authenticated = await oauth.authenticateBearerToken(flow.access_token, 'shop');
         expect(authenticated.ctx.apiType).toBe('shop');
-        expect(authenticated.session.userType).toBe('customer');
-        expect(authenticated.ctx.activeUserId).toBe(authenticated.session.userId);
-        expect(authenticated.session.userId).toBeTruthy();
+        expect(authenticated.grant.userType).toBe('customer');
+        expect(authenticated.ctx.activeUserId).toBe(authenticated.grant.userId);
+        expect(authenticated.grant.userId).toBeTruthy();
     });
 
     // --- helpers that stop before consent ---

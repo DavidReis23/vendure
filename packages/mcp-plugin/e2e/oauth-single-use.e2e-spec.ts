@@ -8,9 +8,9 @@ import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
 import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
 import { McpOauthClient } from '../src/entities/mcp-oauth-client.entity';
-import { McpSession } from '../src/entities/mcp-session.entity';
-import { deriveHashKey, hashToken } from '../src/oauth/crypto';
-import { OAuthService } from '../src/oauth/oauth.service';
+import { McpOauthGrant } from '../src/entities/mcp-oauth-grant.entity';
+import { McpOauthService } from '../src/oauth/oauth.service';
+import { deriveHashKey, hashToken } from '../src/oauth/token-hash';
 import { McpPlugin } from '../src/plugin';
 
 const TOKEN_SECRET = 'test-secret';
@@ -39,7 +39,7 @@ describe('McpPlugin OAuth single-use code', () => {
     it('exchanges the same authorization code concurrently with exactly one winner', async () => {
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
 
         const superadmin = await connection
@@ -111,7 +111,7 @@ describe('McpPlugin OAuth single-use code', () => {
     it('rotates a refresh token atomically in place on the same grant row', async () => {
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
         const hashKey = deriveHashKey(TOKEN_SECRET);
         const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
@@ -158,7 +158,7 @@ describe('McpPlugin OAuth single-use code', () => {
         );
 
         // Exercise the real authorization-code grant so a genuine access+refresh pair and a
-        // minted McpSession exist before we rotate.
+        // minted McpOauthGrant exist before we rotate.
         const first = await oauth.exchangeToken({
             grant_type: 'authorization_code',
             code: CODE_PLAINTEXT,
@@ -168,7 +168,7 @@ describe('McpPlugin OAuth single-use code', () => {
             resource: RESOURCE,
         });
 
-        const priorGrant = await connection.getRepository(ctx, McpSession).findOne({
+        const priorGrant = await connection.getRepository(ctx, McpOauthGrant).findOne({
             where: { accessTokenHash: lookupHash(first.access_token) },
         });
         if (!priorGrant) {
@@ -187,7 +187,7 @@ describe('McpPlugin OAuth single-use code', () => {
 
         // Rotation happened in place: the same grant row carries the new hashes and
         // remembers the rotated-away refresh hash for reuse detection.
-        const rotatedGrant = await connection.getRepository(ctx, McpSession).findOne({
+        const rotatedGrant = await connection.getRepository(ctx, McpOauthGrant).findOne({
             where: { accessTokenHash: lookupHash(second.access_token) },
         });
         if (!rotatedGrant) {
@@ -200,7 +200,7 @@ describe('McpPlugin OAuth single-use code', () => {
 
         // The prior access token no longer resolves, and the minted Vendure session
         // was re-keyed to the new access token.
-        const staleAccess = await connection.getRepository(ctx, McpSession).findOne({
+        const staleAccess = await connection.getRepository(ctx, McpOauthGrant).findOne({
             where: { accessTokenHash: lookupHash(first.access_token) },
         });
         expect(staleAccess).toBeNull();
@@ -223,7 +223,7 @@ describe('McpPlugin OAuth single-use code', () => {
     it('revokes the whole grant when a rotated refresh token is reused', async () => {
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
         const hashKey = deriveHashKey(TOKEN_SECRET);
         const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
@@ -296,7 +296,7 @@ describe('McpPlugin OAuth single-use code', () => {
 
         // ...and revokes the whole grant: the row is marked revoked and its minted
         // Vendure session is deleted.
-        const grant = await connection.getRepository(ctx, McpSession).findOne({
+        const grant = await connection.getRepository(ctx, McpOauthGrant).findOne({
             where: { accessTokenHash: lookupHash(second.access_token) },
         });
         if (!grant) {

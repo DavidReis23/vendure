@@ -2,7 +2,7 @@ export const MCP_PLUGIN_OPTIONS = Symbol('MCP_PLUGIN_OPTIONS');
 
 export const loggerCtx = 'McpPlugin';
 
-export const DEFAULT_TOOL_EXPOSURE = 'discovery' as const;
+export const DEFAULT_TOOL_EXPOSURE = 'direct' as const;
 
 export const DEFAULT_OAUTH_OPTIONS = {
     issuer: 'http://localhost:3500',

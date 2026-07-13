@@ -1,15 +1,14 @@
 import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
 import { Ctx, RequestContext } from '@vendure/core';
+import { McpToolset } from '@vendure/mcp-sdk';
 import type { Response } from 'express';
 
-import { McpToolset } from '../types';
-
 import { AuthorizeInput, RegisterClientInput, StorefrontCallbackInput, TokenInput } from './oauth-types';
-import { OAuthService } from './oauth.service';
+import { McpOauthService } from './oauth.service';
 
 @Controller()
-export class McpOAuthController {
-    constructor(private oauthService: OAuthService) {}
+export class McpOauthController {
+    constructor(private oauthService: McpOauthService) {}
 
     @Get('.well-known/oauth-authorization-server')
     metadata() {

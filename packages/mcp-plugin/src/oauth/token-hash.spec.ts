@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { deriveHashKey, hashToken } from './crypto';
+import { deriveHashKey, hashToken } from './token-hash';
 
 const SECRET = 'test-token-secret-correct-horse-battery-staple';
 

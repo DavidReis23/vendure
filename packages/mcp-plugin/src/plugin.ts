@@ -7,11 +7,11 @@ import {
     McpAuthorizationCode,
     McpAuthorizationRequest,
     McpOauthClient,
-    McpSession,
+    McpOauthGrant,
     McpToolCallLog,
 } from './entities';
-import { McpOAuthController } from './oauth/oauth.controller';
-import { OAuthService } from './oauth/oauth.service';
+import { McpOauthController } from './oauth/oauth.controller';
+import { McpOauthService } from './oauth/oauth.service';
 import { McpPluginOptions } from './types';
 
 /**
@@ -25,9 +25,9 @@ import { McpPluginOptions } from './types';
  *
  * const config: VendureConfig = {
  *     plugins: [
- *         McpPlugin.init({
- *             toolExposure: 'discovery',
- *         }),
+ *         // Tools are exposed directly by default. Pass `toolExposure: 'discovery'`
+ *         // to expose a small set of search/execute meta-tools instead.
+ *         McpPlugin.init({}),
  *     ],
  * };
  * ```
@@ -37,9 +37,9 @@ import { McpPluginOptions } from './types';
  */
 @VendurePlugin({
     imports: [PluginCommonModule, DiscoveryModule],
-    controllers: [McpOAuthController],
-    providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, OAuthService],
-    entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpSession, McpToolCallLog],
+    controllers: [McpOauthController],
+    providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, McpOauthService],
+    entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpOauthGrant, McpToolCallLog],
     compatibility: '^3.8.0',
 })
 export class McpPlugin implements OnApplicationBootstrap {
@@ -66,11 +66,21 @@ export class McpPlugin implements OnApplicationBootstrap {
         }
 
         const isProduction = process.env.NODE_ENV === 'production';
-        if (isProduction && this.isLoopbackUrl(oauth.issuer)) {
-            throw new Error(
-                `McpPlugin: oauth.issuer cannot be a loopback URL ("${oauth.issuer ?? ''}") in production. ` +
-                    `Set it to your public Vendure server URL so clients can reach it.`,
-            );
+        if (isProduction) {
+            if (this.isLoopbackUrl(oauth.issuer)) {
+                throw new Error(
+                    `McpPlugin: oauth.issuer cannot be a loopback URL ("${oauth.issuer ?? ''}") in production. ` +
+                        `Set it to your public Vendure server URL so clients can reach it.`,
+                );
+            }
+            if (this.isLoopbackUrl(oauth.storefrontConsentUrl)) {
+                throw new Error(
+                    `McpPlugin: oauth.storefrontConsentUrl cannot be a loopback URL ("${
+                        oauth.storefrontConsentUrl ?? ''
+                    }") in production. ` +
+                        `Set it to your public storefront consent page URL, or disable the shop toolset.`,
+                );
+            }
         }
     }
 

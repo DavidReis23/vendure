@@ -4,18 +4,18 @@ import { describe, expect, it } from 'vitest';
 import { DEFAULT_OAUTH_OPTIONS } from '../constants';
 import { McpPluginOptions } from '../types';
 
-import { deriveHashKey, hashToken } from './crypto';
-import { OAuthService } from './oauth.service';
+import { McpOauthService } from './oauth.service';
+import { deriveHashKey, hashToken } from './token-hash';
 
 const ISSUER = 'https://shop.example.com';
 
-function createService(oauth?: McpPluginOptions['oauth']): OAuthService {
+function createService(oauth?: McpPluginOptions['oauth']): McpOauthService {
     const options: McpPluginOptions = {
         oauth: oauth === undefined ? undefined : { ...DEFAULT_OAUTH_OPTIONS, issuer: ISSUER, ...oauth },
     };
     // The methods exercised here validate input / read options before touching any
     // injected dependency, so the DB/session deps can be omitted.
-    return new OAuthService(
+    return new McpOauthService(
         undefined as any,
         undefined as any,
         undefined as any,
@@ -25,7 +25,7 @@ function createService(oauth?: McpPluginOptions['oauth']): OAuthService {
     );
 }
 
-describe('OAuthService metadata', () => {
+describe('McpOauthService metadata', () => {
     it('builds RFC 8414 authorization-server metadata with a trailing-slash-trimmed issuer', () => {
         const service = createService({ tokenSecret: 's', issuer: `${ISSUER}/` });
         const meta = service.metadata();
@@ -71,7 +71,7 @@ describe('OAuthService metadata', () => {
     });
 });
 
-describe('OAuthService PKCE / grant gating', () => {
+describe('McpOauthService PKCE / grant gating', () => {
     it('rejects a non-code response_type', async () => {
         const service = createService({ tokenSecret: 's' });
         await expect(
@@ -106,7 +106,7 @@ describe('OAuthService PKCE / grant gating', () => {
     });
 });
 
-describe('OAuthService bearer-token lookup hashing', () => {
+describe('McpOauthService bearer-token lookup hashing', () => {
     it('hashes the incoming bearer with domain separation before lookup', async () => {
         const tokenSecret = 'test-secret';
         let capturedWhere: { accessTokenHash?: string } | undefined;
@@ -126,7 +126,7 @@ describe('OAuthService bearer-token lookup hashing', () => {
         const options: McpPluginOptions = {
             oauth: { ...DEFAULT_OAUTH_OPTIONS, issuer: ISSUER, tokenSecret },
         };
-        const service = new OAuthService(
+        const service = new McpOauthService(
             connection as any,
             requestContextService as any,
             undefined as any,

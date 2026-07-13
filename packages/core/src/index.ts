@@ -18,7 +18,6 @@ export * from './event-bus/index';
 export * from './health-check/index';
 export * from './i18n/index';
 export * from './job-queue/index';
-export * from './mcp/index';
 export { generateMigration, revertLastMigration, runMigrations } from './migrate';
 export * from './migration-utils/index';
 export * from './plugin/index';

@@ -4,7 +4,7 @@ import { Test } from '@nestjs/testing';
 import { Permission } from '@vendure/common/lib/generated-types';
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import { McpTool, McpToolHandler, McpToolMetadata } from './index';
+import { McpTool, McpToolHandler, McpToolMetadata } from './mcp-tool.decorator';
 
 @Injectable()
 @McpTool({

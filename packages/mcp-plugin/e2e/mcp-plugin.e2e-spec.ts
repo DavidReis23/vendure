@@ -29,7 +29,7 @@ describe('McpPlugin bootstrap', () => {
 
     it('boots a Vendure app with McpPlugin registered', () => {
         expect(server.app).toBeDefined();
-        expect(McpPlugin.options.toolExposure).toBe('discovery');
+        expect(McpPlugin.options.toolExposure).toBe('direct');
     });
 
     it('DiscoveryService is injectable from the running app', () => {

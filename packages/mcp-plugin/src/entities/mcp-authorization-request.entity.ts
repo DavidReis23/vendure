@@ -1,7 +1,6 @@
 import { DeepPartial, EntityId, ID, VendureEntity } from '@vendure/core';
+import { McpToolset } from '@vendure/mcp-sdk';
 import { Column, Entity, Index, ManyToOne } from 'typeorm';
-
-import { McpToolset } from '../types';
 
 import { McpOauthClient } from './mcp-oauth-client.entity';
 

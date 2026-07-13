@@ -12,9 +12,9 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
-import { McpSession } from '../src/entities/mcp-session.entity';
-import { deriveHashKey, hashToken } from '../src/oauth/crypto';
-import { OAuthService } from '../src/oauth/oauth.service';
+import { McpOauthGrant } from '../src/entities/mcp-oauth-grant.entity';
+import { McpOauthService } from '../src/oauth/oauth.service';
+import { deriveHashKey, hashToken } from '../src/oauth/token-hash';
 import { McpPlugin } from '../src/plugin';
 
 import { runAuthorizationCodeFlow } from './utils/oauth-test-client';
@@ -29,7 +29,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     });
     const { server, adminClient } = createTestEnvironment(config);
 
-    // Hash helpers mirroring the OAuthService: the `lookup:`-prefixed hash is what's
+    // Hash helpers mirroring the McpOauthService: the `lookup:`-prefixed hash is what's
     // stored in the token column; the unprefixed hash is the minted session's token.
     const hashKey = deriveHashKey(TOKEN_SECRET);
     const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
@@ -70,7 +70,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     });
 
     it('authenticates the issued access token and binds the granting user', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
         const requestContextService = server.app.get(RequestContextService);
         const ctx = await requestContextService.create({ apiType: 'admin' });
@@ -86,7 +86,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             throw new Error('Expected a seeded superadmin user');
         }
         expect(authenticated.ctx.activeUserId).toBe(superadmin.id);
-        expect(authenticated.session.userId).toBe(superadmin.id);
+        expect(authenticated.grant.userId).toBe(superadmin.id);
     });
 
     it('stores the access token hashed, never in plaintext', async () => {
@@ -98,19 +98,19 @@ describe('McpPlugin OAuth end-to-end flow', () => {
 
         // The stored grant row is keyed by the lookup hash, not the plaintext.
         const stored = await connection
-            .getRepository(ctx, McpSession)
+            .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         expect(stored).toBeTruthy();
 
         // The plaintext token must never appear in the token column.
         const plaintextRow = await connection
-            .getRepository(ctx, McpSession)
+            .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: access_token } });
         expect(plaintextRow).toBeNull();
     });
 
     it('rotates the refresh token and rejects a replay of the original', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const first = await runFlow();
 
         const rotated = await oauth.exchangeToken({
@@ -134,7 +134,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     });
 
     it('rejects re-exchange of an already-used authorization code', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         // The flow has already exchanged this code once; a sequential replay must fail.
         const { code, client_id, redirect_uri, code_verifier, resource } = await runFlow();
 
@@ -153,7 +153,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     // T7 regression — when the minted Vendure session lapses, re-authenticating the same
     // access token must re-mint a fresh session rather than fail.
     it('re-mints the dedicated Vendure session after it lapses', async () => {
-        const oauth = server.app.get(OAuthService);
+        const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
         const configService = server.app.get(ConfigService);
         const requestContextService = server.app.get(RequestContextService);
@@ -164,10 +164,10 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         // Find the grant row backing this access token, and note which Vendure
         // session currently backs it.
         const mcpSessionBefore = await connection
-            .getRepository(ctx, McpSession)
+            .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionBefore) {
-            throw new Error('Expected a minted McpSession for the access token');
+            throw new Error('Expected a minted McpOauthGrant for the access token');
         }
         const sessionIdBefore = mcpSessionBefore.vendureSessionId;
 
@@ -186,16 +186,16 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         await connection.getRepository(ctx, Session).save(vendureSession);
         await configService.authOptions.sessionCacheStrategy.delete(sessionToken);
 
-        // Re-authenticating succeeds by re-minting a new session, and the McpSession now
+        // Re-authenticating succeeds by re-minting a new session, and the McpOauthGrant now
         // points at a different Vendure session id.
         const reauthenticated = await oauth.authenticateBearerToken(access_token, 'admin');
         expect(reauthenticated.ctx.activeUserId).toBe(mcpSessionBefore.userId);
 
         const mcpSessionAfter = await connection
-            .getRepository(ctx, McpSession)
+            .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionAfter) {
-            throw new Error('Expected the McpSession to persist after re-mint');
+            throw new Error('Expected the McpOauthGrant to persist after re-mint');
         }
         expect(mcpSessionAfter.vendureSessionId).not.toBe(sessionIdBefore);
     });
