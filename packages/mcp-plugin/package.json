@@ -1,6 +1,6 @@
 {
     "name": "@vendure/mcp-plugin",
-    "version": "3.6.4",
+    "version": "3.7.0",
     "license": "GPL-3.0-or-later",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -25,11 +25,15 @@
         "access": "public"
     },
     "dependencies": {
-        "@vendure/mcp-sdk": "3.6.4"
+        "@modelcontextprotocol/node": "2.0.0-beta.2",
+        "@modelcontextprotocol/server": "2.0.0-beta.2",
+        "@vendure/mcp-sdk": "3.7.0",
+        "hono": "^4.11.4"
     },
     "devDependencies": {
+        "@modelcontextprotocol/client": "2.0.0-beta.2",
         "@types/express": "^5.0.1",
-        "@vendure/common": "3.6.4",
-        "@vendure/core": "3.6.4"
+        "@vendure/common": "3.7.0",
+        "@vendure/core": "3.7.0"
     }
 }

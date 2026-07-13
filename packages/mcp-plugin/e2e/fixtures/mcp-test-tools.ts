@@ -1,0 +1,98 @@
+import { Injectable } from '@nestjs/common';
+import { Permission, PluginCommonModule, RequestContext, VendurePlugin } from '@vendure/core';
+import { McpTool, McpToolHandler } from '@vendure/mcp-sdk';
+
+@Injectable()
+@McpTool({
+    name: 'shop_ping',
+    description: 'Shop readonly ping — reports the resolved session and channel.',
+    toolset: 'shop',
+    behavior: 'readonly',
+    permissions: [Permission.Public],
+    inputSchema: { type: 'object', properties: { text: { type: 'string' } }, additionalProperties: false },
+})
+export class ShopPingTool implements McpToolHandler {
+    execute(ctx: RequestContext, input: { text?: string }) {
+        return {
+            text: input?.text ?? 'pong',
+            sessionId: ctx.session?.id ?? null,
+            sessionToken: ctx.session?.token ?? null,
+            channelId: ctx.channelId ?? null,
+        };
+    }
+}
+
+@Injectable()
+@McpTool({
+    name: 'shop_echo',
+    description: 'Echoes the provided text back.',
+    toolset: 'shop',
+    behavior: 'readonly',
+    permissions: [Permission.Public],
+    inputSchema: {
+        type: 'object',
+        properties: { text: { type: 'string' } },
+        required: ['text'],
+        additionalProperties: false,
+    },
+})
+export class ShopEchoTool implements McpToolHandler {
+    execute(_ctx: RequestContext, input: { text: string }) {
+        return { echoed: input.text };
+    }
+}
+
+@Injectable()
+@McpTool({
+    name: 'shop_boom',
+    description: 'Always throws — used to verify in-tool errors flatten to isError.',
+    toolset: 'shop',
+    behavior: 'mutating',
+    permissions: [Permission.Public],
+    inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+})
+export class ShopBoomTool implements McpToolHandler {
+    execute(): never {
+        throw new Error('boom');
+    }
+}
+
+@Injectable()
+@McpTool({
+    name: 'shop_delete',
+    description: 'Deletes a thing. Destructive — requires confirmation.',
+    toolset: 'shop',
+    behavior: 'destructive',
+    permissions: [Permission.Public],
+    inputSchema: {
+        type: 'object',
+        properties: { id: { type: 'string' } },
+        required: ['id'],
+        additionalProperties: false,
+    },
+})
+export class ShopDeleteTool implements McpToolHandler {
+    execute(_ctx: RequestContext, input: { id: string }) {
+        return { deleted: input.id };
+    }
+}
+
+@Injectable()
+@McpTool({
+    name: 'admin_list',
+    description: 'Admin readonly list.',
+    toolset: 'admin',
+    behavior: 'readonly',
+    permissions: [Permission.ReadCatalog],
+})
+export class AdminListTool implements McpToolHandler {
+    execute() {
+        return { items: [] };
+    }
+}
+
+@VendurePlugin({
+    imports: [PluginCommonModule],
+    providers: [ShopPingTool, ShopEchoTool, ShopBoomTool, ShopDeleteTool, AdminListTool],
+})
+export class McpTestToolsPlugin {}

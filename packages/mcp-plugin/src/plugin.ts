@@ -1,8 +1,16 @@
 import { OnApplicationBootstrap, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
-import { PluginCommonModule, ProcessContext, VendurePlugin } from '@vendure/core';
+import { PluginCommonModule, ProcessContext, SettingsStoreScopes, VendurePlugin } from '@vendure/core';
 
-import { DEFAULT_OAUTH_OPTIONS, DEFAULT_TOOL_EXPOSURE, MCP_PLUGIN_OPTIONS } from './constants';
+import {
+    DEFAULT_OAUTH_OPTIONS,
+    DEFAULT_RATE_LIMIT_OPTIONS,
+    DEFAULT_TOOL_EXPOSURE,
+    MCP_PLUGIN_OPTIONS,
+    MCP_SETTINGS_NAMESPACE,
+    MCP_TOOL_TOGGLES_FIELD_NAME,
+    mcpServerPermission,
+} from './constants';
 import {
     McpAuthorizationCode,
     McpAuthorizationRequest,
@@ -12,7 +20,10 @@ import {
 } from './entities';
 import { McpOauthController } from './oauth/oauth.controller';
 import { McpOauthService } from './oauth/oauth.service';
-import { McpPluginOptions } from './types';
+import { McpToolRegistryService } from './registry/mcp-tool-registry.service';
+import { McpOperationsService } from './services/mcp-operations.service';
+import { McpTransportController } from './transport/mcp-transport.controller';
+import { McpPluginOptions, McpRateLimitOptions } from './types';
 
 /**
  * @description
@@ -37,9 +48,32 @@ import { McpPluginOptions } from './types';
  */
 @VendurePlugin({
     imports: [PluginCommonModule, DiscoveryModule],
-    controllers: [McpOauthController],
-    providers: [{ provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options }, McpOauthService],
+    controllers: [McpOauthController, McpTransportController],
+    providers: [
+        { provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options },
+        McpOauthService,
+        McpToolRegistryService,
+        McpOperationsService,
+    ],
     entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpOauthGrant, McpToolCallLog],
+    configuration: config => {
+        config.authOptions.customPermissions.push(mcpServerPermission);
+        config.settingsStoreFields = {
+            ...config.settingsStoreFields,
+            [MCP_SETTINGS_NAMESPACE]: [
+                {
+                    name: MCP_TOOL_TOGGLES_FIELD_NAME,
+                    scope: SettingsStoreScopes.global,
+                    requiresPermission: { read: mcpServerPermission.Read, write: mcpServerPermission.Update },
+                    validate: value =>
+                        value == null || typeof value === 'object'
+                            ? undefined
+                            : 'MCP tool toggles must be an object',
+                },
+            ],
+        };
+        return config;
+    },
     compatibility: '^3.8.0',
 })
 export class McpPlugin implements OnApplicationBootstrap {
@@ -51,8 +85,26 @@ export class McpPlugin implements OnApplicationBootstrap {
         this.options = {
             toolExposure: options.toolExposure ?? DEFAULT_TOOL_EXPOSURE,
             oauth: options.oauth && { ...DEFAULT_OAUTH_OPTIONS, ...options.oauth },
+            rateLimits: McpPlugin.resolveRateLimits(options.rateLimits),
+            dnsRebinding: options.dnsRebinding,
         };
         return McpPlugin;
+    }
+
+    /**
+     * Merges user rate-limit options over the defaults. The anonymous-IP backstop stays ON unless
+     * the user explicitly passes `anonymousIp: false`.
+     */
+    private static resolveRateLimits(rateLimits?: McpRateLimitOptions): McpRateLimitOptions {
+        return {
+            perSession: rateLimits?.perSession ?? DEFAULT_RATE_LIMIT_OPTIONS.perSession,
+            perClient: rateLimits?.perClient ?? DEFAULT_RATE_LIMIT_OPTIONS.perClient,
+            perTool: { ...DEFAULT_RATE_LIMIT_OPTIONS.perTool, ...rateLimits?.perTool },
+            anonymousIp:
+                rateLimits?.anonymousIp === undefined
+                    ? DEFAULT_RATE_LIMIT_OPTIONS.anonymousIp
+                    : rateLimits.anonymousIp,
+        };
     }
 
     onApplicationBootstrap(): void {

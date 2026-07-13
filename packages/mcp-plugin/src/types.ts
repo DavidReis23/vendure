@@ -1,5 +1,6 @@
+import type { StandardSchemaWithJSON, ToolAnnotations } from '@modelcontextprotocol/server';
 import { RequestContext } from '@vendure/core';
-import { McpToolHandler } from '@vendure/mcp-sdk';
+import { McpJsonSchema, McpToolBehavior, McpToolHandler, McpToolMetadata } from '@vendure/mcp-sdk';
 import type { McpOauthGrant } from './entities/mcp-oauth-grant.entity';
 
 /**
@@ -93,6 +94,58 @@ export type ResolvedMcpOauthOptions = Required<McpOauthOptions>;
 
 /**
  * @description
+ * Per-scope request-rate limits for MCP calls, expressed in requests per minute (`rpm`).
+ * A value of `0` means unlimited.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export interface McpRateLimitOptions {
+    /**
+     * Limit per authenticated MCP session (OAuth grant).
+     *
+     * @default { rpm: 60 }
+     */
+    perSession?: { rpm: number };
+    /**
+     * Limit per registered OAuth client.
+     *
+     * @default { rpm: 120 }
+     */
+    perClient?: { rpm: number };
+    /**
+     * Opt-in per-tool limits, keyed by tool name (`0` = unlimited).
+     *
+     * @default { place_order: { rpm: 5 }, create_product: { rpm: 10 } }
+     */
+    perTool?: Record<string, { rpm: number }>;
+    /**
+     * Limit per client IP for anonymous `/mcp/shop` calls
+     *
+     * Behind a reverse proxy, enable Vendure's `trustProxy` so `req.ip` reports the client
+     * address rather than the proxy's.
+     *
+     * @default { rpm: 60 }
+     */
+    anonymousIp?: { rpm: number } | false;
+}
+
+/**
+ * @description
+ * DNS-rebinding protection for the MCP transport. When `allowedHosts`/`allowedOrigins` are
+ * provided, requests whose `Host`/`Origin` header is not in the list are rejected before the
+ * MCP handler runs. When omitted, the guard is not applied.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export interface McpDnsRebindingOptions {
+    allowedHosts?: string[];
+    allowedOrigins?: string[];
+}
+
+/**
+ * @description
  * Options passed to {@link McpPlugin.init}.
  *
  * @docsCategory core plugins/McpPlugin
@@ -111,6 +164,17 @@ export interface McpPluginOptions {
      * OAuth options. When omitted, the OAuth surface is disabled.
      */
     oauth?: McpOauthOptions;
+    /**
+     * @description
+     * Per-scope request-rate limits. Sensible defaults apply when omitted; see
+     * {@link McpRateLimitOptions}.
+     */
+    rateLimits?: McpRateLimitOptions;
+    /**
+     * @description
+     * DNS-rebinding protection for the MCP transport. See {@link McpDnsRebindingOptions}.
+     */
+    dnsRebinding?: McpDnsRebindingOptions;
 }
 
 /**
@@ -156,3 +220,38 @@ export type McpAuthenticatedContext = Required<Pick<McpExecutionContext, 'ctx' |
  * Terminal outcome of a single MCP tool call recorded in {@link McpToolCallLog}.
  */
 export type McpToolCallStatus = 'success' | 'error';
+
+/**
+ * @description
+ * A discovered `@McpTool` provider, enriched by the registry at bootstrap. This is the registry's
+ * single source of truth, consumed by the transport factory and the admin API.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export interface McpRegisteredTool extends McpToolMetadata {
+    /** The discovered provider instance (implements `execute`). */
+    handler: McpPluginToolHandler;
+    /** Name of the Nest module/host that declared the provider. */
+    pluginSource: string;
+    /** The resolved behavior (`behavior` → `requiresConfirmation` → `readOnly` → `mutating`). */
+    resolvedBehavior: McpToolBehavior;
+    /** MCP annotations derived from behavior; surfaced to the agent in `tools/list` and `search_tools`. */
+    annotations: ToolAnnotations;
+    /**
+     * The canonical input schema (single source of truth). Derived once at discovery: the tool's
+     * `inputSchema`, or the no-args default when none is declared. Never mutated — the destructive
+     * `confirm` field is injected onto a clone (see the wire schema below).
+     */
+    jsonInputSchema: McpJsonSchema;
+    /**
+     * Compiled validator for the WIRE input schema (canonical schema plus the injected optional
+     * `confirm` field for destructive tools). Compiled once at bootstrap; registered with the SDK
+     * per request and reused for discovery-path (`execute_tool`) inner-argument validation.
+     */
+    compiledInputSchema: StandardSchemaWithJSON;
+    /** The declared output schema, if any (drives output-drift logging). */
+    jsonOutputSchema?: McpJsonSchema;
+    /** Compiled validator for the declared output schema, if any. */
+    compiledOutputSchema?: StandardSchemaWithJSON;
+}

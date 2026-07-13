@@ -322,7 +322,7 @@ export class McpOauthService {
         return { ctx, grant };
     }
 
-    async createAnonymousShopContext(sessionToken?: string): Promise<RequestContext> {
+    async createAnonymousShopContext(sessionToken?: string, channelToken?: string): Promise<RequestContext> {
         const existingSession = sessionToken
             ? await this.sessionService.getSessionFromToken(sessionToken)
             : undefined;
@@ -331,7 +331,9 @@ export class McpOauthService {
                 ? existingSession
                 : await this.sessionService.createAnonymousSession();
         const adminCtx = await this.createAdminCtx();
-        const channel = await this.channelService.getDefaultChannel(adminCtx);
+        const channel = channelToken
+            ? await this.channelService.getChannelFromToken(adminCtx, channelToken)
+            : await this.channelService.getDefaultChannel(adminCtx);
         return new RequestContext({
             apiType: 'shop',
             channel,
