@@ -30,6 +30,11 @@ import { prorate } from './prorate';
  * @since 3.8.0
  */
 export interface ApplyPriceAdjustmentsOptions {
+    /**
+     * @description
+     * Whether the shipping method & rate should be re-evaluated — which may swap the Order's
+     * shipping method to a different eligible one. Defaults to `true`.
+     */
     recalculateShipping?: boolean;
     /**
      * @description

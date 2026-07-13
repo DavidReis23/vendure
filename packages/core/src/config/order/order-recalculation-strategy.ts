@@ -4,13 +4,14 @@ import { Order } from '../../entity/order/order.entity';
 
 /**
  * @description
- * This strategy determines whether an active Order's prices, promotions and taxes should be
- * re-calculated when the Order is read (e.g. via the `activeOrder` query). Recalculation is only
- * ever attempted for Orders in the `AddingItems` state.
+ * This strategy determines whether an active Order's prices, promotions, taxes and shipping
+ * promotions should be re-calculated when the Order is read (e.g. via the `activeOrder` query).
+ * Recalculation is only ever attempted for Orders in the `AddingItems` state.
  *
- * **Note:** read-time recalculation refreshes item/order prices, promotions and taxes only.
- * Shipping method eligibility, rates and shipping promotions are NOT re-evaluated on read — they
- * are re-evaluated when the order transitions to `ArrangingPayment` (checkout).
+ * **Note:** the shipping *method* and *rate* are NOT re-evaluated on read, so a read never silently
+ * swaps the customer's chosen method — those are re-evaluated when the Order transitions to
+ * `ArrangingPayment` (checkout). Shipping *promotions* are re-tested, so a now-inactive shipping
+ * promotion's discount is cleared rather than surviving on the Order.
  *
  * The default {@link NoOrderRecalculationStrategy} never triggers a recalculation, preserving the
  * historical behaviour whereby an active Order's prices are only updated on write mutations. Use
