@@ -1544,7 +1544,7 @@
                   "title": "ListQueryBuilder",
                   "slug": "list-query-builder",
                   "file": "docs/reference/typescript-api/data-access/list-query-builder.mdx",
-                  "lastModified": "2026-07-13T10:08:48Z"
+                  "lastModified": "2026-07-14T10:51:14+02:00"
                 },
                 {
                   "title": "TransactionalConnection",
