@@ -31,6 +31,13 @@ const allowedOpenObjectPaths = new Set([
     'set_billing_address.address.customFields',
     'set_shipping_address.address.customFields',
     'place_order.paymentMetadata',
+    // Admin: customFields are genuine open bags on the create/update input objects.
+    'create_customer.input.customFields',
+    'update_customer.input.customFields',
+    'create_product.input.customFields',
+    'update_product.input.customFields',
+    'create_variant.input.customFields',
+    'update_variant.input.customFields',
 ]);
 
 function metadataFor(provider: unknown): McpToolMetadata {

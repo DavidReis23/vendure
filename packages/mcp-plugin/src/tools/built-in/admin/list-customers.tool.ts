@@ -1,0 +1,37 @@
+import { Injectable } from '@nestjs/common';
+import { Customer, CustomerService, Permission, RequestContext } from '@vendure/core';
+import { McpTool } from '@vendure/mcp-sdk';
+
+import { McpPluginToolHandler } from '../../../types';
+import { numberProp, objectSchema, optional } from '../schema-helpers';
+import { customerSummary, listOptions, page } from '../tool-kit';
+
+interface ListCustomersInput extends Record<string, unknown> {
+    limit?: number;
+    offset?: number;
+}
+
+@McpTool({
+    name: 'list_customers',
+    toolset: 'admin',
+    description: 'List customers.',
+    permissions: [Permission.ReadCustomer],
+    readOnly: true,
+    inputSchema: objectSchema({
+        limit: optional(numberProp('Maximum number of customers to return.')),
+        offset: optional(numberProp('Number of customers to skip.')),
+    }),
+})
+@Injectable()
+export class ListCustomersTool implements McpPluginToolHandler<ListCustomersInput> {
+    constructor(private customerService: CustomerService) {}
+
+    async execute(ctx: RequestContext, input: ListCustomersInput) {
+        const result = await this.customerService.findAll(ctx, listOptions<Customer>(input), ['user']);
+        return page(
+            result.items.map(customer => customerSummary(customer)),
+            result.totalItems,
+            input,
+        );
+    }
+}
