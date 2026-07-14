@@ -209,7 +209,9 @@ export class McpOauthService {
         if (!vendureSession?.user) {
             throw new UnauthorizedException('Invalid Vendure storefront session');
         }
-        const channelId = input.channelToken ? await this.resolveChannelId(input.channelToken) : null;
+        const channelId = input.channelToken
+            ? await this.resolveChannelId(input.channelToken)
+            : (vendureSession.activeChannelId ?? null);
         return this.completeAuthorizationRequest(
             input.session,
             true,

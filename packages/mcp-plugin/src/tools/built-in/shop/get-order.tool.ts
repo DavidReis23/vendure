@@ -1,0 +1,41 @@
+import { Injectable } from '@nestjs/common';
+import { ConfigService, OrderService, Permission, RequestContext } from '@vendure/core';
+import { McpTool } from '@vendure/mcp-sdk';
+
+import { McpPluginToolHandler } from '../../../types';
+import { objectSchema, stringProp } from '../schema-helpers';
+import { orderSummary } from '../tool-kit';
+
+interface GetOrderInput {
+    code: string;
+}
+
+@McpTool({
+    name: 'get_order',
+    toolset: 'shop',
+    description: 'Get an accessible order by code.',
+    permissions: [Permission.Public],
+    readOnly: true,
+    inputSchema: objectSchema({ code: stringProp('Order code.') }),
+})
+@Injectable()
+export class ShopGetOrderTool implements McpPluginToolHandler<GetOrderInput> {
+    constructor(
+        private configService: ConfigService,
+        private orderService: OrderService,
+    ) {}
+
+    async execute(ctx: RequestContext, input: GetOrderInput) {
+        const order = await this.orderService.findOneByCode(ctx, input.code, [
+            'lines',
+            'customer',
+            'customer.user',
+        ]);
+        if (!order) return { order: null };
+        const canAccess = await this.configService.orderOptions.orderByCodeAccessStrategy.canAccessOrder(
+            ctx,
+            order,
+        );
+        return { order: canAccess ? orderSummary(order) : null };
+    }
+}

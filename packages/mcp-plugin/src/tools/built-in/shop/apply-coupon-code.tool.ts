@@ -1,0 +1,33 @@
+import { Injectable } from '@nestjs/common';
+import { ActiveOrderService, OrderService, Permission, RequestContext } from '@vendure/core';
+import { McpTool } from '@vendure/mcp-sdk';
+
+import { McpPluginToolHandler } from '../../../types';
+import { objectSchema, stringProp } from '../schema-helpers';
+import { getActiveOrder, orderResult } from '../tool-kit';
+
+interface ApplyCouponCodeInput {
+    code: string;
+}
+
+@McpTool({
+    name: 'apply_coupon_code',
+    toolset: 'shop',
+    description: 'Apply a coupon code to the active cart.',
+    permissions: [Permission.Public],
+    readOnly: false,
+    inputSchema: objectSchema({ code: stringProp('Coupon code.') }),
+})
+@Injectable()
+export class ApplyCouponCodeTool implements McpPluginToolHandler<ApplyCouponCodeInput> {
+    constructor(
+        private activeOrderService: ActiveOrderService,
+        private orderService: OrderService,
+    ) {}
+
+    async execute(ctx: RequestContext, input: ApplyCouponCodeInput) {
+        const order = await getActiveOrder(ctx, this.activeOrderService, this.orderService, true);
+        if (!order) return orderResult(undefined);
+        return orderResult(await this.orderService.applyCouponCode(ctx, order.id, input.code));
+    }
+}

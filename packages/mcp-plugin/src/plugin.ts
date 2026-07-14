@@ -22,6 +22,7 @@ import { McpOauthController } from './oauth/oauth.controller';
 import { McpOauthService } from './oauth/oauth.service';
 import { McpToolRegistryService } from './registry/mcp-tool-registry.service';
 import { McpOperationsService } from './services/mcp-operations.service';
+import { mcpBuiltInToolProviders } from './tools/built-in/providers';
 import { McpTransportController } from './transport/mcp-transport.controller';
 import { McpPluginOptions, McpRateLimitOptions } from './types';
 
@@ -54,6 +55,7 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         McpOauthService,
         McpToolRegistryService,
         McpOperationsService,
+        ...mcpBuiltInToolProviders,
     ],
     entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpOauthGrant, McpToolCallLog],
     configuration: config => {
