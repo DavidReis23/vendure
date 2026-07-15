@@ -1,7 +1,7 @@
+import { useLingui } from '@lingui/react/macro';
 import { CheckIcon, XIcon } from 'lucide-react';
 import React from 'react';
-import { Badge } from '../ui/badge.js';
-import { useLingui } from '@lingui/react/macro';
+import { StatusBadge } from '../ui/status-badge.js';
 
 export function BooleanDisplayCheckbox({ value }: Readonly<{ value: boolean }>) {
     return value ? <CheckIcon className="opacity-70" /> : <XIcon className="opacity-70" />;
@@ -18,8 +18,8 @@ export function BooleanDisplayBadge({
 }) {
     const { t } = useLingui();
     return (
-        <Badge variant={value ? 'success' : 'secondary'}>
+        <StatusBadge tone={value ? 'success' : 'neutral'}>
             {value ? (labelTrue ?? t`Enabled`) : (labelFalse ?? t`Disabled`)}
-        </Badge>
+        </StatusBadge>
     );
 }

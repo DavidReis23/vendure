@@ -71,7 +71,7 @@ export const Route = createFileRoute('/_authenticated/_product-variants/product-
             return [{ path: '/product-variants', label: <Trans>Product Variants</Trans> }, entity?.name];
         },
     }),
-    errorComponent: ({ error }) => <ErrorPage message={error.message} />,
+    errorComponent: ({ error }) => <ErrorPage error={error} />,
 });
 
 type PriceInput = NonNullable<VariablesOf<typeof updateProductVariantDocument>['input']['prices']>[number];
@@ -269,7 +269,7 @@ function ProductVariantDetailPage() {
                     <PageBlock column="side" blockId="options" title={<Trans>Options</Trans>}>
                         <div className="flex flex-wrap gap-1.5">
                             {entity.options.map(option => (
-                                <Badge key={option.id} variant="secondary" className="text-xs" title={option.code}>
+                                <Badge key={option.id} variant="default" className="text-xs" title={option.code}>
                                     <span>{option.group.name}: {option.name}</span>
                                     <Link
                                         to={`/option-groups/${option.group.id}`}

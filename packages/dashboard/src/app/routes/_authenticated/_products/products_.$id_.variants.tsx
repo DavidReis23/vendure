@@ -62,7 +62,7 @@ export const Route = createFileRoute('/_authenticated/_products/products_/$id_/v
             ],
         };
     },
-    errorComponent: ({ error }) => <ErrorPage message={error.message} />,
+    errorComponent: ({ error }) => <ErrorPage error={error} />,
 });
 
 const addOptionValueSchema = z.object({
@@ -280,7 +280,7 @@ function ManageProductVariants() {
                                         </label>
                                         <div className="flex flex-wrap gap-2 mt-1">
                                             {group.options.map(option => (
-                                                <Badge key={option.id} variant="secondary">
+                                                <Badge key={option.id} variant="default">
                                                     {option.name}
                                                 </Badge>
                                             ))}
@@ -296,6 +296,7 @@ function ManageProductVariants() {
                                             <ConfirmationDialog
                                                 title={t`Remove option group`}
                                                 description={t`Are you sure you want to remove this option group from the product?`}
+                                                destructive
                                                 onConfirm={() => removeOptionGroup(group.id)}
                                             >
                                                 <Button
@@ -432,6 +433,7 @@ function ManageProductVariants() {
                                             <ConfirmationDialog
                                                 title={t`Delete variant`}
                                                 description={t`Are you sure you want to delete this variant?`}
+                                                destructive
                                                 onConfirm={() => deleteVariant(variant.id)}
                                             >
                                                 <Button
