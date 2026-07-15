@@ -35,6 +35,17 @@ in the Insights page.
 
 Use the `useWidgetFilters()` hook to get the currently-selected date range, if your widget depends on that.
 
+:::note Be honest about sampled data
+Some data cannot be aggregated or sorted efficiently by the API (for example, best sellers or
+low-stock variants), so a widget may only inspect a bounded sample — e.g. the most recent 100
+orders, or the first 100 variants — rather than the full data set. When your widget samples,
+state the basis in its `description` (or a footer) and avoid absolute claims. The built-in
+**Top Products** and **Low Stock** widgets follow this: Top Products aggregates only orders in
+the active channel's default currency from the most recent 100 placed orders, and Low Stock
+reports "No low stock in this sample" rather than "Stock levels look healthy" so a low-stock
+variant outside the sample is not misread as absent.
+:::
+
 Then register your widget in your dashboard entrypoint file using the `insights` object:
 
 ```tsx title="index.tsx"

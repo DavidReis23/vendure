@@ -306,6 +306,8 @@ export function registerDefaults() {
         defaultSize: { w: 4, h: 6, x: 4, y: 0 },
         minSize: { w: 3, h: 4 },
         requiresPermissions: ['ReadCatalog', 'ReadProduct'],
+        // Matches THRESHOLD_OPTIONS in the low stock widget component.
+        defaultConfig: { threshold: 10 },
     });
 
     registerDashboardWidget({

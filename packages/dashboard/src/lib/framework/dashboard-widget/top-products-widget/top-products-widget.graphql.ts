@@ -6,7 +6,6 @@ export const topProductsOrdersQuery = graphql(`
             totalItems
             items {
                 id
-                currencyCode
                 lines {
                     id
                     quantity

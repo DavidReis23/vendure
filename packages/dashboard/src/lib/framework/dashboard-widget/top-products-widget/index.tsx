@@ -15,6 +15,8 @@ import { topProductsOrdersQuery } from './top-products-widget.graphql.js';
 
 const WIDGET_ID = 'top-products-widget';
 // Number of placed orders sampled from the date range to aggregate best sellers from.
+// The list is not exhaustive: only the most recent ORDER_SAMPLE_SIZE orders are aggregated,
+// so on high-volume stores products that only sold earlier in the range may be missed.
 const ORDER_SAMPLE_SIZE = 100;
 const TOP_N = 8;
 
@@ -39,8 +41,15 @@ export function TopProductsWidget() {
     const [config, setConfig] = useWidgetConfig<TopProductsWidgetConfig>();
     const metric = config.metric;
 
+    // Revenue is only meaningful within a single currency, so we aggregate exclusively over
+    // orders placed in the active channel's default currency and format totals in that currency.
+    // Orders in other currencies (multi-currency channels) are excluded from both the revenue
+    // and quantity rankings; this is stated in the widget description so the sample is not
+    // mistaken for the full picture.
+    const currencyCode = activeChannel?.defaultCurrencyCode ?? 'USD';
+
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['top-products-widget', dateRange],
+        queryKey: ['top-products-widget', dateRange, currencyCode],
         queryFn: () =>
             api.query(topProductsOrdersQuery, {
                 options: {
@@ -48,6 +57,7 @@ export function TopProductsWidget() {
                     filter: {
                         active: { eq: false },
                         state: { notIn: ['Cancelled', 'Draft'] },
+                        currencyCode: { eq: currencyCode },
                         orderPlacedAt: {
                             between: {
                                 start: dateRange.from.toISOString(),
@@ -81,13 +91,11 @@ export function TopProductsWidget() {
             .slice(0, TOP_N);
     }, [data, metric]);
 
-    const currencyCode = activeChannel?.defaultCurrencyCode ?? 'USD';
-
     return (
         <DashboardBaseWidget
             id={WIDGET_ID}
             title={t`Top Products`}
-            description={t`Best sellers for the selected period`}
+            description={t`Best sellers from the most recent ${ORDER_SAMPLE_SIZE} orders in ${currencyCode} for the selected period`}
             actions={
                 <Tabs
                     value={metric}
