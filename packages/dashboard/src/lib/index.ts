@@ -240,6 +240,7 @@ export * from './framework/dashboard-widget/metrics-widget/metrics-widget.graphq
 export * from './framework/dashboard-widget/orders-summary/order-summary-widget.graphql.js';
 export * from './framework/dashboard-widget/widget-extensions.js';
 export * from './framework/dashboard-widget/widget-filters-context.js';
+export * from './framework/dashboard-widget/widget-instance-context.js';
 export * from './framework/data-table/data-table-extensions.js';
 export * from './framework/defaults.js';
 export * from './framework/document-extension/extend-detail-form-query.js';
@@ -343,6 +344,7 @@ export * from './hooks/use-theme.js';
 export * from './hooks/use-ui-language-loader.js';
 export * from './hooks/use-user-settings.js';
 export * from './hooks/use-view-option-defaults.js';
+export * from './hooks/use-widget-config.js';
 export * from './hooks/use-widget-dimensions.js';
 export * from './hooks/use-widget-filters.js';
 export * from './lib/constants.js';

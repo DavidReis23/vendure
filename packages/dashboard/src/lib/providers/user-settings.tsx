@@ -16,6 +16,18 @@ export interface TableSettings {
     pageSize?: number;
 }
 
+/**
+ * @description
+ * A persisted Insights widget instance. Stores the layout and any per-instance
+ * config overrides for a single widget instance, keyed by `instanceId`.
+ */
+export interface PersistedWidgetInstance {
+    instanceId: string;
+    widgetId: string;
+    layout: { x: number; y: number; w: number; h: number };
+    config?: Record<string, unknown>;
+}
+
 export interface UserSettings {
     displayLanguage: string;
     displayLocale?: string;
@@ -27,7 +39,17 @@ export interface UserSettings {
     devMode: boolean;
     hasSeenOnboarding: boolean;
     tableSettings?: Record<string, TableSettings>;
+    /**
+     * @deprecated Superseded by `widgetInstances`. Still read as a fallback so existing
+     * saved layouts migrate transparently on load; no longer written to.
+     */
     widgetLayout?: Record<string, { x: number; y: number; w: number; h: number }>;
+    /**
+     * @description
+     * The persisted Insights widget instances, storing each instance's layout and any
+     * per-instance config overrides. Replaces `widgetLayout`.
+     */
+    widgetInstances?: PersistedWidgetInstance[];
     /**
      * @description
      * The ids of Insights widgets the user has hidden. Uses a hidden-list model so that
@@ -72,6 +94,26 @@ export interface UserSettingsContextType {
         value: TableSettings[K],
     ) => void;
     setWidgetLayout: (layoutConfig: Record<string, { x: number; y: number; w: number; h: number }>) => void;
+    /**
+     * @description
+     * Upserts the layout for the given widget instances, preserving each instance's
+     * existing persisted config and any instances not included in the list. Used when
+     * committing the Insights layout on "Save Layout".
+     */
+    saveWidgetInstanceLayouts: (
+        layouts: Array<Pick<PersistedWidgetInstance, 'instanceId' | 'widgetId' | 'layout'>>,
+    ) => void;
+    /**
+     * @description
+     * Persists the config override for a single widget instance immediately, preserving
+     * its layout. Creates the instance entry if it does not yet exist.
+     */
+    updateWidgetInstanceConfig: (params: {
+        instanceId: string;
+        widgetId: string;
+        layout: { x: number; y: number; w: number; h: number };
+        config: Record<string, unknown>;
+    }) => void;
     setHiddenWidgets: (widgetIds: string[]) => void;
 }
 
@@ -227,6 +269,40 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
             }));
         },
         setWidgetLayout: layoutConfig => updateSetting('widgetLayout', layoutConfig),
+        saveWidgetInstanceLayouts: layouts => {
+            setSettings(prev => {
+                const updatedIds = new Set(layouts.map(item => item.instanceId));
+                const prevById = new Map(
+                    (prev.widgetInstances ?? []).map(instance => [instance.instanceId, instance]),
+                );
+                // Keep any previously-saved instances not in the current list (e.g. widgets
+                // not currently loaded because they are permission-filtered).
+                const preserved = (prev.widgetInstances ?? []).filter(
+                    instance => !updatedIds.has(instance.instanceId),
+                );
+                const merged = layouts.map(item => ({
+                    instanceId: item.instanceId,
+                    widgetId: item.widgetId,
+                    layout: item.layout,
+                    // Preserve any config previously persisted for this instance.
+                    config: prevById.get(item.instanceId)?.config,
+                }));
+                return { ...prev, widgetInstances: [...preserved, ...merged] };
+            });
+        },
+        updateWidgetInstanceConfig: ({ instanceId, widgetId, layout, config }) => {
+            setSettings(prev => {
+                const instances = [...(prev.widgetInstances ?? [])];
+                const index = instances.findIndex(instance => instance.instanceId === instanceId);
+                if (index >= 0) {
+                    // Preserve the existing layout; only the config changes here.
+                    instances[index] = { ...instances[index], config };
+                } else {
+                    instances.push({ instanceId, widgetId, layout, config });
+                }
+                return { ...prev, widgetInstances: instances };
+            });
+        },
         setHiddenWidgets: widgetIds => updateSetting('hiddenWidgets', widgetIds),
     };
 

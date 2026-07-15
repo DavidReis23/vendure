@@ -265,6 +265,8 @@ export function registerDefaults() {
         defaultSize: { w: 12, h: 6, x: 0, y: 0 },
         minSize: { w: 6, h: 4 },
         requiresPermissions: ['ReadOrder'],
+        // Matches DATA_TYPES.OrderTotal in the metrics widget component.
+        defaultConfig: { dataType: 'OrderTotal' },
     });
 
     registerDashboardWidget({

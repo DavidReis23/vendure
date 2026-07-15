@@ -303,6 +303,21 @@ describe('DashboardWidgetDefinition - requiresPermissions', () => {
         expect(widget?.requiresPermissions).toEqual(['ReadOrder', 'ReadCatalog']);
     });
 
+    it('preserves the defaultConfig value', () => {
+        const DummyComponent = () => null;
+        registerDashboardWidget({
+            id: 'config-widget',
+            name: 'Config Widget',
+            component: DummyComponent,
+            defaultSize: { w: 6, h: 3 },
+            defaultConfig: { dataType: 'OrderTotal' },
+        });
+
+        const registry = getDashboardWidgetRegistry();
+        const widget = registry.get('config-widget');
+        expect(widget?.defaultConfig).toEqual({ dataType: 'OrderTotal' });
+    });
+
     it('preserves an empty requiresPermissions array (public widget)', () => {
         const DummyComponent = () => null;
         registerDashboardWidget({

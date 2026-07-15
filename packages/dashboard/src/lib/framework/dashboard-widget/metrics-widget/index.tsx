@@ -8,8 +8,9 @@ import { Trans } from '@lingui/react/macro';
 import { useLingui } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
 import { ChartColumn, RefreshCw } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { DashboardBaseWidget } from '../base-widget.js';
+import { useWidgetConfig } from '@/vdb/hooks/use-widget-config.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { MetricsChart } from './chart.js';
 import { orderChartDataQuery } from './metrics-widget.graphql.js';
@@ -20,12 +21,17 @@ enum DATA_TYPES {
     AverageOrderValue = 'AverageOrderValue',
 }
 
+interface MetricsWidgetConfig extends Record<string, unknown> {
+    dataType: DATA_TYPES;
+}
+
 export function MetricsWidget() {
     const { t } = useLingui();
     const { formatDate, formatCurrency } = useLocalFormat();
     const { activeChannel } = useChannel();
     const { dateRange } = useWidgetFilters();
-    const [dataType, setDataType] = useState<DATA_TYPES>(DATA_TYPES.OrderTotal);
+    const [config, setConfig] = useWidgetConfig<MetricsWidgetConfig>();
+    const dataType = config.dataType;
 
     const dataTypeLabel = useMemo(() => {
         switch (dataType) {
@@ -76,7 +82,7 @@ export function MetricsWidget() {
             description={t`Order metrics`}
             actions={
                 <div className="flex gap-1">
-                    <Tabs defaultValue={dataType} onValueChange={value => setDataType(value as DATA_TYPES)}>
+                    <Tabs value={dataType} onValueChange={value => setConfig({ dataType: value as DATA_TYPES })}>
                         <TabsList>
                             <TabsTrigger value={DATA_TYPES.OrderCount}><Trans>Order Count</Trans></TabsTrigger>
                             <TabsTrigger value={DATA_TYPES.OrderTotal}><Trans>Order Total</Trans></TabsTrigger>

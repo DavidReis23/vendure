@@ -11,6 +11,7 @@ import { GridLayout } from '@/vdb/components/ui/grid-layout.js';
 import { getDashboardWidget, getVisibleDashboardWidgets } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
 import { usePermissions } from '@/vdb/hooks/use-permissions.js';
 import { DefinedDateRange, WidgetFiltersProvider, } from '@/vdb/framework/dashboard-widget/widget-filters-context.js';
+import { WidgetInstanceProvider } from '@/vdb/framework/dashboard-widget/widget-instance-context.js';
 import { DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
 import {
     FullWidthPageBlock,
@@ -88,11 +89,17 @@ function DashboardPage() {
         to: endOfDay(new Date()),
     });
 
-    const { settings, setWidgetLayout, setHiddenWidgets: persistHiddenWidgets } = useUserSettings();
+    const { settings, saveWidgetInstanceLayouts, setHiddenWidgets: persistHiddenWidgets } = useUserSettings();
     const { hasPermissions } = usePermissions();
 
     useEffect(() => {
-        const savedLayouts = settings.widgetLayout || {};
+        // In this phase there is one instance per widget, so the instanceId equals the
+        // widgetId. Saved instances are the source of truth; the legacy `widgetLayout`
+        // record is read only as a fallback so existing layouts migrate transparently.
+        const savedInstances = new Map(
+            (settings.widgetInstances ?? []).map(instance => [instance.instanceId, instance]),
+        );
+        const legacyLayouts = settings.widgetLayout ?? {};
         // Stale ids (widgets that are no longer registered) are naturally ignored
         // because we only iterate over currently-registered widgets below.
         const hiddenIds = new Set(settings.hiddenWidgets ?? []);
@@ -119,8 +126,9 @@ function DashboardPage() {
                     h: widget.minSize?.h ?? defaultSize.h,
                 };
 
-                // Check if we have a saved layout for this widget
-                const savedLayout = savedLayouts[id];
+                // Check if we have a saved instance (or legacy layout) for this widget
+                const savedInstance = savedInstances.get(id);
+                const savedLayout = savedInstance?.layout ?? legacyLayouts[id];
 
                 const layout = {
                     w: savedLayout?.w ?? defaultSize.w,
@@ -133,7 +141,12 @@ function DashboardPage() {
                     maxH: widget.maxSize?.h,
                 };
 
-                const instance: DashboardWidgetInstance = { id, widgetId: id, layout };
+                const instance: DashboardWidgetInstance = {
+                    id,
+                    widgetId: id,
+                    layout,
+                    config: savedInstance?.config,
+                };
 
                 if (hiddenIds.has(id)) {
                     hidden.push(instance);
@@ -156,27 +169,26 @@ function DashboardPage() {
         setWidgets(visible);
         setHiddenWidgets(hidden);
         setIsInitialized(true);
-    }, [settings.widgetLayout, settings.hiddenWidgets, hasPermissions]);
+    }, [settings.widgetInstances, settings.widgetLayout, settings.hiddenWidgets, hasPermissions]);
 
     // Save layout and hidden widgets when edit mode is turned off
     useEffect(() => {
         // Only save when transitioning from edit mode ON to OFF
         if (prevEditModeRef.current && !editMode && isInitialized) {
-            // Preserve any previously-saved layouts (including for widgets not currently
-            // loaded), then overwrite with the current layouts of both visible and hidden
-            // widgets so a hidden widget keeps its position/size when re-added.
-            const layoutConfig: Record<string, { x: number; y: number; w: number; h: number }> = {
-                ...(settings.widgetLayout ?? {}),
-            };
-            [...widgets, ...hiddenWidgets].forEach(widget => {
-                layoutConfig[widget.widgetId] = {
+            // Commit the current layouts of both visible and hidden widgets so a hidden
+            // widget keeps its position/size when re-added. Persisted per-instance config
+            // is preserved by saveWidgetInstanceLayouts.
+            const layouts = [...widgets, ...hiddenWidgets].map(widget => ({
+                instanceId: widget.id,
+                widgetId: widget.widgetId,
+                layout: {
                     x: widget.layout.x,
                     y: widget.layout.y,
                     w: widget.layout.w,
                     h: widget.layout.h,
-                };
-            });
-            setWidgetLayout(layoutConfig);
+                },
+            }));
+            saveWidgetInstanceLayouts(layouts);
             persistHiddenWidgets(hiddenWidgets.map(widget => widget.widgetId));
         }
 
@@ -187,9 +199,8 @@ function DashboardPage() {
         isInitialized,
         widgets,
         hiddenWidgets,
-        setWidgetLayout,
+        saveWidgetInstanceLayouts,
         persistHiddenWidgets,
-        settings.widgetLayout,
     ]);
 
     const handleLayoutChange = (layouts: GridLayoutType[]) => {
@@ -237,7 +248,20 @@ function DashboardPage() {
                         <XIcon className="h-3.5 w-3.5" />
                     </button>
                 )}
-                <WidgetComponent id={widget.id} config={widget.config} />
+                <WidgetInstanceProvider
+                    value={{
+                        instanceId: widget.id,
+                        widgetId: widget.widgetId,
+                        layout: {
+                            x: widget.layout.x,
+                            y: widget.layout.y,
+                            w: widget.layout.w,
+                            h: widget.layout.h,
+                        },
+                    }}
+                >
+                    <WidgetComponent id={widget.id} config={widget.config} />
+                </WidgetInstanceProvider>
             </div>
         );
     };
