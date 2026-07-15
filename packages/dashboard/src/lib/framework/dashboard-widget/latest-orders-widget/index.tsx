@@ -21,7 +21,7 @@ export const WIDGET_ID = 'latest-orders-widget';
 export function LatestOrdersWidget() {
     const { t } = useLingui();
     const { formatRelativeDate } = useLocalFormat();
-    const { dateRange } = useWidgetFilters();
+    const { dateRange, refreshToken } = useWidgetFilters();
     const { setTableSettings, settings } = useUserSettings();
     const tableSettings = settings.tableSettings?.[WIDGET_ID];
 
@@ -79,12 +79,14 @@ export function LatestOrdersWidget() {
                             },
                         },
                     })}
-                    // transformVariables output is not part of the query key, so
-                    // the date range must be appended for range changes to refetch.
+                    // transformVariables output is not part of the query key, so the date range
+                    // must be appended for range changes to refetch. The refresh token is appended
+                    // too so a page-level refresh (button or polling) refetches this list as well.
                     transformQueryKey={queryKey => [
                         ...queryKey,
                         dateRange.from.toISOString(),
                         dateRange.to.toISOString(),
+                        refreshToken,
                     ]}
                     customizeColumns={{
                         code: {

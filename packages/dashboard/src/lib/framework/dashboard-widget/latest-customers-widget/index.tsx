@@ -15,10 +15,10 @@ const MAX_ITEMS = 10;
 export function LatestCustomersWidget() {
     const { t } = useLingui();
     const { formatRelativeDate } = useLocalFormat();
-    const { dateRange } = useWidgetFilters();
+    const { dateRange, refreshToken } = useWidgetFilters();
 
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['latest-customers-widget', dateRange],
+        queryKey: ['latest-customers-widget', dateRange, refreshToken],
         queryFn: () =>
             api.query(latestCustomersQuery, {
                 options: {

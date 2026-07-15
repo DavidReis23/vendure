@@ -1,4 +1,3 @@
-import { Button } from '@/vdb/components/ui/button.js';
 import { EmptyState, ErrorState, LoadingState } from '@/vdb/components/ui/state-views.js';
 import { Tabs, TabsList, TabsTrigger } from '@/vdb/components/ui/tabs.js';
 import { api } from '@/vdb/graphql/api.js';
@@ -7,7 +6,7 @@ import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
 import { Trans } from '@lingui/react/macro';
 import { useLingui } from '@lingui/react/macro';
 import { useQuery } from '@tanstack/react-query';
-import { ChartColumn, RefreshCw } from 'lucide-react';
+import { ChartColumn } from 'lucide-react';
 import { useMemo } from 'react';
 import { DashboardBaseWidget } from '../base-widget.js';
 import { useWidgetConfig } from '@/vdb/hooks/use-widget-config.js';
@@ -29,7 +28,7 @@ export function MetricsWidget() {
     const { t } = useLingui();
     const { formatDate, formatCurrency } = useLocalFormat();
     const { activeChannel } = useChannel();
-    const { dateRange } = useWidgetFilters();
+    const { dateRange, refreshToken } = useWidgetFilters();
     const [config, setConfig] = useWidgetConfig<MetricsWidgetConfig>();
     const dataType = config.dataType;
 
@@ -44,8 +43,8 @@ export function MetricsWidget() {
         }
     }, [dataType, t]);
 
-    const { data, refetch, isRefetching, isPending, isError } = useQuery({
-        queryKey: ['dashboard-order-metrics', dataType, dateRange],
+    const { data, refetch, isPending, isError } = useQuery({
+        queryKey: ['dashboard-order-metrics', dataType, dateRange, refreshToken],
         queryFn: () => {
             return api.query(orderChartDataQuery, {
                 types: [dataType],
@@ -81,20 +80,15 @@ export function MetricsWidget() {
             title={t`Metrics`}
             description={t`Order metrics`}
             actions={
-                <div className="flex gap-1">
-                    <Tabs value={dataType} onValueChange={value => setConfig({ dataType: value as DATA_TYPES })}>
-                        <TabsList>
-                            <TabsTrigger value={DATA_TYPES.OrderCount}><Trans>Order Count</Trans></TabsTrigger>
-                            <TabsTrigger value={DATA_TYPES.OrderTotal}><Trans>Order Total</Trans></TabsTrigger>
-                            <TabsTrigger value={DATA_TYPES.AverageOrderValue}>
-                                <Trans>Average Order Value</Trans>
-                            </TabsTrigger>
-                        </TabsList>
-                    </Tabs>
-                    <Button variant={'ghost'} onClick={() => refetch()}>
-                        <RefreshCw className={isRefetching ? 'animate-rotate' : ''} />
-                    </Button>
-                </div>
+                <Tabs value={dataType} onValueChange={value => setConfig({ dataType: value as DATA_TYPES })}>
+                    <TabsList>
+                        <TabsTrigger value={DATA_TYPES.OrderCount}><Trans>Order Count</Trans></TabsTrigger>
+                        <TabsTrigger value={DATA_TYPES.OrderTotal}><Trans>Order Total</Trans></TabsTrigger>
+                        <TabsTrigger value={DATA_TYPES.AverageOrderValue}>
+                            <Trans>Average Order Value</Trans>
+                        </TabsTrigger>
+                    </TabsList>
+                </Tabs>
             }
         >
             {isPending ? (

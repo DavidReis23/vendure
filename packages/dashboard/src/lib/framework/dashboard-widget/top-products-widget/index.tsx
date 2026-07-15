@@ -37,7 +37,7 @@ export function TopProductsWidget() {
     const { t } = useLingui();
     const { formatCurrency, formatNumber } = useLocalFormat();
     const { activeChannel } = useChannel();
-    const { dateRange } = useWidgetFilters();
+    const { dateRange, refreshToken } = useWidgetFilters();
     const [config, setConfig] = useWidgetConfig<TopProductsWidgetConfig>();
     const metric = config.metric;
 
@@ -49,7 +49,7 @@ export function TopProductsWidget() {
     const currencyCode = activeChannel?.defaultCurrencyCode ?? 'USD';
 
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['top-products-widget', dateRange, currencyCode],
+        queryKey: ['top-products-widget', dateRange, currencyCode, refreshToken],
         queryFn: () =>
             api.query(topProductsOrdersQuery, {
                 options: {

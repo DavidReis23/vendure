@@ -30,7 +30,7 @@ function PercentageChange({ value }: PercentageChangeProps) {
 
 export function OrdersSummaryWidget() {
     const { t } = useLingui();
-    const { dateRange } = useWidgetFilters();
+    const { dateRange, refreshToken } = useWidgetFilters();
 
     const variables = useMemo(() => {
         const rangeLength = differenceInDays(dateRange.to, dateRange.from) + 1;
@@ -47,7 +47,7 @@ export function OrdersSummaryWidget() {
     }, [dateRange]);
 
     const { data } = useQuery({
-        queryKey: ['orders-summary', dateRange],
+        queryKey: ['orders-summary', dateRange, refreshToken],
         queryFn: () =>
             api.query(orderSummaryQuery, {
                 start: variables.start,
@@ -56,7 +56,7 @@ export function OrdersSummaryWidget() {
     });
 
     const { data: previousData } = useQuery({
-        queryKey: ['orders-summary', 'previous', dateRange],
+        queryKey: ['orders-summary', 'previous', dateRange, refreshToken],
         queryFn: () =>
             api.query(orderSummaryQuery, {
                 start: variables.previousStart,

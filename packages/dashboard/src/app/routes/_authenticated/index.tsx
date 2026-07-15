@@ -1,4 +1,5 @@
 import { DateRangePicker } from '@/vdb/components/date-range-picker.js';
+import { RefreshButton } from '@/vdb/components/data-table/refresh-button.js';
 import { Button } from '@/vdb/components/ui/button.js';
 import {
     DropdownMenu,
@@ -35,13 +36,14 @@ import {
     PageTitle,
 } from '@/vdb/framework/layout-engine/page-layout.js';
 import { ActionBarItem } from '@/vdb/framework/layout-engine/action-bar-item-wrapper.js';
+import { useInsightsRefresh } from '@/vdb/hooks/use-insights-refresh.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { createFileRoute } from '@tanstack/react-router';
 import { endOfDay, startOfMonth } from 'date-fns';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLingui as useLinguiRuntime } from '@lingui/react';
-import { LayoutGridIcon, PlusIcon, XIcon } from 'lucide-react';
+import { PlusIcon, Sparkles, XIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
@@ -104,6 +106,10 @@ function DashboardPage() {
         updateWidgetInstanceConfig,
     } = useUserSettings();
     const { hasPermissions } = usePermissions();
+
+    // Page-level refresh signal shared with every widget via the WidgetFiltersProvider. Auto-refresh
+    // polling is paused while editing the layout so a background refetch can't disrupt a live edit.
+    const { refreshToken, refresh, isRefreshing } = useInsightsRefresh({ enabled: !editMode });
 
     // Latest values read inside the one-shot initializer and the config-write handler without
     // making them effect/callback dependencies (which would otherwise re-run initialization on
@@ -392,9 +398,16 @@ function DashboardPage() {
                             disabled={widgets.length === 0}
                             onClick={handleTidy}
                         >
-                            <LayoutGridIcon className="mr-1 h-4 w-4" />
+                            <Sparkles className="mr-1 h-4 w-4" />
                             <Trans>Tidy</Trans>
                         </Button>
+                    </ActionBarItem>
+                )}
+                {!editMode && (
+                    <ActionBarItem itemId="refresh-widgets">
+                        <div className="mr-2">
+                            <RefreshButton onRefresh={refresh} isLoading={isRefreshing} />
+                        </div>
                     </ActionBarItem>
                 )}
                 <ActionBarItem itemId="edit-layout-button">
@@ -410,7 +423,9 @@ function DashboardPage() {
                 <FullWidthPageBlock blockId="widgets">
                     <div className="w-full">
                         {widgets.length > 0 ? (
-                            <WidgetFiltersProvider filters={{ dateRange, filters: filterValues }}>
+                            <WidgetFiltersProvider
+                                filters={{ dateRange, filters: filterValues, refreshToken }}
+                            >
                                 <GridLayout
                                     layouts={widgets.map(w => ({ ...w.layout, i: w.id }))}
                                     onLayoutChange={handleLayoutChange}
