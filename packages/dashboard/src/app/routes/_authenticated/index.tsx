@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
 } from '@/vdb/components/ui/dropdown-menu.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
-import { GridLayout } from '@/vdb/components/ui/grid-layout.js';
+import { compactLayouts, GridLayout, insertWithReflow } from '@/vdb/components/ui/grid-layout.js';
 import {
     getDashboardWidget,
     getDashboardWidgetFilters,
@@ -117,6 +117,24 @@ const buildWidgetInstance = (
 // Multi-instance widgets get a unique instance id so each instance persists its own layout
 // and config independently. Single-instance widgets keep instanceId === widgetId.
 const generateInstanceId = (widgetId: string) => `${widgetId}:${crypto.randomUUID()}`;
+
+const toGridLayout = (widget: DashboardWidgetInstance): GridLayoutType => ({
+    ...widget.layout,
+    i: widget.id,
+});
+
+// Applies the x/y/w/h from a reflowed/compacted grid back onto the widget instances, keeping
+// every other instance property (config, min/max constraints) intact.
+const applyGridLayouts = (
+    instances: DashboardWidgetInstance[],
+    grid: GridLayoutType[],
+): DashboardWidgetInstance[] =>
+    instances.map(instance => {
+        const layout = grid.find(g => g.i === instance.id);
+        return layout
+            ? { ...instance, layout: { ...instance.layout, x: layout.x, y: layout.y, w: layout.w, h: layout.h } }
+            : instance;
+    });
 
 function DashboardPage() {
     const [widgets, setWidgets] = useState<DashboardWidgetInstance[]>([]);
@@ -262,7 +280,13 @@ function DashboardPage() {
         if (!target) {
             return;
         }
-        setWidgets(prev => prev.filter(widget => widget.id !== instanceId));
+        // Vertically compact the remaining widgets so the freed space is filled automatically —
+        // both when discarding a multi-instance instance and when hiding a single-instance
+        // widget (including the last-instance-hide case). The user should not have to re-arrange.
+        setWidgets(prev => {
+            const remaining = prev.filter(widget => widget.id !== instanceId);
+            return applyGridLayouts(remaining, compactLayouts(remaining.map(toGridLayout)));
+        });
         // Multi-instance widgets are re-added as fresh instances from the picker, so a removed
         // instance is simply discarded. Single-instance widgets are kept (with their layout) so
         // re-adding restores their previous position and size.
@@ -272,14 +296,19 @@ function DashboardPage() {
         }
     };
 
-    // Restores a hidden single-instance widget to its previous position and size.
+    // Restores a hidden single-instance widget to its previous position and size, reflowing any
+    // widgets that now overlap that saved space out of the way (rather than overlapping or
+    // dumping the re-added widget at the next free slot).
     const handleAddWidget = (instanceId: string) => {
         const target = hiddenWidgets.find(widget => widget.id === instanceId);
         if (!target) {
             return;
         }
         setHiddenWidgets(prev => prev.filter(widget => widget.id !== instanceId));
-        setWidgets(prev => [...prev, target]);
+        setWidgets(prev => {
+            const combined = [...prev, target];
+            return applyGridLayouts(combined, insertWithReflow(prev.map(toGridLayout), toGridLayout(target)));
+        });
     };
 
     // Adds a fresh instance of a multi-instance widget, placed at the next free grid slot.
