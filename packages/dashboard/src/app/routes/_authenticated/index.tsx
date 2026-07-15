@@ -109,7 +109,7 @@ function DashboardPage() {
 
     // Page-level refresh signal shared with every widget via the WidgetFiltersProvider. Auto-refresh
     // polling is paused while editing the layout so a background refetch can't disrupt a live edit.
-    const { refreshToken, refresh, isRefreshing } = useInsightsRefresh({ enabled: !editMode });
+    const { refresh, isRefreshing } = useInsightsRefresh({ enabled: !editMode });
 
     // Latest values read inside the one-shot initializer and the config-write handler without
     // making them effect/callback dependencies (which would otherwise re-run initialization on
@@ -446,9 +446,9 @@ function DashboardPage() {
             <PageLayout>
                 <FullWidthPageBlock blockId="widgets">
                     <div className="w-full">
-                        {widgets.length > 0 ? (
+                        {!isInitialized ? null : widgets.length > 0 ? (
                             <WidgetFiltersProvider
-                                filters={{ dateRange, filters: filterValues, refreshToken }}
+                                filters={{ dateRange, filters: filterValues }}
                             >
                                 <GridLayout
                                     layouts={widgets.map(w => ({ ...w.layout, i: w.id }))}

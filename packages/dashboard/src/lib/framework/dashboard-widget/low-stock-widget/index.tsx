@@ -2,8 +2,8 @@ import { EmptyState, ErrorState, LoadingState } from '@/vdb/components/ui/state-
 import { Badge } from '@/vdb/components/ui/badge.js';
 import { Tabs, TabsList, TabsTrigger } from '@/vdb/components/ui/tabs.js';
 import { api } from '@/vdb/graphql/api.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useWidgetConfig } from '@/vdb/hooks/use-widget-config.js';
-import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
 import { useQuery } from '@tanstack/react-query';
@@ -31,11 +31,10 @@ interface LowStockWidgetConfig extends Record<string, unknown> {
 export function LowStockWidget() {
     const { t } = useLingui();
     const [config, setConfig] = useWidgetConfig<LowStockWidgetConfig>();
-    const { refreshToken } = useWidgetFilters();
     const threshold = config.threshold;
 
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['low-stock-widget', refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'low-stock-widget'],
         queryFn: () =>
             api.query(lowStockVariantsQuery, {
                 options: {

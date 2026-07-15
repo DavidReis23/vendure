@@ -1,5 +1,14 @@
-import { useIsFetching } from '@tanstack/react-query';
+import { useIsFetching, useQueryClient } from '@tanstack/react-query';
 import { useCallback, useEffect, useState } from 'react';
+
+/**
+ * @description
+ * Shared React Query key prefix for every Insights widget data query. The page-level refresh
+ * invalidates all queries whose key starts with this prefix, so a widget opts into page-level
+ * refresh simply by prefixing its `queryKey` with it, e.g.
+ * `queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'my-widget', dateRange]`.
+ */
+export const INSIGHTS_WIDGET_QUERY_KEY = 'insights-widget';
 
 const DEFAULT_POLL_INTERVAL_MS = 60_000;
 
@@ -9,14 +18,12 @@ export interface UseInsightsRefreshOptions {
      */
     enabled?: boolean;
     /**
-     * How often, in milliseconds, the auto-refresh bumps the token. Defaults to 60s.
+     * How often, in milliseconds, the auto-refresh runs. Defaults to 60s.
      */
     intervalMs?: number;
 }
 
 export interface InsightsRefresh {
-    /** Increments on every manual or automatic refresh; widgets fold it into their query keys. */
-    refreshToken: number;
     /** Triggers an immediate refresh of every widget. */
     refresh: () => void;
     /** True while a manually-triggered refresh is still settling. */
@@ -24,10 +31,13 @@ export interface InsightsRefresh {
 }
 
 /**
- * Page-level refresh signal for the Insights page. Owns a `refreshToken` counter that every
- * widget includes in its React Query key, so a single bump refetches the whole page's data.
+ * Page-level refresh signal for the Insights page. Refetches every widget by invalidating the
+ * shared {@link INSIGHTS_WIDGET_QUERY_KEY} prefix rather than mutating a token in each widget's
+ * query key. Because the query keys stay stable, React Query refetches the existing cache entries
+ * in place (data is retained, no spinner flicker) instead of minting a fresh, empty entry — and no
+ * dead cache entry accumulates per tick.
  *
- * The token is bumped both by {@link InsightsRefresh.refresh} (the action-bar button) and on an
+ * Refresh is triggered both by {@link InsightsRefresh.refresh} (the action-bar button) and on an
  * interval while `enabled`. Polling is paused when the tab is hidden and while disabled (edit
  * mode), keeping to the dashboard convention that background refetching is explicit rather than
  * implicit (`refetchOnWindowFocus` is globally off).
@@ -36,18 +46,25 @@ export function useInsightsRefresh({
     enabled = true,
     intervalMs = DEFAULT_POLL_INTERVAL_MS,
 }: UseInsightsRefreshOptions = {}): InsightsRefresh {
-    const [refreshToken, setRefreshToken] = useState(0);
+    const queryClient = useQueryClient();
     const [manualRefreshPending, setManualRefreshPending] = useState(false);
-    const isFetching = useIsFetching();
+    // Scope the "in-flight" signal to the Insights widget queries, so an unrelated app-wide
+    // fetch never makes the refresh button appear busy.
+    const isFetching = useIsFetching({ queryKey: [INSIGHTS_WIDGET_QUERY_KEY] });
+
+    const refetchWidgets = useCallback(
+        () => queryClient.invalidateQueries({ queryKey: [INSIGHTS_WIDGET_QUERY_KEY] }),
+        [queryClient],
+    );
 
     const refresh = useCallback(() => {
-        setRefreshToken(token => token + 1);
         setManualRefreshPending(true);
-    }, []);
+        void refetchWidgets();
+    }, [refetchWidgets]);
 
-    // Clear the manual spinner once in-flight fetches have settled. The short delay after
-    // `isFetching` reaches 0 bridges the tick between bumping the token and the widget queries
-    // actually starting to refetch, so the spinner does not flicker off immediately.
+    // Clear the manual spinner once the invalidated widget queries have settled. The short delay
+    // after `isFetching` reaches 0 bridges the tick between invalidating and the queries actually
+    // starting to refetch, so the spinner does not flicker off immediately.
     useEffect(() => {
         if (!manualRefreshPending || isFetching > 0) {
             return;
@@ -64,7 +81,7 @@ export function useInsightsRefresh({
         let intervalId: ReturnType<typeof setInterval> | undefined;
         const start = () => {
             if (intervalId === undefined) {
-                intervalId = setInterval(() => setRefreshToken(token => token + 1), intervalMs);
+                intervalId = setInterval(() => void refetchWidgets(), intervalMs);
             }
         };
         const stop = () => {
@@ -80,7 +97,7 @@ export function useInsightsRefresh({
             stop();
             document.removeEventListener('visibilitychange', sync);
         };
-    }, [enabled, intervalMs]);
+    }, [enabled, intervalMs, refetchWidgets]);
 
-    return { refreshToken, refresh, isRefreshing: manualRefreshPending };
+    return { refresh, isRefreshing: manualRefreshPending };
 }

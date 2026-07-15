@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ChartColumn } from 'lucide-react';
 import { useMemo } from 'react';
 import { DashboardBaseWidget } from '../base-widget.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useWidgetConfig } from '@/vdb/hooks/use-widget-config.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { MetricsChart } from './chart.js';
@@ -28,7 +29,7 @@ export function MetricsWidget() {
     const { t } = useLingui();
     const { formatDate, formatCurrency } = useLocalFormat();
     const { activeChannel } = useChannel();
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
     const [config, setConfig] = useWidgetConfig<MetricsWidgetConfig>();
     const dataType = config.dataType;
 
@@ -44,7 +45,7 @@ export function MetricsWidget() {
     }, [dataType, t]);
 
     const { data, refetch, isPending, isError } = useQuery({
-        queryKey: ['dashboard-order-metrics', dataType, dateRange, refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'dashboard-order-metrics', dataType, dateRange],
         queryFn: () => {
             return api.query(orderChartDataQuery, {
                 types: [dataType],

@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { differenceInDays, subDays } from 'date-fns';
 import { useMemo } from 'react';
 import { DashboardBaseWidget } from '../base-widget.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { orderSummaryQuery } from './order-summary-widget.graphql.js';
 
@@ -30,7 +31,7 @@ function PercentageChange({ value }: PercentageChangeProps) {
 
 export function OrdersSummaryWidget() {
     const { t } = useLingui();
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
 
     const variables = useMemo(() => {
         const rangeLength = differenceInDays(dateRange.to, dateRange.from) + 1;
@@ -47,7 +48,7 @@ export function OrdersSummaryWidget() {
     }, [dateRange]);
 
     const { data } = useQuery({
-        queryKey: ['orders-summary', dateRange, refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'orders-summary', dateRange],
         queryFn: () =>
             api.query(orderSummaryQuery, {
                 start: variables.start,
@@ -56,7 +57,7 @@ export function OrdersSummaryWidget() {
     });
 
     const { data: previousData } = useQuery({
-        queryKey: ['orders-summary', 'previous', dateRange, refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'orders-summary', 'previous', dateRange],
         queryFn: () =>
             api.query(orderSummaryQuery, {
                 start: variables.previousStart,

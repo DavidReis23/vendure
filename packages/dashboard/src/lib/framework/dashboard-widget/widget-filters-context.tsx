@@ -18,14 +18,6 @@ export interface WidgetFilters {
      * `useWidgetFilters().filters[id]`.
      */
     filters: Record<string, unknown>;
-    /**
-     * @description
-     * A counter that increments every time a page-level refresh is requested — either by the
-     * user pressing the Insights refresh button or by the automatic polling interval. Include
-     * it in your widget's React Query `queryKey` so the widget refetches when it changes, e.g.
-     * `queryKey: ['my-widget', dateRange, refreshToken]`.
-     */
-    refreshToken: number;
 }
 
 export const WidgetFiltersContext = createContext<WidgetFilters | undefined>(undefined);

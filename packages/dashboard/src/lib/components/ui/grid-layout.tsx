@@ -164,7 +164,7 @@ function growToFill(placed: GridLayout[], cols: number): GridLayout[] {
  * Re-arranges every widget into the tightest gap-free arrangement. Widgets are first placed one
  * at a time in reading order (top-to-bottom, then left-to-right), each at the topmost-then-
  * leftmost slot where it fits without overlapping an already-placed widget. Widgets are then
- * grown within their own `minW`/`minH`/`maxW`/`maxH` bounds to fill the leftover gaps, so the
+ * grown within their own `maxW`/`maxH` bounds to fill the leftover gaps, so the
  * packed area ends up as full as possible. The result is deterministic, has no overlaps, respects
  * every widget's size bounds strictly, is never worse-packed (nor taller) than the input, and is
  * idempotent — tidying an already-tidy layout is a no-op. The returned array preserves the input

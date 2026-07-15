@@ -7,6 +7,7 @@ import {
 import { Button } from '@/vdb/components/ui/button.js';
 import { ErrorState } from '@/vdb/components/ui/state-views.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { useLingui } from '@lingui/react/macro';
@@ -21,7 +22,7 @@ export const WIDGET_ID = 'latest-orders-widget';
 export function LatestOrdersWidget() {
     const { t } = useLingui();
     const { formatRelativeDate } = useLocalFormat();
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
     const { setTableSettings, settings } = useUserSettings();
     const tableSettings = settings.tableSettings?.[WIDGET_ID];
 
@@ -80,13 +81,14 @@ export function LatestOrdersWidget() {
                         },
                     })}
                     // transformVariables output is not part of the query key, so the date range
-                    // must be appended for range changes to refetch. The refresh token is appended
-                    // too so a page-level refresh (button or polling) refetches this list as well.
+                    // must be appended for range changes to refetch. The shared insights prefix is
+                    // prepended so a page-level refresh (button or polling) — which invalidates that
+                    // prefix — refetches this list as well.
                     transformQueryKey={queryKey => [
+                        INSIGHTS_WIDGET_QUERY_KEY,
                         ...queryKey,
                         dateRange.from.toISOString(),
                         dateRange.to.toISOString(),
-                        refreshToken,
                     ]}
                     customizeColumns={{
                         code: {

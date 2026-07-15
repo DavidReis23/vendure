@@ -3,6 +3,7 @@ import { EmptyState, ErrorState, LoadingState } from '@/vdb/components/ui/state-
 import { api } from '@/vdb/graphql/api.js';
 import { useChannel } from '@/vdb/hooks/use-channel.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useWidgetConfig } from '@/vdb/hooks/use-widget-config.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { Trans, useLingui } from '@lingui/react/macro';
@@ -37,7 +38,7 @@ export function TopProductsWidget() {
     const { t } = useLingui();
     const { formatCurrency, formatNumber } = useLocalFormat();
     const { activeChannel } = useChannel();
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
     const [config, setConfig] = useWidgetConfig<TopProductsWidgetConfig>();
     const metric = config.metric;
 
@@ -49,7 +50,7 @@ export function TopProductsWidget() {
     const currencyCode = activeChannel?.defaultCurrencyCode ?? 'USD';
 
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['top-products-widget', dateRange, currencyCode, refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'top-products-widget', dateRange, currencyCode],
         queryFn: () =>
             api.query(topProductsOrdersQuery, {
                 options: {

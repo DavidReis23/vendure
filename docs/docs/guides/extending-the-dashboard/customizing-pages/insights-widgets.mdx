@@ -39,20 +39,21 @@ Use the `useWidgetFilters()` hook to get the currently-selected date range, if y
 
 The Insights page has a single **Refresh** button in its action bar, and it also auto-refreshes on
 an interval while the tab is open (paused while the tab is hidden and while the layout is being
-edited). Both drive a `refreshToken` counter exposed on `useWidgetFilters()`. To opt your widget
-into these page-level refreshes, include the token in your React Query `queryKey` — a change to the
-token then refetches your data, just like a change to the date range does:
+edited). Both invalidate every React Query whose `queryKey` starts with the shared
+`INSIGHTS_WIDGET_QUERY_KEY` prefix. To opt your widget into these page-level refreshes, prefix your
+widget's `queryKey` with it:
 
 ```tsx title="custom-widget.tsx"
-import { DashboardBaseWidget, useWidgetFilters } from '@vendure/dashboard';
+import { DashboardBaseWidget, INSIGHTS_WIDGET_QUERY_KEY, useWidgetFilters } from '@vendure/dashboard';
 import { useQuery } from '@tanstack/react-query';
 
 export function CustomWidget() {
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
     const { data } = useQuery({
-        // Fold `refreshToken` into the key so the page-level refresh button and the polling
-        // interval both refetch this widget.
-        queryKey: ['my-widget', dateRange, refreshToken],
+        // Prefix the key so the page-level refresh button and the polling interval both refetch
+        // this widget. The key stays stable, so refreshing refetches in place (your data stays on
+        // screen) instead of blanking to a spinner.
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'my-widget', dateRange],
         queryFn: () => fetchMyWidgetData(dateRange),
     });
     return <DashboardBaseWidget id="custom-widget" title="Custom Widget">{/* ... */}</DashboardBaseWidget>;
@@ -60,7 +61,8 @@ export function CustomWidget() {
 ```
 
 This keeps refreshing explicit and per-widget: the dashboard deliberately does not refetch on
-window focus, so a widget that omits the token simply won't participate in page-level refreshes.
+window focus, so a widget whose key omits the prefix simply won't participate in page-level
+refreshes.
 
 :::note Be honest about sampled data
 Some data cannot be aggregated or sorted efficiently by the API (for example, best sellers or

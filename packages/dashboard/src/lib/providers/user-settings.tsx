@@ -168,6 +168,7 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
     const {
         data: serverSettingsResponse,
         isSuccess: serverSettingsLoaded,
+        isError: serverSettingsErrored,
         error,
     } = useQuery({
         queryKey: ['user-settings', SETTINGS_STORE_KEY],
@@ -206,7 +207,10 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
 
     // Initialize settings from server if available
     useEffect(() => {
-        if (serverSettingsLoaded && !isReady) {
+        if (isReady) {
+            return;
+        }
+        if (serverSettingsLoaded) {
             try {
                 const serverSettingsData =
                     serverSettingsResponse?.getSettingsStoreValue as UserSettings | null;
@@ -226,8 +230,16 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                 setServerSettings(settings);
                 setIsReady(true);
             }
+        } else if (serverSettingsErrored) {
+            // The settings-store fetch failed and won't retry (retry: false). This covers a
+            // generic failure (network blip, 500) as well as the store field not being registered
+            // (which additionally flips settingsStoreIsAvailable in the effect above). Fall back to
+            // local settings and mark ready, so consumers that gate on `settingsReady` — e.g. the
+            // Insights one-shot init — don't hang forever on the empty state.
+            setServerSettings(settings);
+            setIsReady(true);
         }
-    }, [serverSettingsLoaded, serverSettingsResponse, settings, isReady]);
+    }, [serverSettingsLoaded, serverSettingsErrored, serverSettingsResponse, settings, isReady]);
 
     // Save settings to localStorage whenever they change
     useEffect(() => {

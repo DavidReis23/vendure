@@ -1,6 +1,7 @@
 import { EmptyState, ErrorState, LoadingState } from '@/vdb/components/ui/state-views.js';
 import { api } from '@/vdb/graphql/api.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { Link } from '@tanstack/react-router';
@@ -15,10 +16,10 @@ const MAX_ITEMS = 10;
 export function LatestCustomersWidget() {
     const { t } = useLingui();
     const { formatRelativeDate } = useLocalFormat();
-    const { dateRange, refreshToken } = useWidgetFilters();
+    const { dateRange } = useWidgetFilters();
 
     const { data, isPending, isError, refetch } = useQuery({
-        queryKey: ['latest-customers-widget', dateRange, refreshToken],
+        queryKey: [INSIGHTS_WIDGET_QUERY_KEY, 'latest-customers-widget', dateRange],
         queryFn: () =>
             api.query(latestCustomersQuery, {
                 options: {
