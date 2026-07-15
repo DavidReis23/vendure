@@ -26,6 +26,7 @@ import { WidgetInstanceProvider } from '@/vdb/framework/dashboard-widget/widget-
 import {
     buildInitialWidgetState,
     buildWidgetInstance,
+    mergeHiddenWidgetIds,
 } from '@/vdb/framework/dashboard-widget/insights-layout.js';
 import { DashboardWidgetDefinition, DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
 import {
@@ -197,7 +198,13 @@ function DashboardPage() {
             // hidden single-instance widget and a multi-instance widget whose last instance
             // was removed. The hidden-list model keeps newly-registered widgets visible.
             const visibleWidgetIds = new Set(widgets.map(widget => widget.widgetId));
-            persistHiddenWidgets(loadedWidgetIds.filter(id => !visibleWidgetIds.has(id)));
+            persistHiddenWidgets(
+                mergeHiddenWidgetIds(
+                    settingsRef.current.hiddenWidgets ?? [],
+                    loadedWidgetIds,
+                    visibleWidgetIds,
+                ),
+            );
         }
 
         // Update the ref for next render

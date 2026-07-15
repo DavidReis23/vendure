@@ -49,6 +49,27 @@ export interface InitialWidgetState {
 }
 
 /**
+ * Produces the complete hidden-widget preference after saving an Insights layout.
+ *
+ * The current page only owns widgets that were loaded for the active channel. Hidden
+ * preferences for widgets omitted by permission filtering must remain intact so they
+ * are restored when the user returns to a channel where those widgets are available.
+ */
+export function mergeHiddenWidgetIds(
+    persistedHiddenWidgetIds: string[],
+    loadedWidgetIds: string[],
+    visibleWidgetIds: Iterable<string>,
+): string[] {
+    const loadedIds = new Set(loadedWidgetIds);
+    const visibleIds = new Set(visibleWidgetIds);
+
+    return [
+        ...persistedHiddenWidgetIds.filter(widgetId => !loadedIds.has(widgetId)),
+        ...loadedWidgetIds.filter(widgetId => !visibleIds.has(widgetId)),
+    ];
+}
+
+/**
  * Builds the initial visible/hidden widget draft state from persisted user settings.
  *
  * This is a pure function of (settings, registered widgets) so it can be unit-tested and,

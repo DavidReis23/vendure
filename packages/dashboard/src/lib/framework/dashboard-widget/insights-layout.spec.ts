@@ -2,7 +2,7 @@ import type { DashboardWidgetDefinition } from '@/vdb/framework/extension-api/ty
 import type { PersistedWidgetInstance, UserSettings } from '@/vdb/providers/user-settings.js';
 import { describe, expect, it } from 'vitest';
 
-import { buildInitialWidgetState } from './insights-layout.js';
+import { buildInitialWidgetState, mergeHiddenWidgetIds } from './insights-layout.js';
 
 const def = (id: string, overrides: Partial<DashboardWidgetDefinition> = {}): DashboardWidgetDefinition =>
     ({
@@ -154,5 +154,18 @@ describe('buildInitialWidgetState', () => {
 
         expect(state.visible.map(w => w.widgetId)).toEqual(['metrics']);
         expect(state.loadedWidgetIds).toEqual(['metrics']);
+    });
+});
+
+describe('mergeHiddenWidgetIds', () => {
+    it('preserves hidden widgets that are unavailable in the active channel', () => {
+        expect(mergeHiddenWidgetIds(['orders', 'catalog'], ['orders'], ['orders'])).toEqual(['catalog']);
+    });
+
+    it('updates the hidden state only for widgets loaded by the active channel', () => {
+        expect(mergeHiddenWidgetIds(['orders', 'catalog'], ['orders', 'customers'], ['customers'])).toEqual([
+            'catalog',
+            'orders',
+        ]);
     });
 });
