@@ -13,6 +13,10 @@ const WIDGET_ID = 'low-stock-widget';
 // are considered low on stock. Independent of the selected date range.
 const LOW_STOCK_THRESHOLD = 10;
 const MAX_ITEMS = 10;
+// The core API cannot sort or filter productVariants by stockOnHand/stockAllocated
+// (they are resolved at runtime from the StockLevel entity, not DB columns), so we
+// fetch a bounded pool of variants and compute the low-stock list on the client.
+const CANDIDATE_POOL_SIZE = 100;
 
 export function LowStockWidget() {
     const { t } = useLingui();
@@ -22,16 +26,16 @@ export function LowStockWidget() {
         queryFn: () =>
             api.query(lowStockVariantsQuery, {
                 options: {
-                    take: MAX_ITEMS,
-                    filter: {
-                        stockOnHand: { lte: LOW_STOCK_THRESHOLD },
-                    },
-                    sort: { stockOnHand: 'ASC' },
+                    take: CANDIDATE_POOL_SIZE,
                 },
             }),
     });
 
-    const variants = data?.productVariants.items ?? [];
+    const variants = (data?.productVariants.items ?? [])
+        .map(variant => ({ ...variant, saleable: variant.stockOnHand - variant.stockAllocated }))
+        .filter(variant => variant.saleable <= LOW_STOCK_THRESHOLD)
+        .sort((a, b) => a.saleable - b.saleable)
+        .slice(0, MAX_ITEMS);
 
     return (
         <DashboardBaseWidget
@@ -54,8 +58,7 @@ export function LowStockWidget() {
                 </div>
             ) : variants.length ? (
                 <ul className="flex flex-col gap-1 tabular-nums">
-                    {variants.map(variant => {
-                        const saleable = variant.stockOnHand - variant.stockAllocated;
+                    {variants.map(({ saleable, ...variant }) => {
                         return (
                             <li key={variant.id}>
                                 <Link
