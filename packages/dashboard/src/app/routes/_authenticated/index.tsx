@@ -1,5 +1,11 @@
 import { DateRangePicker } from '@/vdb/components/date-range-picker.js';
 import { Button } from '@/vdb/components/ui/button.js';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/vdb/components/ui/dropdown-menu.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
 import { GridLayout } from '@/vdb/components/ui/grid-layout.js';
 import { getDashboardWidget, getVisibleDashboardWidgets } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
@@ -19,6 +25,8 @@ import { createFileRoute } from '@tanstack/react-router';
 import { endOfDay, startOfMonth } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
+import { useLingui as useLinguiRuntime } from '@lingui/react';
+import { PlusIcon, XIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
@@ -66,30 +74,40 @@ const findNextPosition = (
 
 function DashboardPage() {
     const [widgets, setWidgets] = useState<DashboardWidgetInstance[]>([]);
+    // Draft list of hidden widget instances. Their layout is preserved so that
+    // re-adding a widget restores its previous position and size. Committed to
+    // user settings together with the layout on "Save Layout".
+    const [hiddenWidgets, setHiddenWidgets] = useState<DashboardWidgetInstance[]>([]);
     const [editMode, setEditMode] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
     const prevEditModeRef = useRef(editMode);
     const { t } = useLingui();
+    const { i18n } = useLinguiRuntime();
     const [dateRange, setDateRange] = useState<DefinedDateRange>({
         from: startOfMonth(new Date()),
         to: endOfDay(new Date()),
     });
 
-    const { settings, setWidgetLayout } = useUserSettings();
+    const { settings, setWidgetLayout, setHiddenWidgets: persistHiddenWidgets } = useUserSettings();
     const { hasPermissions } = usePermissions();
 
     useEffect(() => {
         const savedLayouts = settings.widgetLayout || {};
+        // Stale ids (widgets that are no longer registered) are naturally ignored
+        // because we only iterate over currently-registered widgets below.
+        const hiddenIds = new Set(settings.hiddenWidgets ?? []);
 
-        const initialWidgets = getVisibleDashboardWidgets()
+        const visible: DashboardWidgetInstance[] = [];
+        const hidden: DashboardWidgetInstance[] = [];
+
+        getVisibleDashboardWidgets()
             .filter(([, widget]) => {
                 if (!widget.requiresPermissions || widget.requiresPermissions.length === 0) {
                     return true;
                 }
                 return hasPermissions(widget.requiresPermissions);
             })
-            .reduce(
-            (acc: DashboardWidgetInstance[], [id, widget]) => {
+            .forEach(([id, widget]) => {
                 const defaultSize = {
                     w: widget.defaultSize.w ?? 4, // Default 4 columns
                     h: widget.defaultSize.h ?? 3, // Default 3 rows
@@ -115,9 +133,16 @@ function DashboardPage() {
                     maxH: widget.maxSize?.h,
                 };
 
+                const instance: DashboardWidgetInstance = { id, widgetId: id, layout };
+
+                if (hiddenIds.has(id)) {
+                    hidden.push(instance);
+                    return;
+                }
+
                 // Only find next position if we don't have a saved layout
                 if (!savedLayout) {
-                    const pos = findNextPosition(acc, {
+                    const pos = findNextPosition(visible, {
                         w: layout.w,
                         h: layout.h,
                     });
@@ -125,28 +150,25 @@ function DashboardPage() {
                     layout.y = pos.y;
                 }
 
-                return [
-                    ...acc,
-                    {
-                        id,
-                        widgetId: id,
-                        layout,
-                    },
-                ];
-            },
-            [],
-        );
+                visible.push(instance);
+            });
 
-        setWidgets(initialWidgets);
+        setWidgets(visible);
+        setHiddenWidgets(hidden);
         setIsInitialized(true);
-    }, [settings.widgetLayout, hasPermissions]);
+    }, [settings.widgetLayout, settings.hiddenWidgets, hasPermissions]);
 
-    // Save layout when edit mode is turned off
+    // Save layout and hidden widgets when edit mode is turned off
     useEffect(() => {
         // Only save when transitioning from edit mode ON to OFF
-        if (prevEditModeRef.current && !editMode && isInitialized && widgets.length > 0) {
-            const layoutConfig: Record<string, { x: number; y: number; w: number; h: number }> = {};
-            widgets.forEach(widget => {
+        if (prevEditModeRef.current && !editMode && isInitialized) {
+            // Preserve any previously-saved layouts (including for widgets not currently
+            // loaded), then overwrite with the current layouts of both visible and hidden
+            // widgets so a hidden widget keeps its position/size when re-added.
+            const layoutConfig: Record<string, { x: number; y: number; w: number; h: number }> = {
+                ...(settings.widgetLayout ?? {}),
+            };
+            [...widgets, ...hiddenWidgets].forEach(widget => {
                 layoutConfig[widget.widgetId] = {
                     x: widget.layout.x,
                     y: widget.layout.y,
@@ -155,11 +177,20 @@ function DashboardPage() {
                 };
             });
             setWidgetLayout(layoutConfig);
+            persistHiddenWidgets(hiddenWidgets.map(widget => widget.widgetId));
         }
 
         // Update the ref for next render
         prevEditModeRef.current = editMode;
-    }, [editMode, isInitialized, widgets, setWidgetLayout]);
+    }, [
+        editMode,
+        isInitialized,
+        widgets,
+        hiddenWidgets,
+        setWidgetLayout,
+        persistHiddenWidgets,
+        settings.widgetLayout,
+    ]);
 
     const handleLayoutChange = (layouts: GridLayoutType[]) => {
         setWidgets(prev =>
@@ -170,12 +201,45 @@ function DashboardPage() {
         );
     };
 
+    const handleRemoveWidget = (instanceId: string) => {
+        const target = widgets.find(widget => widget.id === instanceId);
+        if (!target) {
+            return;
+        }
+        setWidgets(prev => prev.filter(widget => widget.id !== instanceId));
+        setHiddenWidgets(prev => [...prev, target]);
+    };
+
+    const handleAddWidget = (instanceId: string) => {
+        const target = hiddenWidgets.find(widget => widget.id === instanceId);
+        if (!target) {
+            return;
+        }
+        setHiddenWidgets(prev => prev.filter(widget => widget.id !== instanceId));
+        setWidgets(prev => [...prev, target]);
+    };
+
     const renderWidget = (widget: DashboardWidgetInstance) => {
         const definition = getDashboardWidget(widget.widgetId);
         if (!definition) return null;
         const WidgetComponent = definition.component;
 
-        return <WidgetComponent key={widget.id} id={widget.id} config={widget.config} />;
+        return (
+            <div key={widget.id} className="relative h-full w-full">
+                {editMode && (
+                    <button
+                        type="button"
+                        aria-label={t`Remove widget`}
+                        className="absolute -right-2 -top-2 z-20 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background text-muted-foreground shadow-sm hover:bg-muted hover:text-foreground"
+                        onMouseDown={event => event.stopPropagation()}
+                        onClick={() => handleRemoveWidget(widget.id)}
+                    >
+                        <XIcon className="h-3.5 w-3.5" />
+                    </button>
+                )}
+                <WidgetComponent id={widget.id} config={widget.config} />
+            </div>
+        );
     };
 
     return (
@@ -191,6 +255,35 @@ function DashboardPage() {
                         className="mr-2"
                     />
                 </ActionBarItem>
+                {editMode && (
+                    <ActionBarItem itemId="add-widget-picker">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger render={<Button variant="outline" className="mr-2" />}>
+                                <PlusIcon className="mr-1 h-4 w-4" />
+                                <Trans>Add widget</Trans>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                {hiddenWidgets.length > 0 ? (
+                                    hiddenWidgets.map(widget => {
+                                        const definition = getDashboardWidget(widget.widgetId);
+                                        return (
+                                            <DropdownMenuItem
+                                                key={widget.id}
+                                                onClick={() => handleAddWidget(widget.id)}
+                                            >
+                                                {definition ? i18n.t(definition.name) : widget.widgetId}
+                                            </DropdownMenuItem>
+                                        );
+                                    })
+                                ) : (
+                                    <DropdownMenuItem disabled>
+                                        <Trans>No hidden widgets</Trans>
+                                    </DropdownMenuItem>
+                                )}
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </ActionBarItem>
+                )}
                 <ActionBarItem itemId="edit-layout-button">
                     <Button
                         variant={editMode ? 'default' : 'outline'}
@@ -224,10 +317,17 @@ function DashboardPage() {
                             </WidgetFiltersProvider>
                         ) : (
                             <div
-                                className="flex items-center justify-center text-muted-foreground"
+                                className="flex items-center justify-center text-center text-muted-foreground"
                                 style={{ height: '400px' }}
                             >
-                                <Trans>No widgets available</Trans>
+                                {editMode ? (
+                                    <Trans>
+                                        All widgets are hidden. Use the "Add widget" button to add them
+                                        back.
+                                    </Trans>
+                                ) : (
+                                    <Trans>No widgets to display. Use "Edit Layout" to add widgets.</Trans>
+                                )}
                             </div>
                         )}
                     </div>

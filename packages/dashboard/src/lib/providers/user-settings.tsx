@@ -28,6 +28,12 @@ export interface UserSettings {
     hasSeenOnboarding: boolean;
     tableSettings?: Record<string, TableSettings>;
     widgetLayout?: Record<string, { x: number; y: number; w: number; h: number }>;
+    /**
+     * @description
+     * The ids of Insights widgets the user has hidden. Uses a hidden-list model so that
+     * newly registered widgets are visible by default with no migration needed.
+     */
+    hiddenWidgets?: string[];
 }
 
 const defaultSettings: UserSettings = {
@@ -66,6 +72,7 @@ export interface UserSettingsContextType {
         value: TableSettings[K],
     ) => void;
     setWidgetLayout: (layoutConfig: Record<string, { x: number; y: number; w: number; h: number }>) => void;
+    setHiddenWidgets: (widgetIds: string[]) => void;
 }
 
 export const UserSettingsContext = createContext<UserSettingsContextType | undefined>(undefined);
@@ -220,6 +227,7 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
             }));
         },
         setWidgetLayout: layoutConfig => updateSetting('widgetLayout', layoutConfig),
+        setHiddenWidgets: widgetIds => updateSetting('hiddenWidgets', widgetIds),
     };
 
     return <UserSettingsContext.Provider value={contextValue}>{children}</UserSettingsContext.Provider>;
