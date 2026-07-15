@@ -117,6 +117,25 @@ export function compactLayouts(layouts: GridLayout[]): GridLayout[] {
     return layouts.map(l => compacted.find(c => c.i === l.i) ?? l);
 }
 
+/**
+ * Re-arranges every widget into the tightest gap-free arrangement. Widgets are placed one at a
+ * time in reading order (top-to-bottom, then left-to-right), each at the topmost-then-leftmost
+ * slot where it fits without overlapping an already-placed widget. Sizes are preserved; only
+ * positions change. The result is deterministic, has no overlaps, is idempotent (tidying an
+ * already-tidy layout is a no-op), and is never taller than the input. The returned array
+ * preserves the input order.
+ */
+export function tidyLayouts(layouts: GridLayout[], cols: number = DEFAULT_COLS): GridLayout[] {
+    const ordered = [...layouts].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+    const placed: GridLayout[] = [];
+    for (const item of ordered) {
+        // Scanning from y=0 finds the globally topmost-leftmost free slot among already-placed
+        // widgets, which is what makes this a stronger, global compaction.
+        placed.push(findNextAvailablePosition({ ...item, x: 0, y: 0 }, placed, undefined, cols));
+    }
+    return layouts.map(l => placed.find(p => p.i === l.i) ?? l);
+}
+
 export interface GridLayoutProps {
     children: React.ReactElement[];
     layouts: GridLayout[];

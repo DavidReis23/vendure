@@ -7,7 +7,7 @@ import {
     DropdownMenuTrigger,
 } from '@/vdb/components/ui/dropdown-menu.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
-import { compactLayouts, GridLayout, insertWithReflow } from '@/vdb/components/ui/grid-layout.js';
+import { compactLayouts, GridLayout, insertWithReflow, tidyLayouts } from '@/vdb/components/ui/grid-layout.js';
 import {
     getDashboardWidget,
     getDashboardWidgetFilters,
@@ -31,7 +31,7 @@ import { endOfDay, startOfMonth } from 'date-fns';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLingui as useLinguiRuntime } from '@lingui/react';
-import { PlusIcon, XIcon } from 'lucide-react';
+import { LayoutGridIcon, PlusIcon, XIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
@@ -311,6 +311,12 @@ function DashboardPage() {
         });
     };
 
+    // Re-arranges every visible widget into the tightest gap-free grid, preserving each widget's
+    // size and only changing positions. Affects draft state; persisted on "Save Layout".
+    const handleTidy = () => {
+        setWidgets(prev => applyGridLayouts(prev, tidyLayouts(prev.map(toGridLayout))));
+    };
+
     // Adds a fresh instance of a multi-instance widget, placed at the next free grid slot.
     const handleAddWidgetInstance = (widgetId: string) => {
         const definition = getDashboardWidget(widgetId);
@@ -434,6 +440,19 @@ function DashboardPage() {
                                 )}
                             </DropdownMenuContent>
                         </DropdownMenu>
+                    </ActionBarItem>
+                )}
+                {editMode && (
+                    <ActionBarItem itemId="tidy-widgets">
+                        <Button
+                            variant="outline"
+                            className="mr-2"
+                            disabled={widgets.length === 0}
+                            onClick={handleTidy}
+                        >
+                            <LayoutGridIcon className="mr-1 h-4 w-4" />
+                            <Trans>Tidy</Trans>
+                        </Button>
                     </ActionBarItem>
                 )}
                 <ActionBarItem itemId="edit-layout-button">

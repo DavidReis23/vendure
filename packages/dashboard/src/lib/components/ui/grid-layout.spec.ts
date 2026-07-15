@@ -7,6 +7,7 @@ import {
     insertWithReflow,
     layoutsOverlap,
     reflowAroundAnchor,
+    tidyLayouts,
 } from './grid-layout.js';
 
 const item = (i: string, x: number, y: number, w: number, h: number): GridLayout => ({ i, x, y, w, h });
@@ -110,6 +111,61 @@ describe('reflowAroundAnchor', () => {
             item('b', 0, 0, 12, 2),
         );
         expect(byId(result, 'b')).toMatchObject({ x: 0, y: 0 });
+        expectNoOverlaps(result);
+    });
+});
+
+describe('tidyLayouts', () => {
+    const gridHeight = (layouts: GridLayout[]) => Math.max(0, ...layouts.map(l => l.y + l.h));
+
+    it('pulls scattered widgets up into a gap-free arrangement', () => {
+        const result = tidyLayouts([item('a', 0, 3, 6, 2), item('b', 6, 7, 6, 2)]);
+        expect(byId(result, 'a')).toMatchObject({ x: 0, y: 0 });
+        expect(byId(result, 'b')).toMatchObject({ x: 6, y: 0 });
+        expectNoOverlaps(result);
+    });
+
+    it('packs a full row before starting the next one', () => {
+        const result = tidyLayouts([item('a', 0, 4, 6, 2), item('b', 0, 8, 6, 2), item('c', 0, 0, 6, 2)]);
+        // c (topmost) stays at 0,0; a and b pack to its right and below.
+        expect(byId(result, 'c')).toMatchObject({ x: 0, y: 0 });
+        expect(byId(result, 'a')).toMatchObject({ x: 6, y: 0 });
+        expect(byId(result, 'b')).toMatchObject({ x: 0, y: 2 });
+        expectNoOverlaps(result);
+    });
+
+    it('preserves every widget size', () => {
+        const input = [item('a', 3, 5, 4, 3), item('b', 0, 0, 8, 2)];
+        const result = tidyLayouts(input);
+        expect(byId(result, 'a')).toMatchObject({ w: 4, h: 3 });
+        expect(byId(result, 'b')).toMatchObject({ w: 8, h: 2 });
+    });
+
+    it('preserves the input order', () => {
+        const result = tidyLayouts([item('a', 0, 5, 6, 2), item('b', 0, 0, 6, 2)]);
+        expect(result.map(l => l.i)).toEqual(['a', 'b']);
+    });
+
+    it('is idempotent — tidying an already-tidy layout is a no-op', () => {
+        const once = tidyLayouts([item('a', 0, 3, 6, 2), item('b', 6, 7, 4, 2), item('c', 2, 1, 5, 3)]);
+        const twice = tidyLayouts(once);
+        expect(twice).toEqual(once);
+    });
+
+    it('reduces or maintains total grid height', () => {
+        const input = [item('a', 0, 0, 6, 2), item('b', 0, 5, 6, 2), item('c', 6, 9, 6, 2)];
+        const result = tidyLayouts(input);
+        expect(gridHeight(result)).toBeLessThanOrEqual(gridHeight(input));
+        expectNoOverlaps(result);
+    });
+
+    it('never produces overlaps for tightly-packed mixed sizes', () => {
+        const result = tidyLayouts([
+            item('a', 0, 0, 5, 2),
+            item('b', 5, 0, 7, 3),
+            item('c', 0, 2, 5, 4),
+            item('d', 8, 3, 4, 2),
+        ]);
         expectNoOverlaps(result);
     });
 });
