@@ -160,3 +160,77 @@ In edit mode, multi-instance widgets are always offered in the "Add widget" pick
 instance is already on the page — and each click adds a fresh instance at the next free grid slot.
 Removing one instance leaves the others untouched; removing the last instance hides the widget just
 like a single-instance widget.
+
+## Global filters
+
+Alongside the built-in date range picker, you can register your own global filters via
+`insights.filters`. A filter renders a component in the Insights page action bar, and its value is
+shared with **every** widget on the page. This lets several widgets filter on a common constraint —
+for example a selected warehouse or sales channel.
+
+A filter definition has an `id`, a `component`, and an optional `defaultValue`. The component is a
+controlled input: it receives the current `value` and an `onChange` callback.
+
+```tsx title="warehouse-filter.tsx"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@vendure/dashboard';
+
+const warehouses = { all: 'All warehouses', north: 'North', south: 'South' };
+
+export function WarehouseFilter({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+    return (
+        <Select value={value} onValueChange={onChange} items={warehouses}>
+            <SelectTrigger className="w-48">
+                <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+                {Object.entries(warehouses).map(([id, label]) => (
+                    <SelectItem key={id} value={id}>
+                        {label}
+                    </SelectItem>
+                ))}
+            </SelectContent>
+        </Select>
+    );
+}
+```
+
+Register it in your dashboard entrypoint:
+
+```tsx title="index.tsx"
+import { defineDashboardExtension } from '@vendure/dashboard';
+
+import { WarehouseFilter } from './warehouse-filter';
+
+defineDashboardExtension({
+    insights: {
+        filters: [
+            {
+                id: 'warehouse',
+                defaultValue: 'all',
+                component: WarehouseFilter,
+            },
+        ],
+    },
+});
+```
+
+Any widget can then read the current value via the `useWidgetFilters()` hook, using the filter's
+`id` as the key on `filters`:
+
+```tsx title="custom-widget.tsx"
+import { DashboardBaseWidget, useWidgetFilters } from '@vendure/dashboard';
+
+export function CustomWidget() {
+    const { dateRange, filters } = useWidgetFilters();
+    const warehouse = filters.warehouse as string;
+    return (
+        <DashboardBaseWidget id="custom-widget" title="Custom Widget">
+            <span>Showing data for warehouse: {warehouse}</span>
+        </DashboardBaseWidget>
+    );
+}
+```
+
+Changing a filter re-renders every consuming widget. Filter state is session-only — it is not
+persisted across reloads. Filter ids must be unique; registering two filters with the same id logs a
+warning and ignores the duplicate.

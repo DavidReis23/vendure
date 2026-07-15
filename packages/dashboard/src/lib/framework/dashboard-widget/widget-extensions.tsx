@@ -1,8 +1,12 @@
-import { DashboardWidgetDefinition } from '@/vdb/framework/extension-api/types/index.js';
+import {
+    DashboardWidgetDefinition,
+    DashboardWidgetFilterDefinition,
+} from '@/vdb/framework/extension-api/types/index.js';
 import { globalRegistry } from '../registry/global-registry.js';
 
 globalRegistry.register('dashboardWidgetRegistry', new Map<string, DashboardWidgetDefinition>());
 globalRegistry.register('excludedDashboardWidgets', new Set<string>());
+globalRegistry.register('dashboardWidgetFilterRegistry', new Map<string, DashboardWidgetFilterDefinition>());
 
 export function registerDashboardWidget(widget: DashboardWidgetDefinition) {
     globalRegistry.set('dashboardWidgetRegistry', map => {
@@ -44,4 +48,32 @@ export function getExcludedDashboardWidgets() {
 export function getVisibleDashboardWidgets(): Array<[string, DashboardWidgetDefinition]> {
     const excluded = getExcludedDashboardWidgets();
     return Array.from(getDashboardWidgetRegistry().entries()).filter(([id]) => !excluded.has(id));
+}
+
+/**
+ * Registers a global Insights filter. Filters render in the Insights page action bar and
+ * their values are shared with every widget via the `useWidgetFilters()` hook. Ids must be
+ * unique: a duplicate id logs a warning and is ignored so an existing filter is not silently
+ * overwritten.
+ */
+export function registerDashboardWidgetFilter(filter: DashboardWidgetFilterDefinition) {
+    if (globalRegistry.get('dashboardWidgetFilterRegistry').has(filter.id)) {
+        // eslint-disable-next-line no-console
+        console.warn(
+            `A dashboard widget filter with the id "${filter.id}" is already registered. ` +
+                `The duplicate registration will be ignored.`,
+        );
+        return;
+    }
+    globalRegistry.set('dashboardWidgetFilterRegistry', map => {
+        map.set(filter.id, filter);
+        return map;
+    });
+}
+
+/**
+ * Returns all registered global Insights filters.
+ */
+export function getDashboardWidgetFilters(): DashboardWidgetFilterDefinition[] {
+    return Array.from(globalRegistry.get('dashboardWidgetFilterRegistry').values());
 }

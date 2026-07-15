@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
+    getDashboardWidgetFilters,
     getDashboardWidgetRegistry,
     getExcludedDashboardWidgets,
     getVisibleDashboardWidgets,
@@ -33,6 +34,7 @@ function resetNavState() {
 function resetWidgetRegistry() {
     globalRegistry.set('dashboardWidgetRegistry', () => new Map<string, DashboardWidgetDefinition>());
     globalRegistry.set('excludedDashboardWidgets', () => new Set<string>());
+    globalRegistry.set('dashboardWidgetFilterRegistry', () => new Map());
 }
 
 function resetInsightsState() {
@@ -427,6 +429,60 @@ describe('defineDashboardExtension - insights', () => {
         const visibleIds = getVisibleDashboardWidgets().map(([id]) => id);
         expect(getDashboardWidgetRegistry().get('other-extension-widget')).toBeDefined();
         expect(visibleIds).not.toContain('other-extension-widget');
+    });
+
+    it('registers a global filter via insights.filters', () => {
+        defineDashboardExtension({
+            insights: {
+                filters: [{ id: 'warehouse', component: DummyWidget, defaultValue: 'all' }],
+            },
+        });
+        executeDashboardExtensionCallbacks();
+
+        const filters = getDashboardWidgetFilters();
+        expect(filters).toHaveLength(1);
+        expect(filters[0]).toMatchObject({ id: 'warehouse', defaultValue: 'all' });
+    });
+
+    it('registers filters from multiple extensions without collisions', () => {
+        defineDashboardExtension({
+            insights: { filters: [{ id: 'warehouse', component: DummyWidget }] },
+        });
+        defineDashboardExtension({
+            insights: { filters: [{ id: 'channel', component: DummyWidget }] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        expect(getDashboardWidgetFilters().map(f => f.id)).toEqual(['warehouse', 'channel']);
+    });
+
+    it('warns and ignores a duplicate filter id', () => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {
+            /* noop */
+        });
+
+        const FirstComponent = () => null;
+        const SecondComponent = () => null;
+        defineDashboardExtension({
+            insights: { filters: [{ id: 'warehouse', component: FirstComponent }] },
+        });
+        defineDashboardExtension({
+            insights: { filters: [{ id: 'warehouse', component: SecondComponent }] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringContaining(
+                'A dashboard widget filter with the id "warehouse" is already registered',
+            ),
+        );
+        const filters = getDashboardWidgetFilters();
+        expect(filters).toHaveLength(1);
+        // The first registration wins; the duplicate is ignored.
+        expect(filters[0].component).toBe(FirstComponent);
+
+        warnSpy.mockRestore();
     });
 });
 

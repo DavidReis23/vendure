@@ -8,7 +8,11 @@ import {
 } from '@/vdb/components/ui/dropdown-menu.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
 import { GridLayout } from '@/vdb/components/ui/grid-layout.js';
-import { getDashboardWidget, getVisibleDashboardWidgets } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
+import {
+    getDashboardWidget,
+    getDashboardWidgetFilters,
+    getVisibleDashboardWidgets,
+} from '@/vdb/framework/dashboard-widget/widget-extensions.js';
 import { usePermissions } from '@/vdb/hooks/use-permissions.js';
 import { DefinedDateRange, WidgetFiltersProvider, } from '@/vdb/framework/dashboard-widget/widget-filters-context.js';
 import { WidgetInstanceProvider } from '@/vdb/framework/dashboard-widget/widget-instance-context.js';
@@ -24,7 +28,7 @@ import { ActionBarItem } from '@/vdb/framework/layout-engine/action-bar-item-wra
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { createFileRoute } from '@tanstack/react-router';
 import { endOfDay, startOfMonth } from 'date-fns';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLingui as useLinguiRuntime } from '@lingui/react';
 import { PlusIcon, XIcon } from 'lucide-react';
@@ -133,6 +137,13 @@ function DashboardPage() {
         from: startOfMonth(new Date()),
         to: endOfDay(new Date()),
     });
+    // Global Insights filters registered via `insights.filters`. Their values are session-only
+    // state seeded from each filter's `defaultValue`, and are shared with every widget through
+    // the WidgetFiltersProvider so widgets can read them via `useWidgetFilters().filters[id]`.
+    const widgetFilters = useMemo(() => getDashboardWidgetFilters(), []);
+    const [filterValues, setFilterValues] = useState<Record<string, unknown>>(() =>
+        Object.fromEntries(widgetFilters.map(filter => [filter.id, filter.defaultValue])),
+    );
 
     const { settings, saveWidgetInstanceLayouts, setHiddenWidgets: persistHiddenWidgets } = useUserSettings();
     const { hasPermissions } = usePermissions();
@@ -342,6 +353,21 @@ function DashboardPage() {
                         className="mr-2"
                     />
                 </ActionBarItem>
+                {widgetFilters.map(filter => {
+                    const FilterComponent = filter.component;
+                    return (
+                        <ActionBarItem key={filter.id} itemId={`widget-filter-${filter.id}`}>
+                            <div className="mr-2">
+                                <FilterComponent
+                                    value={filterValues[filter.id]}
+                                    onChange={value =>
+                                        setFilterValues(prev => ({ ...prev, [filter.id]: value }))
+                                    }
+                                />
+                            </div>
+                        </ActionBarItem>
+                    );
+                })}
                 {editMode && (
                     <ActionBarItem itemId="add-widget-picker">
                         <DropdownMenu>
@@ -394,7 +420,7 @@ function DashboardPage() {
                 <FullWidthPageBlock blockId="widgets">
                     <div className="w-full">
                         {widgets.length > 0 ? (
-                            <WidgetFiltersProvider filters={{ dateRange }}>
+                            <WidgetFiltersProvider filters={{ dateRange, filters: filterValues }}>
                                 <GridLayout
                                     layouts={widgets.map(w => ({ ...w.layout, i: w.id }))}
                                     onLayoutChange={handleLayoutChange}

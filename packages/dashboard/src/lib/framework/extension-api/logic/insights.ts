@@ -1,4 +1,7 @@
-import { excludeDashboardWidgets } from '../../dashboard-widget/widget-extensions.js';
+import {
+    excludeDashboardWidgets,
+    registerDashboardWidgetFilter,
+} from '../../dashboard-widget/widget-extensions.js';
 import { DashboardInsightsExtensionDefinition, DashboardWidgetDefinition } from '../types/index.js';
 
 import { registerWidgetExtensions } from './widgets.js';
@@ -16,5 +19,11 @@ export function registerInsightsExtensions(
 
     if (insights?.excludeWidgets?.length) {
         excludeDashboardWidgets(insights.excludeWidgets);
+    }
+
+    if (insights?.filters?.length) {
+        for (const filter of insights.filters) {
+            registerDashboardWidgetFilter(filter);
+        }
     }
 }
