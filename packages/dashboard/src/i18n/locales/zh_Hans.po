@@ -18,7 +18,7 @@ msgstr ""
 msgid "Full Name"
 msgstr "全名"
 
-#: src/lib/components/data-input/relation-selector.tsx:408
+#: src/lib/components/data-input/relation-selector.tsx:409
 msgid "Select items"
 msgstr "选择项目"
 
@@ -90,7 +90,7 @@ msgstr "编辑 JSON 值"
 msgid "Using external authentication strategy: {strategy}"
 msgstr "使用外部身份验证策略：{strategy}"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:225
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:230
 msgid "Select a reason..."
 msgstr "选择原因..."
 
@@ -153,7 +153,7 @@ msgstr "已删除 {selectionLength} 个资源"
 msgid "Successfully updated tax rate"
 msgstr "已成功更新税率"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:237
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:242
 msgid "Enter custom reason..."
 msgstr "输入自定义原因..."
 
@@ -167,6 +167,11 @@ msgstr "类型"
 #: src/lib/components/data-input/default-relation-input.tsx:676
 msgid "Select {0}"
 msgstr "选择 {0}"
+
+#. placeholder {0}: selectedItems.length
+#: src/lib/components/data-input/relation-selector.tsx:408
+msgid "Add more ({0} selected)"
+msgstr ""
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:67
 msgid "View values"
@@ -219,6 +224,10 @@ msgstr "自动刷新：{0}"
 msgid "Deleted {deleted} {entityName}"
 msgstr "已删除 {deleted} {entityName}"
 
+#: src/lib/components/shared/asset/asset-properties.tsx:32
+msgid "File Size"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:13
 #~ msgid "Healthchecks"
 #~ msgstr "健康检查"
@@ -241,7 +250,7 @@ msgstr "{fulfilled, plural, other {成功取消 {fulfilled} 个任务}}"
 msgid "Seller"
 msgstr "卖家"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:131
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:136
 msgid "SKU:"
 msgstr "SKU:"
 
@@ -286,7 +295,7 @@ msgstr "选择角色"
 msgid "Successfully created role"
 msgstr "已成功创建角色"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:459
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:434
 msgid "Are you sure you want to delete this variant?"
 msgstr "确定要删除此变体吗？"
 
@@ -310,7 +319,7 @@ msgstr "已成功更新商品变体"
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
 msgstr "删除 {failed} {entityName} 失败：{allErrors}"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:159
 msgid "Successfully updated product"
 msgstr "已成功更新商品"
 
@@ -350,8 +359,10 @@ msgstr "已成功创建库存位置"
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:120
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:166
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:185
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:113
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:204
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:55
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:73
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:105
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:197
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
 msgstr "未知错误"
@@ -396,7 +407,7 @@ msgstr "新角色"
 msgid "Failed to delete assets: {message}"
 msgstr "删除资源失败：{message}"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:105
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:109
 msgid "Return to stock"
 msgstr "退回库存"
 
@@ -404,7 +415,7 @@ msgstr "退回库存"
 msgid "Visibility"
 msgstr "可见性"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:281
 msgid "Product variants"
 msgstr "产品变体"
 
@@ -565,7 +576,7 @@ msgstr "加载客户历史出错：{0}"
 msgid "Successfully removed {selectionLength} {entityType} from channel"
 msgstr "已成功从渠道中删除 {selectionLength} {entityType}"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:159
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:151
 msgid "Add option value"
 msgstr "添加选项值"
 
@@ -760,7 +771,7 @@ msgstr "完成草稿"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:170
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:158
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:286
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:353
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:328
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:165
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:89
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:148
@@ -809,6 +820,7 @@ msgid "Found {0} eligible shipping method{1}"
 msgstr "找到 {0} 个符合条件的配送方式"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:746
+#: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "尺寸"
 
@@ -817,7 +829,7 @@ msgid "Show password"
 msgstr "显示密码"
 
 #. placeholder {0}: formatCurrency(refund.totalRefundableAmount, order.currencyCode)
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:282
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:287
 msgid "(max: {0})"
 msgstr "(最大: {0})"
 
@@ -875,7 +887,7 @@ msgstr "创建集合失败"
 msgid "Go to first page"
 msgstr "转到首页"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:167
 msgid "Failed to create product"
 msgstr "创建商品失败"
 
@@ -900,7 +912,7 @@ msgstr "订单已设置配送地址"
 msgid "Focal Point"
 msgstr "焦点"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:99
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:98
 msgid "Single variant, no options"
 msgstr "单一变体，无选项"
 
@@ -1050,6 +1062,10 @@ msgstr "草稿订单"
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
 msgid "Scope"
 msgstr "范围"
+
+#: src/app/routes/_authenticated/_promotions/components/promotion-conditions-selector.tsx:37
+msgid "Add condition"
+msgstr "添加条件"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:58
 msgid "Shipping method is eligible for this order"
@@ -1261,7 +1277,7 @@ msgstr "支付状态已成功更新"
 msgid "Create new"
 msgstr "新建"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:249
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:254
 msgid "Refund total"
 msgstr "退款总额"
 
@@ -1279,8 +1295,6 @@ msgid "{cancellableCount, plural, one {Cancel {cancellableCount} job} other {Can
 msgstr ""
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:499
-#: src/lib/components/shared/configurable-operation-multi-selector.tsx:265
-#: src/lib/components/shared/configurable-operation-selector.tsx:140
 msgid "{buttonText}"
 msgstr "{buttonText}"
 
@@ -1331,7 +1345,7 @@ msgstr "没有与当前筛选条件匹配的变体。"
 msgid "Addresses"
 msgstr "地址"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:136
 msgid "Add a new option value to the {groupName} option group"
 msgstr "向 {groupName} 选项组添加新的选项值"
 
@@ -1457,7 +1471,7 @@ msgstr "用作默认账单地址"
 
 #: src/app/common/delete-bulk-action.tsx:139
 #: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:41
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:362
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:337
 #: src/lib/components/data-table/use-generated-columns.tsx:407
 #: src/lib/components/data-table/use-generated-columns.tsx:437
 #: src/lib/components/data-table/views-sheet.tsx:270
@@ -1496,7 +1510,7 @@ msgstr "国家"
 msgid "Failed to rename view"
 msgstr "重命名视图失败"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:306
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:311
 msgid "Available"
 msgstr "可用"
 
@@ -1518,6 +1532,10 @@ msgstr "客户组"
 #: src/lib/framework/defaults.ts:98
 msgid "Customers"
 msgstr "客户"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/shipping-calculator-selector.tsx:37
+msgid "Select Shipping Calculator"
+msgstr ""
 
 #: src/lib/components/layout/language-dialog.tsx:103
 msgid "Sample Formatting"
@@ -1588,10 +1606,10 @@ msgstr "转到末页"
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:168
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:311
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:352
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:358
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:363
 #: src/app/routes/_authenticated/_orders/components/settle-refund-dialog.tsx:71
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:273
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:498
+#: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:48
 #: src/app/routes/_authenticated/_system/settings-store.tsx:140
 #: src/lib/components/data-input/product-multi-selector-input.tsx:470
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:122
@@ -1655,7 +1673,11 @@ msgstr "设置自定义字段"
 msgid "Collections"
 msgstr "集合"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:458
+#: src/app/routes/_authenticated/_shipping-methods/components/shipping-eligibility-checker-selector.tsx:37
+msgid "Select Shipping Eligibility Checker"
+msgstr ""
+
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:433
 msgid "Delete variant"
 msgstr "删除变体"
 
@@ -1697,7 +1719,7 @@ msgid "Private collections are not visible in the shop"
 msgstr "私有集合在商店中不可见"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:262
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:229
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:222
 msgid "When enabled, a product is available in the shop"
 msgstr "启用后，商品在商店中可用"
 
@@ -1713,6 +1735,7 @@ msgstr "客户组"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:123
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:58
+#: src/lib/components/data-display/boolean.tsx:22
 #: src/lib/components/layout/nav-user.tsx:155
 msgid "Disabled"
 msgstr "已禁用"
@@ -1757,7 +1780,7 @@ msgstr "无属性值"
 msgid "A reason for the refund is required"
 msgstr "需要提供退款原因"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:194
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:187
 msgid "Could not remove option group"
 msgstr "无法移除选项组"
 
@@ -1786,7 +1809,7 @@ msgstr "退款已成功完成"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:252
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:279
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
 #: src/app/routes/_authenticated/_profile/profile.tsx:92
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
@@ -1829,7 +1852,7 @@ msgstr "支付方式"
 msgid "Edit"
 msgstr "编辑"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:188
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:180
 msgid "Variant updated successfully"
 msgstr "变体已成功更新"
 
@@ -1865,7 +1888,7 @@ msgstr "复制"
 msgid "No results"
 msgstr "无结果"
 
-#: src/lib/components/data-table/data-table-view-options.tsx:89
+#: src/lib/components/data-table/data-table-view-options.tsx:95
 msgid "Column settings"
 msgstr "列设置"
 
@@ -1883,7 +1906,7 @@ msgstr "列设置"
 msgid "Code"
 msgstr "代码"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:196
 msgid "Failed to remove option groups"
 msgstr "移除选项组失败"
 
@@ -1951,7 +1974,7 @@ msgstr "扩展查询文档失败"
 msgid "Failed to update note"
 msgstr "更新备注失败"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:201
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:206
 msgid "Refund shipping"
 msgstr "退还运费"
 
@@ -1974,7 +1997,7 @@ msgid "Test Shipping Method"
 msgstr "测试配送方式"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:491
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:333
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:327
 msgid "Facet Values"
 msgstr "属性值"
 
@@ -2356,6 +2379,10 @@ msgstr "设置所有渠道可用的语言。然后，各个渠道可以支持这
 msgid "Collections moved successfully"
 msgstr "集合移动成功"
 
+#: src/lib/components/data-input/relation-selector.tsx:411
+msgid "Change selection"
+msgstr ""
+
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:23
 msgid "Registered"
 msgstr "已注册"
@@ -2383,7 +2410,7 @@ msgstr "第 {0} 页，共 {1} 页"
 msgid "Rate"
 msgstr "费率"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:114
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:113
 msgid "Size, colour, etc."
 msgstr "大小、颜色等"
 
@@ -2461,6 +2488,10 @@ msgstr "订单已设置客户"
 #: src/lib/components/shared/facet-value-selector.tsx:222
 msgid "Facets"
 msgstr "属性"
+
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:58
+msgid "{count, plural, one {Are you sure you want to remove {count} customer from this group?} other {Are you sure you want to remove {count} customers from this group?}}"
+msgstr "{count, plural, other {您确定要从此组中移除{count}位客户吗？}}"
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:293
 msgid "Stock on Hand"
@@ -2616,11 +2647,11 @@ msgstr "重新计算运费"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:225
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:508
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:366
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:360
 msgid "Assets"
 msgstr "资源"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:307
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:300
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "这将移除此产品的所有选项组并返回变体设置选择。"
 
@@ -2666,9 +2697,13 @@ msgstr "所有类型"
 msgid "Only draft orders can be completed"
 msgstr "只有草稿订单可以完成"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:168
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:167
 msgid "Failed to update product"
 msgstr "更新商品失败"
+
+#: src/app/routes/_authenticated/_collections/components/collection-filters-selector.tsx:26
+msgid "Add collection filter"
+msgstr ""
 
 #. placeholder {0}: adjustedLines.length
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:152
@@ -2693,7 +2728,7 @@ msgstr "渠道"
 #~ msgstr "健康检查"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:170
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:317
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:322
 msgid "Amount"
 msgstr "金额"
 
@@ -2708,7 +2743,7 @@ msgid "New customer"
 msgstr "新客户"
 
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:33
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:90
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:94
 msgid "Image"
 msgstr "图片"
 
@@ -2717,7 +2752,7 @@ msgid "Successfully created administrator"
 msgstr "成功创建管理员"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:198
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:315
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:308
 msgid "Product Options"
 msgstr "商品选项"
 
@@ -2733,7 +2768,7 @@ msgstr "正在创建..."
 msgid "Are you sure you want to delete this global view? This action cannot be undone and will affect all users."
 msgstr "确定要删除此全局视图吗？此操作无法撤销，将影响所有用户。"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:491
+#: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:37
 msgid "Force remove option group"
 msgstr "强制移除选项组"
 
@@ -2797,7 +2832,7 @@ msgstr "删除全局视图"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:160
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:252
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:219
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2833,7 +2868,7 @@ msgstr "创建客户失败"
 msgid "Focal point updated"
 msgstr "焦点已更新"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:303
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:279
 msgid "Option values"
 msgstr "选项值"
 
@@ -2893,7 +2928,7 @@ msgstr "回退值: {value}"
 msgid "Order history"
 msgstr "订单历史"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:263
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:268
 msgid "Override"
 msgstr "覆盖"
 
@@ -2958,7 +2993,7 @@ msgstr "深色"
 msgid "Test Results"
 msgstr "测试结果"
 
-#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:127
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:137
 msgid "Add customer"
 msgstr "添加客户"
 
@@ -2992,7 +3027,6 @@ msgstr ""
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:44
 #: src/lib/components/data-input/product-multi-selector-input.tsx:377
 #: src/lib/components/data-input/product-multi-selector-input.tsx:380
-#: src/lib/components/data-input/relation-selector.tsx:404
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:439
 msgid "{0}"
 msgstr "{0}"
@@ -3005,7 +3039,7 @@ msgstr "新区域"
 msgid "Failed to update collection position"
 msgstr "更新集合位置失败"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:102
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:106
 msgid "Refund"
 msgstr "退款"
 
@@ -3062,7 +3096,7 @@ msgstr "切换标题列"
 msgid "New Promotion"
 msgstr "新促销"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:152
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
 msgid "Option value name"
 msgstr "选项值名称"
 
@@ -3113,7 +3147,7 @@ msgstr "设置 {columnId} 列的筛选条件"
 msgid "Country"
 msgstr "国家"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:97
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:96
 msgid "Simple product"
 msgstr "简单产品"
 
@@ -3145,6 +3179,10 @@ msgstr "订单指标"
 #: src/lib/components/layout/language-dialog.tsx:49
 msgid "Select display language"
 msgstr "选择显示语言"
+
+#: src/app/routes/_authenticated/_payment-methods/components/payment-handler-selector.tsx:37
+msgid "Select Payment Handler"
+msgstr ""
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:128
 msgid "Authentication methods"
@@ -3181,7 +3219,7 @@ msgstr "商品变体"
 msgid "Manage Global Views"
 msgstr "管理全局视图"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:365
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:370
 msgid "Processing..."
 msgstr "处理中..."
 
@@ -3196,7 +3234,7 @@ msgstr "选择日期范围"
 
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:87
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:44
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:93
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:97
 msgid "Product"
 msgstr "商品"
 
@@ -3275,12 +3313,12 @@ msgstr "订单总数"
 msgid "No eligible shipping methods found for this order."
 msgstr "未找到此订单的符合条件的配送方式。"
 
-#: src/app/routes/_authenticated/_products/components/product-options-table.tsx:118
+#: src/app/routes/_authenticated/_products/components/product-options-table.tsx:126
 msgid "Add product option"
 msgstr "添加商品选项"
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:66
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:189
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:194
 #: src/app/routes/_authenticated/_orders/orders.tsx:85
 msgid "Shipping"
 msgstr "配送"
@@ -3289,7 +3327,7 @@ msgstr "配送"
 msgid "useWidgetDimensions must be used within a DashboardBaseWidget"
 msgstr "useWidgetDimensions 必须在 DashboardBaseWidget 中使用"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:493
+#: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:40
 msgid "This option group is in use by existing variants. Force removing it may affect those variants. Are you sure?"
 msgstr "此选项组正被现有变体使用。强制移除可能会影响这些变体。您确定吗？"
 
@@ -3340,7 +3378,7 @@ msgid "Yes"
 msgstr "是"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:175
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:246
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:239
 msgid "Slug"
 msgstr "Slug"
 
@@ -3394,6 +3432,10 @@ msgstr "不等于"
 #~ msgid "e.g. Size"
 #~ msgstr "例如：尺寸"
 
+#: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:38
+msgid "No checkers found"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:142
 msgid "Settle payment"
 msgstr "完成支付"
@@ -3402,7 +3444,7 @@ msgstr "完成支付"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:23
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:216
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:343
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:337
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3424,12 +3466,12 @@ msgstr "新库存位置"
 msgid "{successfulRefundCount} payment(s) refunded before failure. Check order history for details."
 msgstr "失败前已退还 {successfulRefundCount} 笔付款。请查看订单历史了解详情。"
 
-#: src/lib/components/data-input/relation-selector.tsx:411
+#: src/lib/components/data-input/relation-selector.tsx:412
 msgid "Select item"
 msgstr "选择项目"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:57
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:56
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:205
 msgid "New product"
 msgstr "新商品"
 
@@ -3441,6 +3483,10 @@ msgstr "管理标签"
 msgid "Items refunded"
 msgstr "已退款商品"
 
+#: src/app/routes/_authenticated/_promotions/components/promotion-actions-selector.tsx:37
+msgid "Add action"
+msgstr "添加操作"
+
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:325
 #~ msgid "Assign options to existing variant"
 #~ msgstr "将选项分配给现有变体"
@@ -3449,6 +3495,10 @@ msgstr "已退款商品"
 #: src/app/common/duplicate-entity-dialog.tsx:85
 msgid "Duplicate {0}s"
 msgstr "复制 {0}"
+
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:56
+msgid "Remove from group"
+msgstr "从组中移除"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:52
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:56
@@ -3602,7 +3652,7 @@ msgstr "无法从活动渠道中移除"
 msgid "Not set"
 msgstr "未设置"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:509
+#: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:60
 msgid "Force remove"
 msgstr "强制移除"
 
@@ -3626,7 +3676,7 @@ msgstr "创建客户组失败"
 msgid "Failed to create role"
 msgstr "创建角色失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:240
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:233
 msgid "Product name"
 msgstr "商品名称"
 
@@ -3639,8 +3689,8 @@ msgstr "履行状态已成功更新"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:211
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:38
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:66
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:67
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:56
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:59
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:55
 #: src/app/routes/_authenticated/_products/products.tsx:24
 #: src/app/routes/_authenticated/_products/products.tsx:47
 msgid "Products"
@@ -3664,7 +3714,7 @@ msgid "Add option group"
 msgstr "添加选项组"
 
 #. placeholder {0}: formatCurrency(refund.amountToRefundTotal, order.currencyCode)
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:367
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:372
 msgid "Refund {0}"
 msgstr "退款 {0}"
 
@@ -3813,7 +3863,9 @@ msgstr "返回搜索"
 msgid "View duplicated successfully"
 msgstr "视图已成功复制"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:320
+#: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:50
+#: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:56
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:297
 msgid "Remove option group"
 msgstr "移除选项组"
 
@@ -3821,7 +3873,7 @@ msgstr "移除选项组"
 #: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:76
 #: src/app/routes/_authenticated/_orders/components/order-tax-summary.tsx:14
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:171
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:262
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:255
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:174
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:94
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:162
@@ -3910,7 +3962,7 @@ msgctxt "theme"
 msgid "Light"
 msgstr "浅色"
 
-#: src/lib/components/data-table/data-table-view-options.tsx:120
+#: src/lib/components/data-table/data-table-view-options.tsx:130
 msgid "Reset"
 msgstr "重置"
 
@@ -3918,6 +3970,10 @@ msgstr "重置"
 #: src/lib/components/data-table/human-readable-operator.tsx:26
 msgid "is equal to"
 msgstr "等于"
+
+#: src/lib/components/shared/asset/asset-properties.tsx:17
+msgid "Source File"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:249
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:408
@@ -3962,7 +4018,7 @@ msgstr "您的订单摘要"
 msgid "Upload"
 msgstr "上传"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:111
 msgid "Product with options"
 msgstr "带选项的产品"
 
@@ -4087,7 +4143,7 @@ msgstr "订单总额"
 msgid "Visible to admins only"
 msgstr "仅管理员可见"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:99
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:103
 msgid "Qty"
 msgstr "数量"
 
@@ -4102,6 +4158,10 @@ msgstr "超级管理员"
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:74
 #~ msgid "Some resources are down"
 #~ msgstr "某些资源已关闭"
+
+#: src/app/routes/_authenticated/_promotions/components/promotion-actions-selector.tsx:38
+msgid "Available Actions"
+msgstr "可用操作"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:143
@@ -4206,7 +4266,7 @@ msgid "{title}"
 msgstr "{title}"
 
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:244
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:83
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:87
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:178
 msgid "Order lines"
 msgstr "订单行"
@@ -4229,7 +4289,7 @@ msgstr "需要退款 {formattedDiff}。选择付款金额并输入备注以继�
 
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:100
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:57
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:96
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:100
 msgid "Unit price"
 msgstr "单价"
 
@@ -4285,6 +4345,10 @@ msgstr ""
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
 msgstr "将视图转换为全局失败"
+
+#: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
+msgid "Select Payment Eligibility Checker"
+msgstr ""
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
@@ -4343,7 +4407,7 @@ msgstr "隐藏密码"
 msgid "New seller"
 msgstr "新卖家"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:154
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "e.g., Red, Large, Cotton"
 msgstr "例如：红色、大号、棉质"
 
@@ -4688,7 +4752,7 @@ msgstr "州/省"
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:147
 #: src/app/routes/_authenticated/_payment-methods/payment-methods.tsx:42
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:261
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:228
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:221
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:153
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:115
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:119
@@ -4696,6 +4760,7 @@ msgstr "州/省"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:55
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:57
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:57
+#: src/lib/components/data-display/boolean.tsx:22
 #: src/lib/components/layout/nav-user.tsx:152
 msgid "Enabled"
 msgstr "已启用"
@@ -4736,7 +4801,7 @@ msgstr "预览更改"
 msgid "Failed to remove {entityType} from channel"
 msgstr "从渠道中移除 {entityType} 失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:196
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:188
 msgid "Variant deleted successfully"
 msgstr "变体已成功删除"
 
@@ -4766,7 +4831,7 @@ msgstr "计划任务"
 msgid "Are you sure you want to delete this item? This action cannot be undone."
 msgstr "确定要删除此项目吗？此操作无法撤销。"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:347
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:322
 msgid "Variants"
 msgstr "变体"
 
@@ -4798,13 +4863,17 @@ msgstr "欢迎使用 Vendure"
 msgid "Shipping Methods"
 msgstr "配送方式"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:144
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:149
 msgid "({maxRefundable} refundable)"
 msgstr "({maxRefundable} 可退款)"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:73
 msgid "Identifier"
 msgstr "标识符"
+
+#: src/app/routes/_authenticated/_shipping-methods/components/fulfillment-handler-selector.tsx:51
+msgid "Select a fulfillment handler"
+msgstr ""
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:118
 msgid "Failed to update collection"
@@ -4907,6 +4976,7 @@ msgid "System"
 msgstr "系统"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:290
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:81
 msgid "Variant name"
 msgstr "变体名称"
 
@@ -4919,13 +4989,17 @@ msgstr "删除"
 msgid "Failed to update customer"
 msgstr "更新客户失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:306
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:299
 msgid "Remove option groups?"
 msgstr "移除选项组？"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:91
 msgid "This is a preview of the collection contents based on the current filter settings. Once you save the collection, the contents will be updated to reflect the new filter settings."
 msgstr "这是基于当前筛选器设置的集合内容预览。保存集合后,内容将更新以反映新的筛选器设置。"
+
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:31
+msgid "{count, plural, one {Removed {count} customer from group} other {Removed {count} customers from group}}"
+msgstr "{count, plural, other {已从组中移除{count}位客户}}"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:223
@@ -4937,11 +5011,15 @@ msgstr "税务类别"
 msgid "Tax Rates"
 msgstr "税率"
 
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
+msgid "Failed to remove customers from group"
+msgstr "从组中移除客户失败"
+
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
 msgstr "加载全局设置失败"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:75
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:79
 msgid "Select items to refund and optionally return to stock"
 msgstr "选择要退款的商品，可选择退回库存"
 
@@ -5057,7 +5135,7 @@ msgstr "我已保存此 API Key"
 msgid "Configure available languages for your store and channels"
 msgstr "为您的商店和渠道配置可用语言"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:160
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:159
 msgid "Successfully created product"
 msgstr "已成功创建商品"
 
@@ -5124,6 +5202,11 @@ msgstr "默认语言"
 msgid "Status"
 msgstr "状态"
 
+#: src/lib/components/shared/configurable-operation-multi-selector.tsx:298
+#: src/lib/components/shared/configurable-operation-selector.tsx:155
+msgid "No options found"
+msgstr "未找到选项"
+
 #: src/lib/components/shared/asset/asset-gallery.tsx:370
 #: src/lib/components/shared/asset/asset-gallery.tsx:382
 msgid "Binary"
@@ -5150,7 +5233,7 @@ msgstr "不含税："
 #~ msgid "Add Stock to Location"
 #~ msgstr "向位置添加库存"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:106
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:98
 msgid "Successfully added option value"
 msgstr "已成功添加选项值"
 
@@ -5158,8 +5241,8 @@ msgstr "已成功添加选项值"
 msgid "Collection moved to new parent"
 msgstr "集合已移至新的父级"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:211
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:220
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:51
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:67
 msgid "Option group removed"
 msgstr "选项组已删除"
 
@@ -5230,6 +5313,10 @@ msgstr "处理退款失败"
 msgid "First name"
 msgstr "名"
 
+#: src/lib/components/shared/product-variant-selector.tsx:83
+msgid "Add item to order"
+msgstr ""
+
 #: src/lib/components/data-table/human-readable-operator.tsx:58
 msgid "contains"
 msgstr "包含"
@@ -5241,6 +5328,11 @@ msgstr "未找到选项组"
 #: src/lib/components/data-input/product-multi-selector-input.tsx:162
 msgid "No items found"
 msgstr "未找到项目"
+
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:54
+#: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:72
+msgid "Failed to remove option group"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:52
 msgid "Sub total"
@@ -5301,7 +5393,7 @@ msgid "Duplicate value \"{trimmed}\" already exists"
 msgstr "重复值\"{trimmed}\"已存在"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:233
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:217
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
 msgid "Reason"
 msgstr "原因"
 
@@ -5319,7 +5411,7 @@ msgstr "已成功从渠道中移除 {entityType}"
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:81
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:17
 #: src/app/routes/_authenticated/_option-groups/option-groups.tsx:24
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:283
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:259
 msgid "Option Groups"
 msgstr "选项组"
 
@@ -5382,7 +5474,7 @@ msgstr "语言"
 msgid "New Collection"
 msgstr "新集合"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:72
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:76
 msgid "Refund and cancel order"
 msgstr "退款并取消订单"
 
@@ -5484,7 +5576,8 @@ msgstr "卖家订单"
 msgid "New facet"
 msgstr "新属性"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:321
+#: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:51
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:298
 msgid "Are you sure you want to remove this option group from the product?"
 msgstr "您确定要从产品中移除此选项组吗？"
 
@@ -5667,7 +5760,7 @@ msgstr "新卖家"
 msgid "Edit image"
 msgstr "编辑图片"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:69
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:61
 msgid "Manage Variants"
 msgstr "管理变体"
 
@@ -5710,6 +5803,7 @@ msgstr "正在加载集合..."
 msgid "Successfully updated facet value"
 msgstr "已成功更新属性值"
 
+#: src/lib/components/shared/entity-assets.tsx:290
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:135
 msgid "Add asset"
 msgstr "添加资源"
@@ -5718,7 +5812,7 @@ msgstr "添加资源"
 #~ msgid "Save changes"
 #~ msgstr "保存更改"
 
-#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:55
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:61
 msgid "Customer added to group"
 msgstr "客户已添加到组"
 
@@ -5726,11 +5820,11 @@ msgstr "客户已添加到组"
 msgid "Seller orders"
 msgstr "卖家订单"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:112
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:104
 msgid "Failed to add option value"
 msgstr "添加选项值失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:141
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:133
 msgid "Add option value to {groupName}"
 msgstr "向 {groupName} 添加选项值"
 
@@ -5745,7 +5839,7 @@ msgstr ""
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:292
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:198
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:287
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:356
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:331
 msgid "SKU"
 msgstr "SKU"
 
@@ -5753,7 +5847,7 @@ msgstr "SKU"
 msgid "{totalQuantity} item(s) refunded"
 msgstr "{totalQuantity}件商品已退款"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:263
 msgid "No option groups defined yet. Add option groups to create different variants of your product (e.g., Size, Color, Material)"
 msgstr "尚未定义选项组。添加选项组以创建商品的不同变体（例如：尺寸、颜色、材质）"
 
@@ -5778,6 +5872,10 @@ msgstr "创建于"
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:165
 msgid "Failed to create product variant"
 msgstr "创建商品变体失败"
+
+#: src/lib/components/data-input/relation-selector.tsx:417
+msgid "Search..."
+msgstr ""
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/layout/channel-switcher.tsx:130
@@ -5839,6 +5937,10 @@ msgstr "尚无结果"
 msgid "Payment settled"
 msgstr "支付已完成"
 
+#: src/app/routes/_authenticated/_promotions/components/promotion-conditions-selector.tsx:38
+msgid "Available Conditions"
+msgstr "可用条件"
+
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:27
 msgid "Active filters"
 msgstr "活动筛选条件"
@@ -5885,7 +5987,7 @@ msgstr "未找到地址"
 msgid "Fulfillment ID"
 msgstr "履行 ID"
 
-#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:290
+#: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:295
 msgid "Select payments to refund"
 msgstr "选择要退款的付款"
 
@@ -5919,13 +6021,13 @@ msgstr "完成退款"
 msgid "Payment method is required"
 msgstr "支付方式为必填项"
 
-#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:61
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:67
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:134
 msgid "Failed to add customer to group"
 msgstr "将客户添加到组失败"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:280
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:279
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:256
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:272
 msgid "Manage variants"
 msgstr "管理变体"
 
@@ -5950,7 +6052,7 @@ msgstr "搜索卖家..."
 msgid "Successfully created promotion"
 msgstr "已成功创建促销"
 
-#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:297
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:273
 msgid "Option"
 msgstr "选项"
 
