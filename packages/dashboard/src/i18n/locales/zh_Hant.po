@@ -34,11 +34,11 @@ msgstr "追蹤代碼"
 #: src/lib/components/data-table/data-table.tsx:701
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
-msgstr ""
+msgstr "選取所有列"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:343
 msgid "Text style"
-msgstr ""
+msgstr "文字樣式"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:113
 msgid "The selected permissions will be applied to the these channels."
@@ -58,7 +58,7 @@ msgstr "指派現有選項群組或建立新的選項群組"
 
 #: src/lib/components/login/reset-password-form.tsx:158
 msgid "New password"
-msgstr ""
+msgstr "新密碼"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:33
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:77
@@ -184,7 +184,7 @@ msgstr "選取 {0}"
 #. placeholder {0}: selectedItems.length
 #: src/lib/components/data-input/relation-selector.tsx:409
 msgid "Add more ({0} selected)"
-msgstr ""
+msgstr "新增更多（已選取 {0} 項）"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:71
 msgid "View values"
@@ -239,15 +239,15 @@ msgstr "已刪除 {deleted} {entityName}"
 
 #: src/lib/components/data-table/data-table.tsx:590
 msgid "There are no items to display yet."
-msgstr ""
+msgstr "尚無可顯示的項目。"
 
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:187
 msgid "Order items"
-msgstr ""
+msgstr "訂單商品"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:32
 msgid "File Size"
-msgstr ""
+msgstr "檔案大小"
 
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:13
 #~ msgid "Healthchecks"
@@ -265,11 +265,11 @@ msgstr "選項"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
 msgid "Loading top products…"
-msgstr ""
+msgstr "正在載入熱銷商品…"
 
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
-msgstr ""
+msgstr "前往儀表板"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
@@ -385,7 +385,7 @@ msgstr "已成功建立庫存位置"
 
 #: src/app/routes/_authenticated/index.tsx:393
 msgid "No widgets to add"
-msgstr ""
+msgstr "沒有可新增的小工具"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
@@ -403,7 +403,7 @@ msgstr "未知錯誤"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:142
 msgid "Uploading image..."
-msgstr ""
+msgstr "正在上傳圖片..."
 
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:200
 msgid "Refund total cannot be negative"
@@ -424,7 +424,7 @@ msgstr "已成功建立客戶"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:108
 msgid "More"
-msgstr ""
+msgstr "更多"
 
 #: src/lib/components/date-range-picker.tsx:55
 msgctxt "date-range"
@@ -475,7 +475,7 @@ msgstr "建立「{0}」"
 
 #: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
-msgstr ""
+msgstr "無法載入訂單"
 
 #: src/lib/components/data-table/views-sheet.tsx:238
 msgid "Rename"
@@ -553,7 +553,7 @@ msgstr "父級產品"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
 msgid "We couldn't load the stock levels"
-msgstr ""
+msgstr "無法載入庫存水準"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -585,11 +585,11 @@ msgstr "此欄位為唯讀"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:219
 msgid "Code block"
-msgstr ""
+msgstr "程式碼區塊"
 
 #: src/app/routes/_authenticated/_products/components/product-options-table.tsx:108
 msgid "Search options..."
-msgstr ""
+msgstr "搜尋選項..."
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
@@ -607,7 +607,7 @@ msgstr "繼承篩選器"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
 msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
-msgstr ""
+msgstr "所選期間內以 {currencyCode} 結算的最近 {ORDER_SAMPLE_SIZE} 筆訂單中的熱銷商品"
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -744,7 +744,7 @@ msgstr "切換標題列"
 
 #: src/lib/hooks/use-widget-config.ts:45
 msgid "useWidgetConfig must be used within an Insights page widget"
-msgstr ""
+msgstr "useWidgetConfig 必須在洞察頁面的小工具內使用"
 
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
@@ -760,7 +760,7 @@ msgstr "預設稅務區域"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:268
 msgid "Clear formatting"
-msgstr ""
+msgstr "清除格式"
 
 #: src/app/routes/_authenticated/_orders/components/draft-order-status.tsx:36
 msgid "Order draft is ready to be completed"
@@ -774,7 +774,7 @@ msgstr "中繼資料"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:291
 msgid "Failed to set shipping method for order: {0}"
-msgstr ""
+msgstr "設定訂單配送方式失敗：{0}"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:49
 msgid "Filter..."
@@ -804,7 +804,7 @@ msgstr "可用貨幣"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:110
 #: src/app/routes/_authenticated/_customers/customers.tsx:26
 msgid "Search customers..."
-msgstr ""
+msgstr "搜尋客戶..."
 
 #. placeholder {0}: selectedIds.size
 #: src/lib/components/data-input/product-multi-selector-input.tsx:474
@@ -825,7 +825,7 @@ msgstr "傳遞給工作的資料"
 
 #: src/lib/components/shared/copyable-text.tsx:72
 msgid "Copied"
-msgstr ""
+msgstr "已複製"
 
 #: src/lib/components/shared/navigation-confirmation.tsx:44
 msgid "Confirm navigation"
@@ -958,7 +958,7 @@ msgstr "確認"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:343
 msgid "Failed to complete draft order: {0}"
-msgstr ""
+msgstr "完成草稿訂單失敗：{0}"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to create collection"
@@ -981,7 +981,7 @@ msgstr "客戶"
 
 #: src/lib/components/shared/error-page.tsx:98
 msgid "Page not found"
-msgstr ""
+msgstr "找不到頁面"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:46
@@ -1007,7 +1007,7 @@ msgstr "選取訂單的下一個狀態"
 
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:200
 msgid "{count} selected"
-msgstr ""
+msgstr "已選取 {count} 項"
 
 #: src/lib/components/layout/language-dialog.tsx:80
 msgid "Locale"
@@ -1028,7 +1028,7 @@ msgstr "重新整理資料"
 
 #: src/app/routes/_authenticated/index.tsx:366
 msgid "Add widget"
-msgstr ""
+msgstr "新增小工具"
 
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
@@ -1049,7 +1049,7 @@ msgstr "已為訂單設定帳單地址"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
 msgid "Revenue"
-msgstr ""
+msgstr "營收"
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1079,7 +1079,7 @@ msgstr "新增庫存位置"
 #: src/lib/components/data-table/data-table.tsx:702
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
-msgstr ""
+msgstr "選取列"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:129
 msgid "Permissions"
@@ -1091,7 +1091,7 @@ msgstr "配送地址已變更"
 
 #: src/lib/components/data-table/data-table-column-header.tsx:33
 msgid "Sort by {display}"
-msgstr ""
+msgstr "依 {display} 排序"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:62
 msgid "No products found"
@@ -1112,7 +1112,7 @@ msgstr "本月"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:275
 msgid "Undo"
-msgstr ""
+msgstr "復原"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to create facet"
@@ -1140,11 +1140,11 @@ msgstr "已配置"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:310
 msgid "Failed to set coupon code for order: {0}"
-msgstr ""
+msgstr "為訂單設定優惠券代碼失敗：{0}"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:64
 msgid "Table settings"
-msgstr ""
+msgstr "表格設定"
 
 #: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
@@ -1174,7 +1174,7 @@ msgstr "草稿訂單"
 
 #: src/lib/components/login/forgot-password-form.tsx:108
 msgid "Enter your email address and we will send you a link to reset your password"
-msgstr ""
+msgstr "輸入您的電子郵件地址，我們將傳送重設密碼的連結給您"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:291
 #: src/app/routes/_authenticated/_system/settings-store.tsx:325
@@ -1224,7 +1224,7 @@ msgstr "訂單已設定配送方式"
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:160
 msgid "Open in new tab"
-msgstr ""
+msgstr "在新分頁中開啟"
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:112
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:120
@@ -1270,7 +1270,7 @@ msgstr "電子郵件地址"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:321
 msgid "Failed to remove coupon code from order: {0}"
-msgstr ""
+msgstr "從訂單中移除優惠券代碼失敗：{0}"
 
 #: src/lib/components/data-input/slug-input.tsx:266
 #: src/lib/components/data-input/slug-input.tsx:267
@@ -1284,7 +1284,7 @@ msgstr "從全域設定繼承"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:79
 msgid "Search facets..."
-msgstr ""
+msgstr "搜尋屬性..."
 
 #: src/lib/components/data-input/relation-selector.tsx:428
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:171
@@ -1306,7 +1306,7 @@ msgstr "關閉"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:97
 msgid "Resize image from right"
-msgstr ""
+msgstr "從右側調整圖片大小"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
@@ -1315,7 +1315,7 @@ msgstr "設定商店"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:86
 msgid "Search product variants..."
-msgstr ""
+msgstr "搜尋商品變體..."
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:254
 msgid "Queue"
@@ -1393,7 +1393,7 @@ msgstr "庫存"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
 msgid "No sales for this period"
-msgstr ""
+msgstr "此期間內沒有銷售"
 
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
@@ -1430,7 +1430,7 @@ msgstr "僅您帳戶已指派的角色可用。"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:65
 msgid "{cancellableCount, plural, one {Cancel {cancellableCount} job} other {Cancel {cancellableCount} jobs}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {取消 {cancellableCount} 個任務} other {取消 {cancellableCount} 個任務}}"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:500
 msgid "{buttonText}"
@@ -1549,7 +1549,7 @@ msgstr "{rejected, plural, other {取消 {rejected} 個任務失敗}}"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
-msgstr ""
+msgstr "無法載入這些指標"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
@@ -1584,7 +1584,7 @@ msgstr "之前"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:228
 msgid "Failed to set customer for order: {0}"
-msgstr ""
+msgstr "為訂單設定客戶失敗：{0}"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:745
 msgid "Size"
@@ -1605,7 +1605,7 @@ msgstr "最新訂單"
 
 #: src/lib/components/shared/error-page.tsx:81
 msgid "Go back"
-msgstr ""
+msgstr "返回"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:452
 msgid "+ {leftOver} more"
@@ -1649,7 +1649,7 @@ msgstr "國家"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
-msgstr ""
+msgstr "正在載入指標…"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:124
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:209
@@ -1685,7 +1685,7 @@ msgstr "客戶"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-calculator-selector.tsx:37
 msgid "Select Shipping Calculator"
-msgstr ""
+msgstr "選擇配送費用計算器"
 
 #: src/lib/components/layout/language-dialog.tsx:103
 msgid "Sample Formatting"
@@ -1702,7 +1702,7 @@ msgstr "使用限制"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:547
 msgid "Create your first collection"
-msgstr ""
+msgstr "建立您的第一個集合"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:267
 msgid "Loading global settings..."
@@ -1731,7 +1731,7 @@ msgstr "選取要將 {0} 移動到的目標集合。"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:272
 msgid "Failed to unset billing address for order: {0}"
-msgstr ""
+msgstr "取消訂單帳單地址失敗：{0}"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:45
 msgid "Customer details updated"
@@ -1748,7 +1748,7 @@ msgstr "套用"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:36
 msgid "Search tax rates..."
-msgstr ""
+msgstr "搜尋稅率..."
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:163
 msgid "New product option"
@@ -1760,7 +1760,7 @@ msgstr "前往最後一頁"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:84
 msgid "Insert {row} by {col} table"
-msgstr ""
+msgstr "插入 {row}×{col} 表格"
 
 #: src/app/common/duplicate-entity-dialog.tsx:113
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:61
@@ -1793,7 +1793,7 @@ msgstr "取消"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:97
 msgid "Failed to update order custom fields: {0}"
-msgstr ""
+msgstr "更新訂單自訂欄位失敗：{0}"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:146
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:160
@@ -1838,7 +1838,7 @@ msgstr "集合"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-eligibility-checker-selector.tsx:37
 msgid "Select Shipping Eligibility Checker"
-msgstr ""
+msgstr "選擇配送資格檢查器"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:434
 msgid "Delete variant"
@@ -1921,7 +1921,7 @@ msgstr "{operator}"
 
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx:48
 msgid "Search customer groups..."
-msgstr ""
+msgstr "搜尋客戶群組..."
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:177
 msgid "Refund required"
@@ -1935,7 +1935,7 @@ msgstr "履行訂單"
 
 #: src/lib/components/login/forgot-password-form.tsx:139
 msgid "Send reset link"
-msgstr ""
+msgstr "傳送重設連結"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:316
 msgid "You don't have permission to view channel settings"
@@ -2540,7 +2540,7 @@ msgstr "區域"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
-msgstr ""
+msgstr "此期間內沒有指標"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:118
 msgid "Method"
@@ -2556,7 +2556,7 @@ msgstr "設定所有通路可用的語言。然後，各個通路可以支援這
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:119
 msgid "Create your first facet"
-msgstr ""
+msgstr "建立您的第一個屬性"
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:284
 msgid "Collections moved successfully"
@@ -2564,7 +2564,7 @@ msgstr "集合移動成功"
 
 #: src/lib/components/data-input/relation-selector.tsx:412
 msgid "Change selection"
-msgstr ""
+msgstr "變更選取項目"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:33
 msgid "Registered"
@@ -2573,7 +2573,7 @@ msgstr "已註冊"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:239
 msgid "Failed to set shipping address for order: {0}"
-msgstr ""
+msgstr "設定訂單配送地址失敗：{0}"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
@@ -2683,7 +2683,7 @@ msgstr "{count, plural, other {您確定要從此群組中移除{count}位客戶
 
 #: src/app/routes/_authenticated/_countries/countries.tsx:29
 msgid "Search countries..."
-msgstr ""
+msgstr "搜尋國家..."
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:293
 msgid "Stock on Hand"
@@ -2769,7 +2769,7 @@ msgstr "全域設定"
 
 #: src/lib/components/login/forgot-password-form.tsx:105
 msgid "Forgot your password?"
-msgstr ""
+msgstr "忘記密碼？"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:148
 msgid "Schedule"
@@ -2797,7 +2797,7 @@ msgstr "已成功更新客戶"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
 msgid "Latest Customers"
-msgstr ""
+msgstr "最新客戶"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2837,7 +2837,7 @@ msgstr "新增資源"
 
 #: src/app/routes/_authenticated/index.tsx:409
 msgid "Tidy"
-msgstr ""
+msgstr "整理"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
@@ -2873,7 +2873,7 @@ msgstr "新增屬性值"
 
 #: src/lib/components/shared/error-page.tsx:118
 msgid "You do not have permission to view this page."
-msgstr ""
+msgstr "您沒有權限檢視此頁面。"
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:312
 msgid "Please select a target collection"
@@ -2885,7 +2885,7 @@ msgstr "在將變更套用到訂單之前，請先檢閱變更。"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:284
 msgid "Redo"
-msgstr ""
+msgstr "重做"
 
 #: src/lib/components/shared/role-selector.tsx:52
 msgid "Select a role"
@@ -2903,7 +2903,7 @@ msgstr "折扣"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
 msgid "Top Products"
-msgstr ""
+msgstr "熱銷商品"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -2920,7 +2920,7 @@ msgstr "更新商品失敗"
 
 #: src/app/routes/_authenticated/_collections/components/collection-filters-selector.tsx:26
 msgid "Add collection filter"
-msgstr ""
+msgstr "新增集合篩選器"
 
 #. placeholder {0}: adjustedLines.length
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:152
@@ -2941,7 +2941,7 @@ msgstr "通路"
 
 #: src/lib/components/shared/copyable-text.tsx:71
 msgid "Copy"
-msgstr ""
+msgstr "複製"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:137
@@ -3182,7 +3182,7 @@ msgstr "檢視已成功重新命名"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:192
 msgid "Bullet list"
-msgstr ""
+msgstr "項目符號清單"
 
 #: src/lib/components/data-table/data-table-filter-dialog.tsx:94
 msgid "Apply filter"
@@ -3207,7 +3207,7 @@ msgstr "洞察"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:261
 msgid "Horizontal rule"
-msgstr ""
+msgstr "水平分隔線"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-method-test-result-wrapper.tsx:31
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:46
@@ -3225,7 +3225,7 @@ msgstr "測試結果"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:201
 msgid "Ordered list"
-msgstr ""
+msgstr "編號清單"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:86
 msgid "Add customer"
@@ -3238,7 +3238,7 @@ msgstr "儲存變更"
 
 #: src/app/routes/_authenticated/_products/products.tsx:57
 msgid "Search products..."
-msgstr ""
+msgstr "搜尋商品..."
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:53
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:78
@@ -3251,7 +3251,7 @@ msgstr "退款處理成功"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:72
 msgid "Select value"
-msgstr ""
+msgstr "選擇值"
 
 #. placeholder {0}: action.label
 #. placeholder {0}: entityType === 'products' ? 'Product' : 'Variant'
@@ -3334,15 +3334,15 @@ msgstr "新增促銷"
 
 #: src/lib/components/login/reset-password-form.tsx:130
 msgid "Request a new link"
-msgstr ""
+msgstr "要求新連結"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:83
 msgid "Columns"
-msgstr ""
+msgstr "欄"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
-msgstr ""
+msgstr "圖片上傳失敗"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
 msgid "Option value name"
@@ -3426,7 +3426,7 @@ msgstr "訂單指標"
 
 #: src/lib/components/login/reset-password-form.tsx:175
 msgid "Confirm new password"
-msgstr ""
+msgstr "確認新密碼"
 
 #: src/lib/components/layout/language-dialog.tsx:49
 msgid "Select display language"
@@ -3434,11 +3434,11 @@ msgstr "選取顯示語言"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-handler-selector.tsx:37
 msgid "Select Payment Handler"
-msgstr ""
+msgstr "選擇付款處理器"
 
 #: src/lib/components/login/reset-password-form.tsx:119
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
-msgstr ""
+msgstr "密碼重設連結僅在有限時間內有效。請要求新連結以重設密碼。"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:128
 msgid "Authentication methods"
@@ -3467,7 +3467,7 @@ msgstr "搜尋角色..."
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
 msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
-msgstr ""
+msgstr "抽樣的 {CANDIDATE_POOL_SIZE} 個變體中沒有庫存等於或低於 {threshold} 的。其他變體的庫存可能仍然偏低。"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3506,7 +3506,7 @@ msgstr "輪換 API Key"
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:48
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:58
 msgid "Insert table"
-msgstr ""
+msgstr "插入表格"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:63
 msgid "Category"
@@ -3529,7 +3529,7 @@ msgstr "已成功建立賣家"
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
-msgstr ""
+msgstr "重試"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:91
 msgid "Successfully updated shipping method"
@@ -3562,7 +3562,7 @@ msgstr "備註"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:147
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:59
 msgid "Bold"
-msgstr ""
+msgstr "粗體"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:160
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
@@ -3571,7 +3571,7 @@ msgstr "可用語言"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
 msgid "{saleable} in stock"
-msgstr ""
+msgstr "庫存 {saleable} 件"
 
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
@@ -3580,7 +3580,7 @@ msgstr "載入更多{0}個 (剩餘{remaining}個)"
 
 #: src/lib/components/shared/error-page.tsx:94
 msgid "Not found"
-msgstr ""
+msgstr "找不到"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:143
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:82
@@ -3689,7 +3689,7 @@ msgstr "更新備註內容或可見性"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:315
 msgid "Latest Customers Widget"
-msgstr ""
+msgstr "最新客戶小工具"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:277
@@ -3698,7 +3698,7 @@ msgstr "最新訂單小工具"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
 msgid "Loading stock levels…"
-msgstr ""
+msgstr "正在載入庫存水準…"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3732,7 +3732,7 @@ msgstr "重新整理"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:38
 msgid "No checkers found"
-msgstr ""
+msgstr "找不到檢查器"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:139
 msgid "Settle payment"
@@ -3801,19 +3801,19 @@ msgstr "從群組中移除"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:304
 msgid "Low Stock Widget"
-msgstr ""
+msgstr "低庫存小工具"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
-msgstr ""
+msgstr "搜尋 API 金鑰..."
 
 #: src/lib/components/login/reset-password-form.tsx:61
 msgid "Passwords do not match"
-msgstr ""
+msgstr "密碼不相符"
 
 #: src/lib/components/data-input/datetime-input.tsx:45
 msgid "Pick a date and time"
-msgstr ""
+msgstr "選擇日期與時間"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:53
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:57
@@ -3871,7 +3871,7 @@ msgstr "草稿訂單狀態"
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:147
 #: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
-msgstr ""
+msgstr "搜尋變體..."
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:119
 #~ msgid "Successfully created product options"
@@ -3943,7 +3943,7 @@ msgstr "已成功建立屬性"
 
 #: src/app/routes/_authenticated/index.tsx:488
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
-msgstr ""
+msgstr "沒有可顯示的小工具。請使用「編輯版面配置」新增小工具。"
 
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
@@ -3965,7 +3965,7 @@ msgstr "屬性"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:124
 msgid "Unsaved view"
-msgstr ""
+msgstr "未儲存的檢視"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:41
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -4043,7 +4043,7 @@ msgstr "新增選項群組"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:84
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #. placeholder {0}: formatCurrency(refund.amountToRefundTotal, order.currencyCode)
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:372
@@ -4073,7 +4073,7 @@ msgstr "全域檢視已成功複製"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:26
 msgid "Search administrators..."
-msgstr ""
+msgstr "搜尋管理員..."
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:210
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:70
@@ -4082,7 +4082,7 @@ msgstr "建立者"
 
 #: src/lib/components/data-table/data-table.tsx:579
 msgid "No items match your current filters. Try clearing them to see more."
-msgstr ""
+msgstr "沒有符合目前篩選條件的項目。請嘗試清除篩選條件以查看更多。"
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:240
 msgid "Filter variants..."
@@ -4231,12 +4231,12 @@ msgstr "國家"
 #: src/lib/components/login/forgot-password-form.tsx:61
 #: src/lib/components/login/reset-password-form.tsx:91
 msgid "Something went wrong"
-msgstr ""
+msgstr "發生錯誤"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:162
 msgid "Failed to remove order line: {0}"
-msgstr ""
+msgstr "移除訂單明細失敗：{0}"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:182
 msgid "Street Address 2"
@@ -4280,7 +4280,7 @@ msgstr "電子郵件"
 
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
-msgstr ""
+msgstr "篩選"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:86
 msgid "Failed to update administrator"
@@ -4292,7 +4292,7 @@ msgstr "管理此表格的個人儲存檢視"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
 msgid "Loading customers…"
-msgstr ""
+msgstr "正在載入客戶…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4326,7 +4326,7 @@ msgstr "等於"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:17
 msgid "Source File"
-msgstr ""
+msgstr "來源檔案"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:249
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:408
@@ -4360,11 +4360,11 @@ msgstr "移動集合失敗"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:210
 msgid "Blockquote"
-msgstr ""
+msgstr "引用區塊"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:93
 msgid "Select table size"
-msgstr ""
+msgstr "選擇表格大小"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:60
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:64
@@ -4497,11 +4497,11 @@ msgstr "實體資訊"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:48
 msgid "Default"
-msgstr ""
+msgstr "預設"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:144
 msgid "Manage my views"
-msgstr ""
+msgstr "管理我的檢視"
 
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
@@ -4519,7 +4519,7 @@ msgstr "數量"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:183
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:91
 msgid "Inline code"
-msgstr ""
+msgstr "行內程式碼"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
 msgid "Tags"
@@ -4535,7 +4535,7 @@ msgstr "超級管理員"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:90
 msgid "Resize image from left"
-msgstr ""
+msgstr "從左側調整圖片大小"
 
 #: src/app/routes/_authenticated/_promotions/components/promotion-actions-selector.tsx:38
 msgid "Available Actions"
@@ -4544,15 +4544,15 @@ msgstr "可用動作"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:143
 msgid "Failed to update order line: {0}"
-msgstr ""
+msgstr "更新訂單明細失敗：{0}"
 
 #: src/app/routes/_authenticated/index.tsx:447
 msgid "Edit layout"
-msgstr ""
+msgstr "編輯版面配置"
 
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
-msgstr ""
+msgstr "此連結無效或已過期"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:84
 #~ msgid "Insert link"
@@ -4681,7 +4681,7 @@ msgstr "單價"
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
-msgstr ""
+msgstr "如果 {submittedEmailAddress} 對應的帳戶存在，您將收到一封包含密碼重設連結的電子郵件。"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:145
 msgid "Schedule Pattern"
@@ -4731,11 +4731,11 @@ msgstr "客戶資訊已更新"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:358
 msgid "Failed to delete draft order: {0}"
-msgstr ""
+msgstr "刪除草稿訂單失敗：{0}"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
 msgid "No new customers for this period"
-msgstr ""
+msgstr "此期間內沒有新客戶"
 
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
@@ -4743,11 +4743,11 @@ msgstr "將檢視轉換為全域失敗"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
-msgstr ""
+msgstr "選擇付款資格檢查器"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
-msgstr ""
+msgstr "選擇運算子"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:41
@@ -4786,7 +4786,7 @@ msgstr "設定將此變體視為缺貨的庫存水準。使用負值可啟用延
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:40
 msgid "Search promotions..."
-msgstr ""
+msgstr "搜尋促銷..."
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:45
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:68
@@ -4803,7 +4803,7 @@ msgstr "隱藏密碼"
 
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:71
 msgid "Bulk actions"
-msgstr ""
+msgstr "批次操作"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:30
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:71
@@ -4812,7 +4812,7 @@ msgstr "新增賣家"
 
 #: src/lib/components/ui/state-views.tsx:14
 msgid "Loading…"
-msgstr ""
+msgstr "載入中…"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "e.g., Red, Large, Cotton"
@@ -4825,7 +4825,7 @@ msgstr "更新個人資料失敗"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:156
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:67
 msgid "Italic"
-msgstr ""
+msgstr "斜體"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:221
 msgid "Removed coupon codes"
@@ -4865,7 +4865,7 @@ msgstr "新建選項群組"
 #: src/lib/components/login/forgot-password-form.tsx:147
 #: src/lib/components/login/reset-password-form.tsx:199
 msgid "Back to sign in"
-msgstr ""
+msgstr "返回登入"
 
 #: src/lib/components/data-table/views-sheet.tsx:141
 msgid "No global views have been created yet."
@@ -4928,12 +4928,12 @@ msgstr "訂單已履行"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:438
 msgid "Loading selected items..."
-msgstr ""
+msgstr "正在載入所選項目..."
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:250
 msgid "Failed to set billing address for order: {0}"
-msgstr ""
+msgstr "設定訂單帳單地址失敗：{0}"
 
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:271
 msgid "No shipping address"
@@ -5053,7 +5053,7 @@ msgstr "修改摘要"
 
 #: src/lib/components/login/reset-password-form.tsx:191
 msgid "Reset password"
-msgstr ""
+msgstr "重設密碼"
 
 #. placeholder {0}: payment.refunds.length
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:206
@@ -5087,7 +5087,7 @@ msgstr "更新客戶群組失敗"
 
 #: src/app/routes/_authenticated/index.tsx:298
 msgid "Remove widget"
-msgstr ""
+msgstr "移除小工具"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
@@ -5107,7 +5107,7 @@ msgstr "對表格套用篩選器，然後按一下「儲存檢視」開始。"
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:144
 msgid "Link URL"
-msgstr ""
+msgstr "連結 URL"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:205
@@ -5129,7 +5129,7 @@ msgstr "對所選..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
-msgstr ""
+msgstr "為您的帳戶設定新密碼"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations_.$id.tsx:77
 msgid "Failed to create stock location"
@@ -5146,7 +5146,7 @@ msgstr "{customerGroupName} 的客戶群組成員"
 #. placeholder {0}: e instanceof Error ? e.message : String(e)
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:217
 msgid "Failed to set address for order: {0}"
-msgstr ""
+msgstr "設定訂單地址失敗：{0}"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:120
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:215
@@ -5222,7 +5222,7 @@ msgstr "ID"
 #: src/lib/components/shared/error-page.tsx:113
 #: src/lib/components/shared/error-page.tsx:117
 msgid "Access denied"
-msgstr ""
+msgstr "拒絕存取"
 
 #: src/lib/components/shared/alerts.tsx:33
 msgid "Alerts"
@@ -5312,7 +5312,7 @@ msgstr "識別碼"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/fulfillment-handler-selector.tsx:51
 msgid "Select a fulfillment handler"
-msgstr ""
+msgstr "選擇履行處理器"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to update collection"
@@ -5324,7 +5324,7 @@ msgstr "價格和稅金"
 
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
 msgid "We couldn't load the top products"
-msgstr ""
+msgstr "無法載入熱銷商品"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5344,7 +5344,7 @@ msgstr "訂單已修改"
 
 #: src/lib/components/login/reset-password-form.tsx:143
 msgid "Reset your password"
-msgstr ""
+msgstr "重設您的密碼"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:59
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:128
@@ -5379,7 +5379,7 @@ msgstr "已選取 {0} 個項目"
 
 #: src/app/routes/_authenticated/index.tsx:483
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
-msgstr ""
+msgstr "所有小工具均已隱藏。請使用「新增小工具」按鈕將其重新加入。"
 
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
@@ -5471,7 +5471,7 @@ msgstr "從群組中移除客戶失敗"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
 msgid "We couldn't load the latest customers"
-msgstr ""
+msgstr "無法載入最新客戶"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5514,7 +5514,7 @@ msgstr "街道地址"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
 msgid "No low stock in this sample"
-msgstr ""
+msgstr "此樣本中沒有低庫存"
 
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
@@ -5551,7 +5551,7 @@ msgstr "使用原生驗證策略"
 #: src/lib/components/login/forgot-password-form.tsx:136
 #: src/lib/components/login/reset-password-form.tsx:188
 msgid "Please wait"
-msgstr ""
+msgstr "請稍候"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
 msgid "Failed to assign {entityIdsLength} {entityType} to channel"
@@ -5564,7 +5564,7 @@ msgstr "預設語言"
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:293
 msgid "Top Products Widget"
-msgstr ""
+msgstr "熱銷商品小工具"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5576,7 +5576,7 @@ msgstr "正在履行..."
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:524
 msgid "Search collections..."
-msgstr ""
+msgstr "搜尋集合..."
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:148
 msgid "Add option group to product"
@@ -5705,7 +5705,7 @@ msgstr "每 10 秒"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
 msgid "Low Stock"
-msgstr ""
+msgstr "低庫存"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
@@ -5730,7 +5730,7 @@ msgstr "選項群組已移除"
 
 #: src/lib/components/login/login-form.tsx:101
 msgid "Forgot password?"
-msgstr ""
+msgstr "忘記密碼？"
 
 #: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx:130
 msgid "Transition to selected state"
@@ -5801,7 +5801,7 @@ msgstr "名字"
 
 #: src/lib/components/shared/product-variant-selector.tsx:83
 msgid "Add item to order"
-msgstr ""
+msgstr "新增商品至訂單"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:58
 msgid "contains"
@@ -5809,11 +5809,11 @@ msgstr "包含"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:43
 msgid "Search shipping methods..."
-msgstr ""
+msgstr "搜尋配送方式..."
 
 #: src/lib/components/login/forgot-password-form.tsx:84
 msgid "Check your email"
-msgstr ""
+msgstr "請查收您的電子郵件"
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:249
 msgid "No option groups found"
@@ -5826,7 +5826,7 @@ msgstr "找不到項目"
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:54
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:72
 msgid "Failed to remove option group"
-msgstr ""
+msgstr "移除選項群組失敗"
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:52
 msgid "Sub total"
@@ -5839,7 +5839,7 @@ msgstr "已履行的項目 ({0})"
 
 #: src/app/routes/_authenticated/_products/products.tsx:102
 msgid "Create your first product"
-msgstr ""
+msgstr "建立您的第一個商品"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:246
 msgid "Value updated"
@@ -5894,7 +5894,7 @@ msgstr "重複值「{trimmed}」已存在"
 
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
-msgstr ""
+msgstr "建立您的第一個客戶"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:231
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -5947,7 +5947,7 @@ msgstr "新增國家"
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:72
 msgid "Create your first promotion"
-msgstr ""
+msgstr "建立您的第一個促銷"
 
 #: src/lib/components/data-input/custom-field-list-input.tsx:85
 msgid "Remove item"
@@ -6013,7 +6013,7 @@ msgstr "建立配送方式失敗"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
 msgid "New registrations in the selected period"
-msgstr ""
+msgstr "所選期間內的新註冊"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -6066,13 +6066,13 @@ msgstr "已成功更新屬性"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:174
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
-msgstr ""
+msgstr "刪除線"
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
 #: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
-msgstr ""
+msgstr "請嘗試選擇其他日期範圍。"
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:61
 msgid "Successfully created zone"
@@ -6124,7 +6124,7 @@ msgstr "這些變更不需要付款或退款。"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:72
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {確定要取消 {cancellableCount} 個任務嗎？此操作無法復原。} other {確定要取消 {cancellableCount} 個任務嗎？此操作無法復原。}}"
 
 #: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
@@ -6136,7 +6136,7 @@ msgstr "下次執行"
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
 msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
-msgstr ""
+msgstr "從 {CANDIDATE_POOL_SIZE} 個變體樣本中篩選出的可售庫存等於或低於 {threshold} 的變體"
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -6201,7 +6201,7 @@ msgstr "訂單自訂欄位已更新"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:320
 msgid "Search entries..."
-msgstr ""
+msgstr "搜尋條目..."
 
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:193
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:191
@@ -6230,7 +6230,7 @@ msgstr "訂單摘要"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations.tsx:33
 msgid "Search stock locations..."
-msgstr ""
+msgstr "搜尋庫存位置..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:349
 msgid "Search assets..."
@@ -6269,7 +6269,7 @@ msgstr "刪除地址"
 
 #: src/lib/components/shared/error-page.tsx:130
 msgid "We couldn't load this page"
-msgstr ""
+msgstr "無法載入此頁面"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to update facet"
@@ -6281,7 +6281,7 @@ msgstr "useWidgetFilters 必須在 WidgetFiltersProvider 中使用"
 
 #: src/lib/components/shared/configurable-operation-input.tsx:104
 msgid "Edit as form"
-msgstr ""
+msgstr "以表單形式編輯"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:129
 msgid "Edit Address"
@@ -6297,7 +6297,7 @@ msgstr "從通路中移除屬性失敗：{message}"
 
 #: src/lib/components/data-table/data-table.tsx:704
 msgid "Pagination"
-msgstr ""
+msgstr "分頁"
 
 #: src/app/routes/_authenticated/_sellers/sellers.tsx:47
 msgid "New Seller"
@@ -6305,7 +6305,7 @@ msgstr "新增賣家"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:29
 msgid "Search tax categories..."
-msgstr ""
+msgstr "搜尋稅務類別..."
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:106
 msgid "Edit image"
@@ -6317,7 +6317,7 @@ msgstr "管理變體"
 
 #: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
-msgstr ""
+msgstr "載入最新訂單時發生問題。"
 
 #: src/lib/components/shared/stock-level-label.tsx:18
 msgid "Stock allocated"
@@ -6387,11 +6387,11 @@ msgstr "向 {groupName} 新增選項值"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:261
 msgid "Failed to unset shipping address for order: {0}"
-msgstr ""
+msgstr "取消訂單配送地址失敗：{0}"
 
 #: src/app/routes/_authenticated/_orders/orders.tsx:38
 msgid "Search orders..."
-msgstr ""
+msgstr "搜尋訂單..."
 
 #: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:82
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:167
@@ -6405,11 +6405,11 @@ msgstr "SKU"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:68
 msgid "Table size"
-msgstr ""
+msgstr "表格大小"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:387
 msgid "More formatting options"
-msgstr ""
+msgstr "更多格式選項"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/default-order-history-components.tsx:117
 msgid "{totalQuantity} item(s) refunded"
@@ -6444,7 +6444,7 @@ msgstr "建立商品變體失敗"
 #: src/lib/components/data-input/relation-selector.tsx:418
 #: src/lib/components/data-table/data-table.tsx:489
 msgid "Search..."
-msgstr ""
+msgstr "搜尋..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/layout/channel-switcher.tsx:130
@@ -6461,7 +6461,7 @@ msgstr "已成功建立稅率"
 
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:46
 msgid "Remove option group {name}"
-msgstr ""
+msgstr "移除選項群組 {name}"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:135
 msgid "Heading 6"
@@ -6531,7 +6531,7 @@ msgstr "大於"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:165
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:75
 msgid "Underline"
-msgstr ""
+msgstr "底線"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:125
 msgid "Close"
@@ -6540,7 +6540,7 @@ msgstr "關閉"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:228
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:99
 msgid "Link"
-msgstr ""
+msgstr "連結"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:127
 msgid "Add payment to order"
@@ -6576,7 +6576,7 @@ msgstr "選擇要退款的付款"
 
 #: src/lib/components/shared/error-page.tsx:101
 msgid "The page you are looking for does not exist or may have been moved."
-msgstr ""
+msgstr "您要尋找的頁面不存在或可能已被移動。"
 
 #: src/app/common/delete-bulk-action.tsx:115
 msgid "Failed to delete {failed} {entityName}"
