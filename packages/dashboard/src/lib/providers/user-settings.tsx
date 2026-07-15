@@ -96,12 +96,16 @@ export interface UserSettingsContextType {
     setWidgetLayout: (layoutConfig: Record<string, { x: number; y: number; w: number; h: number }>) => void;
     /**
      * @description
-     * Upserts the layout for the given widget instances, preserving each instance's
-     * existing persisted config and any instances not included in the list. Used when
-     * committing the Insights layout on "Save Layout".
+     * Persists the layout for the given widget instances, preserving each instance's
+     * existing config. The passed `layouts` are treated as the complete set of instances
+     * for every widget in `loadedWidgetIds`, so any previously-persisted instance whose
+     * widget was loaded but is no longer present (e.g. a removed multi-instance widget) is
+     * dropped. Instances belonging to widgets that were not loaded (e.g. permission-filtered
+     * ones) are preserved untouched. Used when committing the Insights layout on "Save Layout".
      */
     saveWidgetInstanceLayouts: (
         layouts: Array<Pick<PersistedWidgetInstance, 'instanceId' | 'widgetId' | 'layout'>>,
+        loadedWidgetIds: string[],
     ) => void;
     /**
      * @description
@@ -269,16 +273,18 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
             }));
         },
         setWidgetLayout: layoutConfig => updateSetting('widgetLayout', layoutConfig),
-        saveWidgetInstanceLayouts: layouts => {
+        saveWidgetInstanceLayouts: (layouts, loadedWidgetIds) => {
             setSettings(prev => {
-                const updatedIds = new Set(layouts.map(item => item.instanceId));
+                const loaded = new Set(loadedWidgetIds);
                 const prevById = new Map(
                     (prev.widgetInstances ?? []).map(instance => [instance.instanceId, instance]),
                 );
-                // Keep any previously-saved instances not in the current list (e.g. widgets
-                // not currently loaded because they are permission-filtered).
+                // Keep previously-saved instances for widgets that were not loaded (e.g. those
+                // filtered out by permissions). Instances for loaded widgets are fully replaced
+                // by `layouts`, so any instance removed in the editor is dropped rather than
+                // silently resurrected on the next reload.
                 const preserved = (prev.widgetInstances ?? []).filter(
-                    instance => !updatedIds.has(instance.instanceId),
+                    instance => !loaded.has(instance.widgetId),
                 );
                 const merged = layouts.map(item => ({
                     instanceId: item.instanceId,

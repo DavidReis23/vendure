@@ -116,4 +116,16 @@ export type DashboardWidgetDefinition = {
      * @since 3.8.0
      */
     defaultConfig?: Record<string, unknown>;
+    /**
+     * @description
+     * If set to `true`, the widget can be added to the Insights page multiple times.
+     * Each instance keeps its own independent layout and {@link useWidgetConfig} state,
+     * and the "Add widget" picker offers the widget even when an instance is already
+     * on the page. When `false` (the default), the widget can appear at most once and
+     * removing it simply hides it until re-added.
+     *
+     * @default false
+     * @since 3.8.0
+     */
+    allowMultipleInstances?: boolean;
 };

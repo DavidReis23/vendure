@@ -318,6 +318,35 @@ describe('DashboardWidgetDefinition - requiresPermissions', () => {
         expect(widget?.defaultConfig).toEqual({ dataType: 'OrderTotal' });
     });
 
+    it('defaults allowMultipleInstances to undefined when not set', () => {
+        const DummyComponent = () => null;
+        registerDashboardWidget({
+            id: 'single-instance-widget',
+            name: 'Single Instance Widget',
+            component: DummyComponent,
+            defaultSize: { w: 6, h: 3 },
+        });
+
+        const registry = getDashboardWidgetRegistry();
+        const widget = registry.get('single-instance-widget');
+        expect(widget?.allowMultipleInstances).toBeUndefined();
+    });
+
+    it('preserves the allowMultipleInstances flag', () => {
+        const DummyComponent = () => null;
+        registerDashboardWidget({
+            id: 'multi-instance-widget',
+            name: 'Multi Instance Widget',
+            component: DummyComponent,
+            defaultSize: { w: 6, h: 3 },
+            allowMultipleInstances: true,
+        });
+
+        const registry = getDashboardWidgetRegistry();
+        const widget = registry.get('multi-instance-widget');
+        expect(widget?.allowMultipleInstances).toBe(true);
+    });
+
     it('preserves an empty requiresPermissions array (public widget)', () => {
         const DummyComponent = () => null;
         registerDashboardWidget({

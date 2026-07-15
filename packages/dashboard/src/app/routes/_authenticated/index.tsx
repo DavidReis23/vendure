@@ -12,7 +12,7 @@ import { getDashboardWidget, getVisibleDashboardWidgets } from '@/vdb/framework/
 import { usePermissions } from '@/vdb/hooks/use-permissions.js';
 import { DefinedDateRange, WidgetFiltersProvider, } from '@/vdb/framework/dashboard-widget/widget-filters-context.js';
 import { WidgetInstanceProvider } from '@/vdb/framework/dashboard-widget/widget-instance-context.js';
-import { DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
+import { DashboardWidgetDefinition, DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
 import {
     FullWidthPageBlock,
     Page,
@@ -73,12 +73,57 @@ const findNextPosition = (
     return { x: 0, y: maxExistingRow };
 };
 
+/**
+ * Builds a widget instance from its definition, applying a saved layout when present and
+ * otherwise falling back to the definition's default/min/max size. `instanceId` equals the
+ * `widgetId` for single-instance widgets (which keeps migration from the legacy layout
+ * stable) and is a freshly-generated id for additional multi-instance instances.
+ */
+const buildWidgetInstance = (
+    widget: DashboardWidgetDefinition,
+    instanceId: string,
+    savedLayout?: { x?: number; y?: number; w?: number; h?: number },
+    config?: Record<string, unknown>,
+): DashboardWidgetInstance => {
+    const defaultSize = {
+        w: widget.defaultSize.w ?? 4,
+        h: widget.defaultSize.h ?? 3,
+    };
+    const minSize = {
+        w: widget.minSize?.w ?? defaultSize.w,
+        h: widget.minSize?.h ?? defaultSize.h,
+    };
+    return {
+        id: instanceId,
+        widgetId: widget.id,
+        layout: {
+            w: savedLayout?.w ?? defaultSize.w,
+            h: savedLayout?.h ?? defaultSize.h,
+            x: savedLayout?.x ?? widget.defaultSize.x ?? 0,
+            y: savedLayout?.y ?? widget.defaultSize.y ?? 0,
+            minW: minSize.w,
+            minH: minSize.h,
+            maxW: widget.maxSize?.w,
+            maxH: widget.maxSize?.h,
+        },
+        config,
+    };
+};
+
+// Multi-instance widgets get a unique instance id so each instance persists its own layout
+// and config independently. Single-instance widgets keep instanceId === widgetId.
+const generateInstanceId = (widgetId: string) => `${widgetId}:${crypto.randomUUID()}`;
+
 function DashboardPage() {
     const [widgets, setWidgets] = useState<DashboardWidgetInstance[]>([]);
     // Draft list of hidden widget instances. Their layout is preserved so that
     // re-adding a widget restores its previous position and size. Committed to
     // user settings together with the layout on "Save Layout".
     const [hiddenWidgets, setHiddenWidgets] = useState<DashboardWidgetInstance[]>([]);
+    // The ids of all currently-registered widgets the user is permitted to see. Captured on
+    // load so the save step knows which widgets it "owns" when pruning removed instances and
+    // computing the hidden list.
+    const [loadedWidgetIds, setLoadedWidgetIds] = useState<string[]>([]);
     const [editMode, setEditMode] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
     const prevEditModeRef = useRef(editMode);
@@ -93,81 +138,65 @@ function DashboardPage() {
     const { hasPermissions } = usePermissions();
 
     useEffect(() => {
-        // In this phase there is one instance per widget, so the instanceId equals the
-        // widgetId. Saved instances are the source of truth; the legacy `widgetLayout`
-        // record is read only as a fallback so existing layouts migrate transparently.
-        const savedInstances = new Map(
-            (settings.widgetInstances ?? []).map(instance => [instance.instanceId, instance]),
-        );
+        // Saved instances are the source of truth. A widget may have several persisted
+        // instances (multi-instance). The legacy `widgetLayout` record is read only as a
+        // fallback so existing single-instance layouts migrate transparently.
+        const persistedInstances = settings.widgetInstances ?? [];
         const legacyLayouts = settings.widgetLayout ?? {};
-        // Stale ids (widgets that are no longer registered) are naturally ignored
-        // because we only iterate over currently-registered widgets below.
+        // Stale ids (widgets that are no longer registered) are naturally ignored because we
+        // only iterate over currently-registered widgets below.
         const hiddenIds = new Set(settings.hiddenWidgets ?? []);
+
+        const registered = getVisibleDashboardWidgets().filter(([, widget]) => {
+            if (!widget.requiresPermissions || widget.requiresPermissions.length === 0) {
+                return true;
+            }
+            return hasPermissions(widget.requiresPermissions);
+        });
 
         const visible: DashboardWidgetInstance[] = [];
         const hidden: DashboardWidgetInstance[] = [];
 
-        getVisibleDashboardWidgets()
-            .filter(([, widget]) => {
-                if (!widget.requiresPermissions || widget.requiresPermissions.length === 0) {
-                    return true;
+        registered.forEach(([id, widget]) => {
+            const persistedForWidget = persistedInstances.filter(instance => instance.widgetId === id);
+            const isHidden = hiddenIds.has(id);
+
+            if (persistedForWidget.length > 0) {
+                // Restore each persisted instance at its saved position/size and config.
+                persistedForWidget.forEach(instance => {
+                    (isHidden ? hidden : visible).push(
+                        buildWidgetInstance(widget, instance.instanceId, instance.layout, instance.config),
+                    );
+                });
+                return;
+            }
+
+            const legacyLayout = legacyLayouts[id];
+
+            if (isHidden) {
+                // A hidden widget with no saved instances. Keep a restorable default instance
+                // only for single-instance widgets; multi-instance widgets carry no default
+                // instance and are re-added as fresh instances from the picker.
+                if (!widget.allowMultipleInstances) {
+                    hidden.push(buildWidgetInstance(widget, id, legacyLayout));
                 }
-                return hasPermissions(widget.requiresPermissions);
-            })
-            .forEach(([id, widget]) => {
-                const defaultSize = {
-                    w: widget.defaultSize.w ?? 4, // Default 4 columns
-                    h: widget.defaultSize.h ?? 3, // Default 3 rows
-                };
+                return;
+            }
 
-                // Use minSize if specified, otherwise fall back to defaultSize
-                const minSize = {
-                    w: widget.minSize?.w ?? defaultSize.w,
-                    h: widget.minSize?.h ?? defaultSize.h,
-                };
-
-                // Check if we have a saved instance (or legacy layout) for this widget
-                const savedInstance = savedInstances.get(id);
-                const savedLayout = savedInstance?.layout ?? legacyLayouts[id];
-
-                const layout = {
-                    w: savedLayout?.w ?? defaultSize.w,
-                    h: savedLayout?.h ?? defaultSize.h,
-                    x: savedLayout?.x ?? widget.defaultSize.x ?? 0,
-                    y: savedLayout?.y ?? widget.defaultSize.y ?? 0,
-                    minW: minSize.w,
-                    minH: minSize.h,
-                    maxW: widget.maxSize?.w,
-                    maxH: widget.maxSize?.h,
-                };
-
-                const instance: DashboardWidgetInstance = {
-                    id,
-                    widgetId: id,
-                    layout,
-                    config: savedInstance?.config,
-                };
-
-                if (hiddenIds.has(id)) {
-                    hidden.push(instance);
-                    return;
-                }
-
-                // Only find next position if we don't have a saved layout
-                if (!savedLayout) {
-                    const pos = findNextPosition(visible, {
-                        w: layout.w,
-                        h: layout.h,
-                    });
-                    layout.x = pos.x;
-                    layout.y = pos.y;
-                }
-
-                visible.push(instance);
-            });
+            // Newly-registered / default-visible widget: create its default instance, placing
+            // it via findNextPosition unless a legacy layout supplies a saved position.
+            const instance = buildWidgetInstance(widget, id, legacyLayout);
+            if (!legacyLayout) {
+                const pos = findNextPosition(visible, { w: instance.layout.w, h: instance.layout.h });
+                instance.layout.x = pos.x;
+                instance.layout.y = pos.y;
+            }
+            visible.push(instance);
+        });
 
         setWidgets(visible);
         setHiddenWidgets(hidden);
+        setLoadedWidgetIds(registered.map(([id]) => id));
         setIsInitialized(true);
     }, [settings.widgetInstances, settings.widgetLayout, settings.hiddenWidgets, hasPermissions]);
 
@@ -176,8 +205,8 @@ function DashboardPage() {
         // Only save when transitioning from edit mode ON to OFF
         if (prevEditModeRef.current && !editMode && isInitialized) {
             // Commit the current layouts of both visible and hidden widgets so a hidden
-            // widget keeps its position/size when re-added. Persisted per-instance config
-            // is preserved by saveWidgetInstanceLayouts.
+            // single-instance widget keeps its position/size when re-added. Persisted
+            // per-instance config is preserved by saveWidgetInstanceLayouts.
             const layouts = [...widgets, ...hiddenWidgets].map(widget => ({
                 instanceId: widget.id,
                 widgetId: widget.widgetId,
@@ -188,8 +217,12 @@ function DashboardPage() {
                     h: widget.layout.h,
                 },
             }));
-            saveWidgetInstanceLayouts(layouts);
-            persistHiddenWidgets(hiddenWidgets.map(widget => widget.widgetId));
+            saveWidgetInstanceLayouts(layouts, loadedWidgetIds);
+            // A widget is hidden when it has no visible instance left — this covers both a
+            // hidden single-instance widget and a multi-instance widget whose last instance
+            // was removed. The hidden-list model keeps newly-registered widgets visible.
+            const visibleWidgetIds = new Set(widgets.map(widget => widget.widgetId));
+            persistHiddenWidgets(loadedWidgetIds.filter(id => !visibleWidgetIds.has(id)));
         }
 
         // Update the ref for next render
@@ -199,6 +232,7 @@ function DashboardPage() {
         isInitialized,
         widgets,
         hiddenWidgets,
+        loadedWidgetIds,
         saveWidgetInstanceLayouts,
         persistHiddenWidgets,
     ]);
@@ -218,9 +252,16 @@ function DashboardPage() {
             return;
         }
         setWidgets(prev => prev.filter(widget => widget.id !== instanceId));
-        setHiddenWidgets(prev => [...prev, target]);
+        // Multi-instance widgets are re-added as fresh instances from the picker, so a removed
+        // instance is simply discarded. Single-instance widgets are kept (with their layout) so
+        // re-adding restores their previous position and size.
+        const definition = getDashboardWidget(target.widgetId);
+        if (!definition?.allowMultipleInstances) {
+            setHiddenWidgets(prev => [...prev, target]);
+        }
     };
 
+    // Restores a hidden single-instance widget to its previous position and size.
     const handleAddWidget = (instanceId: string) => {
         const target = hiddenWidgets.find(widget => widget.id === instanceId);
         if (!target) {
@@ -228,6 +269,21 @@ function DashboardPage() {
         }
         setHiddenWidgets(prev => prev.filter(widget => widget.id !== instanceId));
         setWidgets(prev => [...prev, target]);
+    };
+
+    // Adds a fresh instance of a multi-instance widget, placed at the next free grid slot.
+    const handleAddWidgetInstance = (widgetId: string) => {
+        const definition = getDashboardWidget(widgetId);
+        if (!definition) {
+            return;
+        }
+        setWidgets(prev => {
+            const instance = buildWidgetInstance(definition, generateInstanceId(widgetId));
+            const pos = findNextPosition(prev, { w: instance.layout.w, h: instance.layout.h });
+            instance.layout.x = pos.x;
+            instance.layout.y = pos.y;
+            return [...prev, instance];
+        });
     };
 
     const renderWidget = (widget: DashboardWidgetInstance) => {
@@ -266,6 +322,13 @@ function DashboardPage() {
         );
     };
 
+    // Multi-instance widgets are always offered in the picker (even when already on the page)
+    // so the user can add additional independent instances.
+    const multiInstanceWidgets = loadedWidgetIds
+        .map(id => getDashboardWidget(id))
+        .filter((definition): definition is DashboardWidgetDefinition => !!definition?.allowMultipleInstances);
+    const hasPickerOptions = hiddenWidgets.length > 0 || multiInstanceWidgets.length > 0;
+
     return (
         <Page pageId="insights">
             <PageTitle>
@@ -287,21 +350,31 @@ function DashboardPage() {
                                 <Trans>Add widget</Trans>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end">
-                                {hiddenWidgets.length > 0 ? (
-                                    hiddenWidgets.map(widget => {
-                                        const definition = getDashboardWidget(widget.widgetId);
-                                        return (
+                                {hasPickerOptions ? (
+                                    <>
+                                        {hiddenWidgets.map(widget => {
+                                            const definition = getDashboardWidget(widget.widgetId);
+                                            return (
+                                                <DropdownMenuItem
+                                                    key={widget.id}
+                                                    onClick={() => handleAddWidget(widget.id)}
+                                                >
+                                                    {definition ? i18n.t(definition.name) : widget.widgetId}
+                                                </DropdownMenuItem>
+                                            );
+                                        })}
+                                        {multiInstanceWidgets.map(definition => (
                                             <DropdownMenuItem
-                                                key={widget.id}
-                                                onClick={() => handleAddWidget(widget.id)}
+                                                key={definition.id}
+                                                onClick={() => handleAddWidgetInstance(definition.id)}
                                             >
-                                                {definition ? i18n.t(definition.name) : widget.widgetId}
+                                                {i18n.t(definition.name)}
                                             </DropdownMenuItem>
-                                        );
-                                    })
+                                        ))}
+                                    </>
                                 ) : (
                                     <DropdownMenuItem disabled>
-                                        <Trans>No hidden widgets</Trans>
+                                        <Trans>No widgets to add</Trans>
                                     </DropdownMenuItem>
                                 )}
                             </DropdownMenuContent>
