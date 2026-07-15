@@ -24,6 +24,7 @@ export interface GlobalRegistryContents {
     dashboardActionBarItemRegistry: Map<string, DashboardActionBarItem[]>;
     dashboardPageBlockRegistry: Map<string, DashboardPageBlockDefinition[]>;
     dashboardWidgetRegistry: Map<string, DashboardWidgetDefinition>;
+    excludedDashboardWidgets: Set<string>;
     dashboardAlertRegistry: Map<string, DashboardAlertDefinition>;
     inputComponents: Map<string, DashboardFormComponent>;
     displayComponents: Map<string, DataDisplayComponent | DataTableDisplayComponent>;

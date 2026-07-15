@@ -4,6 +4,8 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
     getDashboardWidgetRegistry,
+    getExcludedDashboardWidgets,
+    getVisibleDashboardWidgets,
     registerDashboardWidget,
 } from '../dashboard-widget/widget-extensions.js';
 import {
@@ -30,6 +32,18 @@ function resetNavState() {
 
 function resetWidgetRegistry() {
     globalRegistry.set('dashboardWidgetRegistry', () => new Map<string, DashboardWidgetDefinition>());
+    globalRegistry.set('excludedDashboardWidgets', () => new Set<string>());
+}
+
+function resetInsightsState() {
+    resetWidgetRegistry();
+    (globalRegistry as any).registry.set('registerDashboardExtensionCallbacks', new Set<() => void>());
+}
+
+const DummyWidget = () => null;
+
+function makeWidget(id: string): DashboardWidgetDefinition {
+    return { id, name: id, component: DummyWidget, defaultSize: { w: 4, h: 3 } };
 }
 
 function resetCustomProvidersRegistry() {
@@ -303,6 +317,72 @@ describe('DashboardWidgetDefinition - requiresPermissions', () => {
         const widget = registry.get('empty-perm-widget');
         expect(widget).toBeDefined();
         expect(widget?.requiresPermissions).toEqual([]);
+    });
+});
+
+describe('defineDashboardExtension - insights', () => {
+    beforeEach(() => {
+        resetInsightsState();
+    });
+
+    it('registers widgets via insights.widgets', () => {
+        defineDashboardExtension({
+            insights: { widgets: [makeWidget('insights-widget')] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        expect(getDashboardWidgetRegistry().get('insights-widget')).toBeDefined();
+    });
+
+    it('still registers widgets via the deprecated top-level widgets option', () => {
+        defineDashboardExtension({
+            widgets: [makeWidget('legacy-widget')],
+        });
+        executeDashboardExtensionCallbacks();
+
+        expect(getDashboardWidgetRegistry().get('legacy-widget')).toBeDefined();
+    });
+
+    it('merges deprecated top-level widgets with insights.widgets', () => {
+        defineDashboardExtension({
+            widgets: [makeWidget('legacy-widget')],
+            insights: { widgets: [makeWidget('insights-widget')] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        expect(getDashboardWidgetRegistry().get('legacy-widget')).toBeDefined();
+        expect(getDashboardWidgetRegistry().get('insights-widget')).toBeDefined();
+    });
+
+    it('excludeWidgets removes a widget from the visible registry', () => {
+        registerDashboardWidget(makeWidget('latest-orders-widget'));
+        registerDashboardWidget(makeWidget('metrics-widget'));
+
+        defineDashboardExtension({
+            insights: { excludeWidgets: ['latest-orders-widget'] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        const visibleIds = getVisibleDashboardWidgets().map(([id]) => id);
+        expect(visibleIds).toContain('metrics-widget');
+        expect(visibleIds).not.toContain('latest-orders-widget');
+        // The definition remains in the raw registry; only the effective/visible set removes it.
+        expect(getExcludedDashboardWidgets().has('latest-orders-widget')).toBe(true);
+    });
+
+    it('excludes a widget registered by another extension regardless of order', () => {
+        // Exclusion declared BEFORE the widget is registered
+        defineDashboardExtension({
+            insights: { excludeWidgets: ['other-extension-widget'] },
+        });
+        defineDashboardExtension({
+            insights: { widgets: [makeWidget('other-extension-widget')] },
+        });
+        executeDashboardExtensionCallbacks();
+
+        const visibleIds = getVisibleDashboardWidgets().map(([id]) => id);
+        expect(getDashboardWidgetRegistry().get('other-extension-widget')).toBeDefined();
+        expect(visibleIds).not.toContain('other-extension-widget');
     });
 });
 

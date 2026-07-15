@@ -2,7 +2,7 @@ import { DateRangePicker } from '@/vdb/components/date-range-picker.js';
 import { Button } from '@/vdb/components/ui/button.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
 import { GridLayout } from '@/vdb/components/ui/grid-layout.js';
-import { getDashboardWidget, getDashboardWidgetRegistry } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
+import { getDashboardWidget, getVisibleDashboardWidgets } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
 import { usePermissions } from '@/vdb/hooks/use-permissions.js';
 import { DefinedDateRange, WidgetFiltersProvider, } from '@/vdb/framework/dashboard-widget/widget-filters-context.js';
 import { DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
@@ -81,7 +81,7 @@ function DashboardPage() {
     useEffect(() => {
         const savedLayouts = settings.widgetLayout || {};
 
-        const initialWidgets = Array.from(getDashboardWidgetRegistry().entries())
+        const initialWidgets = getVisibleDashboardWidgets()
             .filter(([, widget]) => {
                 if (!widget.requiresPermissions || widget.requiresPermissions.length === 0) {
                     return true;
