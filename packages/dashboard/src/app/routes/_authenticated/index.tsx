@@ -1,6 +1,6 @@
 import { DateRangePicker } from '@/vdb/components/date-range-picker.js';
-import { RefreshButton } from '@/vdb/components/data-table/refresh-button.js';
 import { Button } from '@/vdb/components/ui/button.js';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/vdb/components/ui/tooltip.js';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -43,7 +43,7 @@ import { endOfDay, startOfMonth } from 'date-fns';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { useLingui as useLinguiRuntime } from '@lingui/react';
-import { PlusIcon, Sparkles, XIcon } from 'lucide-react';
+import { PlusIcon, RefreshCw, Sparkles, SquarePen, XIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
@@ -405,18 +405,42 @@ function DashboardPage() {
                 )}
                 {!editMode && (
                     <ActionBarItem itemId="refresh-widgets">
-                        <div className="mr-2">
-                            <RefreshButton onRefresh={refresh} isLoading={isRefreshing} />
-                        </div>
+                        <Button
+                            variant="outline"
+                            className="mr-2"
+                            onClick={refresh}
+                            disabled={isRefreshing}
+                        >
+                            <RefreshCw
+                                className={isRefreshing ? 'animate-rotate mr-1 h-4 w-4' : 'mr-1 h-4 w-4'}
+                            />
+                            <Trans>Refresh</Trans>
+                        </Button>
                     </ActionBarItem>
                 )}
                 <ActionBarItem itemId="edit-layout-button">
-                    <Button
-                        variant={editMode ? 'default' : 'outline'}
-                        onClick={() => setEditMode(prev => !prev)}
-                    >
-                        {editMode ? t`Save Layout` : t`Edit Layout`}
-                    </Button>
+                    {editMode ? (
+                        <Button variant="default" onClick={() => setEditMode(false)}>
+                            <Trans>Save Layout</Trans>
+                        </Button>
+                    ) : (
+                        <Tooltip>
+                            <TooltipTrigger
+                                render={
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        onClick={() => setEditMode(true)}
+                                    />
+                                }
+                            >
+                                <SquarePen />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <Trans>Edit layout</Trans>
+                            </TooltipContent>
+                        </Tooltip>
+                    )}
                 </ActionBarItem>
             </PageActionBar>
             <PageLayout>
