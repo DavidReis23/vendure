@@ -102,6 +102,10 @@ export interface UserSettingsContextType {
         key: K,
         value: TableSettings[K],
     ) => void;
+    /**
+     * @deprecated Superseded by `saveWidgetInstanceLayouts`. The legacy `widgetLayout` field it
+     * writes to is only read as a migration fallback and is no longer written by the Insights page.
+     */
     setWidgetLayout: (layoutConfig: Record<string, { x: number; y: number; w: number; h: number }>) => void;
     /**
      * @description

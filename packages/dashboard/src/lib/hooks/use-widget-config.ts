@@ -1,7 +1,11 @@
 import { getDashboardWidget } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
 import { WidgetInstanceContext } from '@/vdb/framework/dashboard-widget/widget-instance-context.js';
 import { useLingui } from '@lingui/react/macro';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useMemo, useRef } from 'react';
+
+// Shared stable reference used when a widget definition has no `defaultConfig`, so the
+// `config` memo below does not re-run every render on a fresh `{}` literal.
+const EMPTY_CONFIG = Object.freeze({});
 
 /**
  * @description
@@ -42,15 +46,26 @@ export function useWidgetConfig<T extends Record<string, unknown>>(): [T, (updat
     }
     const { widgetId, config: instanceConfig, setConfig: setInstanceConfig } = context;
 
-    const defaultConfig = (getDashboardWidget(widgetId)?.defaultConfig ?? {}) as Partial<T>;
+    // The registry returns a stable definition object, so `defaultConfig` keeps a stable
+    // identity across renders (and falls back to the shared `EMPTY_CONFIG` when unset),
+    // which keeps the `config` memo from re-running on every render.
+    const defaultConfig = (getDashboardWidget(widgetId)?.defaultConfig ?? EMPTY_CONFIG) as Partial<T>;
     const config = useMemo(
         () => ({ ...defaultConfig, ...instanceConfig }) as T,
         [defaultConfig, instanceConfig],
     );
 
+    // Read the latest config and setter through refs so `setConfig` keeps a stable identity
+    // across renders — widgets can safely list it in effect dependency arrays without
+    // re-running those effects on every render.
+    const configRef = useRef(config);
+    configRef.current = config;
+    const setInstanceConfigRef = useRef(setInstanceConfig);
+    setInstanceConfigRef.current = setInstanceConfig;
+
     const setConfig = useCallback(
-        (update: Partial<T>) => setInstanceConfig({ ...config, ...update }),
-        [config, setInstanceConfig],
+        (update: Partial<T>) => setInstanceConfigRef.current({ ...configRef.current, ...update }),
+        [],
     );
 
     return [config, setConfig];

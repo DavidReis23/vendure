@@ -1,53 +1,9 @@
+import { findNextAvailablePosition } from '@/vdb/components/ui/grid-layout.js';
 import type {
     DashboardWidgetDefinition,
     DashboardWidgetInstance,
 } from '@/vdb/framework/extension-api/types/widgets.js';
 import type { UserSettings } from '@/vdb/providers/user-settings.js';
-
-/**
- * Finds the first free grid position (scanning top-to-bottom, left-to-right) that fits a
- * widget of the given size, treating the 12-column grid as occupied by `existingWidgets`.
- * Falls back to a new row below everything when no gap is found.
- */
-export const findNextPosition = (
-    existingWidgets: DashboardWidgetInstance[],
-    newWidgetSize: { w: number; h: number },
-) => {
-    const occupied = new Set();
-    let maxExistingRow = 0;
-
-    existingWidgets.forEach(widget => {
-        const { x, y, w, h } = widget.layout;
-        maxExistingRow = Math.max(maxExistingRow, y + h);
-
-        for (let i = x; i < x + w; i++) {
-            for (let j = y; j < y + h; j++) {
-                occupied.add(`${i},${j}`);
-            }
-        }
-    });
-
-    const maxSearchRows = maxExistingRow + 3;
-
-    for (let y = 0; y < maxSearchRows; y++) {
-        for (let x = 0; x <= 12 - newWidgetSize.w; x++) {
-            let fits = true;
-            for (let i = x; i < x + newWidgetSize.w; i++) {
-                for (let j = y; j < y + newWidgetSize.h; j++) {
-                    if (occupied.has(`${i},${j}`)) {
-                        fits = false;
-                        break;
-                    }
-                }
-                if (!fits) break;
-            }
-            if (fits) {
-                return { x, y };
-            }
-        }
-    }
-    return { x: 0, y: maxExistingRow };
-};
 
 /**
  * Builds a widget instance from its definition, applying a saved layout when present and
@@ -156,10 +112,14 @@ export function buildInitialWidgetState(
         }
 
         // Newly-registered / default-visible widget: create its default instance, placing
-        // it via findNextPosition unless a legacy layout supplies a saved position.
+        // it at the first free slot (scanning from the top) unless a legacy layout supplies
+        // a saved position.
         const instance = buildWidgetInstance(widget, id, legacyLayout);
         if (!legacyLayout) {
-            const pos = findNextPosition(visible, { w: instance.layout.w, h: instance.layout.h });
+            const pos = findNextAvailablePosition(
+                { ...instance.layout, i: instance.id, y: 0 },
+                visible.map(v => ({ ...v.layout, i: v.id })),
+            );
             instance.layout.x = pos.x;
             instance.layout.y = pos.y;
         }

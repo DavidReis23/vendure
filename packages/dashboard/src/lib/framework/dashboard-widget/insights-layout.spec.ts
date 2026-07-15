@@ -125,7 +125,7 @@ describe('buildInitialWidgetState', () => {
         expect(state.visible[0].layout).toMatchObject({ x: 3, y: 2, w: 5, h: 2 });
     });
 
-    it('places a fresh default-visible widget via findNextPosition (no overlaps)', () => {
+    it('places a fresh default-visible widget at the first free slot (no overlaps)', () => {
         const a = def('a', { defaultSize: { w: 6, h: 3 } });
         const b = def('b', { defaultSize: { w: 6, h: 3 } });
         const state = buildInitialWidgetState(settings(), [

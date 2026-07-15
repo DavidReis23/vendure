@@ -52,18 +52,21 @@ export function getVisibleDashboardWidgets(): Array<[string, DashboardWidgetDefi
 
 /**
  * Registers a global Insights filter. Filters render in the Insights page action bar and
- * their values are shared with every widget via the `useWidgetFilters()` hook. Ids must be
- * unique: a duplicate id logs a warning and is ignored so an existing filter is not silently
- * overwritten.
+ * their values are shared with every widget via the `useWidgetFilters()` hook. A duplicate
+ * id overwrites the previous registration (last wins), matching `registerDashboardWidget`
+ * and keeping HMR re-registration working; in development a warning is logged so an
+ * accidental id collision between extensions is still surfaced.
  */
 export function registerDashboardWidgetFilter(filter: DashboardWidgetFilterDefinition) {
-    if (globalRegistry.get('dashboardWidgetFilterRegistry').has(filter.id)) {
+    if (
+        process.env.NODE_ENV !== 'production' &&
+        globalRegistry.get('dashboardWidgetFilterRegistry').has(filter.id)
+    ) {
         // eslint-disable-next-line no-console
         console.warn(
             `A dashboard widget filter with the id "${filter.id}" is already registered. ` +
-                `The duplicate registration will be ignored.`,
+                `The previous registration will be overwritten.`,
         );
-        return;
     }
     globalRegistry.set('dashboardWidgetFilterRegistry', map => {
         map.set(filter.id, filter);

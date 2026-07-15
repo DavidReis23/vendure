@@ -456,7 +456,7 @@ describe('defineDashboardExtension - insights', () => {
         expect(getDashboardWidgetFilters().map(f => f.id)).toEqual(['warehouse', 'channel']);
     });
 
-    it('warns and ignores a duplicate filter id', () => {
+    it('warns on a duplicate filter id and the last registration wins', () => {
         // eslint-disable-next-line @typescript-eslint/no-empty-function
         const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {
             /* noop */
@@ -479,8 +479,9 @@ describe('defineDashboardExtension - insights', () => {
         );
         const filters = getDashboardWidgetFilters();
         expect(filters).toHaveLength(1);
-        // The first registration wins; the duplicate is ignored.
-        expect(filters[0].component).toBe(FirstComponent);
+        // Last-wins (matching the widget registry and keeping HMR re-registration working):
+        // the later registration overwrites the earlier one.
+        expect(filters[0].component).toBe(SecondComponent);
 
         warnSpy.mockRestore();
     });

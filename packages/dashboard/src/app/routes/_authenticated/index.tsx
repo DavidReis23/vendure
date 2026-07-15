@@ -7,7 +7,13 @@ import {
     DropdownMenuTrigger,
 } from '@/vdb/components/ui/dropdown-menu.js';
 import type { GridLayout as GridLayoutType } from '@/vdb/components/ui/grid-layout.js';
-import { compactLayouts, GridLayout, insertWithReflow, tidyLayouts } from '@/vdb/components/ui/grid-layout.js';
+import {
+    compactLayouts,
+    findNextAvailablePosition,
+    GridLayout,
+    insertWithReflow,
+    tidyLayouts,
+} from '@/vdb/components/ui/grid-layout.js';
 import {
     getDashboardWidget,
     getDashboardWidgetFilters,
@@ -19,7 +25,6 @@ import { WidgetInstanceProvider } from '@/vdb/framework/dashboard-widget/widget-
 import {
     buildInitialWidgetState,
     buildWidgetInstance,
-    findNextPosition,
 } from '@/vdb/framework/dashboard-widget/insights-layout.js';
 import { DashboardWidgetDefinition, DashboardWidgetInstance } from '@/vdb/framework/extension-api/types/widgets.js';
 import {
@@ -260,7 +265,7 @@ function DashboardPage() {
         }
         setWidgets(prev => {
             const instance = buildWidgetInstance(definition, generateInstanceId(widgetId));
-            const pos = findNextPosition(prev, { w: instance.layout.w, h: instance.layout.h });
+            const pos = findNextAvailablePosition({ ...toGridLayout(instance), y: 0 }, prev.map(toGridLayout));
             instance.layout.x = pos.x;
             instance.layout.y = pos.y;
             return [...prev, instance];
