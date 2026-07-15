@@ -329,7 +329,7 @@ export * from './hooks/use-extended-list-query.js';
 export * from './hooks/use-facet-value-browser.js';
 export * from './hooks/use-floating-bulk-actions.js';
 export * from './hooks/use-grouped-permissions.js';
-export { INSIGHTS_WIDGET_QUERY_KEY } from './hooks/use-insights-refresh.js';
+export * from './hooks/use-insights-refresh.js';
 export * from './hooks/use-job-queue-polling.js';
 export * from './hooks/use-local-format.js';
 export * from './hooks/use-mobile.js';
