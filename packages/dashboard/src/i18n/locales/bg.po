@@ -263,6 +263,10 @@ msgstr "Продавачи"
 msgid "Options"
 msgstr "Опции"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
+msgid "Loading top products…"
+msgstr ""
+
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
 msgstr ""
@@ -382,6 +386,10 @@ msgstr "Персонализираните полета са променени"
 msgid "Successfully created stock location"
 msgstr "Успешно създадено складово местоположение"
 
+#: src/app/routes/_authenticated/index.tsx:393
+msgid "No widgets to add"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:79
@@ -471,7 +479,7 @@ msgstr "Нова клиентска група"
 msgid "Create \"{0}\""
 msgstr "Създаване на „{0}“"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:133
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
 msgstr ""
 
@@ -521,7 +529,7 @@ msgstr "Черновата на поръчката не е готова за з�
 msgid "New collection"
 msgstr "Нова колекция"
 
-#: src/app/routes/_authenticated/index.tsx:184
+#: src/app/routes/_authenticated/index.tsx:336
 msgid "Insights"
 msgstr "Анализи"
 
@@ -548,6 +556,10 @@ msgstr "Успешно създадена продуктова опция"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:501
 msgid "Parent product"
 msgstr "Основен продукт"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
+msgid "We couldn't load the stock levels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -585,8 +597,8 @@ msgstr ""
 msgid "Search options..."
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:33
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
 msgid "Order Count"
 msgstr "Брой поръчки"
 
@@ -598,6 +610,10 @@ msgstr "Успешно актуализирана поръчка"
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:203
 msgid "Inherit filters"
 msgstr "Наследяване на филтри"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
+msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -732,6 +748,10 @@ msgstr "Моля, добавете продукти и попълнете адр
 msgid "Toggle header row"
 msgstr "Превключване на заглавния ред"
 
+#: src/lib/hooks/use-widget-config.ts:45
+msgid "useWidgetConfig must be used within an Insights page widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
 msgstr "Изберете адрес"
@@ -797,7 +817,7 @@ msgstr ""
 msgid "Select {0} Items"
 msgstr "Изберете {0} елементи"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:108
 msgid "Placed At"
 msgstr "Поставен при"
 
@@ -860,7 +880,7 @@ msgstr "Неуспешно изпълнение на поръчката"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:88
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:106
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:226
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:117
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:121
 msgid "Total"
 msgstr "Общо"
 
@@ -1012,6 +1032,10 @@ msgstr "Въведете ID на транзакцията"
 msgid "Refresh data"
 msgstr "Обновяване на данните"
 
+#: src/app/routes/_authenticated/index.tsx:366
+msgid "Add widget"
+msgstr ""
+
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
 msgid "Add or remove facet values for {0} {entityType}"
@@ -1028,6 +1052,10 @@ msgstr "Успешно добавено плащане към поръчката
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:246
 msgid "Billing address set for order"
 msgstr "Адресът за фактуриране е зададен за поръчка"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
+msgid "Revenue"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1168,7 +1196,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "Методът на доставка отговаря на условията за тази поръчка"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:195
+#: src/lib/framework/defaults.ts:198
 msgid "Administrators"
 msgstr "Администратори"
 
@@ -1215,7 +1243,7 @@ msgid "Images"
 msgstr "Изображения"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:158
+#: src/lib/framework/defaults.ts:161
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1237,7 +1265,7 @@ msgid "Job Queue"
 msgstr "Опашка от задачи"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:66
+#: src/lib/framework/defaults.ts:69
 msgid "Assets"
 msgstr "Медия"
 
@@ -1368,6 +1396,10 @@ msgstr "Начини на плащане"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:377
 msgid "Stock"
 msgstr "Наличност"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
+msgid "No sales for this period"
+msgstr ""
 
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
@@ -1504,7 +1536,7 @@ msgid "Delete draft order"
 msgstr "Изтриване на чернова на поръчка"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:24
+#: src/lib/framework/defaults.ts:27
 msgid "Catalog"
 msgstr "Каталог"
 
@@ -1521,7 +1553,7 @@ msgstr "Успешно актуализирана промоция"
 msgid "{rejected, plural, one {Failed to cancel {rejected} job} other {Failed to cancel {rejected} jobs}}"
 msgstr "{rejected, plural, one {Неуспешно отменяне на {rejected} задача} other {Неуспешно отменяне на {rejected} задачи}}"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:102
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
 msgstr ""
 
@@ -1543,7 +1575,7 @@ msgstr "Подробности за изпълнението"
 #~ msgstr "Сега"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:181
+#: src/lib/framework/defaults.ts:184
 msgid "Channels"
 msgstr "Канали"
 
@@ -1573,7 +1605,7 @@ msgstr "Няма намерен превод за {0}"
 msgid "New Customer"
 msgstr "Нов клиент"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
 msgstr "Последни поръчки"
 
@@ -1604,7 +1636,7 @@ msgid "Disable"
 msgstr "Деактивиране"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:59
+#: src/lib/framework/defaults.ts:62
 msgid "Collections"
 msgstr "Колекции"
 
@@ -1617,11 +1649,11 @@ msgid "Failed to create country"
 msgstr "Неуспешно създаване на държава"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:237
+#: src/lib/framework/defaults.ts:240
 msgid "Countries"
 msgstr "Държави"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:96
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
 msgstr ""
 
@@ -1650,13 +1682,13 @@ msgstr "Филтри"
 #~ msgstr "Последните 7 дни"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:105
+#: src/lib/framework/defaults.ts:108
 msgid "Customer Groups"
 msgstr "Групи клиенти"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:91
-#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:94
+#: src/lib/framework/defaults.ts:101
 msgid "Customers"
 msgstr "Клиенти"
 
@@ -2060,7 +2092,7 @@ msgstr "Настройки на колони"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:154
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:63
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:91
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:95
 msgid "Code"
 msgstr "Код"
 
@@ -2108,7 +2140,7 @@ msgid "Successfully updated country"
 msgstr "Успешно актуализирана държава"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:52
+#: src/lib/framework/defaults.ts:55
 msgid "Facets"
 msgstr "Атрибути"
 
@@ -2524,7 +2556,7 @@ msgstr "Списък със стойности"
 msgid "fieldName.zone"
 msgstr "Зона"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:125
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
 msgstr ""
 
@@ -2748,7 +2780,7 @@ msgid "Customer verified"
 msgstr "Проверен от клиента"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:251
+#: src/lib/framework/defaults.ts:254
 msgid "Global Settings"
 msgstr "Глобални настройки"
 
@@ -2779,6 +2811,10 @@ msgstr "Успешно създаден канал"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:98
 msgid "Successfully updated customer"
 msgstr "Успешно актуализиран клиент"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
+msgid "Latest Customers"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2815,6 +2851,10 @@ msgstr "Нов продукт"
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
 msgid "New asset"
 msgstr "Нов актив"
+
+#: src/app/routes/_authenticated/index.tsx:409
+msgid "Tidy"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
@@ -2877,6 +2917,10 @@ msgstr "Поръчката е отменена"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:38
 msgid "Discount"
 msgstr "Отстъпка"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
+msgid "Top Products"
+msgstr ""
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -3173,7 +3217,7 @@ msgid "Added to group"
 msgstr "Добавен към групата"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:16
+#: src/lib/framework/defaults.ts:19
 msgid "Insights"
 msgstr "Анализи"
 
@@ -3283,7 +3327,7 @@ msgstr "Създай вариант"
 msgid "Facet values for {facetName}"
 msgstr "Стойности на аспекти за {facetName}"
 
-#: src/app/routes/_authenticated/index.tsx:199
+#: src/app/routes/_authenticated/index.tsx:431
 msgid "Save Layout"
 msgstr "Запазване на оформлението"
 
@@ -3376,7 +3420,7 @@ msgid "Simple product"
 msgstr "Прост продукт"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:137
+#: src/lib/framework/defaults.ts:140
 msgid "Job Queue"
 msgstr "Опашка от задачи"
 
@@ -3396,7 +3440,7 @@ msgstr "Неуспешна промяна на поръчката"
 msgid "Includes tax at {taxRate}%"
 msgstr "Включва данък от {taxRate}%"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:76
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
 msgid "Order metrics"
 msgstr "Метрики за поръчка"
 
@@ -3440,6 +3484,10 @@ msgstr "Търсене на роли..."
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 #~ msgid "Successfully cancelled {fulfilled} jobs"
 #~ msgstr ""
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
+msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
+msgstr ""
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3496,7 +3544,10 @@ msgstr "Присвояване"
 msgid "Successfully created seller"
 msgstr "Успешно създаден продавач"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
 msgstr ""
 
@@ -3538,6 +3589,10 @@ msgstr ""
 msgid "Available languages"
 msgstr "Налични езици"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
+msgid "{saleable} in stock"
+msgstr ""
+
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
 msgid "Load {0} more ({remaining} remaining)"
@@ -3557,7 +3612,7 @@ msgstr "Атрибутни стойности"
 msgid "Failed to reorder items"
 msgstr "Неуспешно пренареждане на артикули"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:90
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:91
 msgid "Total Orders"
 msgstr "Общ брой поръчки"
 
@@ -3652,9 +3707,18 @@ msgid "Update the note content or visibility"
 msgstr "Актуализирайте съдържанието или видимостта на бележката"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:272
+#: src/lib/framework/defaults.ts:315
+msgid "Latest Customers Widget"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:277
 msgid "Latest Orders Widget"
 msgstr "Уиджет за най-нови поръчки"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
+msgid "Loading stock levels…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3677,6 +3741,7 @@ msgstr "е по-малко или равно на"
 msgid "is not equal to"
 msgstr "не е равно на"
 
+#: src/app/routes/_authenticated/index.tsx:424
 #: src/lib/components/data-table/data-table-settings-menu.tsx:72
 msgid "Refresh"
 msgstr "Опресняване"
@@ -3752,6 +3817,11 @@ msgstr "Дублиране на {0}"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:56
 msgid "Remove from group"
 msgstr "Премахване от група"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:304
+msgid "Low Stock Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
@@ -3836,7 +3906,7 @@ msgid "Successfully created facet value"
 msgstr "Успешно създадена стойност на аспекта"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:114
+#: src/lib/framework/defaults.ts:117
 msgid "Marketing"
 msgstr "Маркетинг"
 
@@ -3849,7 +3919,7 @@ msgid "greater than"
 msgstr "по-голямо от"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:263
+#: src/lib/framework/defaults.ts:266
 msgid "Metrics Widget"
 msgstr "Уиджет за показатели"
 
@@ -3890,6 +3960,10 @@ msgstr "Таговете се зареждат..."
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:78
 msgid "Successfully created facet"
 msgstr "Атрибутът е създаден успешно"
+
+#: src/app/routes/_authenticated/index.tsx:488
+msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
+msgstr ""
 
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
@@ -4001,8 +4075,8 @@ msgid "Enter slug manually"
 msgstr "Въведете slug ръчно"
 
 #: src/app/routes/_authenticated/index.tsx:230
-msgid "No widgets available"
-msgstr "Няма налични приспособления"
+#~ msgid "No widgets available"
+#~ msgstr "Няма налични приспособления"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:75
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:79
@@ -4193,8 +4267,8 @@ msgid "Global view deleted successfully"
 msgstr "Глобалният изглед е изтрит успешно"
 
 #: src/app/routes/_authenticated/index.tsx:199
-msgid "Edit Layout"
-msgstr "Редакция на оформлението"
+#~ msgid "Edit Layout"
+#~ msgstr "Редакция на оформлението"
 
 #: src/lib/components/shared/assign-to-channel-bulk-action.tsx:55
 #: src/lib/components/shared/assigned-channels.tsx:98
@@ -4235,6 +4309,10 @@ msgstr "Неуспешно актуализиране на администра�
 #: src/lib/components/data-table/views-sheet.tsx:132
 msgid "Manage your personal saved views for this table"
 msgstr "Управлявайте личните си запазени изгледи за тази таблица"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
+msgid "Loading customers…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4313,7 +4391,7 @@ msgstr ""
 msgid "Failed to update payment state"
 msgstr "Неуспешно актуализиране на състоянието на плащането"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:86
 msgid "Your orders summary"
 msgstr "Резюме на вашите поръчки"
 
@@ -4342,7 +4420,7 @@ msgid "+ {0} more"
 msgstr "+ още {0}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:45
+#: src/lib/framework/defaults.ts:48
 msgid "Option Groups"
 msgstr "Групи опции"
 
@@ -4355,12 +4433,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Всички възможни състояния на поръчката и техните преходи. Текущото състояние е маркирано."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:82
+#: src/lib/framework/defaults.ts:85
 msgid "Orders"
 msgstr "Поръчки"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:280
+#: src/lib/framework/defaults.ts:285
 msgid "Orders Summary Widget"
 msgstr "Уиджет за обобщение на поръчките"
 
@@ -4448,8 +4526,8 @@ msgstr ""
 #~ msgid "This month"
 #~ msgstr "Този месец"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:35
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
 msgid "Order Total"
 msgstr "Общо за поръчката"
 
@@ -4491,6 +4569,10 @@ msgstr "Налични действия"
 msgid "Failed to update order line: {0}"
 msgstr ""
 
+#: src/app/routes/_authenticated/index.tsx:447
+msgid "Edit layout"
+msgstr ""
+
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
 msgstr ""
@@ -4526,7 +4608,7 @@ msgid "Enable"
 msgstr "Активиране"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:216
+#: src/lib/framework/defaults.ts:219
 msgid "Payment Methods"
 msgstr "Начини на плащане"
 
@@ -4571,8 +4653,8 @@ msgstr "Изчаква"
 msgid "paymentState.Settled"
 msgstr "Приключено"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:37
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:84
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:43
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:89
 msgid "Average Order Value"
 msgstr "Средна стойност на поръчката"
 
@@ -4674,6 +4756,10 @@ msgstr "Информацията за клиента е актуализиран
 msgid "Failed to delete draft order: {0}"
 msgstr ""
 
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
+msgid "No new customers for this period"
+msgstr ""
+
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
 msgstr "Неуспешно преобразуване на изгледа в глобален"
@@ -4687,17 +4773,17 @@ msgid "Select operator"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:38
+#: src/lib/framework/defaults.ts:41
 msgid "Product Variants"
 msgstr "Варианти"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:31
+#: src/lib/framework/defaults.ts:34
 msgid "Products"
 msgstr "Продукти"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:121
+#: src/lib/framework/defaults.ts:124
 msgid "Promotions"
 msgstr "Промоции"
 
@@ -5025,6 +5111,10 @@ msgstr "На всеки 60 секунди"
 msgid "Failed to update customer group"
 msgstr "Неуспешно актуализиране на клиентска група"
 
+#: src/app/routes/_authenticated/index.tsx:298
+msgid "Remove widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
 msgstr "Метаданни за плащане"
@@ -5046,7 +5136,7 @@ msgid "Link URL"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:202
+#: src/lib/framework/defaults.ts:205
 msgid "Roles"
 msgstr "Роли"
 
@@ -5188,7 +5278,7 @@ msgstr "Вариантът е изтрит успешно"
 #~ msgstr "Редактиране на свойствата на избраната връзка"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:75
+#: src/lib/framework/defaults.ts:78
 msgid "Sales"
 msgstr "Продажби"
 
@@ -5196,12 +5286,12 @@ msgstr "Продажби"
 msgid "Select a destination collection"
 msgstr "Изберете целева колекция"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Your latest orders"
 msgstr "Вашите най-нови поръчки"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:144
+#: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Планирани задачи"
 
@@ -5214,17 +5304,17 @@ msgid "Variants"
 msgstr "Варианти"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:174
+#: src/lib/framework/defaults.ts:177
 msgid "Sellers"
 msgstr "Продавачи"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:167
+#: src/lib/framework/defaults.ts:170
 msgid "Settings"
 msgstr "Настройки"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:151
+#: src/lib/framework/defaults.ts:154
 msgid "Settings Store"
 msgstr "Настройки на магазина"
 
@@ -5237,7 +5327,7 @@ msgid "Welcome to Vendure"
 msgstr "Добре дошли във Venudre"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:209
+#: src/lib/framework/defaults.ts:212
 msgid "Shipping Methods"
 msgstr "Методи за доставка"
 
@@ -5260,6 +5350,10 @@ msgstr "Неуспешно актуализиране на колекцията"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:304
 msgid "Price and tax"
 msgstr "Цена и данък"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
+msgid "We couldn't load the top products"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5312,12 +5406,16 @@ msgstr "Добавете тагове..."
 msgid "{0} items selected"
 msgstr "{0} избрани елемента"
 
+#: src/app/routes/_authenticated/index.tsx:483
+msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
+msgstr ""
+
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
 msgstr "Търсене на езици..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:188
+#: src/lib/framework/defaults.ts:191
 msgid "Stock Locations"
 msgstr "Складови местоположения"
 
@@ -5355,7 +5453,7 @@ msgid "Add payment ({0})"
 msgstr "Добавяне на плащане ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:130
+#: src/lib/framework/defaults.ts:133
 msgid "System"
 msgstr "Система"
 
@@ -5387,18 +5485,22 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {Премахнат {count} клиент от групата} other {Премахнати {count} клиенти от групата}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:223
+#: src/lib/framework/defaults.ts:226
 msgid "Tax Categories"
 msgstr "Данъчни категории"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:230
+#: src/lib/framework/defaults.ts:233
 msgid "Tax Rates"
 msgstr "Данъчни ставки"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Неуспешно премахване на клиенти от групата"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
+msgid "We couldn't load the latest customers"
+msgstr ""
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5438,6 +5540,10 @@ msgstr "Страницата ще продължи със заявката по 
 #: src/lib/components/shared/customer-address-form.tsx:121
 msgid "Street Address"
 msgstr "Улица"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
+msgid "No low stock in this sample"
+msgstr ""
 
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
@@ -5483,6 +5589,11 @@ msgstr "Неуспешно присвояване на {entityIdsLength} {entity
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
 msgstr "Език по подразбиране"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:293
+msgid "Top Products Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5620,6 +5731,10 @@ msgstr "Нов метод на доставка"
 #: src/app/routes/_authenticated/_system/job-queue.tsx:115
 msgid "Every 10 seconds"
 msgstr "На всеки 10 секунди"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
+msgid "Low Stock"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
@@ -5770,6 +5885,7 @@ msgstr "Непроверено"
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:182
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:268
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:78
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:107
 msgid "Quantity"
 msgstr "Количество"
 
@@ -5886,7 +6002,7 @@ msgstr "Вариантът не можа да бъде добавен. Увер�
 #~ msgid "An unknown error occurred"
 #~ msgstr "Възникна неизвестна грешка"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:75
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
 msgid "Metrics"
 msgstr "Метрики"
 
@@ -5926,6 +6042,10 @@ msgstr "{label}"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to create shipping method"
 msgstr "Неуспешно създаване на метод за доставка"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
+msgid "New registrations in the selected period"
+msgstr ""
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -5980,7 +6100,9 @@ msgstr "Успешно актуализиран аспект"
 msgid "Strikethrough"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
 msgstr ""
 
@@ -6036,13 +6158,17 @@ msgstr "Не се изисква плащане или възстановява�
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:100
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
 msgstr "Общи приходи"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:163
 msgid "Next Execution"
 msgstr "Следващо изпълнение"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
+msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
+msgstr ""
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -6130,7 +6256,7 @@ msgstr "Преминете към най-горното ниво"
 msgid "Clear"
 msgstr "Изчисти"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:84
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
 msgid "Orders Summary"
 msgstr "Резюме на поръчките"
 
@@ -6221,7 +6347,7 @@ msgstr "Редакция на изображението"
 msgid "Manage Variants"
 msgstr "Управление на варианти"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:134
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
 msgstr ""
 
@@ -6538,7 +6664,7 @@ msgid "Customer registered"
 msgstr "Регистриран клиент"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:244
+#: src/lib/framework/defaults.ts:247
 msgid "Zones"
 msgstr "Зони"
 

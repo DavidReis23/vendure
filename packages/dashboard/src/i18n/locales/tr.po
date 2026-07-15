@@ -263,6 +263,10 @@ msgstr "Satıcılar"
 msgid "Options"
 msgstr "Seçenekler"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
+msgid "Loading top products…"
+msgstr ""
+
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
 msgstr ""
@@ -379,6 +383,10 @@ msgstr "Özel alanlar değiştirildi"
 msgid "Successfully created stock location"
 msgstr "Stok konumu başarıyla oluşturuldu"
 
+#: src/app/routes/_authenticated/index.tsx:393
+msgid "No widgets to add"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:79
@@ -465,7 +473,7 @@ msgstr "Yeni müşteri grubu"
 msgid "Create \"{0}\""
 msgstr "\"{0}\" oluştur"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:133
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
 msgstr ""
 
@@ -515,7 +523,7 @@ msgstr "Sipariş taslağı tamamlanmaya hazır değil"
 msgid "New collection"
 msgstr "Yeni koleksiyon"
 
-#: src/app/routes/_authenticated/index.tsx:184
+#: src/app/routes/_authenticated/index.tsx:336
 msgid "Insights"
 msgstr "İçgörüler"
 
@@ -542,6 +550,10 @@ msgstr "Ürün seçeneği başarıyla oluşturuldu"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:501
 msgid "Parent product"
 msgstr "Üst ürün"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
+msgid "We couldn't load the stock levels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -579,8 +591,8 @@ msgstr ""
 msgid "Search options..."
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:33
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
 msgid "Order Count"
 msgstr "Sipariş Sayısı"
 
@@ -592,6 +604,10 @@ msgstr "Sipariş başarıyla güncellendi"
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:203
 msgid "Inherit filters"
 msgstr "Filtreleri miras al"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
+msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -726,6 +742,10 @@ msgstr "Testi çalıştırmak için lütfen ürün ekleyin ve kargo adresini dol
 msgid "Toggle header row"
 msgstr "Başlık satırını değiştir"
 
+#: src/lib/hooks/use-widget-config.ts:45
+msgid "useWidgetConfig must be used within an Insights page widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
 msgstr "Adres seç"
@@ -791,7 +811,7 @@ msgstr ""
 msgid "Select {0} Items"
 msgstr "{0} Öğe Seç"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:108
 msgid "Placed At"
 msgstr "Verilme Tarihi"
 
@@ -854,7 +874,7 @@ msgstr "Sipariş teslim edilemedi"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:88
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:106
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:226
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:117
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:121
 msgid "Total"
 msgstr "Toplam"
 
@@ -1006,6 +1026,10 @@ msgstr "İşlem ID'sini girin"
 msgid "Refresh data"
 msgstr "Verileri yenile"
 
+#: src/app/routes/_authenticated/index.tsx:366
+msgid "Add widget"
+msgstr ""
+
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
 msgid "Add or remove facet values for {0} {entityType}"
@@ -1022,6 +1046,10 @@ msgstr "Ödeme siparişe başarıyla eklendi"
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:246
 msgid "Billing address set for order"
 msgstr "Sipariş için fatura adresi ayarlandı"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
+msgid "Revenue"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1162,7 +1190,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "Kargo yöntemi bu sipariş için uygundur"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:195
+#: src/lib/framework/defaults.ts:198
 msgid "Administrators"
 msgstr "Yöneticiler"
 
@@ -1209,7 +1237,7 @@ msgid "Images"
 msgstr "Görseller"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:158
+#: src/lib/framework/defaults.ts:161
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1231,7 +1259,7 @@ msgid "Job Queue"
 msgstr "İş Kuyruğu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:66
+#: src/lib/framework/defaults.ts:69
 msgid "Assets"
 msgstr "Varlıklar"
 
@@ -1362,6 +1390,10 @@ msgstr "Ödeme Yöntemleri"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:377
 msgid "Stock"
 msgstr "Stok"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
+msgid "No sales for this period"
+msgstr ""
 
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
@@ -1498,7 +1530,7 @@ msgid "Delete draft order"
 msgstr "Taslak siparişi sil"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:24
+#: src/lib/framework/defaults.ts:27
 msgid "Catalog"
 msgstr "Katalog"
 
@@ -1515,7 +1547,7 @@ msgstr "Promosyon başarıyla güncellendi"
 msgid "{rejected, plural, one {Failed to cancel {rejected} job} other {Failed to cancel {rejected} jobs}}"
 msgstr "{rejected, plural, one {{rejected} görev iptal edilemedi} other {{rejected} görev iptal edilemedi}}"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:102
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
 msgstr ""
 
@@ -1537,7 +1569,7 @@ msgstr "Teslimat detayları"
 #~ msgstr "Şimdi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:181
+#: src/lib/framework/defaults.ts:184
 msgid "Channels"
 msgstr "Kanallar"
 
@@ -1567,7 +1599,7 @@ msgstr "{0} için çeviri bulunamadı"
 msgid "New Customer"
 msgstr "Yeni Müşteri"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
 msgstr "Son Siparişler"
 
@@ -1598,7 +1630,7 @@ msgid "Disable"
 msgstr "Devre dışı bırak"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:59
+#: src/lib/framework/defaults.ts:62
 msgid "Collections"
 msgstr "Koleksiyonlar"
 
@@ -1611,11 +1643,11 @@ msgid "Failed to create country"
 msgstr "Ülke oluşturulamadı"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:237
+#: src/lib/framework/defaults.ts:240
 msgid "Countries"
 msgstr "Ülkeler"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:96
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
 msgstr ""
 
@@ -1641,13 +1673,13 @@ msgid "Filters"
 msgstr "Filtreler"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:105
+#: src/lib/framework/defaults.ts:108
 msgid "Customer Groups"
 msgstr "Müşteri Grupları"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:91
-#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:94
+#: src/lib/framework/defaults.ts:101
 msgid "Customers"
 msgstr "Müşteriler"
 
@@ -2045,7 +2077,7 @@ msgstr "Sütun ayarları"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:154
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:63
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:91
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:95
 msgid "Code"
 msgstr "Kod"
 
@@ -2090,7 +2122,7 @@ msgid "Successfully updated country"
 msgstr "Ülke başarıyla güncellendi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:52
+#: src/lib/framework/defaults.ts:55
 msgid "Facets"
 msgstr "Özellikler"
 
@@ -2506,7 +2538,7 @@ msgstr "Değer listesi"
 msgid "fieldName.zone"
 msgstr "Bölge"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:125
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
 msgstr ""
 
@@ -2731,7 +2763,7 @@ msgid "Customer verified"
 msgstr "Müşteri doğrulandı"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:251
+#: src/lib/framework/defaults.ts:254
 msgid "Global Settings"
 msgstr "Genel Ayarlar"
 
@@ -2762,6 +2794,10 @@ msgstr "Kanal başarıyla oluşturuldu"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:98
 msgid "Successfully updated customer"
 msgstr "Müşteri başarıyla güncellendi"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
+msgid "Latest Customers"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2798,6 +2834,10 @@ msgstr "Yeni Ürün"
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
 msgid "New asset"
 msgstr "Yeni varlık"
+
+#: src/app/routes/_authenticated/index.tsx:409
+msgid "Tidy"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
@@ -2860,6 +2900,10 @@ msgstr "Sipariş iptal edildi"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:38
 msgid "Discount"
 msgstr "İndirim"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
+msgid "Top Products"
+msgstr ""
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -3153,7 +3197,7 @@ msgid "Added to group"
 msgstr "Gruba eklendi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:16
+#: src/lib/framework/defaults.ts:19
 msgid "Insights"
 msgstr "İçgörüler"
 
@@ -3263,7 +3307,7 @@ msgstr "Varyant oluştur"
 msgid "Facet values for {facetName}"
 msgstr "{facetName} için özellik değerleri"
 
-#: src/app/routes/_authenticated/index.tsx:199
+#: src/app/routes/_authenticated/index.tsx:431
 msgid "Save Layout"
 msgstr "Düzeni Kaydet"
 
@@ -3356,7 +3400,7 @@ msgid "Simple product"
 msgstr "Basit ürün"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:137
+#: src/lib/framework/defaults.ts:140
 msgid "Job Queue"
 msgstr "İş Kuyruğu"
 
@@ -3376,7 +3420,7 @@ msgstr "Sipariş değiştirilemedi"
 msgid "Includes tax at {taxRate}%"
 msgstr "%{taxRate} vergi dahil"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:76
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
 msgid "Order metrics"
 msgstr "Sipariş metrikleri"
 
@@ -3420,6 +3464,10 @@ msgstr "Rolleri ara..."
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 #~ msgid "Successfully cancelled {fulfilled} jobs"
 #~ msgstr ""
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
+msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
+msgstr ""
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3476,7 +3524,10 @@ msgstr "Ata"
 msgid "Successfully created seller"
 msgstr "Satıcı başarıyla oluşturuldu"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
 msgstr ""
 
@@ -3518,6 +3569,10 @@ msgstr ""
 msgid "Available languages"
 msgstr "Mevcut diller"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
+msgid "{saleable} in stock"
+msgstr ""
+
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
 msgid "Load {0} more ({remaining} remaining)"
@@ -3537,7 +3592,7 @@ msgstr "Özellik değerleri"
 msgid "Failed to reorder items"
 msgstr "Öğeler yeniden sıralanamadı"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:90
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:91
 msgid "Total Orders"
 msgstr "Toplam Sipariş"
 
@@ -3632,9 +3687,18 @@ msgid "Update the note content or visibility"
 msgstr "Not içeriğini veya görünürlüğünü güncelleyin"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:272
+#: src/lib/framework/defaults.ts:315
+msgid "Latest Customers Widget"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:277
 msgid "Latest Orders Widget"
 msgstr "Son Siparişler Widget'ı"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
+msgid "Loading stock levels…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3657,6 +3721,7 @@ msgstr "küçük eşittir"
 msgid "is not equal to"
 msgstr "eşit değildir"
 
+#: src/app/routes/_authenticated/index.tsx:424
 #: src/lib/components/data-table/data-table-settings-menu.tsx:72
 msgid "Refresh"
 msgstr "Yenile"
@@ -3732,6 +3797,11 @@ msgstr "{0} çoğalt"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:56
 msgid "Remove from group"
 msgstr "Gruptan kaldır"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:304
+msgid "Low Stock Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
@@ -3816,7 +3886,7 @@ msgid "Successfully created facet value"
 msgstr "Özellik değeri başarıyla oluşturuldu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:114
+#: src/lib/framework/defaults.ts:117
 msgid "Marketing"
 msgstr "Pazarlama"
 
@@ -3829,7 +3899,7 @@ msgid "greater than"
 msgstr "büyüktür"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:263
+#: src/lib/framework/defaults.ts:266
 msgid "Metrics Widget"
 msgstr "Metrik Widget'ı"
 
@@ -3870,6 +3940,10 @@ msgstr "Etiketler yükleniyor..."
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:78
 msgid "Successfully created facet"
 msgstr "Özellik başarıyla oluşturuldu"
+
+#: src/app/routes/_authenticated/index.tsx:488
+msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
+msgstr ""
 
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
@@ -3981,8 +4055,8 @@ msgid "Enter slug manually"
 msgstr "Slug'ı manuel olarak girin"
 
 #: src/app/routes/_authenticated/index.tsx:230
-msgid "No widgets available"
-msgstr "Kullanılabilir widget yok"
+#~ msgid "No widgets available"
+#~ msgstr "Kullanılabilir widget yok"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:75
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:79
@@ -4173,8 +4247,8 @@ msgid "Global view deleted successfully"
 msgstr "Genel görünüm başarıyla silindi"
 
 #: src/app/routes/_authenticated/index.tsx:199
-msgid "Edit Layout"
-msgstr "Düzeni Düzenle"
+#~ msgid "Edit Layout"
+#~ msgstr "Düzeni Düzenle"
 
 #: src/lib/components/shared/assign-to-channel-bulk-action.tsx:55
 #: src/lib/components/shared/assigned-channels.tsx:98
@@ -4215,6 +4289,10 @@ msgstr "Yönetici güncellenemedi"
 #: src/lib/components/data-table/views-sheet.tsx:132
 msgid "Manage your personal saved views for this table"
 msgstr "Bu tablo için kişisel kaydedilmiş görünümlerinizi yönetin"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
+msgid "Loading customers…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4293,7 +4371,7 @@ msgstr ""
 msgid "Failed to update payment state"
 msgstr "Ödeme durumu güncellenemedi"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:86
 msgid "Your orders summary"
 msgstr "Sipariş özetiniz"
 
@@ -4322,7 +4400,7 @@ msgid "+ {0} more"
 msgstr "+ {0} daha"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:45
+#: src/lib/framework/defaults.ts:48
 msgid "Option Groups"
 msgstr "Seçenek Grupları"
 
@@ -4335,12 +4413,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Tüm olası sipariş durumları ve geçişleri. Mevcut durum vurgulanmıştır."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:82
+#: src/lib/framework/defaults.ts:85
 msgid "Orders"
 msgstr "Siparişler"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:280
+#: src/lib/framework/defaults.ts:285
 msgid "Orders Summary Widget"
 msgstr "Sipariş Özeti Widget'ı"
 
@@ -4425,8 +4503,8 @@ msgstr ""
 msgid "Manage my views"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:35
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
 msgid "Order Total"
 msgstr "Sipariş Toplamı"
 
@@ -4468,6 +4546,10 @@ msgstr "Kullanılabilir eylemler"
 msgid "Failed to update order line: {0}"
 msgstr ""
 
+#: src/app/routes/_authenticated/index.tsx:447
+msgid "Edit layout"
+msgstr ""
+
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
 msgstr ""
@@ -4503,7 +4585,7 @@ msgid "Enable"
 msgstr "Etkinleştir"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:216
+#: src/lib/framework/defaults.ts:219
 msgid "Payment Methods"
 msgstr "Ödeme Yöntemleri"
 
@@ -4548,8 +4630,8 @@ msgstr "Beklemede"
 msgid "paymentState.Settled"
 msgstr "Kapatıldı"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:37
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:84
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:43
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:89
 msgid "Average Order Value"
 msgstr "Ortalama Sipariş Değeri"
 
@@ -4651,6 +4733,10 @@ msgstr "Müşteri bilgileri güncellendi"
 msgid "Failed to delete draft order: {0}"
 msgstr ""
 
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
+msgid "No new customers for this period"
+msgstr ""
+
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
 msgstr "Görünüm genele dönüştürülemedi"
@@ -4664,17 +4750,17 @@ msgid "Select operator"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:38
+#: src/lib/framework/defaults.ts:41
 msgid "Product Variants"
 msgstr "Ürün Varyantları"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:31
+#: src/lib/framework/defaults.ts:34
 msgid "Products"
 msgstr "Ürünler"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:121
+#: src/lib/framework/defaults.ts:124
 msgid "Promotions"
 msgstr "Promosyonlar"
 
@@ -4999,6 +5085,10 @@ msgstr "Her 60 saniyede"
 msgid "Failed to update customer group"
 msgstr "Müşteri grubu güncellenemedi"
 
+#: src/app/routes/_authenticated/index.tsx:298
+msgid "Remove widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
 msgstr "Ödeme metadata"
@@ -5020,7 +5110,7 @@ msgid "Link URL"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:202
+#: src/lib/framework/defaults.ts:205
 msgid "Roles"
 msgstr "Roller"
 
@@ -5159,7 +5249,7 @@ msgstr "Varyant başarıyla silindi"
 #~ msgstr "Seçili bağlantının özelliklerini düzenleyin"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:75
+#: src/lib/framework/defaults.ts:78
 msgid "Sales"
 msgstr "Satışlar"
 
@@ -5167,12 +5257,12 @@ msgstr "Satışlar"
 msgid "Select a destination collection"
 msgstr "Bir hedef koleksiyon seçin"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Your latest orders"
 msgstr "Son siparişleriniz"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:144
+#: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Zamanlanmış Görevler"
 
@@ -5185,17 +5275,17 @@ msgid "Variants"
 msgstr "Varyantlar"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:174
+#: src/lib/framework/defaults.ts:177
 msgid "Sellers"
 msgstr "Satıcılar"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:167
+#: src/lib/framework/defaults.ts:170
 msgid "Settings"
 msgstr "Ayarlar"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:151
+#: src/lib/framework/defaults.ts:154
 msgid "Settings Store"
 msgstr "Ayarlar Deposu"
 
@@ -5208,7 +5298,7 @@ msgid "Welcome to Vendure"
 msgstr "Vendure'a hoş geldiniz"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:209
+#: src/lib/framework/defaults.ts:212
 msgid "Shipping Methods"
 msgstr "Kargo Yöntemleri"
 
@@ -5231,6 +5321,10 @@ msgstr "Koleksiyon güncellenemedi"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:304
 msgid "Price and tax"
 msgstr "Fiyat ve vergi"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
+msgid "We couldn't load the top products"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5283,12 +5377,16 @@ msgstr "Etiket ekle..."
 msgid "{0} items selected"
 msgstr "{0} öğe seçildi"
 
+#: src/app/routes/_authenticated/index.tsx:483
+msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
+msgstr ""
+
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
 msgstr "Dilleri ara..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:188
+#: src/lib/framework/defaults.ts:191
 msgid "Stock Locations"
 msgstr "Stok Konumları"
 
@@ -5326,7 +5424,7 @@ msgid "Add payment ({0})"
 msgstr "Ödeme ekle ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:130
+#: src/lib/framework/defaults.ts:133
 msgid "System"
 msgstr "Sistem"
 
@@ -5358,18 +5456,22 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {{count} müşteri gruptan kaldırıldı} other {{count} müşteri gruptan kaldırıldı}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:223
+#: src/lib/framework/defaults.ts:226
 msgid "Tax Categories"
 msgstr "Vergi Kategorileri"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:230
+#: src/lib/framework/defaults.ts:233
 msgid "Tax Rates"
 msgstr "Vergi Oranları"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Müşteriler gruptan kaldırılamadı"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
+msgid "We couldn't load the latest customers"
+msgstr ""
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5409,6 +5511,10 @@ msgstr "Sayfa varsayılan sorgu ile devam edecek."
 #: src/lib/components/shared/customer-address-form.tsx:121
 msgid "Street Address"
 msgstr "Sokak Adresi"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
+msgid "No low stock in this sample"
+msgstr ""
 
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
@@ -5454,6 +5560,11 @@ msgstr "{entityIdsLength} {entityType} kanala atanamadı"
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
 msgstr "Varsayılan Dil"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:293
+msgid "Top Products Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5591,6 +5702,10 @@ msgstr "Yeni kargo yöntemi"
 #: src/app/routes/_authenticated/_system/job-queue.tsx:115
 msgid "Every 10 seconds"
 msgstr "Her 10 saniyede"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
+msgid "Low Stock"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
@@ -5738,6 +5853,7 @@ msgstr "Doğrulanmamış"
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:182
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:268
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:78
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:107
 msgid "Quantity"
 msgstr "Miktar"
 
@@ -5854,7 +5970,7 @@ msgstr "Varyant eklenemedi. Ana ürünün etkin olduğundan emin olun."
 #~ msgid "An unknown error occurred"
 #~ msgstr "Bilinmeyen bir hata oluştu"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:75
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
 msgid "Metrics"
 msgstr "Metrikler"
 
@@ -5894,6 +6010,10 @@ msgstr "{label}"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to create shipping method"
 msgstr "Kargo yöntemi oluşturulamadı"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
+msgid "New registrations in the selected period"
+msgstr ""
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -5948,7 +6068,9 @@ msgstr "Özellik başarıyla güncellendi"
 msgid "Strikethrough"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
 msgstr ""
 
@@ -6004,13 +6126,17 @@ msgstr "Bu değişiklikler için ödeme veya iade gerekmez."
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:100
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
 msgstr "Toplam Gelir"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:163
 msgid "Next Execution"
 msgstr "Sonraki Çalıştırma"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
+msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
+msgstr ""
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -6098,7 +6224,7 @@ msgstr "Üst düzeye taşı"
 msgid "Clear"
 msgstr "Temizle"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:84
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
 msgid "Orders Summary"
 msgstr "Sipariş Özeti"
 
@@ -6189,7 +6315,7 @@ msgstr "Görseli düzenle"
 msgid "Manage Variants"
 msgstr "Varyantları Yönet"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:134
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
 msgstr ""
 
@@ -6501,7 +6627,7 @@ msgid "Customer registered"
 msgstr "Müşteri kaydedildi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:244
+#: src/lib/framework/defaults.ts:247
 msgid "Zones"
 msgstr "Bölgeler"
 

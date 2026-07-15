@@ -247,6 +247,10 @@ msgstr "Vânzători"
 msgid "Options"
 msgstr "Opțiuni"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
+msgid "Loading top products…"
+msgstr ""
+
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
 msgstr ""
@@ -355,6 +359,10 @@ msgstr "Câmpuri personalizate modificate"
 msgid "Successfully created stock location"
 msgstr "Locația de stoc a fost creată cu succes"
 
+#: src/app/routes/_authenticated/index.tsx:393
+msgid "No widgets to add"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:79
@@ -441,7 +449,7 @@ msgstr "Grup client nou"
 msgid "Create \"{0}\""
 msgstr "Creează \"{0}\""
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:133
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
 msgstr ""
 
@@ -487,7 +495,7 @@ msgstr "Ciorna comenzii nu este gata pentru finalizare"
 msgid "New collection"
 msgstr "Colecție nouă"
 
-#: src/app/routes/_authenticated/index.tsx:184
+#: src/app/routes/_authenticated/index.tsx:336
 msgid "Insights"
 msgstr "Perspective"
 
@@ -514,6 +522,10 @@ msgstr "Opțiunea produsului a fost creată cu succes"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:501
 msgid "Parent product"
 msgstr "Produs părinte"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
+msgid "We couldn't load the stock levels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -551,8 +563,8 @@ msgstr ""
 msgid "Search options..."
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:33
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
 msgid "Order Count"
 msgstr "Număr comenzi"
 
@@ -564,6 +576,10 @@ msgstr "Comanda a fost actualizată cu succes"
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:203
 msgid "Inherit filters"
 msgstr "Moștenește filtre"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
+msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -698,6 +714,10 @@ msgstr "Te rugăm să adaugi produse și să completezi adresa de livrare pentru
 msgid "Toggle header row"
 msgstr "Comută rândul antet"
 
+#: src/lib/hooks/use-widget-config.ts:45
+msgid "useWidgetConfig must be used within an Insights page widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
 msgstr "Selectează adresa"
@@ -763,7 +783,7 @@ msgstr ""
 msgid "Select {0} Items"
 msgstr "Selectează {0} elemente"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:108
 msgid "Placed At"
 msgstr "Plasată la"
 
@@ -826,7 +846,7 @@ msgstr "Nu s-a putut livra comanda"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:88
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:106
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:226
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:117
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:121
 msgid "Total"
 msgstr "Total"
 
@@ -978,6 +998,10 @@ msgstr "Introdu ID tranzacție"
 msgid "Refresh data"
 msgstr "Reîmprospătează datele"
 
+#: src/app/routes/_authenticated/index.tsx:366
+msgid "Add widget"
+msgstr ""
+
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
 msgid "Add or remove facet values for {0} {entityType}"
@@ -994,6 +1018,10 @@ msgstr "Plata a fost adăugată cu succes la comandă"
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:246
 msgid "Billing address set for order"
 msgstr "Adresă de facturare setată pentru comandă"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
+msgid "Revenue"
+msgstr ""
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1130,7 +1158,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "Metoda de livrare este eligibilă pentru această comandă"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:195
+#: src/lib/framework/defaults.ts:198
 msgid "Administrators"
 msgstr "Administratori"
 
@@ -1177,7 +1205,7 @@ msgid "Images"
 msgstr "Imagini"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:158
+#: src/lib/framework/defaults.ts:161
 msgid "API Keys"
 msgstr "Chei API"
 
@@ -1199,7 +1227,7 @@ msgid "Job Queue"
 msgstr "Coadă de joburi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:66
+#: src/lib/framework/defaults.ts:69
 msgid "Assets"
 msgstr "Resurse"
 
@@ -1327,6 +1355,10 @@ msgstr "Metode de Plată"
 msgid "Stock"
 msgstr "Stoc"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
+msgid "No sales for this period"
+msgstr ""
+
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
 msgstr "Nu s-au găsit clienți"
@@ -1450,7 +1482,7 @@ msgid "Delete draft order"
 msgstr "Șterge comanda ciornă"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:24
+#: src/lib/framework/defaults.ts:27
 msgid "Catalog"
 msgstr "Catalog"
 
@@ -1467,7 +1499,7 @@ msgstr "Promoția a fost actualizată cu succes"
 msgid "{rejected, plural, one {Failed to cancel {rejected} job} other {Failed to cancel {rejected} jobs}}"
 msgstr "{rejected, plural, one {Nu s-a putut anula {rejected} job} few {Nu s-au putut anula {rejected} joburi} other {Nu s-au putut anula {rejected} de joburi}}"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:102
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
 msgstr ""
 
@@ -1489,7 +1521,7 @@ msgstr "Detalii livrare"
 #~ msgstr "Acum"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:181
+#: src/lib/framework/defaults.ts:184
 msgid "Channels"
 msgstr "Canale"
 
@@ -1519,7 +1551,7 @@ msgstr "Nu s-a găsit traducere pentru {0}"
 msgid "New Customer"
 msgstr "Client Nou"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
 msgstr "Comenzi recente"
 
@@ -1550,7 +1582,7 @@ msgid "Disable"
 msgstr "Dezactivează"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:59
+#: src/lib/framework/defaults.ts:62
 msgid "Collections"
 msgstr "Colecții"
 
@@ -1563,11 +1595,11 @@ msgid "Failed to create country"
 msgstr "Nu s-a putut crea țara"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:237
+#: src/lib/framework/defaults.ts:240
 msgid "Countries"
 msgstr "Țări"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:96
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
 msgstr ""
 
@@ -1588,13 +1620,13 @@ msgid "Filters"
 msgstr "Filtre"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:105
+#: src/lib/framework/defaults.ts:108
 msgid "Customer Groups"
 msgstr "Grupuri de clienți"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:91
-#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:94
+#: src/lib/framework/defaults.ts:101
 msgid "Customers"
 msgstr "Clienți"
 
@@ -1978,7 +2010,7 @@ msgstr "Setări coloane"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:154
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:63
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:91
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:95
 msgid "Code"
 msgstr "Cod"
 
@@ -2023,7 +2055,7 @@ msgid "Successfully updated country"
 msgstr "Țara a fost actualizată cu succes"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:52
+#: src/lib/framework/defaults.ts:55
 msgid "Facets"
 msgstr "Atribute"
 
@@ -2439,7 +2471,7 @@ msgstr "Listă valori"
 msgid "fieldName.zone"
 msgstr "Zonă"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:125
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
 msgstr ""
 
@@ -2660,7 +2692,7 @@ msgid "Customer verified"
 msgstr "Client verificat"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:251
+#: src/lib/framework/defaults.ts:254
 msgid "Global Settings"
 msgstr "Setări globale"
 
@@ -2687,6 +2719,10 @@ msgstr "Canalul a fost creat cu succes"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:98
 msgid "Successfully updated customer"
 msgstr "Clientul a fost actualizat cu succes"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
+msgid "Latest Customers"
+msgstr ""
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2723,6 +2759,10 @@ msgstr "Produs Nou"
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
 msgid "New asset"
 msgstr "Resursă nouă"
+
+#: src/app/routes/_authenticated/index.tsx:409
+msgid "Tidy"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
@@ -2781,6 +2821,10 @@ msgstr "Comandă anulată"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:38
 msgid "Discount"
 msgstr "Reducere"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
+msgid "Top Products"
+msgstr ""
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -3065,7 +3109,7 @@ msgid "Added to group"
 msgstr "Adăugat la grup"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:16
+#: src/lib/framework/defaults.ts:19
 msgid "Insights"
 msgstr "Perspective"
 
@@ -3171,7 +3215,7 @@ msgstr "Creează variantă"
 msgid "Facet values for {facetName}"
 msgstr "Valori atribut pentru {facetName}"
 
-#: src/app/routes/_authenticated/index.tsx:199
+#: src/app/routes/_authenticated/index.tsx:431
 msgid "Save Layout"
 msgstr "Salvează layout"
 
@@ -3264,7 +3308,7 @@ msgid "Simple product"
 msgstr "Produs simplu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:137
+#: src/lib/framework/defaults.ts:140
 msgid "Job Queue"
 msgstr "Coadă de joburi"
 
@@ -3284,7 +3328,7 @@ msgstr "Nu s-a putut modifica comanda"
 msgid "Includes tax at {taxRate}%"
 msgstr "Include taxa de {taxRate}%"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:76
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
 msgid "Order metrics"
 msgstr "Metrici comenzi"
 
@@ -3328,6 +3372,10 @@ msgstr "Caută roluri..."
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 #~ msgid "Successfully cancelled {fulfilled} jobs"
 #~ msgstr ""
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
+msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
+msgstr ""
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3384,7 +3432,10 @@ msgstr "Atribuie"
 msgid "Successfully created seller"
 msgstr "Vânzătorul a fost creat cu succes"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
 msgstr ""
 
@@ -3426,6 +3477,10 @@ msgstr ""
 msgid "Available languages"
 msgstr "Limbi disponibile"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
+msgid "{saleable} in stock"
+msgstr ""
+
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
 msgid "Load {0} more ({remaining} remaining)"
@@ -3445,7 +3500,7 @@ msgstr "Valori atribut"
 msgid "Failed to reorder items"
 msgstr "Nu s-a putut reordona elementele"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:90
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:91
 msgid "Total Orders"
 msgstr "Total Comenzi"
 
@@ -3540,9 +3595,18 @@ msgid "Update the note content or visibility"
 msgstr "Actualizați conținutul sau vizibilitatea notei"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:272
+#: src/lib/framework/defaults.ts:315
+msgid "Latest Customers Widget"
+msgstr ""
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:277
 msgid "Latest Orders Widget"
 msgstr "Widget comenzi recente"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
+msgid "Loading stock levels…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3565,6 +3629,7 @@ msgstr "este mai mic sau egal cu"
 msgid "is not equal to"
 msgstr "nu este egal cu"
 
+#: src/app/routes/_authenticated/index.tsx:424
 #: src/lib/components/data-table/data-table-settings-menu.tsx:72
 msgid "Refresh"
 msgstr ""
@@ -3632,6 +3697,11 @@ msgstr "Duplică {0}"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:56
 msgid "Remove from group"
 msgstr "Elimină din grup"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:304
+msgid "Low Stock Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
@@ -3709,7 +3779,7 @@ msgid "Successfully created facet value"
 msgstr "Valoarea atributului a fost creată cu succes"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:114
+#: src/lib/framework/defaults.ts:117
 msgid "Marketing"
 msgstr "Marketing"
 
@@ -3722,7 +3792,7 @@ msgid "greater than"
 msgstr "mai mare decât"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:263
+#: src/lib/framework/defaults.ts:266
 msgid "Metrics Widget"
 msgstr "Widget metrici"
 
@@ -3763,6 +3833,10 @@ msgstr "Se încarcă etichetele..."
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:78
 msgid "Successfully created facet"
 msgstr "Atributul a fost creat cu succes"
+
+#: src/app/routes/_authenticated/index.tsx:488
+msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
+msgstr ""
 
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
@@ -3870,8 +3944,8 @@ msgid "Enter slug manually"
 msgstr "Introdu identificator URL manual"
 
 #: src/app/routes/_authenticated/index.tsx:230
-msgid "No widgets available"
-msgstr "Nu există widgeturi disponibile"
+#~ msgid "No widgets available"
+#~ msgstr "Nu există widgeturi disponibile"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:75
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:79
@@ -4062,8 +4136,8 @@ msgid "Global view deleted successfully"
 msgstr "Vizualizare globală ștearsă cu succes"
 
 #: src/app/routes/_authenticated/index.tsx:199
-msgid "Edit Layout"
-msgstr "Editează layout"
+#~ msgid "Edit Layout"
+#~ msgstr "Editează layout"
 
 #: src/lib/components/shared/assign-to-channel-bulk-action.tsx:55
 #: src/lib/components/shared/assigned-channels.tsx:98
@@ -4100,6 +4174,10 @@ msgstr "Nu s-a putut actualiza administratorul"
 #: src/lib/components/data-table/views-sheet.tsx:132
 msgid "Manage your personal saved views for this table"
 msgstr "Gestionează vizualizările tale personale salvate pentru acest tabel"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
+msgid "Loading customers…"
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4169,7 +4247,7 @@ msgstr ""
 msgid "Failed to update payment state"
 msgstr "Nu s-a putut actualiza statusul plății"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:86
 msgid "Your orders summary"
 msgstr "Rezumatul comenzilor tale"
 
@@ -4198,7 +4276,7 @@ msgid "+ {0} more"
 msgstr "+ încă {0}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:45
+#: src/lib/framework/defaults.ts:48
 msgid "Option Groups"
 msgstr "Grupuri de opțiuni"
 
@@ -4211,12 +4289,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Toate stările posibile ale comenzii și tranzițiile dintre ele. Starea curentă este evidențiată."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:82
+#: src/lib/framework/defaults.ts:85
 msgid "Orders"
 msgstr "Comenzi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:280
+#: src/lib/framework/defaults.ts:285
 msgid "Orders Summary Widget"
 msgstr "Widget rezumat comenzi"
 
@@ -4297,8 +4375,8 @@ msgstr ""
 msgid "Manage my views"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:35
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
 msgid "Order Total"
 msgstr "Total Comandă"
 
@@ -4336,6 +4414,10 @@ msgstr "Acțiuni disponibile"
 msgid "Failed to update order line: {0}"
 msgstr ""
 
+#: src/app/routes/_authenticated/index.tsx:447
+msgid "Edit layout"
+msgstr ""
+
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
 msgstr ""
@@ -4371,7 +4453,7 @@ msgid "Enable"
 msgstr "Activează"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:216
+#: src/lib/framework/defaults.ts:219
 msgid "Payment Methods"
 msgstr "Metode de plată"
 
@@ -4416,8 +4498,8 @@ msgstr "În așteptare"
 msgid "paymentState.Settled"
 msgstr "Soluționată"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:37
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:84
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:43
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:89
 msgid "Average Order Value"
 msgstr "Valoare medie comandă"
 
@@ -4515,6 +4597,10 @@ msgstr "Informații client actualizate"
 msgid "Failed to delete draft order: {0}"
 msgstr ""
 
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
+msgid "No new customers for this period"
+msgstr ""
+
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
 msgstr "Nu s-a putut converti vizualizarea la globală"
@@ -4528,17 +4614,17 @@ msgid "Select operator"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:38
+#: src/lib/framework/defaults.ts:41
 msgid "Product Variants"
 msgstr "Variante de produse"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:31
+#: src/lib/framework/defaults.ts:34
 msgid "Products"
 msgstr "Produse"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:121
+#: src/lib/framework/defaults.ts:124
 msgid "Promotions"
 msgstr "Promoții"
 
@@ -4847,6 +4933,10 @@ msgstr "La fiecare 60 de secunde"
 msgid "Failed to update customer group"
 msgstr "Nu s-a putut actualiza grupul de clienți"
 
+#: src/app/routes/_authenticated/index.tsx:298
+msgid "Remove widget"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
 msgstr "Metadate plată"
@@ -4868,7 +4958,7 @@ msgid "Link URL"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:202
+#: src/lib/framework/defaults.ts:205
 msgid "Roles"
 msgstr "Roluri"
 
@@ -5007,7 +5097,7 @@ msgstr "Variantă ștearsă cu succes"
 #~ msgstr "Editează proprietățile linkului selectat"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:75
+#: src/lib/framework/defaults.ts:78
 msgid "Sales"
 msgstr "Vânzări"
 
@@ -5015,12 +5105,12 @@ msgstr "Vânzări"
 msgid "Select a destination collection"
 msgstr "Selectează o colecție de destinație"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Your latest orders"
 msgstr "Comenzile tale recente"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:144
+#: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Sarcini programate"
 
@@ -5033,17 +5123,17 @@ msgid "Variants"
 msgstr "Variante"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:174
+#: src/lib/framework/defaults.ts:177
 msgid "Sellers"
 msgstr "Vânzători"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:167
+#: src/lib/framework/defaults.ts:170
 msgid "Settings"
 msgstr "Setări"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:151
+#: src/lib/framework/defaults.ts:154
 msgid "Settings Store"
 msgstr "Stocare setări"
 
@@ -5056,7 +5146,7 @@ msgid "Welcome to Vendure"
 msgstr "Bun venit la Vendure"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:209
+#: src/lib/framework/defaults.ts:212
 msgid "Shipping Methods"
 msgstr "Metode de livrare"
 
@@ -5079,6 +5169,10 @@ msgstr "Nu s-a putut actualiza colecția"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:304
 msgid "Price and tax"
 msgstr "Preț și taxă"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
+msgid "We couldn't load the top products"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5123,12 +5217,16 @@ msgstr "Adaugă etichete..."
 msgid "{0} items selected"
 msgstr "{0} elemente selectate"
 
+#: src/app/routes/_authenticated/index.tsx:483
+msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
+msgstr ""
+
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
 msgstr "Caută limbi..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:188
+#: src/lib/framework/defaults.ts:191
 msgid "Stock Locations"
 msgstr "Locații de stoc"
 
@@ -5162,7 +5260,7 @@ msgid "Add payment ({0})"
 msgstr "Adaugă plată ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:130
+#: src/lib/framework/defaults.ts:133
 msgid "System"
 msgstr "Sistem"
 
@@ -5194,18 +5292,22 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {{count} client eliminat din grup} few {{count} clienți eliminați din grup} other {{count} de clienți eliminați din grup}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:223
+#: src/lib/framework/defaults.ts:226
 msgid "Tax Categories"
 msgstr "Categorii de taxă"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:230
+#: src/lib/framework/defaults.ts:233
 msgid "Tax Rates"
 msgstr "Cote de taxă"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Eliminarea clienților din grup a eșuat"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
+msgid "We couldn't load the latest customers"
+msgstr ""
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5237,6 +5339,10 @@ msgstr "Pagina va continua cu query-ul implicit."
 #: src/lib/components/shared/customer-address-form.tsx:121
 msgid "Street Address"
 msgstr "Adresă"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
+msgid "No low stock in this sample"
+msgstr ""
 
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
@@ -5278,6 +5384,11 @@ msgstr "Nu s-a putut atribui {entityIdsLength} {entityType} canalului"
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
 msgstr "Limbă implicită"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:293
+msgid "Top Products Widget"
+msgstr ""
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5411,6 +5522,10 @@ msgstr "Metodă de livrare nouă"
 #: src/app/routes/_authenticated/_system/job-queue.tsx:115
 msgid "Every 10 seconds"
 msgstr "La fiecare 10 secunde"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
+msgid "Low Stock"
+msgstr ""
 
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
@@ -5554,6 +5669,7 @@ msgstr "Neverificat"
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:182
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:268
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:78
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:107
 msgid "Quantity"
 msgstr "Cantitate"
 
@@ -5666,7 +5782,7 @@ msgstr "mai mic decât"
 msgid "The variant could not be added. Ensure the parent product is enabled."
 msgstr "Varianta nu a putut fi adăugată. Asigurați-vă că produsul părinte este activat."
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:75
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
 msgid "Metrics"
 msgstr "Metrici"
 
@@ -5706,6 +5822,10 @@ msgstr "{label}"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to create shipping method"
 msgstr "Nu s-a putut crea metoda de livrare"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
+msgid "New registrations in the selected period"
+msgstr ""
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -5756,7 +5876,9 @@ msgstr "Atributul a fost actualizat cu succes"
 msgid "Strikethrough"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
 msgstr ""
 
@@ -5812,13 +5934,17 @@ msgstr "Nu este necesară plată sau rambursare pentru aceste modificări."
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
 msgstr ""
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:100
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
 msgstr "Venit Total"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:163
 msgid "Next Execution"
 msgstr "Următoarea execuție"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
+msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
+msgstr ""
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -5902,7 +6028,7 @@ msgstr "Mută la nivel superior"
 msgid "Clear"
 msgstr "Șterge"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:84
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
 msgid "Orders Summary"
 msgstr "Rezumat comenzi"
 
@@ -5993,7 +6119,7 @@ msgstr "Editează imagine"
 msgid "Manage Variants"
 msgstr "Gestionează Variante"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:134
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
 msgstr ""
 
@@ -6293,7 +6419,7 @@ msgid "Customer registered"
 msgstr "Client înregistrat"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:244
+#: src/lib/framework/defaults.ts:247
 msgid "Zones"
 msgstr "Zone"
 
