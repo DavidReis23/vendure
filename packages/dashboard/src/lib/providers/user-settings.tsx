@@ -78,6 +78,15 @@ export interface UserSettingsContextType {
      * (i.e. the Vendure instance has the DashboardPlugin configured)
      */
     settingsStoreIsAvailable: boolean;
+    /**
+     * @description
+     * Whether the settings have finished resolving — either the server-side value has
+     * loaded, or the SettingsStore was determined to be unavailable and local settings
+     * are in effect. Consumers that initialize state from settings (e.g. the Insights
+     * page draft) should wait for this before their one-shot initialization, so they
+     * seed from the authoritative (server) values rather than the transient local ones.
+     */
+    settingsReady: boolean;
     settings: UserSettings;
     setDisplayLanguage: (language: string) => void;
     setDisplayLocale: (locale: string | undefined) => void;
@@ -104,7 +113,7 @@ export interface UserSettingsContextType {
      * ones) are preserved untouched. Used when committing the Insights layout on "Save Layout".
      */
     saveWidgetInstanceLayouts: (
-        layouts: Array<Pick<PersistedWidgetInstance, 'instanceId' | 'widgetId' | 'layout'>>,
+        layouts: Array<Pick<PersistedWidgetInstance, 'instanceId' | 'widgetId' | 'layout' | 'config'>>,
         loadedWidgetIds: string[],
     ) => void;
     /**
@@ -253,6 +262,10 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
 
     const contextValue: UserSettingsContextType = {
         settingsStoreIsAvailable,
+        // Ready once the server value has loaded, or the store was found to be unavailable
+        // (in which case local settings are authoritative). Flips exactly once as settings
+        // resolve, giving consumers a stable signal for one-shot initialization.
+        settingsReady: isReady || !settingsStoreIsAvailable,
         settings,
         setDisplayLanguage: language => updateSetting('displayLanguage', language),
         setDisplayLocale: locale => updateSetting('displayLocale', locale),
@@ -290,8 +303,11 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                     instanceId: item.instanceId,
                     widgetId: item.widgetId,
                     layout: item.layout,
-                    // Preserve any config previously persisted for this instance.
-                    config: prevById.get(item.instanceId)?.config,
+                    // Draft config is authoritative on Save Layout: it carries any edit-mode
+                    // config changes, including those made on never-saved instances (which have
+                    // no previously-persisted entry). Fall back to the previously persisted
+                    // config only when the caller supplies none.
+                    config: item.config ?? prevById.get(item.instanceId)?.config,
                 }));
                 return { ...prev, widgetInstances: [...preserved, ...merged] };
             });

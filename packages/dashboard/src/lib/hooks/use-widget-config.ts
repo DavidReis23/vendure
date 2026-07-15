@@ -1,6 +1,5 @@
 import { getDashboardWidget } from '@/vdb/framework/dashboard-widget/widget-extensions.js';
 import { WidgetInstanceContext } from '@/vdb/framework/dashboard-widget/widget-instance-context.js';
-import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { useLingui } from '@lingui/react/macro';
 import { useCallback, useContext, useMemo } from 'react';
 
@@ -9,9 +8,11 @@ import { useCallback, useContext, useMemo } from 'react';
  * Reads and persists the configuration for the current Insights widget instance.
  *
  * The returned config is the widget definition's `defaultConfig` merged with any
- * per-instance overrides the user has persisted. The returned setter merges a partial
- * update into the config and persists it immediately (independent of the "Save Layout"
- * action), so config changes such as a selected chart data type survive a page reload.
+ * per-instance overrides. The returned setter merges a partial update into the config and
+ * hands it to the Insights page, which decides where it is written: outside edit mode it
+ * is persisted immediately (independent of the "Save Layout" action) so config changes
+ * such as a selected chart data type survive a page reload; while the layout is being
+ * edited it is held in draft state and committed together with the layout on "Save Layout".
  *
  * Must be used within an Insights page widget rendered by the dashboard.
  *
@@ -39,25 +40,17 @@ export function useWidgetConfig<T extends Record<string, unknown>>(): [T, (updat
     if (context === undefined) {
         throw new Error(t`useWidgetConfig must be used within an Insights page widget`);
     }
-    const { instanceId, widgetId, layout } = context;
-    const { settings, updateWidgetInstanceConfig } = useUserSettings();
+    const { widgetId, config: instanceConfig, setConfig: setInstanceConfig } = context;
 
     const defaultConfig = (getDashboardWidget(widgetId)?.defaultConfig ?? {}) as Partial<T>;
-    const persisted = settings.widgetInstances?.find(instance => instance.instanceId === instanceId)
-        ?.config as Partial<T> | undefined;
-
-    const config = useMemo(() => ({ ...defaultConfig, ...persisted }) as T, [defaultConfig, persisted]);
+    const config = useMemo(
+        () => ({ ...defaultConfig, ...instanceConfig }) as T,
+        [defaultConfig, instanceConfig],
+    );
 
     const setConfig = useCallback(
-        (update: Partial<T>) => {
-            updateWidgetInstanceConfig({
-                instanceId,
-                widgetId,
-                layout,
-                config: { ...config, ...update },
-            });
-        },
-        [instanceId, widgetId, layout, config, updateWidgetInstanceConfig],
+        (update: Partial<T>) => setInstanceConfig({ ...config, ...update }),
+        [config, setInstanceConfig],
     );
 
     return [config, setConfig];

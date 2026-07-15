@@ -10,6 +10,18 @@ export interface WidgetInstanceContextValue {
     instanceId: string;
     widgetId: string;
     layout: { x: number; y: number; w: number; h: number };
+    /**
+     * The instance's current (draft) config overrides, seeded from persisted settings on
+     * load. `useWidgetConfig` merges this over the widget definition's `defaultConfig`.
+     */
+    config?: Record<string, unknown>;
+    /**
+     * Persists a full config object for this instance. The Insights page owns the write
+     * target: outside edit mode the config is persisted to user settings immediately;
+     * while editing it is held in draft state and committed on "Save Layout", so a config
+     * change never turns a never-saved draft instance into a permanent one.
+     */
+    setConfig: (config: Record<string, unknown>) => void;
 }
 
 export const WidgetInstanceContext = createContext<WidgetInstanceContextValue | undefined>(undefined);
