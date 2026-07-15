@@ -15,7 +15,7 @@ import {
     optional,
     stringProp,
 } from '../schema-helpers';
-import { variantSummary } from '../tool-kit';
+import { variantSummary } from '../serializers';
 
 interface CreateVariantToolInput {
     productId: ID;

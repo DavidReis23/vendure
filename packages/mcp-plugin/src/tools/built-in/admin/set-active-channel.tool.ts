@@ -1,5 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { ChannelService, Permission, RequestContext, TransactionalConnection } from '@vendure/core';
+import {
+    ChannelService,
+    InternalServerError,
+    Permission,
+    RequestContext,
+    TransactionalConnection,
+} from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpOauthGrant } from '../../../entities/mcp-oauth-grant.entity';
@@ -31,10 +37,13 @@ export class SetActiveChannelTool implements McpPluginToolHandler<SetActiveChann
         // Persist the choice on the one merged grant row. Subsequent requests re-authenticate against
         // this grant, so its channelId becomes the active channel for later calls.
         const grant = executionContext?.grant;
-        if (grant) {
-            grant.channelId = channel.id;
-            await this.connection.getRepository(ctx, McpOauthGrant).save(grant);
+        if (!grant) {
+            // An authenticated MCP caller always carries a grant; its absence means the execution
+            // context was not wired up, so fail loudly rather than report a switch that never persisted.
+            throw new InternalServerError('MCP set_active_channel requires an authenticated grant');
         }
+        grant.channelId = channel.id;
+        await this.connection.getRepository(ctx, McpOauthGrant).save(grant);
         return { channel: { id: channel.id, code: channel.code, token: channel.token } };
     }
 }

@@ -4,7 +4,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { booleanProp, idProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { orderSummary } from '../tool-kit';
+import { orderSummary } from '../serializers';
 
 interface AddNoteToOrderToolInput {
     id: ID;

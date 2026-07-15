@@ -3,8 +3,8 @@ import { ActiveOrderService, OrderService, Permission, RequestContext } from '@v
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder } from '../order-helpers';
 import { objectSchema } from '../schema-helpers';
-import { getActiveOrder } from '../tool-kit';
 
 @McpTool({
     name: 'get_eligible_payment_methods',

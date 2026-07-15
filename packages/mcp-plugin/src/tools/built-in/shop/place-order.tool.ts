@@ -4,8 +4,8 @@ import { ActiveOrderService, OrderService, Permission, RequestContext } from '@v
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder, orderResult } from '../order-helpers';
 import { jsonObjectProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { getActiveOrder, orderResult } from '../tool-kit';
 
 interface PlaceOrderInput {
     paymentMethodCode: string;

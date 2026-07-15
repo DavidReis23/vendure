@@ -14,7 +14,7 @@ import {
     optional,
     stringProp,
 } from '../schema-helpers';
-import { productSummary } from '../tool-kit';
+import { productSummary } from '../serializers';
 
 interface CreateProductToolInput {
     input: CreateProductInput;

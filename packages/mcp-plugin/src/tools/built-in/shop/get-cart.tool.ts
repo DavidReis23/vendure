@@ -3,8 +3,9 @@ import { ActiveOrderService, OrderService, Permission, RequestContext } from '@v
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder } from '../order-helpers';
 import { objectSchema } from '../schema-helpers';
-import { getActiveOrder, orderSummary } from '../tool-kit';
+import { orderSummary } from '../serializers';
 
 @McpTool({
     name: 'get_cart',

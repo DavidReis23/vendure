@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { AssetService, Permission, RequestContext } from '@vendure/core';
+import { AssetService, ConfigService, Permission, RequestContext } from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { uploadAssetFromUrl } from '../remote-asset';
 import { objectSchema, stringProp } from '../schema-helpers';
-import { uploadAssetFromUrl } from '../tool-kit';
 
 interface UploadAssetInput {
     url: string;
@@ -21,11 +21,19 @@ interface UploadAssetInput {
 })
 @Injectable()
 export class UploadAssetTool implements McpPluginToolHandler<UploadAssetInput> {
-    constructor(private assetService: AssetService) {}
+    constructor(
+        private assetService: AssetService,
+        private configService: ConfigService,
+    ) {}
 
     async execute(ctx: RequestContext, input: UploadAssetInput) {
-        // The server fetches the caller-supplied URL, so uploadAssetFromUrl is SSRF-hardened (scheme +
-        // private/reserved address rejection, redirect re-validation, timeout, and size caps).
-        return { asset: await uploadAssetFromUrl(ctx, input.url, this.assetService) };
+        return {
+            asset: await uploadAssetFromUrl(
+                ctx,
+                input.url,
+                this.assetService,
+                this.configService.importExportOptions.assetImportStrategy,
+            ),
+        };
     }
 }

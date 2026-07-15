@@ -3,8 +3,8 @@ import { ID, OrderService, OrderState, Permission, RequestContext } from '@vendu
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { orderResult } from '../order-helpers';
 import { idProp, objectSchema, stringProp } from '../schema-helpers';
-import { orderResult } from '../tool-kit';
 
 interface UpdateOrderStateInput {
     id: ID;

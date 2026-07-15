@@ -3,8 +3,9 @@ import { OrderService, Permission, RequestContext } from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { orderListOptions, page } from '../order-helpers';
 import { numberProp, objectSchema, optional } from '../schema-helpers';
-import { orderListOptions, orderSummary, page } from '../tool-kit';
+import { orderSummary } from '../serializers';
 
 interface ListOrdersInput extends Record<string, unknown> {
     limit?: number;

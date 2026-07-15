@@ -3,8 +3,8 @@ import { ID, OrderService, Permission, RequestContext } from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { orderResult } from '../order-helpers';
 import { booleanProp, idProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { orderResult } from '../tool-kit';
 
 interface CancelOrderToolInput {
     id: ID;

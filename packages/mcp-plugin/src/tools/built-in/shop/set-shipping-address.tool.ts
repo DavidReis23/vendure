@@ -4,8 +4,9 @@ import { ActiveOrderService, OrderService, Permission, RequestContext } from '@v
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder } from '../order-helpers';
 import { booleanProp, jsonObjectProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { getActiveOrder, orderSummary } from '../tool-kit';
+import { orderSummary } from '../serializers';
 
 interface SetShippingAddressInput {
     address: CreateAddressInput;

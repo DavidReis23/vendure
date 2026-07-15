@@ -4,7 +4,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { idArrayProp, idProp, objectSchema, optional } from '../schema-helpers';
-import { productSummary } from '../tool-kit';
+import { productSummary } from '../serializers';
 
 interface UpdateProductAssetsInput {
     id: ID;

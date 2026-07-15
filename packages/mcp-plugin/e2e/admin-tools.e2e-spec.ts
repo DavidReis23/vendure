@@ -132,6 +132,8 @@ describe('MCP built-in admin tools (direct mode)', () => {
     let seededCustomerEmail: string;
     let productGraphqlId: string;
     let productId: ID;
+    let variantId: ID;
+    let stockLocationId: ID;
     let secondChannelToken: string;
     let secondChannelDbId: ID;
 
@@ -162,6 +164,16 @@ describe('MCP built-in admin tools (direct mode)', () => {
                         id
                     }
                 }
+                productVariants(options: { take: 1 }) {
+                    items {
+                        id
+                    }
+                }
+                stockLocations {
+                    items {
+                        id
+                    }
+                }
                 customers(options: { take: 1 }) {
                     items {
                         emailAddress
@@ -172,11 +184,21 @@ describe('MCP built-in admin tools (direct mode)', () => {
         const defaultChannelId = fixture.activeChannel.id;
         const zoneId = fixture.zones.items[0]?.id;
         productGraphqlId = fixture.products.items[0]?.id;
+        const variantGraphqlId = fixture.productVariants.items[0]?.id;
+        const stockLocationGraphqlId = fixture.stockLocations.items[0]?.id;
         seededCustomerEmail = fixture.customers.items[0]?.emailAddress;
-        if (!productGraphqlId || !zoneId || !seededCustomerEmail) {
+        if (
+            !productGraphqlId ||
+            !zoneId ||
+            !seededCustomerEmail ||
+            !variantGraphqlId ||
+            !stockLocationGraphqlId
+        ) {
             throw new Error(`Missing seeded fixtures: ${JSON.stringify(fixture)}`);
         }
         productId = idStrategy.decodeId(productGraphqlId);
+        variantId = idStrategy.decodeId(variantGraphqlId);
+        stockLocationId = idStrategy.decodeId(stockLocationGraphqlId);
 
         const channelResult = await adminClient.query(
             gql`
@@ -316,10 +338,16 @@ describe('MCP built-in admin tools (direct mode)', () => {
             callTool('cancel_order', { id: order.id, confirm: true }, 2),
             { token },
         );
-        // The gate passed and the handler executed (whatever the business outcome).
-        expect((confirmed.body.result.structuredContent as { status?: string })?.status).not.toBe(
-            'confirmation_required',
-        );
+        expect(confirmed.body.result.isError).toBeUndefined();
+        // The gate passed and the handler ran the real cancelOrder. An empty draft has no lines to
+        // cancel, so the tool surfaces the concrete EmptyOrderLineSelectionError union — proof the
+        // handler executed and shaped its business result, not merely that the confirm gate opened.
+        expect(confirmed.body.result.structuredContent).toMatchObject({
+            result: {
+                __typename: 'EmptyOrderLineSelectionError',
+                errorCode: 'EMPTY_ORDER_LINE_SELECTION_ERROR',
+            },
+        });
     });
 
     it('does not require confirmation for a readonly tool', async () => {
@@ -346,8 +374,10 @@ describe('MCP built-in admin tools (direct mode)', () => {
         // an isError result for a registered-but-unpermitted tool — is covered by the registry unit spec
         // and exercised end-to-end via the discovery execute_tool funnel.)
         const denied = await postMcp(baseUrl(), 'admin', callTool('list_orders', {}, 2), { token });
-        const rejected = denied.body.result?.isError === true || denied.body.error != null;
-        expect(rejected).toBe(true);
+        // Assert exactly that mechanism: a top-level JSON-RPC protocol error and no tool result — not
+        // the in-funnel `isError` permission path (which discovery mode + the registry unit spec prove).
+        expect(denied.body.error).toBeDefined();
+        expect(denied.body.result).toBeUndefined();
     });
 
     it('set_active_channel writes the grant row and changes the active channel for later calls', async () => {
@@ -417,12 +447,66 @@ describe('MCP built-in admin tools (direct mode)', () => {
         expect(conflict.body.result.structuredContent).toEqual({ customer: null });
     });
 
-    it('reads stock levels for a variant through the core service', async () => {
+    it('reads stock levels for a variant through get_stock_levels', async () => {
         const token = await adminAccessToken();
-        const product = await postMcp(baseUrl(), 'admin', callTool('get_product', { id: productId }, 1), {
+        const response = await postMcp(baseUrl(), 'admin', callTool('get_stock_levels', { variantId }, 1), {
             token,
         });
-        expect(product.body.result.structuredContent.product).toMatchObject({ id: productId });
+        expect(response.body.result.isError).toBeUndefined();
+        const stockLevels = response.body.result.structuredContent.stockLevels as Array<{
+            stockOnHand: number;
+            stockAllocated: number;
+            stockLocationId: ID;
+        }>;
+        expect(Array.isArray(stockLevels)).toBe(true);
+        // The seeded variant carries stock at the default location (stockOnHand 100 in the fixture CSV),
+        // so its level for that location is present and shaped as a stock-level record.
+        const atLocation = stockLevels.find(
+            level => String(level.stockLocationId) === String(stockLocationId),
+        );
+        expect(atLocation).toBeDefined();
+        expect(typeof atLocation?.stockOnHand).toBe('number');
+        expect(typeof atLocation?.stockAllocated).toBe('number');
+    });
+
+    it('adjust_stock applies the delta to stock on hand when confirmed', async () => {
+        const token = await adminAccessToken();
+        // Reads the current on-hand quantity for the fixture location (0 if no level exists yet).
+        const readOnHand = async () => {
+            const res = await postMcp(baseUrl(), 'admin', callTool('get_stock_levels', { variantId }, 1), {
+                token,
+            });
+            const levels = res.body.result.structuredContent.stockLevels as Array<{
+                stockOnHand: number;
+                stockLocationId: ID;
+            }>;
+            return (
+                levels.find(level => String(level.stockLocationId) === String(stockLocationId))
+                    ?.stockOnHand ?? 0
+            );
+        };
+
+        const before = await readOnHand();
+        const delta = 7;
+
+        const adjusted = await postMcp(
+            baseUrl(),
+            'admin',
+            callTool('adjust_stock', { variantId, locationId: stockLocationId, delta, confirm: true }, 2),
+            { token },
+        );
+        expect(adjusted.body.result.isError).toBeUndefined();
+        // The confirmed call returns the refreshed stock levels; the adjusted location reflects the delta.
+        const returned = adjusted.body.result.structuredContent.stockLevels as Array<{
+            stockOnHand: number;
+            stockLocationId: ID;
+        }>;
+        const returnedAtLocation = returned.find(
+            level => String(level.stockLocationId) === String(stockLocationId),
+        );
+        expect(returnedAtLocation?.stockOnHand).toBe(before + delta);
+        // A fresh read confirms the change persisted, not just that the response echoed it.
+        expect(await readOnHand()).toBe(before + delta);
     });
 });
 
@@ -507,9 +591,16 @@ describe('MCP built-in admin tools (discovery mode)', () => {
             callTool('execute_tool', { name: 'cancel_order', arguments: { id: orderId, confirm: true } }, 2),
             { token },
         );
-        expect((confirmed.body.result.structuredContent as { status?: string })?.status).not.toBe(
-            'confirmation_required',
-        );
+        expect(confirmed.body.result.isError).toBeUndefined();
+        // Through the discovery funnel too, confirm:true reaches the real cancelOrder: an empty draft
+        // has no lines to cancel, so the concrete EmptyOrderLineSelectionError union comes back — not
+        // the confirmation gate.
+        expect(confirmed.body.result.structuredContent).toMatchObject({
+            result: {
+                __typename: 'EmptyOrderLineSelectionError',
+                errorCode: 'EMPTY_ORDER_LINE_SELECTION_ERROR',
+            },
+        });
     });
 
     it('rejects an unpermitted tool at call time through the execute_tool funnel (defense-in-depth)', async () => {

@@ -3,8 +3,9 @@ import { CollectionService, ID, idsAreEqual, Permission, RequestContext } from '
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { page, publicCollectionListOptions } from '../order-helpers';
 import { idProp, numberProp, objectSchema, optional } from '../schema-helpers';
-import { collectionSummary, page, publicCollectionListOptions } from '../tool-kit';
+import { collectionSummary } from '../serializers';
 
 interface ListCollectionsInput extends Record<string, unknown> {
     limit?: number;

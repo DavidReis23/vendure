@@ -3,8 +3,9 @@ import { Permission, ProductService, RequestContext } from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { page, publicProductListOptions } from '../order-helpers';
 import { numberProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { page, productSummary, publicProductListOptions } from '../tool-kit';
+import { productSummary } from '../serializers';
 
 interface SearchProductsInput extends Record<string, unknown> {
     query?: string;

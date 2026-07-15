@@ -4,7 +4,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { objectSchema } from '../schema-helpers';
-import { customerSummary } from '../tool-kit';
+import { customerSummary } from '../serializers';
 
 @McpTool({
     name: 'get_my_account',

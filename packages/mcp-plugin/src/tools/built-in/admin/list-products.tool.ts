@@ -3,8 +3,9 @@ import { Permission, Product, ProductService, RequestContext } from '@vendure/co
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { listOptions, page } from '../order-helpers';
 import { numberProp, objectSchema, optional } from '../schema-helpers';
-import { listOptions, page, productSummary } from '../tool-kit';
+import { productSummary } from '../serializers';
 
 interface ListProductsInput extends Record<string, unknown> {
     limit?: number;

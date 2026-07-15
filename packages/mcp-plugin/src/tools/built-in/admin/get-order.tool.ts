@@ -4,7 +4,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { idProp, objectSchema } from '../schema-helpers';
-import { orderSummary } from '../tool-kit';
+import { orderSummary } from '../serializers';
 
 interface GetOrderInput {
     id: ID;

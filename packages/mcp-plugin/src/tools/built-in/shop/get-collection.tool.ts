@@ -4,7 +4,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { idProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { collectionSummary } from '../tool-kit';
+import { collectionSummary } from '../serializers';
 
 interface GetCollectionInput {
     id?: ID;

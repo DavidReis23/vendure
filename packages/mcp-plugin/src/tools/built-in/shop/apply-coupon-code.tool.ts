@@ -3,8 +3,8 @@ import { ActiveOrderService, OrderService, Permission, RequestContext } from '@v
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder, orderResult } from '../order-helpers';
 import { objectSchema, stringProp } from '../schema-helpers';
-import { getActiveOrder, orderResult } from '../tool-kit';
 
 interface ApplyCouponCodeInput {
     code: string;

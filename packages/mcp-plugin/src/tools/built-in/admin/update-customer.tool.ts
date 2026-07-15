@@ -5,7 +5,7 @@ import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
 import { idProp, jsonObjectProp, objectSchema, optional, stringProp } from '../schema-helpers';
-import { customerSummary } from '../tool-kit';
+import { customerSummary } from '../serializers';
 
 interface UpdateCustomerToolInput {
     id: ID;

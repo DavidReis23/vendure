@@ -3,8 +3,8 @@ import { ActiveOrderService, ID, OrderService, Permission, RequestContext } from
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
+import { getActiveOrder, orderResult } from '../order-helpers';
 import { idProp, numberProp, objectSchema } from '../schema-helpers';
-import { getActiveOrder, orderResult } from '../tool-kit';
 
 interface UpdateCartLineInput {
     orderLineId: ID;
