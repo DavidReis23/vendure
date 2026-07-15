@@ -118,12 +118,57 @@ export function compactLayouts(layouts: GridLayout[]): GridLayout[] {
 }
 
 /**
- * Re-arranges every widget into the tightest gap-free arrangement. Widgets are placed one at a
- * time in reading order (top-to-bottom, then left-to-right), each at the topmost-then-leftmost
- * slot where it fits without overlapping an already-placed widget. Sizes are preserved; only
- * positions change. The result is deterministic, has no overlaps, is idempotent (tidying an
- * already-tidy layout is a no-op), and is never taller than the input. The returned array
- * preserves the input order.
+ * Grows already-placed widgets to fill the empty cells left by the packing, so rows are padded
+ * out and holes are minimized. Each widget is expanded — first rightward, then downward — one
+ * cell at a time as far as it can without overlapping another widget, staying within its own
+ * `maxW`/`maxH` bounds (a widget with no bound may grow to the grid edge / bottom of the packed
+ * area). Positions and the overall packed height are never changed, and widgets are never shrunk
+ * below their input size, so the result is never worse-packed than the plain placement. Because
+ * growth only ever adds cells (never moves a widget), this converges to a fixed point.
+ */
+function growToFill(placed: GridLayout[], cols: number): GridLayout[] {
+    // Down-growth is bounded by the packed height so tidying never makes the grid taller.
+    const maxRow = Math.max(0, ...placed.map(l => l.y + l.h));
+    const items = placed.map(l => ({ ...l }));
+    // Reading order is stable throughout: growth never changes any widget's x/y.
+    const order = [...items].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+    let changed = true;
+    while (changed) {
+        changed = false;
+        for (const item of order) {
+            const others = items.filter(other => other.i !== item.i);
+            const maxW = item.maxW ?? cols;
+            while (
+                item.w + 1 <= maxW &&
+                item.x + item.w + 1 <= cols &&
+                !others.some(other => layoutsOverlap({ ...item, w: item.w + 1 }, other))
+            ) {
+                item.w += 1;
+                changed = true;
+            }
+            const maxH = item.maxH ?? Number.POSITIVE_INFINITY;
+            while (
+                item.h + 1 <= maxH &&
+                item.y + item.h + 1 <= maxRow &&
+                !others.some(other => layoutsOverlap({ ...item, h: item.h + 1 }, other))
+            ) {
+                item.h += 1;
+                changed = true;
+            }
+        }
+    }
+    return items;
+}
+
+/**
+ * Re-arranges every widget into the tightest gap-free arrangement. Widgets are first placed one
+ * at a time in reading order (top-to-bottom, then left-to-right), each at the topmost-then-
+ * leftmost slot where it fits without overlapping an already-placed widget. Widgets are then
+ * grown within their own `minW`/`minH`/`maxW`/`maxH` bounds to fill the leftover gaps, so the
+ * packed area ends up as full as possible. The result is deterministic, has no overlaps, respects
+ * every widget's size bounds strictly, is never worse-packed (nor taller) than the input, and is
+ * idempotent — tidying an already-tidy layout is a no-op. The returned array preserves the input
+ * order.
  */
 export function tidyLayouts(layouts: GridLayout[], cols: number = DEFAULT_COLS): GridLayout[] {
     const ordered = [...layouts].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
@@ -133,7 +178,8 @@ export function tidyLayouts(layouts: GridLayout[], cols: number = DEFAULT_COLS):
         // widgets, which is what makes this a stronger, global compaction.
         placed.push(findNextAvailablePosition({ ...item, x: 0, y: 0 }, placed, undefined, cols));
     }
-    return layouts.map(l => placed.find(p => p.i === l.i) ?? l);
+    const grown = growToFill(placed, cols);
+    return layouts.map(l => grown.find(p => p.i === l.i) ?? l);
 }
 
 export interface GridLayoutProps {

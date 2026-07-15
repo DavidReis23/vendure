@@ -134,16 +134,61 @@ describe('tidyLayouts', () => {
         expectNoOverlaps(result);
     });
 
-    it('preserves every widget size', () => {
-        const input = [item('a', 3, 5, 4, 3), item('b', 0, 0, 8, 2)];
-        const result = tidyLayouts(input);
-        expect(byId(result, 'a')).toMatchObject({ w: 4, h: 3 });
-        expect(byId(result, 'b')).toMatchObject({ w: 8, h: 2 });
-    });
-
     it('preserves the input order', () => {
         const result = tidyLayouts([item('a', 0, 5, 6, 2), item('b', 0, 0, 6, 2)]);
         expect(result.map(l => l.i)).toEqual(['a', 'b']);
+    });
+
+    // A widget factory carrying growth bounds, for the size-aware tidy behaviour.
+    const bounded = (
+        i: string,
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        bounds: Pick<GridLayout, 'minW' | 'minH' | 'maxW' | 'maxH'>,
+    ): GridLayout => ({ i, x, y, w, h, ...bounds });
+
+    it('grows an unconstrained widget to fill the empty space in its row', () => {
+        const result = tidyLayouts([item('a', 0, 0, 6, 2)]);
+        // Sole widget: fills the full 12-col width; height stays as there is no gap below it.
+        expect(byId(result, 'a')).toMatchObject({ x: 0, y: 0, w: 12, h: 2 });
+    });
+
+    it('grows a short widget down to fill the hole beside a taller neighbour', () => {
+        const result = tidyLayouts([item('a', 0, 0, 6, 3), item('b', 6, 0, 6, 1)]);
+        expect(byId(result, 'b')).toMatchObject({ x: 6, y: 0, w: 6, h: 3 });
+        expectNoOverlaps(result);
+    });
+
+    it('clamps growth to each widget max bounds', () => {
+        const result = tidyLayouts([
+            bounded('a', 0, 0, 6, 4, {}),
+            bounded('b', 6, 0, 4, 2, { maxW: 5, maxH: 3 }),
+        ]);
+        // b sits in a 6-wide, 4-tall gap but may not exceed maxW=5 / maxH=3.
+        expect(byId(result, 'b')).toMatchObject({ w: 5, h: 3 });
+        expectNoOverlaps(result);
+    });
+
+    it('never shrinks a widget below its input size', () => {
+        const result = tidyLayouts([item('a', 0, 0, 12, 2), item('b', 0, 2, 12, 2)]);
+        expect(byId(result, 'a')).toMatchObject({ w: 12, h: 2 });
+        expect(byId(result, 'b')).toMatchObject({ w: 12, h: 2 });
+    });
+
+    it('is idempotent once widgets have been grown to fill', () => {
+        const once = tidyLayouts([item('a', 0, 3, 6, 2), item('b', 6, 7, 4, 3), item('c', 1, 1, 3, 2)]);
+        const twice = tidyLayouts(once);
+        expect(twice).toEqual(once);
+    });
+
+    it('leaves no holes within the packed area when growth is unconstrained', () => {
+        const result = tidyLayouts([item('a', 0, 0, 5, 2), item('b', 5, 0, 7, 3), item('c', 0, 2, 4, 1)]);
+        const height = Math.max(0, ...result.map(l => l.y + l.h));
+        const filled = result.reduce((sum, l) => sum + l.w * l.h, 0);
+        expect(filled).toBe(12 * height);
+        expectNoOverlaps(result);
     });
 
     it('is idempotent — tidying an already-tidy layout is a no-op', () => {
