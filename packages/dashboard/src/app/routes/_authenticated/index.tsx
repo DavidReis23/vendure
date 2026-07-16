@@ -437,6 +437,7 @@ function DashboardPage() {
                                     <Button
                                         variant="outline"
                                         size="icon"
+                                        aria-label={t`Edit layout`}
                                         onClick={() => setEditMode(true)}
                                     />
                                 }

@@ -3941,7 +3941,7 @@ msgstr "Etiketler yükleniyor..."
 msgid "Successfully created facet"
 msgstr "Özellik başarıyla oluşturuldu"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Görüntülenecek widget yok. Widget eklemek için \"Düzeni düzenle\" seçeneğini kullanın."
 
@@ -4546,7 +4546,8 @@ msgstr "Kullanılabilir eylemler"
 msgid "Failed to update order line: {0}"
 msgstr "Sipariş kalemi güncellenemedi: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Düzeni düzenle"
 
@@ -5377,7 +5378,7 @@ msgstr "Etiket ekle..."
 msgid "{0} items selected"
 msgstr "{0} öğe seçildi"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Tüm widget'lar gizli. Geri eklemek için \"Widget ekle\" düğmesini kullanın."
 

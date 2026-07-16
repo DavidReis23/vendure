@@ -3941,7 +3941,7 @@ msgstr "Cargando etiquetas..."
 msgid "Successfully created facet"
 msgstr "Faceta creada exitosamente"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "No hay widgets para mostrar. Use \"Editar diseño\" para agregar widgets."
 
@@ -4546,7 +4546,8 @@ msgstr "Acciones disponibles"
 msgid "Failed to update order line: {0}"
 msgstr "Error al actualizar la línea del pedido: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Editar diseño"
 
@@ -5377,7 +5378,7 @@ msgstr "Agregar etiquetas..."
 msgid "{0} items selected"
 msgstr "{0} elementos seleccionados"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Todos los widgets están ocultos. Use el botón \"Agregar widget\" para volver a agregarlos."
 

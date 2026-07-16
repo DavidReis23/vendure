@@ -3941,7 +3941,7 @@ msgstr "در حال بارگذاری برچسب‌ها..."
 msgid "Successfully created facet"
 msgstr "ویژگی با موفقیت ایجاد شد"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "ابزارکی برای نمایش وجود ندارد. برای افزودن ابزارک‌ها از «ویرایش چیدمان» استفاده کنید."
 
@@ -4546,7 +4546,8 @@ msgstr "اقدام‌های موجود"
 msgid "Failed to update order line: {0}"
 msgstr "به‌روزرسانی ردیف سفارش ناموفق بود: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "ویرایش چیدمان"
 
@@ -5377,7 +5378,7 @@ msgstr "افزودن برچسب‌ها..."
 msgid "{0} items selected"
 msgstr "{0} مورد انتخاب شده"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "همه ابزارک‌ها پنهان هستند. برای بازگرداندن آن‌ها از دکمه «افزودن ابزارک» استفاده کنید."
 

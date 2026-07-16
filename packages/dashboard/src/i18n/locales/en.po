@@ -3941,7 +3941,7 @@ msgstr "Loading tags..."
 msgid "Successfully created facet"
 msgstr "Successfully created facet"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "No widgets to display. Use \"Edit Layout\" to add widgets."
 
@@ -4546,7 +4546,8 @@ msgstr "Available Actions"
 msgid "Failed to update order line: {0}"
 msgstr "Failed to update order line: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Edit layout"
 
@@ -5377,7 +5378,7 @@ msgstr "Add tags..."
 msgid "{0} items selected"
 msgstr "{0} items selected"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "All widgets are hidden. Use the \"Add widget\" button to add them back."
 

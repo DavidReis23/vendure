@@ -3932,7 +3932,7 @@ msgstr "Tags laden..."
 msgid "Successfully created facet"
 msgstr "Facet succesvol aangemaakt"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Geen widgets om weer te geven. Gebruik 'Lay-out bewerken' om widgets toe te voegen."
 
@@ -4537,7 +4537,8 @@ msgstr "Beschikbare acties"
 msgid "Failed to update order line: {0}"
 msgstr "Bijwerken van bestelregel mislukt: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Lay-out bewerken"
 
@@ -5372,7 +5373,7 @@ msgstr "Tags toevoegen..."
 msgid "{0} items selected"
 msgstr "{0} items geselecteerd"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Alle widgets zijn verborgen. Gebruik de knop 'Widget toevoegen' om ze weer toe te voegen."
 

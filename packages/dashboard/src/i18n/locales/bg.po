@@ -3961,7 +3961,7 @@ msgstr "Таговете се зареждат..."
 msgid "Successfully created facet"
 msgstr "Атрибутът е създаден успешно"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Няма уиджети за показване. Използвайте „Редактирай оформлението“, за да добавите уиджети."
 
@@ -4569,7 +4569,8 @@ msgstr "Налични действия"
 msgid "Failed to update order line: {0}"
 msgstr "Неуспешно обновяване на ред от поръчката: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Редактирай оформлението"
 
@@ -5406,7 +5407,7 @@ msgstr "Добавете тагове..."
 msgid "{0} items selected"
 msgstr "{0} избрани елемента"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Всички уиджети са скрити. Използвайте бутона „Добави уиджет“, за да ги върнете."
 

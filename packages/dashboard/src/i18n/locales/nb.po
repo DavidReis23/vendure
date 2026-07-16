@@ -3941,7 +3941,7 @@ msgstr "Laster tagger..."
 msgid "Successfully created facet"
 msgstr "Fasett opprettet"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Ingen widgeter å vise. Bruk «Rediger oppsett» for å legge til widgeter."
 
@@ -4546,7 +4546,8 @@ msgstr "Tilgjengelige handlinger"
 msgid "Failed to update order line: {0}"
 msgstr "Kunne ikke oppdatere bestillingslinjen: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Rediger oppsett"
 
@@ -5377,7 +5378,7 @@ msgstr "Legg til tagger..."
 msgid "{0} items selected"
 msgstr "{0} elementer valgt"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Alle widgeter er skjult. Bruk «Legg til widget»-knappen for å legge dem til igjen."
 

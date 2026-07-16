@@ -3834,7 +3834,7 @@ msgstr "Teglar yuklanmoqda..."
 msgid "Successfully created facet"
 msgstr "Faset yaratildi"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Ko'rsatiladigan vidjetlar yo'q. Vidjet qo'shish uchun \"Tartibni tahrirlash\" dan foydalaning."
 
@@ -4414,7 +4414,8 @@ msgstr "Mavjud amallar"
 msgid "Failed to update order line: {0}"
 msgstr "Buyurtma qatorini yangilab bo'lmadi: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Tartibni tahrirlash"
 
@@ -5217,7 +5218,7 @@ msgstr "Teglar qo'shish..."
 msgid "{0} items selected"
 msgstr "{0} ta element tanlandi"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Barcha vidjetlar yashirilgan. Ularni qaytarish uchun \"Vidjet qo'shish\" tugmasidan foydalaning."
 

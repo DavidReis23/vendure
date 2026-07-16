@@ -3941,7 +3941,7 @@ msgstr "Lade Tags..."
 msgid "Successfully created facet"
 msgstr "Facette erfolgreich erstellt"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Keine Widgets zum Anzeigen. Verwenden Sie „Layout bearbeiten“, um Widgets hinzuzufügen."
 
@@ -4546,7 +4546,8 @@ msgstr "Verfügbare Aktionen"
 msgid "Failed to update order line: {0}"
 msgstr "Bestellposition konnte nicht aktualisiert werden: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Layout bearbeiten"
 
@@ -5377,7 +5378,7 @@ msgstr "Tags hinzufügen..."
 msgid "{0} items selected"
 msgstr "{0} Elemente ausgewählt"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Alle Widgets sind ausgeblendet. Verwenden Sie die Schaltfläche „Widget hinzufügen“, um sie wieder hinzuzufügen."
 

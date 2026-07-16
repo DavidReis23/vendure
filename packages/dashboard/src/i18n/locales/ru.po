@@ -3941,7 +3941,7 @@ msgstr "Загрузка тегов..."
 msgid "Successfully created facet"
 msgstr "Фасет успешно создан"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Нет виджетов для отображения. Используйте «Редактировать макет», чтобы добавить виджеты."
 
@@ -4546,7 +4546,8 @@ msgstr "Доступные действия"
 msgid "Failed to update order line: {0}"
 msgstr "Не удалось обновить позицию заказа: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Редактировать макет"
 
@@ -5377,7 +5378,7 @@ msgstr "Добавить теги..."
 msgid "{0} items selected"
 msgstr "{0} элементов выбрано"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Все виджеты скрыты. Используйте кнопку «Добавить виджет», чтобы вернуть их."
 

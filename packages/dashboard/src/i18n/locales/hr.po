@@ -3941,7 +3941,7 @@ msgstr "Učitavanje oznaka..."
 msgid "Successfully created facet"
 msgstr "Svojstvo uspješno stvoreno"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Nema widgeta za prikaz. Za dodavanje widgeta upotrijebite „Uredi raspored“."
 
@@ -4546,7 +4546,8 @@ msgstr "Dostupne radnje"
 msgid "Failed to update order line: {0}"
 msgstr "Nije uspjelo ažuriranje stavke narudžbe: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Uredi raspored"
 
@@ -5377,7 +5378,7 @@ msgstr "Dodaj oznake..."
 msgid "{0} items selected"
 msgstr "{0} stavki odabrano"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Svi widgeti su skriveni. Za ponovno dodavanje upotrijebite gumb „Dodaj widget“."
 

@@ -3941,7 +3941,7 @@ msgstr "Laddar taggar..."
 msgid "Successfully created facet"
 msgstr "Facett skapad"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Inga widgetar att visa. Använd \"Redigera layout\" för att lägga till widgetar."
 
@@ -4546,7 +4546,8 @@ msgstr "Tillgängliga åtgärder"
 msgid "Failed to update order line: {0}"
 msgstr "Kunde inte uppdatera orderraden: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Redigera layout"
 
@@ -5377,7 +5378,7 @@ msgstr "Lägg till taggar..."
 msgid "{0} items selected"
 msgstr "{0} artiklar valda"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Alla widgetar är dolda. Använd knappen \"Lägg till widget\" för att lägga till dem igen."
 

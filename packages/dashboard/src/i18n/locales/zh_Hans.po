@@ -3941,7 +3941,7 @@ msgstr "正在加载标签..."
 msgid "Successfully created facet"
 msgstr "已成功创建属性"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "没有可显示的小部件。请使用“编辑布局”添加小部件。"
 
@@ -4546,7 +4546,8 @@ msgstr "可用操作"
 msgid "Failed to update order line: {0}"
 msgstr "更新订单行失败：{0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "编辑布局"
 
@@ -5377,7 +5378,7 @@ msgstr "添加标签..."
 msgid "{0} items selected"
 msgstr "已选择 {0} 个项目"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "所有小部件均已隐藏。请使用“添加小部件”按钮将其重新添加。"
 

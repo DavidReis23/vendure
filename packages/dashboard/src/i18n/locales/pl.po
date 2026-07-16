@@ -3941,7 +3941,7 @@ msgstr "Ładowanie tagów..."
 msgid "Successfully created facet"
 msgstr "Pomyślnie utworzono aspekt"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Brak widgetów do wyświetlenia. Użyj „Edytuj układ”, aby dodać widgety."
 
@@ -4546,7 +4546,8 @@ msgstr "Dostępne akcje"
 msgid "Failed to update order line: {0}"
 msgstr "Nie udało się zaktualizować pozycji zamówienia: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Edytuj układ"
 
@@ -5377,7 +5378,7 @@ msgstr "Dodaj tagi..."
 msgid "{0} items selected"
 msgstr "{0} wybranych elementów"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Wszystkie widgety są ukryte. Użyj przycisku „Dodaj widget”, aby dodać je z powrotem."
 

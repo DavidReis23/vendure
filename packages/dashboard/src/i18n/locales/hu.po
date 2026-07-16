@@ -3928,7 +3928,7 @@ msgstr "Címkék betöltése..."
 msgid "Successfully created facet"
 msgstr "A tulajdonság sikeresen létrehozva"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Nincsenek megjeleníthető widgetek. Használja az „Elrendezés szerkesztése\" lehetőséget widgetek hozzáadásához."
 
@@ -4533,7 +4533,8 @@ msgstr "Elérhető műveletek"
 msgid "Failed to update order line: {0}"
 msgstr "Nem sikerült frissíteni a rendelési tételt: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Elrendezés szerkesztése"
 
@@ -5364,7 +5365,7 @@ msgstr "Címkék hozzáadása..."
 msgid "{0} items selected"
 msgstr "{0} elem kijelölve"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Minden widget el van rejtve. Használja a „Widget hozzáadása\" gombot a visszaállításukhoz."
 

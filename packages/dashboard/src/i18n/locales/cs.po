@@ -3941,7 +3941,7 @@ msgstr "Načítání štítků..."
 msgid "Successfully created facet"
 msgstr "Vlastnost úspěšně vytvořena"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Žádné widgety k zobrazení. Pro přidání widgetů použijte „Upravit rozložení“."
 
@@ -4546,7 +4546,8 @@ msgstr "Dostupné akce"
 msgid "Failed to update order line: {0}"
 msgstr "Nepodařilo se aktualizovat položku objednávky: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Upravit rozložení"
 
@@ -5377,7 +5378,7 @@ msgstr "Přidat štítky..."
 msgid "{0} items selected"
 msgstr "{0} položek vybráno"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Všechny widgety jsou skryté. Pro jejich opětovné přidání použijte tlačítko „Přidat widget“."
 

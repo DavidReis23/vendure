@@ -3834,7 +3834,7 @@ msgstr "Se încarcă etichetele..."
 msgid "Successfully created facet"
 msgstr "Atributul a fost creat cu succes"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "Niciun widget de afișat. Folosește „Editează aspectul” pentru a adăuga widgeturi."
 
@@ -4414,7 +4414,8 @@ msgstr "Acțiuni disponibile"
 msgid "Failed to update order line: {0}"
 msgstr "Nu s-a putut actualiza linia comenzii: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "Editează aspectul"
 
@@ -5217,7 +5218,7 @@ msgstr "Adaugă etichete..."
 msgid "{0} items selected"
 msgstr "{0} elemente selectate"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "Toate widgeturile sunt ascunse. Folosește butonul „Adaugă widget” pentru a le readăuga."
 

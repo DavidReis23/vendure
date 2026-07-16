@@ -3941,7 +3941,7 @@ msgstr "جارٍ تحميل العلامات..."
 msgid "Successfully created facet"
 msgstr "تم إنشاء الخاصية بنجاح"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "لا توجد أدوات للعرض. استخدم \"تعديل التخطيط\" لإضافة أدوات."
 
@@ -4546,7 +4546,8 @@ msgstr "الإجراءات المتاحة"
 msgid "Failed to update order line: {0}"
 msgstr "فشل تحديث بند الطلب: {0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "تعديل التخطيط"
 
@@ -5377,7 +5378,7 @@ msgstr "إضافة علامات..."
 msgid "{0} items selected"
 msgstr "{0} عنصر محدد"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "جميع الأدوات مخفية. استخدم زر \"إضافة أداة\" لإعادتها."
 

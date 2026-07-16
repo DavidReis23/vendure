@@ -3941,7 +3941,7 @@ msgstr "正在載入標籤..."
 msgid "Successfully created facet"
 msgstr "已成功建立屬性"
 
-#: src/app/routes/_authenticated/index.tsx:488
+#: src/app/routes/_authenticated/index.tsx:489
 msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
 msgstr "沒有可顯示的小工具。請使用「編輯版面配置」新增小工具。"
 
@@ -4546,7 +4546,8 @@ msgstr "可用動作"
 msgid "Failed to update order line: {0}"
 msgstr "更新訂單明細失敗：{0}"
 
-#: src/app/routes/_authenticated/index.tsx:447
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
 msgid "Edit layout"
 msgstr "編輯版面配置"
 
@@ -5377,7 +5378,7 @@ msgstr "新增標籤..."
 msgid "{0} items selected"
 msgstr "已選取 {0} 個項目"
 
-#: src/app/routes/_authenticated/index.tsx:483
+#: src/app/routes/_authenticated/index.tsx:484
 msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
 msgstr "所有小工具均已隱藏。請使用「新增小工具」按鈕將其重新加入。"
 
