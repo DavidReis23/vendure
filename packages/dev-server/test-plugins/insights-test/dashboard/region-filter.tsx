@@ -18,10 +18,7 @@ export const REGION_VALUES = ['all', 'europe', 'north-america', 'asia-pacific'] 
 
 export type RegionValue = (typeof REGION_VALUES)[number];
 
-/**
- * Resolves a region value to a translated, user-facing label. Called at render time
- * so the label goes through lingui rather than being a hardcoded English constant.
- */
+/** Called at render time so the label goes through lingui rather than a hardcoded string. */
 export function useRegionLabel() {
     const { t } = useLingui();
     const labels: Record<RegionValue, string> = {
@@ -33,12 +30,6 @@ export function useRegionLabel() {
     return (value: string) => labels[value as RegionValue] ?? value;
 }
 
-/**
- * A global Insights filter rendered in the action bar next to the built-in date
- * range picker. It is a controlled input: it renders the current `value` and calls
- * `onChange` when the user picks a new region. The chosen value flows to every widget
- * through the shared `WidgetFiltersProvider`.
- */
 export function RegionFilter({ value, onChange }: DashboardWidgetFilterComponentProps<string>) {
     const regionLabel = useRegionLabel();
     const items = Object.fromEntries(REGION_VALUES.map(region => [region, regionLabel(region)]));

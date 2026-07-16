@@ -48,8 +48,7 @@ export function useInsightsRefresh({
 }: UseInsightsRefreshOptions = {}): InsightsRefresh {
     const queryClient = useQueryClient();
     const [manualRefreshPending, setManualRefreshPending] = useState(false);
-    // Scope the "in-flight" signal to the Insights widget queries, so an unrelated app-wide
-    // fetch never makes the refresh button appear busy.
+    // Scoped to Insights widget queries so an unrelated app-wide fetch doesn't make the button busy.
     const isFetching = useIsFetching({ queryKey: [INSIGHTS_WIDGET_QUERY_KEY] });
 
     const refetchWidgets = useCallback(
@@ -62,9 +61,8 @@ export function useInsightsRefresh({
         void refetchWidgets();
     }, [refetchWidgets]);
 
-    // Clear the manual spinner once the invalidated widget queries have settled. The short delay
-    // after `isFetching` reaches 0 bridges the tick between invalidating and the queries actually
-    // starting to refetch, so the spinner does not flicker off immediately.
+    // The short delay after `isFetching` reaches 0 bridges the tick between invalidating and the
+    // queries actually starting to refetch, so the spinner does not flicker off immediately.
     useEffect(() => {
         if (!manualRefreshPending || isFetching > 0) {
             return;

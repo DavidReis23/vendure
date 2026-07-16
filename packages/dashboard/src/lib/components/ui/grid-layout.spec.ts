@@ -12,7 +12,6 @@ import {
 
 const item = (i: string, x: number, y: number, w: number, h: number): GridLayout => ({ i, x, y, w, h });
 
-/** Asserts that no two items in the layout occupy the same grid cells. */
 function expectNoOverlaps(layouts: GridLayout[]) {
     for (let a = 0; a < layouts.length; a++) {
         for (let b = a + 1; b < layouts.length; b++) {
@@ -139,7 +138,6 @@ describe('tidyLayouts', () => {
         expect(result.map(l => l.i)).toEqual(['a', 'b']);
     });
 
-    // A widget factory carrying growth bounds, for the size-aware tidy behaviour.
     const bounded = (
         i: string,
         x: number,

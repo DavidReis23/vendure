@@ -50,8 +50,7 @@ export const Route = createFileRoute('/_authenticated/')({
     component: DashboardPage,
 });
 
-// Multi-instance widgets get a unique instance id so each instance persists its own layout
-// and config independently. Single-instance widgets keep instanceId === widgetId.
+// Multi-instance widgets keep a unique instanceId; single-instance widgets keep instanceId === widgetId.
 const generateInstanceId = (widgetId: string) => `${widgetId}:${crypto.randomUUID()}`;
 
 const toGridLayout = (widget: DashboardWidgetInstance): GridLayoutType => ({
@@ -59,8 +58,6 @@ const toGridLayout = (widget: DashboardWidgetInstance): GridLayoutType => ({
     i: widget.id,
 });
 
-// Applies the x/y/w/h from a reflowed/compacted grid back onto the widget instances, keeping
-// every other instance property (config, min/max constraints) intact.
 const applyGridLayouts = (
     instances: DashboardWidgetInstance[],
     grid: GridLayoutType[],
@@ -74,13 +71,10 @@ const applyGridLayouts = (
 
 function DashboardPage() {
     const [widgets, setWidgets] = useState<DashboardWidgetInstance[]>([]);
-    // Draft list of hidden widget instances. Their layout is preserved so that
-    // re-adding a widget restores its previous position and size. Committed to
-    // user settings together with the layout on "Save Layout".
+    // Hidden widgets keep their layout so re-adding restores position/size.
     const [hiddenWidgets, setHiddenWidgets] = useState<DashboardWidgetInstance[]>([]);
-    // The ids of all currently-registered widgets the user is permitted to see. Captured on
-    // load so the save step knows which widgets it "owns" when pruning removed instances and
-    // computing the hidden list.
+    // Widget ids the user is permitted to see, captured on load so the save step
+    // knows which widgets it "owns" when pruning removed instances.
     const [loadedWidgetIds, setLoadedWidgetIds] = useState<string[]>([]);
     const [editMode, setEditMode] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
@@ -91,9 +85,8 @@ function DashboardPage() {
         from: startOfMonth(new Date()),
         to: endOfDay(new Date()),
     });
-    // Global Insights filters registered via `insights.filters`. Their values are session-only
-    // state seeded from each filter's `defaultValue`, and are shared with every widget through
-    // the WidgetFiltersProvider so widgets can read them via `useWidgetFilters().filters[id]`.
+    // Session-only filter state seeded from each filter's defaultValue, shared with
+    // widgets via WidgetFiltersProvider (useWidgetFilters().filters[id]).
     const widgetFilters = useMemo(() => getDashboardWidgetFilters(), []);
     const [filterValues, setFilterValues] = useState<Record<string, unknown>>(() =>
         Object.fromEntries(widgetFilters.map(filter => [filter.id, filter.defaultValue])),
@@ -108,13 +101,11 @@ function DashboardPage() {
     } = useUserSettings();
     const { hasPermissions } = usePermissions();
 
-    // Page-level refresh signal shared with every widget via the WidgetFiltersProvider. Auto-refresh
-    // polling is paused while editing the layout so a background refetch can't disrupt a live edit.
+    // Polling is paused while editing so a background refetch can't disrupt a live edit.
     const { refresh, isRefreshing } = useInsightsRefresh({ enabled: !editMode });
 
-    // Latest values read inside the one-shot initializer and the config-write handler without
-    // making them effect/callback dependencies (which would otherwise re-run initialization on
-    // every config write and discard the unsaved draft).
+    // Refs so the initializer/config-write handler read latest values without
+    // becoming effect/callback dependencies (which would discard the unsaved draft).
     const settingsRef = useRef(settings);
     settingsRef.current = settings;
     const editModeRef = useRef(editMode);
@@ -122,14 +113,10 @@ function DashboardPage() {
     const widgetsRef = useRef(widgets);
     widgetsRef.current = widgets;
 
-    // Initialize the draft widget state from persisted settings exactly once, when settings
-    // become ready, and again only when the set of permitted widgets changes. This is
-    // deliberately NOT reactive to `settings.widgetInstances`: widget config is persisted
-    // immediately via `updateWidgetInstanceConfig`, and rebuilding here on those writes would
-    // wipe out the user's unsaved edit-mode draft (dragged positions, hidden widgets,
-    // never-saved multi-instance instances). Re-initialization is also skipped while editing so
-    // an out-of-band settings change (e.g. synced from another tab) can't corrupt a live edit
-    // session.
+    // Deliberately not reactive to `settings.widgetInstances`: config is persisted immediately
+    // via `updateWidgetInstanceConfig`, and rebuilding here on those writes would wipe out the
+    // unsaved edit-mode draft. Also skipped while editing to avoid corrupting a live edit
+    // session from an out-of-band settings change (e.g. synced from another tab).
     useEffect(() => {
         if (!settingsReady || editModeRef.current) {
             return;
@@ -147,13 +134,9 @@ function DashboardPage() {
         setIsInitialized(true);
     }, [settingsReady, hasPermissions]);
 
-    // Routes a widget instance's config change to the correct destination. The config is always
-    // reflected in draft state so the widget re-renders immediately and "Save Layout" commits
-    // the right value. Outside edit mode there is no Save step, so it is also persisted to user
-    // settings right away (e.g. the Metrics widget's Count/Total tab must survive a reload).
-    // While editing, the config stays in draft only — committed together with the layout on
-    // "Save Layout" — which is what stops a config change from silently making a never-saved
-    // draft instance permanent.
+    // Outside edit mode there's no Save step, so config is persisted right away (e.g. the
+    // Metrics widget's Count/Total tab must survive a reload). While editing, it stays in
+    // draft only and is committed together with the layout on "Save Layout".
     const handleConfigChange = useCallback(
         (instanceId: string, config: Record<string, unknown>) => {
             setWidgets(prev =>
@@ -174,14 +157,12 @@ function DashboardPage() {
         [updateWidgetInstanceConfig],
     );
 
-    // Save layout and hidden widgets when edit mode is turned off
+    // Save layout when edit mode is turned off
     useEffect(() => {
         // Only save when transitioning from edit mode ON to OFF
         if (prevEditModeRef.current && !editMode && isInitialized) {
-            // Commit the current layouts of both visible and hidden widgets so a hidden
-            // single-instance widget keeps its position/size when re-added. The draft `config`
-            // is committed here too, so any config changes made during the edit session
-            // (including on never-saved draft instances) are persisted atomically with the layout.
+            // Includes hidden widgets so a hidden single-instance widget keeps its
+            // position/size when re-added, and commits draft config atomically with layout.
             const layouts = [...widgets, ...hiddenWidgets].map(widget => ({
                 instanceId: widget.id,
                 widgetId: widget.widgetId,
@@ -194,9 +175,8 @@ function DashboardPage() {
                 config: widget.config,
             }));
             saveWidgetInstanceLayouts(layouts, loadedWidgetIds);
-            // A widget is hidden when it has no visible instance left — this covers both a
-            // hidden single-instance widget and a multi-instance widget whose last instance
-            // was removed. The hidden-list model keeps newly-registered widgets visible.
+            // A widget is hidden when it has no visible instance left (single-instance
+            // hidden, or a multi-instance widget's last instance removed).
             const visibleWidgetIds = new Set(widgets.map(widget => widget.widgetId));
             persistHiddenWidgets(
                 mergeHiddenWidgetIds(
@@ -233,25 +213,20 @@ function DashboardPage() {
         if (!target) {
             return;
         }
-        // Vertically compact the remaining widgets so the freed space is filled automatically —
-        // both when discarding a multi-instance instance and when hiding a single-instance
-        // widget (including the last-instance-hide case). The user should not have to re-arrange.
         setWidgets(prev => {
             const remaining = prev.filter(widget => widget.id !== instanceId);
             return applyGridLayouts(remaining, compactLayouts(remaining.map(toGridLayout)));
         });
-        // Multi-instance widgets are re-added as fresh instances from the picker, so a removed
-        // instance is simply discarded. Single-instance widgets are kept (with their layout) so
-        // re-adding restores their previous position and size.
+        // Single-instance widgets are kept hidden (with their layout) so re-adding restores
+        // position/size; multi-instance widgets are re-added as fresh instances, so discard.
         const definition = getDashboardWidget(target.widgetId);
         if (!definition?.allowMultipleInstances) {
             setHiddenWidgets(prev => [...prev, target]);
         }
     };
 
-    // Restores a hidden single-instance widget to its previous position and size, reflowing any
-    // widgets that now overlap that saved space out of the way (rather than overlapping or
-    // dumping the re-added widget at the next free slot).
+    // Reflows any widgets now overlapping the restored widget's saved space, rather than
+    // overlapping them or dumping it at the next free slot.
     const handleAddWidget = (instanceId: string) => {
         const target = hiddenWidgets.find(widget => widget.id === instanceId);
         if (!target) {
@@ -264,13 +239,10 @@ function DashboardPage() {
         });
     };
 
-    // Re-arranges every visible widget into the tightest gap-free grid, preserving each widget's
-    // size and only changing positions. Affects draft state; persisted on "Save Layout".
     const handleTidy = () => {
         setWidgets(prev => applyGridLayouts(prev, tidyLayouts(prev.map(toGridLayout))));
     };
 
-    // Adds a fresh instance of a multi-instance widget, placed at the next free grid slot.
     const handleAddWidgetInstance = (widgetId: string) => {
         const definition = getDashboardWidget(widgetId);
         if (!definition) {
@@ -323,8 +295,7 @@ function DashboardPage() {
         );
     };
 
-    // Multi-instance widgets are always offered in the picker (even when already on the page)
-    // so the user can add additional independent instances.
+    // Always offered in the picker, even when already on the page, so more can be added.
     const multiInstanceWidgets = loadedWidgetIds
         .map(id => getDashboardWidget(id))
         .filter((definition): definition is DashboardWidgetDefinition => !!definition?.allowMultipleInstances);

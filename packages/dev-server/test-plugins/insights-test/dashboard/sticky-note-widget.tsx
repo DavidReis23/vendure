@@ -23,8 +23,6 @@ export const STICKY_NOTE_DEFAULT_CONFIG: StickyNoteConfig = {
 
 const TONE_VALUES: NoteTone[] = ['neutral', 'highlight', 'accent', 'secondary'];
 
-// Each tone maps to a distinct set of semantic-token classes so that multiple
-// instances of the same widget are visually differentiated by their config alone.
 const TONE_CLASSES: Record<NoteTone, string> = {
     neutral: 'bg-muted text-foreground border-border',
     highlight: 'bg-primary/10 text-primary border-primary/30',
@@ -32,12 +30,7 @@ const TONE_CLASSES: Record<NoteTone, string> = {
     secondary: 'bg-secondary text-secondary-foreground border-border',
 };
 
-/**
- * A multi-instance widget (`allowMultipleInstances: true`). Every instance keeps its
- * own independent `useWidgetConfig` state, so adding the widget several times and giving
- * each a different tone produces visually distinct notes — demonstrating that instances
- * are differentiated purely via their persisted config.
- */
+// A multi-instance widget: each instance keeps its own independent `useWidgetConfig` state.
 export function StickyNoteWidget() {
     const { t } = useLingui();
     const [config, setConfig] = useWidgetConfig<StickyNoteConfig>();

@@ -106,8 +106,7 @@ export function defineDashboardExtension(extension: DashboardExtension) {
         // Register layout extensions (action bar items and page blocks)
         registerLayoutExtensions(extension.actionBarItems, extension.pageBlocks);
 
-        // Register insights extensions (widgets and code-level widget exclusions).
-        // The deprecated top-level `widgets` option is merged with `insights.widgets`.
+        // Register insights extensions; deprecated top-level `widgets` is merged with `insights.widgets`.
         registerInsightsExtensions(extension.insights, extension.widgets);
 
         // Register form component extensions for custom fields and configurable operation arguments

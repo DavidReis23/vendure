@@ -13,15 +13,13 @@ import { lowStockVariantsQuery } from './low-stock-widget.graphql.js';
 
 const WIDGET_ID = 'low-stock-widget';
 const MAX_ITEMS = 10;
-// Selectable low-stock thresholds. A variant is "low" when its saleable stock
-// (stockOnHand - stockAllocated) is at or below the chosen threshold.
+// A variant is "low" when its saleable stock (stockOnHand - stockAllocated) is at or
+// below the chosen threshold.
 const THRESHOLD_OPTIONS = [5, 10, 20, 50] as const;
-// The core API cannot sort or filter productVariants by stockOnHand/stockAllocated
-// (they are resolved at runtime from the StockLevel entity, not DB columns), so we
-// fetch a bounded pool of variants and compute the low-stock list on the client.
-// This means the result is a SAMPLE: variants outside the first CANDIDATE_POOL_SIZE
-// are never inspected, so the widget cannot guarantee it has surfaced every low-stock
-// variant. The description and empty state make this sampling explicit.
+// The core API can't sort/filter productVariants by stockOnHand/stockAllocated (resolved at
+// runtime from the StockLevel entity, not DB columns), so we fetch a bounded pool and compute
+// the low-stock list client-side. The result is a SAMPLE — variants beyond this pool are never
+// inspected — hence the description/empty state making the sampling explicit.
 const CANDIDATE_POOL_SIZE = 100;
 
 interface LowStockWidgetConfig extends Record<string, unknown> {

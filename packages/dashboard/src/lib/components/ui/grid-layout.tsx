@@ -127,10 +127,9 @@ export function compactLayouts(layouts: GridLayout[]): GridLayout[] {
  * growth only ever adds cells (never moves a widget), this converges to a fixed point.
  */
 function growToFill(placed: GridLayout[], cols: number): GridLayout[] {
-    // Down-growth is bounded by the packed height so tidying never makes the grid taller.
+    // Bounded by the packed height so tidying never makes the grid taller.
     const maxRow = Math.max(0, ...placed.map(l => l.y + l.h));
     const items = placed.map(l => ({ ...l }));
-    // Reading order is stable throughout: growth never changes any widget's x/y.
     const order = [...items].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
     let changed = true;
     while (changed) {
@@ -174,8 +173,7 @@ export function tidyLayouts(layouts: GridLayout[], cols: number = DEFAULT_COLS):
     const ordered = [...layouts].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
     const placed: GridLayout[] = [];
     for (const item of ordered) {
-        // Scanning from y=0 finds the globally topmost-leftmost free slot among already-placed
-        // widgets, which is what makes this a stronger, global compaction.
+        // Scanning from y=0 finds the globally topmost-leftmost free slot, for stronger compaction.
         placed.push(findNextAvailablePosition({ ...item, x: 0, y: 0 }, placed, undefined, cols));
     }
     const grown = growToFill(placed, cols);

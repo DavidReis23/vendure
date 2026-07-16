@@ -3,8 +3,7 @@ import { WidgetInstanceContext } from '@/vdb/framework/dashboard-widget/widget-i
 import { useLingui } from '@lingui/react/macro';
 import { useCallback, useContext, useMemo, useRef } from 'react';
 
-// Shared stable reference used when a widget definition has no `defaultConfig`, so the
-// `config` memo below does not re-run every render on a fresh `{}` literal.
+// Stable reference so the `config` memo below doesn't re-run on a fresh `{}` literal each render.
 const EMPTY_CONFIG = Object.freeze({});
 
 /**
@@ -47,16 +46,14 @@ export function useWidgetConfig<T extends Record<string, unknown>>(): [T, (updat
     const { widgetId, config: instanceConfig, setConfig: setInstanceConfig } = context;
 
     // The registry returns a stable definition object, so `defaultConfig` keeps a stable
-    // identity across renders (and falls back to the shared `EMPTY_CONFIG` when unset),
-    // which keeps the `config` memo from re-running on every render.
+    // identity across renders, keeping the `config` memo below from re-running every render.
     const defaultConfig = (getDashboardWidget(widgetId)?.defaultConfig ?? EMPTY_CONFIG) as Partial<T>;
     const config = useMemo(
         () => ({ ...defaultConfig, ...instanceConfig }) as T,
         [defaultConfig, instanceConfig],
     );
 
-    // Read the latest config and setter through refs so `setConfig` keeps a stable identity
-    // across renders — widgets can safely list it in effect dependency arrays without
+    // Refs so `setConfig` keeps a stable identity — safe to list in effect deps without
     // re-running those effects on every render.
     const configRef = useRef(config);
     configRef.current = config;

@@ -12,8 +12,7 @@ defineDashboardExtension({
     insights: {
         widgets: [
             {
-                // Custom widget with defaultConfig + a control persisted via useWidgetConfig,
-                // that also responds to the global region filter below.
+                // Responds to the global region filter below.
                 id: REGION_SUMMARY_WIDGET_ID,
                 name: 'Region Summary (test)',
                 component: RegionSummaryWidget,
@@ -21,8 +20,7 @@ defineDashboardExtension({
                 defaultConfig: REGION_SUMMARY_DEFAULT_CONFIG,
             },
             {
-                // Multi-instance widget: can be added several times, each instance
-                // differentiated purely via its persisted config (the selected tone).
+                // Instances are differentiated purely via their persisted config (the tone).
                 id: STICKY_NOTE_WIDGET_ID,
                 name: 'Sticky Note (test)',
                 component: StickyNoteWidget,
@@ -31,9 +29,7 @@ defineDashboardExtension({
                 allowMultipleInstances: true,
             },
         ],
-        // Global filter rendered in the Insights action bar. Its value flows to every
-        // widget via useWidgetFilters().filters[REGION_FILTER_ID]; the Region Summary
-        // widget above reflects the current selection.
+        // Its value flows to every widget via useWidgetFilters().filters[REGION_FILTER_ID].
         filters: [
             {
                 id: REGION_FILTER_ID,
@@ -41,9 +37,7 @@ defineDashboardExtension({
                 defaultValue: 'all',
             },
         ],
-        // Code-level exclusion example — OFF by default so the dev server's default
-        // Insights page is unchanged. Uncomment to hard-remove a built-in widget: it
-        // will never render and never appear in the "Add widget" picker.
+        // Uncomment to hard-remove a built-in widget:
         // excludeWidgets: ['top-products-widget'],
     },
 });

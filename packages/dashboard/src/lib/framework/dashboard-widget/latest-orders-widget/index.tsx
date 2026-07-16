@@ -81,9 +81,8 @@ export function LatestOrdersWidget() {
                         },
                     })}
                     // transformVariables output is not part of the query key, so the date range
-                    // must be appended for range changes to refetch. The shared insights prefix is
-                    // prepended so a page-level refresh (button or polling) — which invalidates that
-                    // prefix — refetches this list as well.
+                    // must be appended for range changes to refetch. INSIGHTS_WIDGET_QUERY_KEY is
+                    // prepended so a page-level refresh, which invalidates that prefix, refetches this too.
                     transformQueryKey={queryKey => [
                         INSIGHTS_WIDGET_QUERY_KEY,
                         ...queryKey,

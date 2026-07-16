@@ -87,13 +87,10 @@ export function buildInitialWidgetState(
     settings: Pick<UserSettings, 'widgetInstances' | 'widgetLayout' | 'hiddenWidgets'>,
     registered: Array<[string, DashboardWidgetDefinition]>,
 ): InitialWidgetState {
-    // Saved instances are the source of truth. A widget may have several persisted
-    // instances (multi-instance). The legacy `widgetLayout` record is read only as a
-    // fallback so existing single-instance layouts migrate transparently.
+    // Saved instances are the source of truth; the legacy `widgetLayout` record is read only
+    // as a fallback so existing single-instance layouts migrate transparently.
     const persistedInstances = settings.widgetInstances ?? [];
     const legacyLayouts = settings.widgetLayout ?? {};
-    // Stale ids (widgets that are no longer registered) are naturally ignored because we
-    // only iterate over currently-registered widgets below.
     const hiddenIds = new Set(settings.hiddenWidgets ?? []);
 
     const visible: DashboardWidgetInstance[] = [];
@@ -106,7 +103,6 @@ export function buildInitialWidgetState(
         const isHidden = hiddenIds.has(id);
 
         if (persistedForWidget.length > 0) {
-            // Restore each persisted instance at its saved position/size and config.
             persistedForWidget.forEach(persistedInstance => {
                 (isHidden ? hidden : visible).push(
                     buildWidgetInstance(
@@ -123,18 +119,13 @@ export function buildInitialWidgetState(
         const legacyLayout = legacyLayouts[id];
 
         if (isHidden) {
-            // A hidden widget with no saved instances. Keep a restorable default instance
-            // only for single-instance widgets; multi-instance widgets carry no default
-            // instance and are re-added as fresh instances from the picker.
+            // Multi-instance widgets carry no default instance; re-added as fresh from the picker.
             if (!widget.allowMultipleInstances) {
                 hidden.push(buildWidgetInstance(widget, id, legacyLayout));
             }
             return;
         }
 
-        // Newly-registered / default-visible widget: create its default instance, placing
-        // it at the first free slot (scanning from the top) unless a legacy layout supplies
-        // a saved position.
         const instance = buildWidgetInstance(widget, id, legacyLayout);
         if (!legacyLayout) {
             const pos = findNextAvailablePosition(

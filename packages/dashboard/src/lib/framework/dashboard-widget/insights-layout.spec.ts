@@ -69,10 +69,7 @@ describe('buildInitialWidgetState', () => {
     });
 
     it('only reconstructs persisted instances, not extra draft-only ones', () => {
-        // The builder rebuilds solely from persisted state: one persisted instance in, one
-        // instance out. Extra instances a user adds in edit mode get fresh ids and have no
-        // persisted entry, so a rebuild would drop them — which is exactly why initialization
-        // must be one-shot and not re-run on every config write.
+        // Draft-only instances have no persisted entry, so a rebuild would drop them.
         const note = def('note', { allowMultipleInstances: true });
         const state = buildInitialWidgetState(
             settings({

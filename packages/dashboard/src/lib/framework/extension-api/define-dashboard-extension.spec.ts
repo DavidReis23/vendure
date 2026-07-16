@@ -417,7 +417,6 @@ describe('defineDashboardExtension - insights', () => {
     });
 
     it('excludes a widget registered by another extension regardless of order', () => {
-        // Exclusion declared BEFORE the widget is registered
         defineDashboardExtension({
             insights: { excludeWidgets: ['other-extension-widget'] },
         });
@@ -479,8 +478,7 @@ describe('defineDashboardExtension - insights', () => {
         );
         const filters = getDashboardWidgetFilters();
         expect(filters).toHaveLength(1);
-        // Last-wins (matching the widget registry and keeping HMR re-registration working):
-        // the later registration overwrites the earlier one.
+        // Last-wins, matching the widget registry.
         expect(filters[0].component).toBe(SecondComponent);
 
         warnSpy.mockRestore();

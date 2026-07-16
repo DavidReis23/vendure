@@ -231,11 +231,8 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                 setIsReady(true);
             }
         } else if (serverSettingsErrored) {
-            // The settings-store fetch failed and won't retry (retry: false). This covers a
-            // generic failure (network blip, 500) as well as the store field not being registered
-            // (which additionally flips settingsStoreIsAvailable in the effect above). Fall back to
-            // local settings and mark ready, so consumers that gate on `settingsReady` — e.g. the
-            // Insights one-shot init — don't hang forever on the empty state.
+            // Fetch failed and won't retry (retry: false); fall back to local settings and mark
+            // ready so consumers gating on `settingsReady` don't hang forever.
             setServerSettings(settings);
             setIsReady(true);
         }
@@ -278,9 +275,6 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
 
     const contextValue: UserSettingsContextType = {
         settingsStoreIsAvailable,
-        // Ready once the server value has loaded, or the store was found to be unavailable
-        // (in which case local settings are authoritative). Flips exactly once as settings
-        // resolve, giving consumers a stable signal for one-shot initialization.
         settingsReady: isReady || !settingsStoreIsAvailable,
         settings,
         setDisplayLanguage: language => updateSetting('displayLanguage', language),
@@ -308,10 +302,9 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                 const prevById = new Map(
                     (prev.widgetInstances ?? []).map(instance => [instance.instanceId, instance]),
                 );
-                // Keep previously-saved instances for widgets that were not loaded (e.g. those
-                // filtered out by permissions). Instances for loaded widgets are fully replaced
-                // by `layouts`, so any instance removed in the editor is dropped rather than
-                // silently resurrected on the next reload.
+                // Instances for loaded widgets are fully replaced by `layouts`, so one removed
+                // in the editor is dropped rather than resurrected on the next reload. Instances
+                // for widgets not loaded (e.g. permission-filtered) are preserved untouched.
                 const preserved = (prev.widgetInstances ?? []).filter(
                     instance => !loaded.has(instance.widgetId),
                 );
@@ -319,10 +312,8 @@ export const UserSettingsProvider: React.FC<UserSettingsProviderProps> = ({ quer
                     instanceId: item.instanceId,
                     widgetId: item.widgetId,
                     layout: item.layout,
-                    // Draft config is authoritative on Save Layout: it carries any edit-mode
-                    // config changes, including those made on never-saved instances (which have
-                    // no previously-persisted entry). Fall back to the previously persisted
-                    // config only when the caller supplies none.
+                    // Draft config is authoritative; fall back to the persisted config only
+                    // when the caller supplies none (e.g. a never-saved instance).
                     config: item.config ?? prevById.get(item.instanceId)?.config,
                 }));
                 return { ...prev, widgetInstances: [...preserved, ...merged] };

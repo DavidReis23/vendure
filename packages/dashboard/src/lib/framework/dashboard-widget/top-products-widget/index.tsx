@@ -15,9 +15,8 @@ import { DashboardBaseWidget } from '../base-widget.js';
 import { topProductsOrdersQuery } from './top-products-widget.graphql.js';
 
 const WIDGET_ID = 'top-products-widget';
-// Number of placed orders sampled from the date range to aggregate best sellers from.
-// The list is not exhaustive: only the most recent ORDER_SAMPLE_SIZE orders are aggregated,
-// so on high-volume stores products that only sold earlier in the range may be missed.
+// Only the most recent ORDER_SAMPLE_SIZE orders are aggregated, so on high-volume stores
+// products that only sold earlier in the range may be missed.
 const ORDER_SAMPLE_SIZE = 100;
 const TOP_N = 8;
 
@@ -42,11 +41,8 @@ export function TopProductsWidget() {
     const [config, setConfig] = useWidgetConfig<TopProductsWidgetConfig>();
     const metric = config.metric;
 
-    // Revenue is only meaningful within a single currency, so we aggregate exclusively over
-    // orders placed in the active channel's default currency and format totals in that currency.
-    // Orders in other currencies (multi-currency channels) are excluded from both the revenue
-    // and quantity rankings; this is stated in the widget description so the sample is not
-    // mistaken for the full picture.
+    // Revenue is only meaningful within a single currency, so orders are aggregated exclusively
+    // over the active channel's default currency; other-currency orders are excluded entirely.
     const currencyCode = activeChannel?.defaultCurrencyCode ?? 'USD';
 
     const { data, isPending, isError, refetch } = useQuery({
