@@ -591,7 +591,7 @@
               "title": "Insights Widgets",
               "slug": "insights-widgets",
               "file": "docs/guides/extending-the-dashboard/customizing-pages/insights-widgets.mdx",
-              "lastModified": "2026-02-12T16:47:03+01:00"
+              "lastModified": "2026-07-16T08:31:54+02:00"
             },
             {
               "title": "History Entries",
@@ -3955,7 +3955,7 @@
                   "title": "DefineDashboardExtension",
                   "slug": "define-dashboard-extension",
                   "file": "docs/reference/dashboard/extensions-api/define-dashboard-extension.mdx",
-                  "lastModified": "2026-06-24T16:28:55+02:00"
+                  "lastModified": "2026-07-16T06:34:25Z"
                 },
                 {
                   "title": "DetailForms",
@@ -3974,6 +3974,12 @@
                   "slug": "history-entries",
                   "file": "docs/reference/dashboard/extensions-api/history-entries.mdx",
                   "lastModified": "2026-07-15T13:23:53+02:00"
+                },
+                {
+                  "title": "Insights Filters",
+                  "slug": "insights-filters",
+                  "file": "docs/reference/dashboard/extensions-api/insights-filters.mdx",
+                  "lastModified": "2026-07-16T06:34:25Z"
                 },
                 {
                   "title": "Login",
@@ -4009,7 +4015,7 @@
                   "title": "Widgets",
                   "slug": "widgets",
                   "file": "docs/reference/dashboard/extensions-api/widgets.mdx",
-                  "lastModified": "2026-04-14T11:17:24+02:00"
+                  "lastModified": "2026-07-16T06:34:25Z"
                 }
               ],
               "lastModified": "2026-01-28T14:49:21+01:00"
@@ -4182,6 +4188,12 @@
                   "slug": "use-ui-language-loader",
                   "file": "docs/reference/dashboard/hooks/use-ui-language-loader.mdx",
                   "lastModified": "2026-06-24T09:45:17Z"
+                },
+                {
+                  "title": "UseWidgetConfig",
+                  "slug": "use-widget-config",
+                  "file": "docs/reference/dashboard/hooks/use-widget-config.mdx",
+                  "lastModified": "2026-07-16T06:34:25Z"
                 },
                 {
                   "title": "UseWidgetFilters",

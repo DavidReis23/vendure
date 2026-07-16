@@ -34,11 +34,11 @@ msgstr "Nyomkövetési kód"
 #: src/lib/components/data-table/data-table.tsx:701
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
-msgstr ""
+msgstr "Összes sor kijelölése"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:343
 msgid "Text style"
-msgstr ""
+msgstr "Szövegstílus"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:113
 msgid "The selected permissions will be applied to the these channels."
@@ -58,7 +58,7 @@ msgstr "Meglévő opciócsoport hozzárendelése vagy új létrehozása"
 
 #: src/lib/components/login/reset-password-form.tsx:158
 msgid "New password"
-msgstr ""
+msgstr "Új jelszó"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:33
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:77
@@ -184,7 +184,7 @@ msgstr "{0} kiválasztása"
 #. placeholder {0}: selectedItems.length
 #: src/lib/components/data-input/relation-selector.tsx:409
 msgid "Add more ({0} selected)"
-msgstr ""
+msgstr "Továbbiak hozzáadása ({0} kijelölve)"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:71
 msgid "View values"
@@ -239,15 +239,15 @@ msgstr "{deleted} {entityName} törölve"
 
 #: src/lib/components/data-table/data-table.tsx:590
 msgid "There are no items to display yet."
-msgstr ""
+msgstr "Még nincsenek megjeleníthető elemek."
 
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:187
 msgid "Order items"
-msgstr ""
+msgstr "Rendelési tételek"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:32
 msgid "File Size"
-msgstr ""
+msgstr "Fájlméret"
 
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:13
 #~ msgid "Healthchecks"
@@ -263,9 +263,13 @@ msgstr "Eladók"
 msgid "Options"
 msgstr "Opciók"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
+msgid "Loading top products…"
+msgstr "Legnépszerűbb termékek betöltése…"
+
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
-msgstr ""
+msgstr "Ugrás az irányítópultra"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
@@ -379,6 +383,10 @@ msgstr "Egyéni mezők módosítva"
 msgid "Successfully created stock location"
 msgstr "A raktárhely sikeresen létrehozva"
 
+#: src/app/routes/_authenticated/index.tsx:393
+msgid "No widgets to add"
+msgstr "Nincs hozzáadható widget"
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:79
@@ -395,7 +403,7 @@ msgstr "Ismeretlen hiba"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:142
 msgid "Uploading image..."
-msgstr ""
+msgstr "Kép feltöltése..."
 
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:200
 msgid "Refund total cannot be negative"
@@ -416,7 +424,7 @@ msgstr "A vásárló sikeresen létrehozva"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:108
 msgid "More"
-msgstr ""
+msgstr "Több"
 
 #: src/lib/components/date-range-picker.tsx:55
 msgctxt "date-range"
@@ -465,9 +473,9 @@ msgstr "Új vásárlói csoport"
 msgid "Create \"{0}\""
 msgstr "\"{0}\" létrehozása"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:133
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
-msgstr ""
+msgstr "Nem sikerült betölteni a megrendeléseket"
 
 #: src/lib/components/data-table/views-sheet.tsx:238
 msgid "Rename"
@@ -515,7 +523,7 @@ msgstr "A megrendelés piszkozata nem áll készen a teljesítésre"
 msgid "New collection"
 msgstr "Új gyűjtemény"
 
-#: src/app/routes/_authenticated/index.tsx:184
+#: src/app/routes/_authenticated/index.tsx:336
 msgid "Insights"
 msgstr "Elemzések"
 
@@ -542,6 +550,10 @@ msgstr "A termékopció sikeresen létrehozva"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:501
 msgid "Parent product"
 msgstr "Szülő termék"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
+msgid "We couldn't load the stock levels"
+msgstr "Nem sikerült betölteni a készletszinteket"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -573,14 +585,14 @@ msgstr "Ez a mező csak olvasható"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:219
 msgid "Code block"
-msgstr ""
+msgstr "Kódblokk"
 
 #: src/app/routes/_authenticated/_products/components/product-options-table.tsx:108
 msgid "Search options..."
-msgstr ""
+msgstr "Opciók keresése..."
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:33
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
 msgid "Order Count"
 msgstr "Megrendelések száma"
 
@@ -592,6 +604,10 @@ msgstr "Megrendelés sikeresen frissítve"
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:203
 msgid "Inherit filters"
 msgstr "Szűrők öröklése"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
+msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
+msgstr "A legkelendőbb termékek a legutóbbi {ORDER_SAMPLE_SIZE} megrendelés alapján {currencyCode} pénznemben a kiválasztott időszakra"
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -726,6 +742,10 @@ msgstr "Kérjük, adjon hozzá termékeket és töltse ki a szállítási címet
 msgid "Toggle header row"
 msgstr "Fejlécsor be-/kikapcsolása"
 
+#: src/lib/hooks/use-widget-config.ts:45
+msgid "useWidgetConfig must be used within an Insights page widget"
+msgstr "A useWidgetConfig csak az Elemzések oldal widgetjén belül használható"
+
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
 msgstr "Válasszon címet"
@@ -740,7 +760,7 @@ msgstr "Alapértelmezett adózóna"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:268
 msgid "Clear formatting"
-msgstr ""
+msgstr "Formázás törlése"
 
 #: src/app/routes/_authenticated/_orders/components/draft-order-status.tsx:36
 msgid "Order draft is ready to be completed"
@@ -754,7 +774,7 @@ msgstr "Metaadatok"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:291
 msgid "Failed to set shipping method for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a szállítási módot a megrendeléshez: {0}"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:49
 msgid "Filter..."
@@ -784,14 +804,14 @@ msgstr "Elérhető pénznemek"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:110
 #: src/app/routes/_authenticated/_customers/customers.tsx:26
 msgid "Search customers..."
-msgstr ""
+msgstr "Vásárlók keresése..."
 
 #. placeholder {0}: selectedIds.size
 #: src/lib/components/data-input/product-multi-selector-input.tsx:474
 msgid "Select {0} Items"
 msgstr "{0} tétel kiválasztása"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:108
 msgid "Placed At"
 msgstr "Leadva"
 
@@ -805,7 +825,7 @@ msgstr "A feladathoz átadott adatok"
 
 #: src/lib/components/shared/copyable-text.tsx:72
 msgid "Copied"
-msgstr ""
+msgstr "Másolva"
 
 #: src/lib/components/shared/navigation-confirmation.tsx:44
 msgid "Confirm navigation"
@@ -854,7 +874,7 @@ msgstr "Megrendelés teljesítése sikertelen"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:88
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:106
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:226
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:117
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:121
 msgid "Total"
 msgstr "Összesen"
 
@@ -938,7 +958,7 @@ msgstr "Megerősítés"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:343
 msgid "Failed to complete draft order: {0}"
-msgstr ""
+msgstr "Nem sikerült véglegesíteni a piszkozat megrendelést: {0}"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to create collection"
@@ -961,7 +981,7 @@ msgstr "Vásárló"
 
 #: src/lib/components/shared/error-page.tsx:98
 msgid "Page not found"
-msgstr ""
+msgstr "Az oldal nem található"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:46
@@ -987,7 +1007,7 @@ msgstr "Válassza ki a megrendelés következő állapotát"
 
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:200
 msgid "{count} selected"
-msgstr ""
+msgstr "{count} kijelölve"
 
 #: src/lib/components/layout/language-dialog.tsx:80
 msgid "Locale"
@@ -1006,6 +1026,10 @@ msgstr "Adja meg a tranzakció ID-t"
 msgid "Refresh data"
 msgstr "Adatok frissítése"
 
+#: src/app/routes/_authenticated/index.tsx:366
+msgid "Add widget"
+msgstr "Widget hozzáadása"
+
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
 msgid "Add or remove facet values for {0} {entityType}"
@@ -1022,6 +1046,10 @@ msgstr "A fizetés sikeresen hozzáadva a megrendeléshez"
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:246
 msgid "Billing address set for order"
 msgstr "Számlázási cím beállítva a megrendeléshez"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
+msgid "Revenue"
+msgstr "Bevétel"
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1051,7 +1079,7 @@ msgstr "Új raktárhely"
 #: src/lib/components/data-table/data-table.tsx:702
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
-msgstr ""
+msgstr "Sor kijelölése"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:129
 msgid "Permissions"
@@ -1063,7 +1091,7 @@ msgstr "Szállítási cím megváltoztatva"
 
 #: src/lib/components/data-table/data-table-column-header.tsx:33
 msgid "Sort by {display}"
-msgstr ""
+msgstr "Rendezés {display} szerint"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:62
 msgid "No products found"
@@ -1084,7 +1112,7 @@ msgstr "Ez a hónap"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:275
 msgid "Undo"
-msgstr ""
+msgstr "Visszavonás"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to create facet"
@@ -1112,11 +1140,11 @@ msgstr "Lefoglalt"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:310
 msgid "Failed to set coupon code for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a kuponkódot a megrendeléshez: {0}"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:64
 msgid "Table settings"
-msgstr ""
+msgstr "Táblázatbeállítások"
 
 #: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
@@ -1146,7 +1174,7 @@ msgstr "Piszkozat megrendelés"
 
 #: src/lib/components/login/forgot-password-form.tsx:108
 msgid "Enter your email address and we will send you a link to reset your password"
-msgstr ""
+msgstr "Adja meg az e-mail címét, és küldünk egy linket a jelszava visszaállításához"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:291
 #: src/app/routes/_authenticated/_system/settings-store.tsx:325
@@ -1162,7 +1190,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "A szállítási mód alkalmazható erre a megrendelésre"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:195
+#: src/lib/framework/defaults.ts:198
 msgid "Administrators"
 msgstr "Adminisztrátorok"
 
@@ -1196,7 +1224,7 @@ msgstr "Szállítási mód beállítva a megrendeléshez"
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:160
 msgid "Open in new tab"
-msgstr ""
+msgstr "Megnyitás új lapon"
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:112
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:120
@@ -1209,7 +1237,7 @@ msgid "Images"
 msgstr "Képek"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:158
+#: src/lib/framework/defaults.ts:161
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1231,7 +1259,7 @@ msgid "Job Queue"
 msgstr "Feladatsor"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:66
+#: src/lib/framework/defaults.ts:69
 msgid "Assets"
 msgstr "Média"
 
@@ -1242,7 +1270,7 @@ msgstr "E-mail cím"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:321
 msgid "Failed to remove coupon code from order: {0}"
-msgstr ""
+msgstr "Nem sikerült eltávolítani a kuponkódot a megrendelésből: {0}"
 
 #: src/lib/components/data-input/slug-input.tsx:266
 #: src/lib/components/data-input/slug-input.tsx:267
@@ -1256,7 +1284,7 @@ msgstr "Öröklés a globális beállításokból"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:79
 msgid "Search facets..."
-msgstr ""
+msgstr "Tulajdonságok keresése..."
 
 #: src/lib/components/data-input/relation-selector.tsx:428
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:171
@@ -1278,7 +1306,7 @@ msgstr "Ki"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:97
 msgid "Resize image from right"
-msgstr ""
+msgstr "Kép átméretezése jobbról"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
@@ -1287,7 +1315,7 @@ msgstr "Beállítástár"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:86
 msgid "Search product variants..."
-msgstr ""
+msgstr "Termékváltozatok keresése..."
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:254
 msgid "Queue"
@@ -1363,6 +1391,10 @@ msgstr "Fizetési módok"
 msgid "Stock"
 msgstr "Készlet"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
+msgid "No sales for this period"
+msgstr "Nincs eladás ebben az időszakban"
+
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
 msgstr "Nem található vásárló"
@@ -1398,7 +1430,7 @@ msgstr "Csak a fiókjához rendelt szerepkörök érhetők el."
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:65
 msgid "{cancellableCount, plural, one {Cancel {cancellableCount} job} other {Cancel {cancellableCount} jobs}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {{cancellableCount} feladat megszakítása} other {{cancellableCount} feladat megszakítása}}"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:500
 msgid "{buttonText}"
@@ -1498,7 +1530,7 @@ msgid "Delete draft order"
 msgstr "Piszkozat megrendelés törlése"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:24
+#: src/lib/framework/defaults.ts:27
 msgid "Catalog"
 msgstr "Katalógus"
 
@@ -1515,9 +1547,9 @@ msgstr "Promóció sikeresen frissítve"
 msgid "{rejected, plural, one {Failed to cancel {rejected} job} other {Failed to cancel {rejected} jobs}}"
 msgstr "{rejected, plural, one {Nem sikerült megszakítani {rejected} feladatot} other {Nem sikerült megszakítani {rejected} feladatot}}"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:102
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
-msgstr ""
+msgstr "Nem sikerült betölteni ezeket a mutatókat"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
@@ -1537,7 +1569,7 @@ msgstr "Teljesítés részletei"
 #~ msgstr "Most"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:181
+#: src/lib/framework/defaults.ts:184
 msgid "Channels"
 msgstr "Csatornák"
 
@@ -1552,7 +1584,7 @@ msgstr "előtt"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:228
 msgid "Failed to set customer for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a vásárlót a megrendeléshez: {0}"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:745
 msgid "Size"
@@ -1567,13 +1599,13 @@ msgstr "Nem található fordítás a következőhöz: {0}"
 msgid "New Customer"
 msgstr "Új vásárló"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
 msgstr "Legújabb megrendelések"
 
 #: src/lib/components/shared/error-page.tsx:81
 msgid "Go back"
-msgstr ""
+msgstr "Vissza"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:452
 msgid "+ {leftOver} more"
@@ -1598,7 +1630,7 @@ msgid "Disable"
 msgstr "Letiltás"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:59
+#: src/lib/framework/defaults.ts:62
 msgid "Collections"
 msgstr "Gyűjtemények"
 
@@ -1611,13 +1643,13 @@ msgid "Failed to create country"
 msgstr "Ország létrehozása sikertelen"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:237
+#: src/lib/framework/defaults.ts:240
 msgid "Countries"
 msgstr "Országok"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:96
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
-msgstr ""
+msgstr "Mutatók betöltése…"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:124
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:209
@@ -1641,19 +1673,19 @@ msgid "Filters"
 msgstr "Szűrők"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:105
+#: src/lib/framework/defaults.ts:108
 msgid "Customer Groups"
 msgstr "Vásárlói csoportok"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:91
-#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:94
+#: src/lib/framework/defaults.ts:101
 msgid "Customers"
 msgstr "Vásárlók"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-calculator-selector.tsx:37
 msgid "Select Shipping Calculator"
-msgstr ""
+msgstr "Szállítási kalkulátor kiválasztása"
 
 #: src/lib/components/layout/language-dialog.tsx:103
 msgid "Sample Formatting"
@@ -1670,7 +1702,7 @@ msgstr "Felhasználási korlát"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:547
 msgid "Create your first collection"
-msgstr ""
+msgstr "Hozza létre első gyűjteményét"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:267
 msgid "Loading global settings..."
@@ -1699,7 +1731,7 @@ msgstr "Válasszon célgyűjteményt, ahová a következőt áthelyezi: {0}."
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:272
 msgid "Failed to unset billing address for order: {0}"
-msgstr ""
+msgstr "Nem sikerült törölni a számlázási címet a megrendelésből: {0}"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:45
 msgid "Customer details updated"
@@ -1716,7 +1748,7 @@ msgstr "Alkalmaz"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:36
 msgid "Search tax rates..."
-msgstr ""
+msgstr "Adókulcsok keresése..."
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:163
 msgid "New product option"
@@ -1728,7 +1760,7 @@ msgstr "Ugrás az utolsó oldalra"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:84
 msgid "Insert {row} by {col} table"
-msgstr ""
+msgstr "{row} x {col} méretű táblázat beszúrása"
 
 #: src/app/common/duplicate-entity-dialog.tsx:113
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:61
@@ -1761,7 +1793,7 @@ msgstr "Mégse"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:97
 msgid "Failed to update order custom fields: {0}"
-msgstr ""
+msgstr "Nem sikerült frissíteni a megrendelés egyéni mezőit: {0}"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:146
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:160
@@ -1806,7 +1838,7 @@ msgstr "Gyűjtemények"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-eligibility-checker-selector.tsx:37
 msgid "Select Shipping Eligibility Checker"
-msgstr ""
+msgstr "Szállítási jogosultság-ellenőrző kiválasztása"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:434
 msgid "Delete variant"
@@ -1889,7 +1921,7 @@ msgstr "{operator}"
 
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx:48
 msgid "Search customer groups..."
-msgstr ""
+msgstr "Vásárlói csoportok keresése..."
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:177
 msgid "Refund required"
@@ -1903,7 +1935,7 @@ msgstr "Megrendelés teljesítése"
 
 #: src/lib/components/login/forgot-password-form.tsx:139
 msgid "Send reset link"
-msgstr ""
+msgstr "Visszaállítási link küldése"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:316
 msgid "You don't have permission to view channel settings"
@@ -2039,7 +2071,7 @@ msgstr "Oszlopbeállítások"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:154
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:63
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:91
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:95
 msgid "Code"
 msgstr "Kód"
 
@@ -2084,7 +2116,7 @@ msgid "Successfully updated country"
 msgstr "Ország sikeresen frissítve"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:52
+#: src/lib/framework/defaults.ts:55
 msgid "Facets"
 msgstr "Tulajdonságok"
 
@@ -2500,9 +2532,9 @@ msgstr "Értéklista"
 msgid "fieldName.zone"
 msgstr "Zóna"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:125
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
-msgstr ""
+msgstr "Nincsenek mutatók ebben az időszakban"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:118
 msgid "Method"
@@ -2518,7 +2550,7 @@ msgstr "Beállítja az összes csatorna számára elérhető nyelveket. Az egyes
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:119
 msgid "Create your first facet"
-msgstr ""
+msgstr "Hozza létre első tulajdonságát"
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:284
 msgid "Collections moved successfully"
@@ -2526,7 +2558,7 @@ msgstr "Gyűjtemények sikeresen áthelyezve"
 
 #: src/lib/components/data-input/relation-selector.tsx:412
 msgid "Change selection"
-msgstr ""
+msgstr "Kijelölés módosítása"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:33
 msgid "Registered"
@@ -2535,7 +2567,7 @@ msgstr "Regisztrált"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:239
 msgid "Failed to set shipping address for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a szállítási címet a megrendeléshez: {0}"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
@@ -2645,7 +2677,7 @@ msgstr "{count, plural, one {Biztosan eltávolít {count} ügyfelet ebből a cso
 
 #: src/app/routes/_authenticated/_countries/countries.tsx:29
 msgid "Search countries..."
-msgstr ""
+msgstr "Országok keresése..."
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:293
 msgid "Stock on Hand"
@@ -2721,13 +2753,13 @@ msgid "Customer verified"
 msgstr "Vásárló hitelesítve"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:251
+#: src/lib/framework/defaults.ts:254
 msgid "Global Settings"
 msgstr "Általános beállítások"
 
 #: src/lib/components/login/forgot-password-form.tsx:105
 msgid "Forgot your password?"
-msgstr ""
+msgstr "Elfelejtette a jelszavát?"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:148
 msgid "Schedule"
@@ -2752,6 +2784,10 @@ msgstr "A csatorna sikeresen létrehozva"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:98
 msgid "Successfully updated customer"
 msgstr "Vásárló sikeresen frissítve"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
+msgid "Latest Customers"
+msgstr "Legújabb vásárlók"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2789,6 +2825,10 @@ msgstr "Új termék"
 msgid "New asset"
 msgstr "Új média"
 
+#: src/app/routes/_authenticated/index.tsx:409
+msgid "Tidy"
+msgstr "Rendbe rakás"
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
 msgstr "Szállítási díj újraszámítása"
@@ -2823,7 +2863,7 @@ msgstr "Tulajdonságérték hozzáadása"
 
 #: src/lib/components/shared/error-page.tsx:118
 msgid "You do not have permission to view this page."
-msgstr ""
+msgstr "Nincs jogosultsága az oldal megtekintéséhez."
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:312
 msgid "Please select a target collection"
@@ -2835,7 +2875,7 @@ msgstr "Tekintse át a változtatásokat, mielőtt alkalmazza azokat a megrendel
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:284
 msgid "Redo"
-msgstr ""
+msgstr "Újra"
 
 #: src/lib/components/shared/role-selector.tsx:52
 msgid "Select a role"
@@ -2850,6 +2890,10 @@ msgstr "Megrendelés törölve"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:38
 msgid "Discount"
 msgstr "Kedvezmény"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
+msgid "Top Products"
+msgstr "Legnépszerűbb termékek"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -2866,7 +2910,7 @@ msgstr "Termék frissítése sikertelen"
 
 #: src/app/routes/_authenticated/_collections/components/collection-filters-selector.tsx:26
 msgid "Add collection filter"
-msgstr ""
+msgstr "Gyűjteményszűrő hozzáadása"
 
 #. placeholder {0}: adjustedLines.length
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:152
@@ -2887,7 +2931,7 @@ msgstr "Csatorna"
 
 #: src/lib/components/shared/copyable-text.tsx:71
 msgid "Copy"
-msgstr ""
+msgstr "Másolás"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:137
@@ -3128,7 +3172,7 @@ msgstr "Nézet sikeresen átnevezve"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:192
 msgid "Bullet list"
-msgstr ""
+msgstr "Felsorolás"
 
 #: src/lib/components/data-table/data-table-filter-dialog.tsx:94
 msgid "Apply filter"
@@ -3143,7 +3187,7 @@ msgid "Added to group"
 msgstr "Csoporthoz adva"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:16
+#: src/lib/framework/defaults.ts:19
 msgid "Insights"
 msgstr "Elemzések"
 
@@ -3153,7 +3197,7 @@ msgstr "Elemzések"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:261
 msgid "Horizontal rule"
-msgstr ""
+msgstr "Vízszintes elválasztó"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-method-test-result-wrapper.tsx:31
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:46
@@ -3171,7 +3215,7 @@ msgstr "Teszteredmények"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:201
 msgid "Ordered list"
-msgstr ""
+msgstr "Számozott lista"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:86
 msgid "Add customer"
@@ -3184,7 +3228,7 @@ msgstr "Változtatások mentése"
 
 #: src/app/routes/_authenticated/_products/products.tsx:57
 msgid "Search products..."
-msgstr ""
+msgstr "Termékek keresése..."
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:53
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:78
@@ -3197,7 +3241,7 @@ msgstr "A visszatérítés sikeresen feldolgozva"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:72
 msgid "Select value"
-msgstr ""
+msgstr "Válasszon értéket"
 
 #. placeholder {0}: action.label
 #. placeholder {0}: entityType === 'products' ? 'Product' : 'Variant'
@@ -3253,7 +3297,7 @@ msgstr "Termékváltozat létrehozása"
 msgid "Facet values for {facetName}"
 msgstr "Tulajdonságértékek: {facetName}"
 
-#: src/app/routes/_authenticated/index.tsx:199
+#: src/app/routes/_authenticated/index.tsx:431
 msgid "Save Layout"
 msgstr "Elrendezés mentése"
 
@@ -3280,15 +3324,15 @@ msgstr "Új promóció"
 
 #: src/lib/components/login/reset-password-form.tsx:130
 msgid "Request a new link"
-msgstr ""
+msgstr "Új link kérése"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:83
 msgid "Columns"
-msgstr ""
+msgstr "Oszlopok"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
-msgstr ""
+msgstr "Nem sikerült feltölteni a képet"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
 msgid "Option value name"
@@ -3346,7 +3390,7 @@ msgid "Simple product"
 msgstr "Egyszerű termék"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:137
+#: src/lib/framework/defaults.ts:140
 msgid "Job Queue"
 msgstr "Feladatsor"
 
@@ -3366,13 +3410,13 @@ msgstr "Megrendelés módosítása sikertelen"
 msgid "Includes tax at {taxRate}%"
 msgstr "{taxRate}% adót tartalmaz"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:76
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
 msgid "Order metrics"
 msgstr "Megrendelési statisztikák"
 
 #: src/lib/components/login/reset-password-form.tsx:175
 msgid "Confirm new password"
-msgstr ""
+msgstr "Új jelszó megerősítése"
 
 #: src/lib/components/layout/language-dialog.tsx:49
 msgid "Select display language"
@@ -3380,11 +3424,11 @@ msgstr "Válasszon megjelenítési nyelvet"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-handler-selector.tsx:37
 msgid "Select Payment Handler"
-msgstr ""
+msgstr "Fizetéskezelő kiválasztása"
 
 #: src/lib/components/login/reset-password-form.tsx:119
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
-msgstr ""
+msgstr "A jelszó-visszaállító linkek csak korlátozott ideig érvényesek. Kérjen újat a jelszava visszaállításához."
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:128
 msgid "Authentication methods"
@@ -3410,6 +3454,10 @@ msgstr "Szerepkörök keresése..."
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 #~ msgid "Successfully cancelled {fulfilled} jobs"
 #~ msgstr ""
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
+msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
+msgstr "A mintavételezett {CANDIDATE_POOL_SIZE} termékváltozat egyikének készlete sem {threshold} vagy az alatti. Más változatok készlete így is lehet alacsony."
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3448,7 +3496,7 @@ msgstr "API Key rotálása"
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:48
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:58
 msgid "Insert table"
-msgstr ""
+msgstr "Táblázat beszúrása"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:63
 msgid "Category"
@@ -3466,9 +3514,12 @@ msgstr "Hozzárendelés"
 msgid "Successfully created seller"
 msgstr "Az eladó sikeresen létrehozva"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
-msgstr ""
+msgstr "Próbálja újra"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:91
 msgid "Successfully updated shipping method"
@@ -3501,12 +3552,16 @@ msgstr "Megjegyzés"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:147
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:59
 msgid "Bold"
-msgstr ""
+msgstr "Félkövér"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:160
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "Elérhető nyelvek"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
+msgid "{saleable} in stock"
+msgstr "{saleable} db készleten"
 
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
@@ -3515,7 +3570,7 @@ msgstr "{0} további betöltése ({remaining} maradt)"
 
 #: src/lib/components/shared/error-page.tsx:94
 msgid "Not found"
-msgstr ""
+msgstr "Nem található"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:143
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:82
@@ -3527,7 +3582,7 @@ msgstr "Tulajdonságértékek"
 msgid "Failed to reorder items"
 msgstr "Elemek átrendezése sikertelen"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:90
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:91
 msgid "Total Orders"
 msgstr "Megrendelések összesen"
 
@@ -3622,9 +3677,18 @@ msgid "Update the note content or visibility"
 msgstr "A megjegyzés tartalmának vagy láthatóságának módosítása"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:272
+#: src/lib/framework/defaults.ts:315
+msgid "Latest Customers Widget"
+msgstr "Legújabb vásárlók widget"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:277
 msgid "Latest Orders Widget"
 msgstr "Legújabb megrendelések widget"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
+msgid "Loading stock levels…"
+msgstr "Készletszintek betöltése…"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3647,6 +3711,7 @@ msgstr "kisebb vagy egyenlő mint"
 msgid "is not equal to"
 msgstr "nem egyenlő"
 
+#: src/app/routes/_authenticated/index.tsx:424
 #: src/lib/components/data-table/data-table-settings-menu.tsx:72
 msgid "Refresh"
 msgstr "Frissítés"
@@ -3657,7 +3722,7 @@ msgstr "Frissítés"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:38
 msgid "No checkers found"
-msgstr ""
+msgstr "Nem található ellenőrző"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:139
 msgid "Settle payment"
@@ -3723,17 +3788,22 @@ msgstr "{0} másolása"
 msgid "Remove from group"
 msgstr "Eltávolítás a csoportból"
 
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:304
+msgid "Low Stock Widget"
+msgstr "Alacsony készlet widget"
+
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
-msgstr ""
+msgstr "API-kulcsok keresése..."
 
 #: src/lib/components/login/reset-password-form.tsx:61
 msgid "Passwords do not match"
-msgstr ""
+msgstr "A jelszavak nem egyeznek"
 
 #: src/lib/components/data-input/datetime-input.tsx:45
 msgid "Pick a date and time"
-msgstr ""
+msgstr "Válasszon dátumot és időpontot"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:53
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:57
@@ -3788,7 +3858,7 @@ msgstr "Piszkozat megrendelés állapota"
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:147
 #: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
-msgstr ""
+msgstr "Termékváltozatok keresése..."
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:119
 #~ msgid "Successfully created product options"
@@ -3803,7 +3873,7 @@ msgid "Successfully created facet value"
 msgstr "A tulajdonságérték sikeresen létrehozva"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:114
+#: src/lib/framework/defaults.ts:117
 msgid "Marketing"
 msgstr "Marketing"
 
@@ -3816,7 +3886,7 @@ msgid "greater than"
 msgstr "nagyobb mint"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:263
+#: src/lib/framework/defaults.ts:266
 msgid "Metrics Widget"
 msgstr "Statisztikák widget"
 
@@ -3858,6 +3928,10 @@ msgstr "Címkék betöltése..."
 msgid "Successfully created facet"
 msgstr "A tulajdonság sikeresen létrehozva"
 
+#: src/app/routes/_authenticated/index.tsx:489
+msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
+msgstr "Nincsenek megjeleníthető widgetek. Használja az „Elrendezés szerkesztése\" lehetőséget widgetek hozzáadásához."
+
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
 msgid "{0} variants"
@@ -3878,7 +3952,7 @@ msgstr "Tulajdonság"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:124
 msgid "Unsaved view"
-msgstr ""
+msgstr "Nem mentett nézet"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:41
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -3956,7 +4030,7 @@ msgstr "Opciócsoport hozzáadása"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:84
 msgid "All"
-msgstr ""
+msgstr "Összes"
 
 #. placeholder {0}: formatCurrency(refund.amountToRefundTotal, order.currencyCode)
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:372
@@ -3968,8 +4042,8 @@ msgid "Enter slug manually"
 msgstr "Adja meg a slug-ot manuálisan"
 
 #: src/app/routes/_authenticated/index.tsx:230
-msgid "No widgets available"
-msgstr "Nincsenek elérhető widgetek"
+#~ msgid "No widgets available"
+#~ msgstr "Nincsenek elérhető widgetek"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:75
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:79
@@ -3986,7 +4060,7 @@ msgstr "A globális nézet sikeresen duplikálva"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:26
 msgid "Search administrators..."
-msgstr ""
+msgstr "Adminisztrátorok keresése..."
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:210
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:70
@@ -3995,7 +4069,7 @@ msgstr "Létrehozta"
 
 #: src/lib/components/data-table/data-table.tsx:579
 msgid "No items match your current filters. Try clearing them to see more."
-msgstr ""
+msgstr "Nincs a jelenlegi szűrőknek megfelelő elem. Törölje a szűrőket, hogy több elemet lásson."
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:240
 msgid "Filter variants..."
@@ -4144,12 +4218,12 @@ msgstr "Országok"
 #: src/lib/components/login/forgot-password-form.tsx:61
 #: src/lib/components/login/reset-password-form.tsx:91
 msgid "Something went wrong"
-msgstr ""
+msgstr "Hiba történt"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:162
 msgid "Failed to remove order line: {0}"
-msgstr ""
+msgstr "Nem sikerült eltávolítani a rendelési tételt: {0}"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:182
 msgid "Street Address 2"
@@ -4160,8 +4234,8 @@ msgid "Global view deleted successfully"
 msgstr "A globális nézet sikeresen törölve"
 
 #: src/app/routes/_authenticated/index.tsx:199
-msgid "Edit Layout"
-msgstr "Elrendezés szerkesztése"
+#~ msgid "Edit Layout"
+#~ msgstr "Elrendezés szerkesztése"
 
 #: src/lib/components/shared/assign-to-channel-bulk-action.tsx:55
 #: src/lib/components/shared/assigned-channels.tsx:98
@@ -4193,7 +4267,7 @@ msgstr "E-mail"
 
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
-msgstr ""
+msgstr "Szűrő"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:86
 msgid "Failed to update administrator"
@@ -4202,6 +4276,10 @@ msgstr "Rendszergazda frissítése sikertelen"
 #: src/lib/components/data-table/views-sheet.tsx:132
 msgid "Manage your personal saved views for this table"
 msgstr "Személyes mentett nézetek kezelése ehhez a táblázathoz"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
+msgid "Loading customers…"
+msgstr "Vásárlók betöltése…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4235,7 +4313,7 @@ msgstr "egyenlő"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:17
 msgid "Source File"
-msgstr ""
+msgstr "Forrásfájl"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:249
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:408
@@ -4269,18 +4347,18 @@ msgstr "Gyűjtemények áthelyezése sikertelen"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:210
 msgid "Blockquote"
-msgstr ""
+msgstr "Idézetblokk"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:93
 msgid "Select table size"
-msgstr ""
+msgstr "Táblázatméret kiválasztása"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:60
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:64
 msgid "Failed to update payment state"
 msgstr "Fizetési állapot frissítése sikertelen"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:86
 msgid "Your orders summary"
 msgstr "Megrendelései összesítése"
 
@@ -4309,7 +4387,7 @@ msgid "+ {0} more"
 msgstr "+ {0} további"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:45
+#: src/lib/framework/defaults.ts:48
 msgid "Option Groups"
 msgstr "Opciócsoportok"
 
@@ -4322,12 +4400,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Az összes lehetséges rendelési állapot és azok átmenetei. A jelenlegi állapot ki van emelve."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:82
+#: src/lib/framework/defaults.ts:85
 msgid "Orders"
 msgstr "Megrendelések"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:280
+#: src/lib/framework/defaults.ts:285
 msgid "Orders Summary Widget"
 msgstr "Megrendelések összesítő widget"
 
@@ -4406,14 +4484,14 @@ msgstr "Entitás adatai"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:48
 msgid "Default"
-msgstr ""
+msgstr "Alapértelmezett"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:144
 msgid "Manage my views"
-msgstr ""
+msgstr "Nézeteim kezelése"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:35
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
 msgid "Order Total"
 msgstr "Megrendelés összege"
 
@@ -4428,7 +4506,7 @@ msgstr "Menny."
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:183
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:91
 msgid "Inline code"
-msgstr ""
+msgstr "Soron belüli kód"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
 msgid "Tags"
@@ -4444,7 +4522,7 @@ msgstr "Szuper adminisztrátor"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:90
 msgid "Resize image from left"
-msgstr ""
+msgstr "Kép átméretezése balról"
 
 #: src/app/routes/_authenticated/_promotions/components/promotion-actions-selector.tsx:38
 msgid "Available Actions"
@@ -4453,11 +4531,16 @@ msgstr "Elérhető műveletek"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:143
 msgid "Failed to update order line: {0}"
-msgstr ""
+msgstr "Nem sikerült frissíteni a rendelési tételt: {0}"
+
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
+msgid "Edit layout"
+msgstr "Elrendezés szerkesztése"
 
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
-msgstr ""
+msgstr "A link érvénytelen vagy lejárt"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:84
 #~ msgid "Insert link"
@@ -4490,7 +4573,7 @@ msgid "Enable"
 msgstr "Engedélyezés"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:216
+#: src/lib/framework/defaults.ts:219
 msgid "Payment Methods"
 msgstr "Fizetési módok"
 
@@ -4535,8 +4618,8 @@ msgstr "Függőben"
 msgid "paymentState.Settled"
 msgstr "Rendezve"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:37
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:84
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:43
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:89
 msgid "Average Order Value"
 msgstr "Átlagos megrendelési érték"
 
@@ -4586,7 +4669,7 @@ msgstr "Egységár"
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
-msgstr ""
+msgstr "Ha létezik fiók a(z) {submittedEmailAddress} címhez, e-mailt fog kapni egy linkkel a jelszava visszaállításához."
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:145
 msgid "Schedule Pattern"
@@ -4636,7 +4719,11 @@ msgstr "Vásárló adatai frissítve"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:358
 msgid "Failed to delete draft order: {0}"
-msgstr ""
+msgstr "Nem sikerült törölni a piszkozat megrendelést: {0}"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
+msgid "No new customers for this period"
+msgstr "Nincsenek új vásárlók ebben az időszakban"
 
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
@@ -4644,24 +4731,24 @@ msgstr "Nézet globálissá alakítása sikertelen"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
-msgstr ""
+msgstr "Fizetési jogosultság-ellenőrző kiválasztása"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
-msgstr ""
+msgstr "Válasszon operátort"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:38
+#: src/lib/framework/defaults.ts:41
 msgid "Product Variants"
 msgstr "Termékváltozatok"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:31
+#: src/lib/framework/defaults.ts:34
 msgid "Products"
 msgstr "Termékek"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:121
+#: src/lib/framework/defaults.ts:124
 msgid "Promotions"
 msgstr "Promóciók"
 
@@ -4687,7 +4774,7 @@ msgstr "Beállítja azt a készletszintet, amelynél ez a termékváltozat kész
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:40
 msgid "Search promotions..."
-msgstr ""
+msgstr "Promóciók keresése..."
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:45
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:68
@@ -4704,7 +4791,7 @@ msgstr "Jelszó elrejtése"
 
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:71
 msgid "Bulk actions"
-msgstr ""
+msgstr "Tömeges műveletek"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:30
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:71
@@ -4713,7 +4800,7 @@ msgstr "Új eladó"
 
 #: src/lib/components/ui/state-views.tsx:14
 msgid "Loading…"
-msgstr ""
+msgstr "Betöltés…"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "e.g., Red, Large, Cotton"
@@ -4726,7 +4813,7 @@ msgstr "Profil frissítése sikertelen"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:156
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:67
 msgid "Italic"
-msgstr ""
+msgstr "Dőlt"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:221
 msgid "Removed coupon codes"
@@ -4766,7 +4853,7 @@ msgstr "Új opciócsoport"
 #: src/lib/components/login/forgot-password-form.tsx:147
 #: src/lib/components/login/reset-password-form.tsx:199
 msgid "Back to sign in"
-msgstr ""
+msgstr "Vissza a bejelentkezéshez"
 
 #: src/lib/components/data-table/views-sheet.tsx:141
 msgid "No global views have been created yet."
@@ -4829,12 +4916,12 @@ msgstr "Megrendelés teljesítve"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:438
 msgid "Loading selected items..."
-msgstr ""
+msgstr "Kijelölt elemek betöltése..."
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:250
 msgid "Failed to set billing address for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a számlázási címet a megrendeléshez: {0}"
 
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:271
 msgid "No shipping address"
@@ -4954,7 +5041,7 @@ msgstr "Módosítások összefoglalása"
 
 #: src/lib/components/login/reset-password-form.tsx:191
 msgid "Reset password"
-msgstr ""
+msgstr "Jelszó visszaállítása"
 
 #. placeholder {0}: payment.refunds.length
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:206
@@ -4986,6 +5073,10 @@ msgstr "Minden 60 másodpercben"
 msgid "Failed to update customer group"
 msgstr "Vásárlói csoport frissítése sikertelen"
 
+#: src/app/routes/_authenticated/index.tsx:298
+msgid "Remove widget"
+msgstr "Widget eltávolítása"
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
 msgstr "Fizetés metaadatai"
@@ -5004,10 +5095,10 @@ msgstr "Alkalmazzon szűrőket a táblázatra, majd kattintson a „Nézet ment�
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:144
 msgid "Link URL"
-msgstr ""
+msgstr "Link URL"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:202
+#: src/lib/framework/defaults.ts:205
 msgid "Roles"
 msgstr "Szerepkörök"
 
@@ -5026,7 +5117,7 @@ msgstr "Kijelöltekkel..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
-msgstr ""
+msgstr "Válasszon új jelszót a fiókjához"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations_.$id.tsx:77
 msgid "Failed to create stock location"
@@ -5043,7 +5134,7 @@ msgstr "A(z) {customerGroupName} vásárlói csoport tagjai"
 #. placeholder {0}: e instanceof Error ? e.message : String(e)
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:217
 msgid "Failed to set address for order: {0}"
-msgstr ""
+msgstr "Nem sikerült beállítani a címet a megrendeléshez: {0}"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:120
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:215
@@ -5119,7 +5210,7 @@ msgstr "ID"
 #: src/lib/components/shared/error-page.tsx:113
 #: src/lib/components/shared/error-page.tsx:117
 msgid "Access denied"
-msgstr ""
+msgstr "Hozzáférés megtagadva"
 
 #: src/lib/components/shared/alerts.tsx:33
 msgid "Alerts"
@@ -5146,7 +5237,7 @@ msgstr "Termékváltozat sikeresen törölve"
 #~ msgstr "A kiválasztott hivatkozás tulajdonságainak szerkesztése"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:75
+#: src/lib/framework/defaults.ts:78
 msgid "Sales"
 msgstr "Értékesítés"
 
@@ -5154,12 +5245,12 @@ msgstr "Értékesítés"
 msgid "Select a destination collection"
 msgstr "Célgyűjtemény kiválasztása"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Your latest orders"
 msgstr "Legújabb megrendelései"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:144
+#: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Ütemezett feladatok"
 
@@ -5172,17 +5263,17 @@ msgid "Variants"
 msgstr "Termékváltozatok"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:174
+#: src/lib/framework/defaults.ts:177
 msgid "Sellers"
 msgstr "Eladók"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:167
+#: src/lib/framework/defaults.ts:170
 msgid "Settings"
 msgstr "Beállítások"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:151
+#: src/lib/framework/defaults.ts:154
 msgid "Settings Store"
 msgstr "Beállítástár"
 
@@ -5195,7 +5286,7 @@ msgid "Welcome to Vendure"
 msgstr "Üdvözöljük a Vendure-ban"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:209
+#: src/lib/framework/defaults.ts:212
 msgid "Shipping Methods"
 msgstr "Szállítási módok"
 
@@ -5209,7 +5300,7 @@ msgstr "Azonosító"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/fulfillment-handler-selector.tsx:51
 msgid "Select a fulfillment handler"
-msgstr ""
+msgstr "Válasszon teljesítéskezelőt"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to update collection"
@@ -5218,6 +5309,10 @@ msgstr "Gyűjtemény frissítése sikertelen"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:304
 msgid "Price and tax"
 msgstr "Ár és adó"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
+msgid "We couldn't load the top products"
+msgstr "Nem sikerült betölteni a legnépszerűbb termékeket"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5237,7 +5332,7 @@ msgstr "Megrendelés módosítva"
 
 #: src/lib/components/login/reset-password-form.tsx:143
 msgid "Reset your password"
-msgstr ""
+msgstr "Jelszava visszaállítása"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:59
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:128
@@ -5270,12 +5365,16 @@ msgstr "Címkék hozzáadása..."
 msgid "{0} items selected"
 msgstr "{0} elem kijelölve"
 
+#: src/app/routes/_authenticated/index.tsx:484
+msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
+msgstr "Minden widget el van rejtve. Használja a „Widget hozzáadása\" gombot a visszaállításukhoz."
+
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
 msgstr "Nyelvek keresése..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:188
+#: src/lib/framework/defaults.ts:191
 msgid "Stock Locations"
 msgstr "Raktárhelyek"
 
@@ -5313,7 +5412,7 @@ msgid "Add payment ({0})"
 msgstr "Fizetés hozzáadása ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:130
+#: src/lib/framework/defaults.ts:133
 msgid "System"
 msgstr "Rendszer"
 
@@ -5345,18 +5444,22 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {{count} ügyfél eltávolítva a csoportból} other {{count} ügyfél eltávolítva a csoportból}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:223
+#: src/lib/framework/defaults.ts:226
 msgid "Tax Categories"
 msgstr "Adókategóriák"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:230
+#: src/lib/framework/defaults.ts:233
 msgid "Tax Rates"
 msgstr "Adókulcsok"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Nem sikerült eltávolítani az ügyfeleket a csoportból"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
+msgid "We couldn't load the latest customers"
+msgstr "Nem sikerült betölteni a legújabb vásárlókat"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5397,6 +5500,10 @@ msgstr "Az oldal az alapértelmezett lekérdezéssel folytatódik."
 msgid "Street Address"
 msgstr "Utca, házszám"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
+msgid "No low stock in this sample"
+msgstr "Nincs alacsony készlet ebben a mintában"
+
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
 msgstr "Nincs több tulajdonság"
@@ -5432,7 +5539,7 @@ msgstr "Natív hitelesítési stratégia használata"
 #: src/lib/components/login/forgot-password-form.tsx:136
 #: src/lib/components/login/reset-password-form.tsx:188
 msgid "Please wait"
-msgstr ""
+msgstr "Kérjük, várjon"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
 msgid "Failed to assign {entityIdsLength} {entityType} to channel"
@@ -5441,6 +5548,11 @@ msgstr "{entityIdsLength} {entityType} csatornához rendelése sikertelen"
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
 msgstr "Alapértelmezett nyelv"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:293
+msgid "Top Products Widget"
+msgstr "Legnépszerűbb termékek widget"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5452,7 +5564,7 @@ msgstr "Teljesítés folyamatban..."
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:524
 msgid "Search collections..."
-msgstr ""
+msgstr "Gyűjtemények keresése..."
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:148
 msgid "Add option group to product"
@@ -5579,6 +5691,10 @@ msgstr "Új szállítási mód"
 msgid "Every 10 seconds"
 msgstr "Minden 10 másodpercben"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
+msgid "Low Stock"
+msgstr "Alacsony készlet"
+
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
 msgstr "adó nélkül:"
@@ -5602,7 +5718,7 @@ msgstr "Opciócsoport eltávolítva"
 
 #: src/lib/components/login/login-form.tsx:101
 msgid "Forgot password?"
-msgstr ""
+msgstr "Elfelejtett jelszó?"
 
 #: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx:130
 msgid "Transition to selected state"
@@ -5673,7 +5789,7 @@ msgstr "Keresztnév"
 
 #: src/lib/components/shared/product-variant-selector.tsx:83
 msgid "Add item to order"
-msgstr ""
+msgstr "Tétel hozzáadása a megrendeléshez"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:58
 msgid "contains"
@@ -5681,11 +5797,11 @@ msgstr "tartalmaz"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:43
 msgid "Search shipping methods..."
-msgstr ""
+msgstr "Szállítási módok keresése..."
 
 #: src/lib/components/login/forgot-password-form.tsx:84
 msgid "Check your email"
-msgstr ""
+msgstr "Ellenőrizze e-mailjeit"
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:249
 msgid "No option groups found"
@@ -5698,7 +5814,7 @@ msgstr "Nem található elem"
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:54
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:72
 msgid "Failed to remove option group"
-msgstr ""
+msgstr "Nem sikerült eltávolítani az opciócsoportot"
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:52
 msgid "Sub total"
@@ -5711,7 +5827,7 @@ msgstr "Teljesített tételek ({0})"
 
 #: src/app/routes/_authenticated/_products/products.tsx:102
 msgid "Create your first product"
-msgstr ""
+msgstr "Hozza létre első termékét"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:246
 msgid "Value updated"
@@ -5725,6 +5841,7 @@ msgstr "Nem ellenőrzött"
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:182
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:268
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:78
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:107
 msgid "Quantity"
 msgstr "Mennyiség"
 
@@ -5765,7 +5882,7 @@ msgstr "A(z) \"{trimmed}\" duplikált érték már létezik"
 
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
-msgstr ""
+msgstr "Hozza létre első vásárlóját"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:231
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -5818,7 +5935,7 @@ msgstr "Ország hozzáadása"
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:72
 msgid "Create your first promotion"
-msgstr ""
+msgstr "Hozza létre első promócióját"
 
 #: src/lib/components/data-input/custom-field-list-input.tsx:85
 msgid "Remove item"
@@ -5841,7 +5958,7 @@ msgstr "A termékváltozat nem adható hozzá. Győződjön meg arról, hogy a s
 #~ msgid "An unknown error occurred"
 #~ msgstr "Ismeretlen hiba történt"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:75
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
 msgid "Metrics"
 msgstr "Mutatók"
 
@@ -5881,6 +5998,10 @@ msgstr "{label}"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to create shipping method"
 msgstr "Szállítási mód létrehozása sikertelen"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
+msgid "New registrations in the selected period"
+msgstr "Új regisztrációk a kiválasztott időszakban"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -5933,11 +6054,13 @@ msgstr "Tulajdonság sikeresen frissítve"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:174
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
-msgstr ""
+msgstr "Áthúzott"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
-msgstr ""
+msgstr "Próbáljon másik dátumtartományt választani."
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:61
 msgid "Successfully created zone"
@@ -5989,15 +6112,19 @@ msgstr "Ezekhez a módosításokhoz nem szükséges fizetés vagy visszatérít�
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:72
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {Biztosan meg szeretné szakítani a kijelölt {cancellableCount} feladatot? Ez a művelet nem vonható vissza.} other {Biztosan meg szeretné szakítani a kijelölt {cancellableCount} feladatot? Ez a művelet nem vonható vissza.}}"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:100
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
 msgstr "Teljes bevétel"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:163
 msgid "Next Execution"
 msgstr "Következő végrehajtás"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
+msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
+msgstr "Eladható készlet {threshold} vagy az alatti, {CANDIDATE_POOL_SIZE} termékváltozatból vett minta alapján"
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -6062,7 +6189,7 @@ msgstr "A megrendelés egyéni mezői frissítve"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:320
 msgid "Search entries..."
-msgstr ""
+msgstr "Bejegyzések keresése..."
 
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:193
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:191
@@ -6085,13 +6212,13 @@ msgstr "Áthelyezés a legfelső szintre"
 msgid "Clear"
 msgstr "Törlés"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:84
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
 msgid "Orders Summary"
 msgstr "Megrendelések összesítése"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations.tsx:33
 msgid "Search stock locations..."
-msgstr ""
+msgstr "Készlethelyek keresése..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:349
 msgid "Search assets..."
@@ -6130,7 +6257,7 @@ msgstr "Cím törlése"
 
 #: src/lib/components/shared/error-page.tsx:130
 msgid "We couldn't load this page"
-msgstr ""
+msgstr "Nem sikerült betölteni az oldalt"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to update facet"
@@ -6142,7 +6269,7 @@ msgstr "A useWidgetFilters csak WidgetFiltersProvider-en belül használható"
 
 #: src/lib/components/shared/configurable-operation-input.tsx:104
 msgid "Edit as form"
-msgstr ""
+msgstr "Szerkesztés űrlapként"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:129
 msgid "Edit Address"
@@ -6158,7 +6285,7 @@ msgstr "Tulajdonság eltávolítása a csatornából sikertelen: {message}"
 
 #: src/lib/components/data-table/data-table.tsx:704
 msgid "Pagination"
-msgstr ""
+msgstr "Lapozás"
 
 #: src/app/routes/_authenticated/_sellers/sellers.tsx:47
 msgid "New Seller"
@@ -6166,7 +6293,7 @@ msgstr "Új eladó"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:29
 msgid "Search tax categories..."
-msgstr ""
+msgstr "Adókategóriák keresése..."
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:106
 msgid "Edit image"
@@ -6176,9 +6303,9 @@ msgstr "Kép szerkesztése"
 msgid "Manage Variants"
 msgstr "Termékváltozatok kezelése"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:134
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
-msgstr ""
+msgstr "Hiba történt a legutóbbi megrendelések betöltésekor."
 
 #: src/lib/components/shared/stock-level-label.tsx:18
 msgid "Stock allocated"
@@ -6244,11 +6371,11 @@ msgstr "Opcióérték hozzáadása ehhez: {groupName}"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:261
 msgid "Failed to unset shipping address for order: {0}"
-msgstr ""
+msgstr "Nem sikerült törölni a szállítási címet a megrendelésből: {0}"
 
 #: src/app/routes/_authenticated/_orders/orders.tsx:38
 msgid "Search orders..."
-msgstr ""
+msgstr "Megrendelések keresése..."
 
 #: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:82
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:167
@@ -6262,11 +6389,11 @@ msgstr "SKU"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:68
 msgid "Table size"
-msgstr ""
+msgstr "Táblázatméret"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:387
 msgid "More formatting options"
-msgstr ""
+msgstr "További formázási lehetőségek"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/default-order-history-components.tsx:117
 msgid "{totalQuantity} item(s) refunded"
@@ -6301,7 +6428,7 @@ msgstr "Termékváltozat létrehozása sikertelen"
 #: src/lib/components/data-input/relation-selector.tsx:418
 #: src/lib/components/data-table/data-table.tsx:489
 msgid "Search..."
-msgstr ""
+msgstr "Keresés..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/layout/channel-switcher.tsx:130
@@ -6318,7 +6445,7 @@ msgstr "Az adókulcs sikeresen létrehozva"
 
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:46
 msgid "Remove option group {name}"
-msgstr ""
+msgstr "{name} opciócsoport eltávolítása"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:135
 msgid "Heading 6"
@@ -6388,7 +6515,7 @@ msgstr "nagyobb mint"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:165
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:75
 msgid "Underline"
-msgstr ""
+msgstr "Aláhúzott"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:125
 msgid "Close"
@@ -6397,7 +6524,7 @@ msgstr "Bezárás"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:228
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:99
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:127
 msgid "Add payment to order"
@@ -6433,7 +6560,7 @@ msgstr "Válassza ki a visszatérítendő fizetéseket"
 
 #: src/lib/components/shared/error-page.tsx:101
 msgid "The page you are looking for does not exist or may have been moved."
-msgstr ""
+msgstr "A keresett oldal nem létezik, vagy áthelyezték."
 
 #: src/app/common/delete-bulk-action.tsx:115
 msgid "Failed to delete {failed} {entityName}"
@@ -6484,7 +6611,7 @@ msgid "Customer registered"
 msgstr "Vásárló regisztrálva"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:244
+#: src/lib/framework/defaults.ts:247
 msgid "Zones"
 msgstr "Zónák"
 

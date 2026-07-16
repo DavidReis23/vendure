@@ -34,11 +34,11 @@ msgstr "ट्र्याकिङ कोड"
 #: src/lib/components/data-table/data-table.tsx:701
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
-msgstr ""
+msgstr "सबै पङ्क्तिहरू चयन गर्नुहोस्"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:343
 msgid "Text style"
-msgstr ""
+msgstr "पाठ शैली"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:113
 msgid "The selected permissions will be applied to the these channels."
@@ -58,7 +58,7 @@ msgstr "अवस्थित विकल्प समूह तोक्नु
 
 #: src/lib/components/login/reset-password-form.tsx:158
 msgid "New password"
-msgstr ""
+msgstr "नयाँ पासवर्ड"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:33
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:77
@@ -184,7 +184,7 @@ msgstr "{0} चयन गर्नुहोस्"
 #. placeholder {0}: selectedItems.length
 #: src/lib/components/data-input/relation-selector.tsx:409
 msgid "Add more ({0} selected)"
-msgstr ""
+msgstr "थप थप्नुहोस् ({0} चयन गरिएको)"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:71
 msgid "View values"
@@ -239,15 +239,15 @@ msgstr "{deleted} {entityName} मेटियो"
 
 #: src/lib/components/data-table/data-table.tsx:590
 msgid "There are no items to display yet."
-msgstr ""
+msgstr "प्रदर्शन गर्न अहिलेसम्म कुनै वस्तुहरू छैनन्।"
 
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:187
 msgid "Order items"
-msgstr ""
+msgstr "अर्डरका वस्तुहरू"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:32
 msgid "File Size"
-msgstr ""
+msgstr "फाइल आकार"
 
 #: src/app/routes/_authenticated/_system/healthchecks.tsx:13
 #~ msgid "Healthchecks"
@@ -263,9 +263,13 @@ msgstr "विक्रेताहरू"
 msgid "Options"
 msgstr "विकल्पहरू"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:118
+msgid "Loading top products…"
+msgstr "शीर्ष उत्पादनहरू लोड हुँदै…"
+
 #: src/lib/components/shared/error-page.tsx:86
 msgid "Go to dashboard"
-msgstr ""
+msgstr "ड्यासबोर्डमा जानुहोस्"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
@@ -379,6 +383,10 @@ msgstr "कस्टम फिल्डहरू परिवर्तन भय
 msgid "Successfully created stock location"
 msgstr "स्टक स्थान सफलतापूर्वक सिर्जना गरियो"
 
+#: src/app/routes/_authenticated/index.tsx:393
+msgid "No widgets to add"
+msgstr "थप्नका लागि कुनै विजेटहरू छैनन्"
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:109
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:303
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:79
@@ -395,7 +403,7 @@ msgstr "अज्ञात त्रुटि"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:142
 msgid "Uploading image..."
-msgstr ""
+msgstr "छवि अपलोड हुँदै..."
 
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:200
 msgid "Refund total cannot be negative"
@@ -416,7 +424,7 @@ msgstr "ग्राहक सफलतापूर्वक सिर्जन�
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:108
 msgid "More"
-msgstr ""
+msgstr "थप"
 
 #: src/lib/components/date-range-picker.tsx:55
 msgctxt "date-range"
@@ -465,9 +473,9 @@ msgstr "नयाँ ग्राहक समूह"
 msgid "Create \"{0}\""
 msgstr "\"{0}\" सिर्जना गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:133
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:137
 msgid "Could not load orders"
-msgstr ""
+msgstr "अर्डरहरू लोड गर्न सकिएन"
 
 #: src/lib/components/data-table/views-sheet.tsx:238
 msgid "Rename"
@@ -515,7 +523,7 @@ msgstr "अर्डर ड्राफ्ट पूरा गर्न तय�
 msgid "New collection"
 msgstr "नयाँ संग्रह"
 
-#: src/app/routes/_authenticated/index.tsx:184
+#: src/app/routes/_authenticated/index.tsx:336
 msgid "Insights"
 msgstr "अन्तर्दृष्टि"
 
@@ -542,6 +550,10 @@ msgstr "उत्पादन विकल्प सफलतापूर्व�
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:501
 msgid "Parent product"
 msgstr "मुख्य उत्पादन"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
+msgid "We couldn't load the stock levels"
+msgstr "हामीले स्टक स्तरहरू लोड गर्न सकेनौं"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:196
 #: src/lib/components/shared/customer-address-form.tsx:141
@@ -573,14 +585,14 @@ msgstr "यो फिल्ड पढ्न मात्र हो"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:219
 msgid "Code block"
-msgstr ""
+msgstr "कोड ब्लक"
 
 #: src/app/routes/_authenticated/_products/components/product-options-table.tsx:108
 msgid "Search options..."
-msgstr ""
+msgstr "विकल्पहरू खोज्नुहोस्..."
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:33
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:39
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:86
 msgid "Order Count"
 msgstr "अर्डर संख्या"
 
@@ -592,6 +604,10 @@ msgstr "अर्डर सफलतापूर्वक अपडेट गर
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:203
 msgid "Inherit filters"
 msgstr "फिल्टरहरू विरासतमा प्राप्त गर्नुहोस्"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:99
+msgid "Best sellers from the most recent {ORDER_SAMPLE_SIZE} orders in {currencyCode} for the selected period"
+msgstr "चयन गरिएको अवधिका लागि {currencyCode} मा पछिल्ला {ORDER_SAMPLE_SIZE} अर्डरहरूबाट सबैभन्दा धेरै बिक्री भएका उत्पादनहरू"
 
 #: src/lib/components/data-table/views-sheet.tsx:130
 msgid "Manage global saved views that are visible to all users"
@@ -726,6 +742,10 @@ msgstr "कृपया परीक्षण चलाउन उत्पाद
 msgid "Toggle header row"
 msgstr "हेडर पङ्क्ति टगल गर्नुहोस्"
 
+#: src/lib/hooks/use-widget-config.ts:45
+msgid "useWidgetConfig must be used within an Insights page widget"
+msgstr "useWidgetConfig लाई अन्तर्दृष्टि पृष्ठको विजेट भित्र प्रयोग गर्नुपर्छ"
+
 #: src/app/routes/_authenticated/_orders/components/customer-address-selector.tsx:52
 msgid "Select address"
 msgstr "ठेगाना चयन गर्नुहोस्"
@@ -740,7 +760,7 @@ msgstr "पूर्वनिर्धारित कर क्षेत्र"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:268
 msgid "Clear formatting"
-msgstr ""
+msgstr "ढाँचा हटाउनुहोस्"
 
 #: src/app/routes/_authenticated/_orders/components/draft-order-status.tsx:36
 msgid "Order draft is ready to be completed"
@@ -754,7 +774,7 @@ msgstr "मेटाडेटा"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:291
 msgid "Failed to set shipping method for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि ढुवानी विधि सेट गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:49
 msgid "Filter..."
@@ -784,14 +804,14 @@ msgstr "उपलब्ध मुद्राहरू"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:110
 #: src/app/routes/_authenticated/_customers/customers.tsx:26
 msgid "Search customers..."
-msgstr ""
+msgstr "ग्राहकहरू खोज्नुहोस्..."
 
 #. placeholder {0}: selectedIds.size
 #: src/lib/components/data-input/product-multi-selector-input.tsx:474
 msgid "Select {0} Items"
 msgstr "{0} वस्तुहरू चयन गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:108
 msgid "Placed At"
 msgstr "राखिएको मिति"
 
@@ -805,7 +825,7 @@ msgstr "कार्यमा पास गरिएको डेटा"
 
 #: src/lib/components/shared/copyable-text.tsx:72
 msgid "Copied"
-msgstr ""
+msgstr "प्रतिलिपि गरियो"
 
 #: src/lib/components/shared/navigation-confirmation.tsx:44
 msgid "Confirm navigation"
@@ -854,7 +874,7 @@ msgstr "अर्डर पूरा गर्न असफल"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:88
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:106
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:226
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:117
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:121
 msgid "Total"
 msgstr "कुल"
 
@@ -938,7 +958,7 @@ msgstr "पुष्टि गर्नुहोस्"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:343
 msgid "Failed to complete draft order: {0}"
-msgstr ""
+msgstr "ड्राफ्ट अर्डर पूरा गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to create collection"
@@ -961,7 +981,7 @@ msgstr "ग्राहक"
 
 #: src/lib/components/shared/error-page.tsx:98
 msgid "Page not found"
-msgstr ""
+msgstr "पृष्ठ फेला परेन"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:46
@@ -987,7 +1007,7 @@ msgstr "अर्डरको लागि अर्को स्थिति �
 
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:200
 msgid "{count} selected"
-msgstr ""
+msgstr "{count} चयन गरिएको"
 
 #: src/lib/components/layout/language-dialog.tsx:80
 msgid "Locale"
@@ -1006,6 +1026,10 @@ msgstr "लेनदेन ID प्रविष्ट गर्नुहोस�
 msgid "Refresh data"
 msgstr "डेटा रिफ्रेस गर्नुहोस्"
 
+#: src/app/routes/_authenticated/index.tsx:366
+msgid "Add widget"
+msgstr "विजेट थप्नुहोस्"
+
 #. placeholder {0}: entityIds.length
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:163
 msgid "Add or remove facet values for {0} {entityType}"
@@ -1022,6 +1046,10 @@ msgstr "अर्डरमा भुक्तानी सफलतापूर�
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:246
 msgid "Billing address set for order"
 msgstr "अर्डरको लागि बिलिङ ठेगाना सेट गरिएको"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:110
+msgid "Revenue"
+msgstr "राजस्व"
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:68
 msgid "Failed to update zone"
@@ -1051,7 +1079,7 @@ msgstr "नयाँ स्टक स्थान"
 #: src/lib/components/data-table/data-table.tsx:702
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
-msgstr ""
+msgstr "पङ्क्ति चयन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:129
 msgid "Permissions"
@@ -1063,7 +1091,7 @@ msgstr "ढुवानी ठेगाना परिवर्तन भयो
 
 #: src/lib/components/data-table/data-table-column-header.tsx:33
 msgid "Sort by {display}"
-msgstr ""
+msgstr "{display} अनुसार क्रमबद्ध गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-products-block.tsx:62
 msgid "No products found"
@@ -1084,7 +1112,7 @@ msgstr "यो महिना"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:275
 msgid "Undo"
-msgstr ""
+msgstr "अन्डु गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to create facet"
@@ -1112,11 +1140,11 @@ msgstr "आवंटित"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:310
 msgid "Failed to set coupon code for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि कुपन कोड सेट गर्न असफल भयो: {0}"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:64
 msgid "Table settings"
-msgstr ""
+msgstr "तालिका सेटिङहरू"
 
 #: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
@@ -1146,7 +1174,7 @@ msgstr "मस्यौदा अर्डर"
 
 #: src/lib/components/login/forgot-password-form.tsx:108
 msgid "Enter your email address and we will send you a link to reset your password"
-msgstr ""
+msgstr "तपाईंको इमेल ठेगाना प्रविष्ट गर्नुहोस्, हामी तपाईंलाई पासवर्ड रिसेट गर्ने लिङ्क पठाउनेछौं"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:291
 #: src/app/routes/_authenticated/_system/settings-store.tsx:325
@@ -1162,7 +1190,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "यो ढुवानी विधि यो अर्डरको लागि योग्य छ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:195
+#: src/lib/framework/defaults.ts:198
 msgid "Administrators"
 msgstr "प्रशासकहरू"
 
@@ -1196,7 +1224,7 @@ msgstr "अर्डरको लागि ढुवानी विधि स�
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:160
 msgid "Open in new tab"
-msgstr ""
+msgstr "नयाँ ट्याबमा खोल्नुहोस्"
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:112
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:120
@@ -1209,7 +1237,7 @@ msgid "Images"
 msgstr "छविहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:158
+#: src/lib/framework/defaults.ts:161
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1231,7 +1259,7 @@ msgid "Job Queue"
 msgstr "कार्य पंक्ति"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:66
+#: src/lib/framework/defaults.ts:69
 msgid "Assets"
 msgstr "सम्पत्तिहरू"
 
@@ -1242,7 +1270,7 @@ msgstr "इमेल ठेगाना"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:321
 msgid "Failed to remove coupon code from order: {0}"
-msgstr ""
+msgstr "अर्डरबाट कुपन कोड हटाउन असफल भयो: {0}"
 
 #: src/lib/components/data-input/slug-input.tsx:266
 #: src/lib/components/data-input/slug-input.tsx:267
@@ -1256,7 +1284,7 @@ msgstr "ग्लोबल सेटिङहरूबाट विरासत�
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:79
 msgid "Search facets..."
-msgstr ""
+msgstr "विशेषताहरू खोज्नुहोस्..."
 
 #: src/lib/components/data-input/relation-selector.tsx:428
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:171
@@ -1278,7 +1306,7 @@ msgstr "बन्द"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:97
 msgid "Resize image from right"
-msgstr ""
+msgstr "दायाँबाट छविको आकार परिवर्तन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
 #: src/app/routes/_authenticated/_system/settings-store.tsx:314
@@ -1287,7 +1315,7 @@ msgstr "सेटिङ स्टोर"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:86
 msgid "Search product variants..."
-msgstr ""
+msgstr "उत्पादन भेरियन्टहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:254
 msgid "Queue"
@@ -1363,6 +1391,10 @@ msgstr "भुक्तानी विधिहरू"
 msgid "Stock"
 msgstr "स्टक"
 
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:157
+msgid "No sales for this period"
+msgstr "यस अवधिमा कुनै बिक्री छैन"
+
 #: src/lib/components/shared/customer-selector.tsx:92
 msgid "No customers found"
 msgstr "कुनै ग्राहकहरू फेला परेन"
@@ -1398,7 +1430,7 @@ msgstr "तपाईंको खातामा तोकिएका भूम
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:65
 msgid "{cancellableCount, plural, one {Cancel {cancellableCount} job} other {Cancel {cancellableCount} jobs}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {{cancellableCount} कार्य रद्द गर्नुहोस्} other {{cancellableCount} कार्यहरू रद्द गर्नुहोस्}}"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:500
 msgid "{buttonText}"
@@ -1498,7 +1530,7 @@ msgid "Delete draft order"
 msgstr "मस्यौदा अर्डर मेट्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:24
+#: src/lib/framework/defaults.ts:27
 msgid "Catalog"
 msgstr "सूची"
 
@@ -1515,9 +1547,9 @@ msgstr "प्रमोशन सफलतापूर्वक अपडेट 
 msgid "{rejected, plural, one {Failed to cancel {rejected} job} other {Failed to cancel {rejected} jobs}}"
 msgstr "{rejected, plural, one {{rejected} कार्य रद्द गर्न असफल भयो} other {{rejected} कार्यहरू रद्द गर्न असफल भयो}}"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:102
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:103
 msgid "We couldn't load these metrics"
-msgstr ""
+msgstr "हामीले यी मेट्रिक्सहरू लोड गर्न सकेनौं"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
@@ -1537,7 +1569,7 @@ msgstr "पूर्ति विवरणहरू"
 #~ msgstr "अहिले"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:181
+#: src/lib/framework/defaults.ts:184
 msgid "Channels"
 msgstr "च्यानलहरू"
 
@@ -1552,7 +1584,7 @@ msgstr "अघि"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:228
 msgid "Failed to set customer for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि ग्राहक सेट गर्न असफल भयो: {0}"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:745
 msgid "Size"
@@ -1567,13 +1599,13 @@ msgstr "{0} को लागि कुनै अनुवाद फेला प
 msgid "New Customer"
 msgstr "नयाँ ग्राहक"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
 msgstr "नवीनतम अर्डरहरू"
 
 #: src/lib/components/shared/error-page.tsx:81
 msgid "Go back"
-msgstr ""
+msgstr "पछाडि जानुहोस्"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:452
 msgid "+ {leftOver} more"
@@ -1598,7 +1630,7 @@ msgid "Disable"
 msgstr "असक्षम पार्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:59
+#: src/lib/framework/defaults.ts:62
 msgid "Collections"
 msgstr "संग्रहहरू"
 
@@ -1611,13 +1643,13 @@ msgid "Failed to create country"
 msgstr "देश सिर्जना गर्न असफल"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:237
+#: src/lib/framework/defaults.ts:240
 msgid "Countries"
 msgstr "देशहरू"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:96
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:97
 msgid "Loading metrics…"
-msgstr ""
+msgstr "मेट्रिक्स लोड हुँदै…"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:124
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:209
@@ -1641,19 +1673,19 @@ msgid "Filters"
 msgstr "फिल्टरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:105
+#: src/lib/framework/defaults.ts:108
 msgid "Customer Groups"
 msgstr "ग्राहक समूहहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:91
-#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:94
+#: src/lib/framework/defaults.ts:101
 msgid "Customers"
 msgstr "ग्राहकहरू"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-calculator-selector.tsx:37
 msgid "Select Shipping Calculator"
-msgstr ""
+msgstr "ढुवानी क्याल्कुलेटर चयन गर्नुहोस्"
 
 #: src/lib/components/layout/language-dialog.tsx:103
 msgid "Sample Formatting"
@@ -1670,7 +1702,7 @@ msgstr "प्रयोग सीमा"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:547
 msgid "Create your first collection"
-msgstr ""
+msgstr "आफ्नो पहिलो संग्रह सिर्जना गर्नुहोस्"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:267
 msgid "Loading global settings..."
@@ -1699,7 +1731,7 @@ msgstr "{0} सार्न लक्ष्य संग्रह चयन ग�
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:272
 msgid "Failed to unset billing address for order: {0}"
-msgstr ""
+msgstr "अर्डरको बिलिङ ठेगाना हटाउन असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:45
 msgid "Customer details updated"
@@ -1716,7 +1748,7 @@ msgstr "लागू गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:36
 msgid "Search tax rates..."
-msgstr ""
+msgstr "कर दरहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:163
 msgid "New product option"
@@ -1728,7 +1760,7 @@ msgstr "अन्तिम पृष्ठमा जानुहोस्"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:84
 msgid "Insert {row} by {col} table"
-msgstr ""
+msgstr "{row} x {col} तालिका सम्मिलित गर्नुहोस्"
 
 #: src/app/common/duplicate-entity-dialog.tsx:113
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:61
@@ -1761,7 +1793,7 @@ msgstr "रद्द गर्नुहोस्"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:97
 msgid "Failed to update order custom fields: {0}"
-msgstr ""
+msgstr "अर्डरका कस्टम फिल्डहरू अद्यावधिक गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:146
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx:160
@@ -1806,7 +1838,7 @@ msgstr "संग्रहहरू"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-eligibility-checker-selector.tsx:37
 msgid "Select Shipping Eligibility Checker"
-msgstr ""
+msgstr "ढुवानी योग्यता जाँचकर्ता चयन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:434
 msgid "Delete variant"
@@ -1889,7 +1921,7 @@ msgstr "{operator}"
 
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx:48
 msgid "Search customer groups..."
-msgstr ""
+msgstr "ग्राहक समूहहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:177
 msgid "Refund required"
@@ -1903,7 +1935,7 @@ msgstr "अर्डर पूरा गर्नुहोस्"
 
 #: src/lib/components/login/forgot-password-form.tsx:139
 msgid "Send reset link"
-msgstr ""
+msgstr "रिसेट लिङ्क पठाउनुहोस्"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:316
 msgid "You don't have permission to view channel settings"
@@ -2045,7 +2077,7 @@ msgstr "स्तम्भ सेटिङहरू"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:100
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:154
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:63
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:91
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:95
 msgid "Code"
 msgstr "कोड"
 
@@ -2090,7 +2122,7 @@ msgid "Successfully updated country"
 msgstr "देश सफलतापूर्वक अपडेट गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:52
+#: src/lib/framework/defaults.ts:55
 msgid "Facets"
 msgstr "विशेषताहरू"
 
@@ -2506,9 +2538,9 @@ msgstr "मान सूची"
 msgid "fieldName.zone"
 msgstr "क्षेत्र"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:125
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
 msgid "No metrics for this period"
-msgstr ""
+msgstr "यस अवधिका लागि कुनै मेट्रिक्स छैनन्"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:118
 msgid "Method"
@@ -2524,7 +2556,7 @@ msgstr "सबै च्यानलहरूको लागि उपलब्
 
 #: src/app/routes/_authenticated/_facets/facets.tsx:119
 msgid "Create your first facet"
-msgstr ""
+msgstr "आफ्नो पहिलो विशेषता सिर्जना गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:284
 msgid "Collections moved successfully"
@@ -2532,7 +2564,7 @@ msgstr "संग्रहहरू सफलतापूर्वक सार�
 
 #: src/lib/components/data-input/relation-selector.tsx:412
 msgid "Change selection"
-msgstr ""
+msgstr "चयन परिवर्तन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:33
 msgid "Registered"
@@ -2541,7 +2573,7 @@ msgstr "दर्ता गरिएको"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:239
 msgid "Failed to set shipping address for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि ढुवानी ठेगाना सेट गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
@@ -2651,7 +2683,7 @@ msgstr "{count, plural, one {के तपाईं यो समूहबाट
 
 #: src/app/routes/_authenticated/_countries/countries.tsx:29
 msgid "Search countries..."
-msgstr ""
+msgstr "देशहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:293
 msgid "Stock on Hand"
@@ -2731,13 +2763,13 @@ msgid "Customer verified"
 msgstr "ग्राहक प्रमाणित गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:251
+#: src/lib/framework/defaults.ts:254
 msgid "Global Settings"
 msgstr "ग्लोबल सेटिङहरू"
 
 #: src/lib/components/login/forgot-password-form.tsx:105
 msgid "Forgot your password?"
-msgstr ""
+msgstr "पासवर्ड बिर्सनुभयो?"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:148
 msgid "Schedule"
@@ -2762,6 +2794,10 @@ msgstr "च्यानल सफलतापूर्वक सिर्जन�
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:98
 msgid "Successfully updated customer"
 msgstr "ग्राहक सफलतापूर्वक अपडेट गरियो"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:45
+msgid "Latest Customers"
+msgstr "पछिल्ला ग्राहकहरू"
 
 #: src/app/routes/_authenticated/_system/job-queue.tsx:165
 msgid "View data"
@@ -2799,6 +2835,10 @@ msgstr "नयाँ उत्पादन"
 msgid "New asset"
 msgstr "नयाँ सम्पत्ति"
 
+#: src/app/routes/_authenticated/index.tsx:409
+msgid "Tidy"
+msgstr "मिलाउनुहोस्"
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:262
 msgid "Recalculate shipping"
 msgstr "ढुवानी पुन: गणना गर्नुहोस्"
@@ -2833,7 +2873,7 @@ msgstr "विशेषता मान थप्नुहोस्"
 
 #: src/lib/components/shared/error-page.tsx:118
 msgid "You do not have permission to view this page."
-msgstr ""
+msgstr "तपाईंसँग यो पृष्ठ हेर्ने अनुमति छैन।"
 
 #: src/app/routes/_authenticated/_collections/components/move-collections-dialog.tsx:312
 msgid "Please select a target collection"
@@ -2845,7 +2885,7 @@ msgstr "अर्डरमा लागू गर्नु अघि परि�
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:284
 msgid "Redo"
-msgstr ""
+msgstr "रिडु गर्नुहोस्"
 
 #: src/lib/components/shared/role-selector.tsx:52
 msgid "Select a role"
@@ -2860,6 +2900,10 @@ msgstr "अर्डर रद्द गरियो"
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:38
 msgid "Discount"
 msgstr "छुट"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:98
+msgid "Top Products"
+msgstr "शीर्ष उत्पादनहरू"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:367
 #: src/lib/components/shared/asset/asset-gallery.tsx:379
@@ -2876,7 +2920,7 @@ msgstr "उत्पादन अपडेट गर्न असफल"
 
 #: src/app/routes/_authenticated/_collections/components/collection-filters-selector.tsx:26
 msgid "Add collection filter"
-msgstr ""
+msgstr "संग्रह फिल्टर थप्नुहोस्"
 
 #. placeholder {0}: adjustedLines.length
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:152
@@ -2897,7 +2941,7 @@ msgstr "च्यानल"
 
 #: src/lib/components/shared/copyable-text.tsx:71
 msgid "Copy"
-msgstr ""
+msgstr "प्रतिलिपि गर्नुहोस्"
 
 #. js-lingui-explicit-id
 #: src/lib/framework/defaults.ts:137
@@ -3138,7 +3182,7 @@ msgstr "दृश्य सफलतापूर्वक पुन: नाम�
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:192
 msgid "Bullet list"
-msgstr ""
+msgstr "बुलेट सूची"
 
 #: src/lib/components/data-table/data-table-filter-dialog.tsx:94
 msgid "Apply filter"
@@ -3153,7 +3197,7 @@ msgid "Added to group"
 msgstr "समूहमा थपियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:16
+#: src/lib/framework/defaults.ts:19
 msgid "Insights"
 msgstr "अन्तर्दृष्टि"
 
@@ -3163,7 +3207,7 @@ msgstr "अन्तर्दृष्टि"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:261
 msgid "Horizontal rule"
-msgstr ""
+msgstr "तेर्सो रेखा"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-method-test-result-wrapper.tsx:31
 #: src/app/routes/_authenticated/_shipping-methods/components/test-single-method-result.tsx:46
@@ -3181,7 +3225,7 @@ msgstr "परीक्षण परिणामहरू"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:201
 msgid "Ordered list"
-msgstr ""
+msgstr "क्रमबद्ध सूची"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:86
 msgid "Add customer"
@@ -3194,7 +3238,7 @@ msgstr "परिवर्तनहरू सुरक्षित गर्न�
 
 #: src/app/routes/_authenticated/_products/products.tsx:57
 msgid "Search products..."
-msgstr ""
+msgstr "उत्पादनहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:53
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:78
@@ -3207,7 +3251,7 @@ msgstr "फिर्ता सफलतापूर्वक प्रशोध�
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:72
 msgid "Select value"
-msgstr ""
+msgstr "मान चयन गर्नुहोस्"
 
 #. placeholder {0}: action.label
 #. placeholder {0}: entityType === 'products' ? 'Product' : 'Variant'
@@ -3263,7 +3307,7 @@ msgstr "भेरियन्ट सिर्जना गर्नुहोस�
 msgid "Facet values for {facetName}"
 msgstr "{facetName} को विशेषता मानहरू"
 
-#: src/app/routes/_authenticated/index.tsx:199
+#: src/app/routes/_authenticated/index.tsx:431
 msgid "Save Layout"
 msgstr "लेआउट सुरक्षित गर्नुहोस्"
 
@@ -3290,15 +3334,15 @@ msgstr "नयाँ प्रमोशन"
 
 #: src/lib/components/login/reset-password-form.tsx:130
 msgid "Request a new link"
-msgstr ""
+msgstr "नयाँ लिङ्क अनुरोध गर्नुहोस्"
 
 #: src/lib/components/data-table/data-table-settings-menu.tsx:83
 msgid "Columns"
-msgstr ""
+msgstr "स्तम्भहरू"
 
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
-msgstr ""
+msgstr "छवि अपलोड गर्न असफल भयो"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:144
 msgid "Option value name"
@@ -3356,7 +3400,7 @@ msgid "Simple product"
 msgstr "साधारण उत्पादन"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:137
+#: src/lib/framework/defaults.ts:140
 msgid "Job Queue"
 msgstr "कार्य पंक्ति"
 
@@ -3376,13 +3420,13 @@ msgstr "अर्डर परिमार्जन गर्न असफल"
 msgid "Includes tax at {taxRate}%"
 msgstr "{taxRate}% कर समावेश"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:76
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
 msgid "Order metrics"
 msgstr "अर्डर मेट्रिक्स"
 
 #: src/lib/components/login/reset-password-form.tsx:175
 msgid "Confirm new password"
-msgstr ""
+msgstr "नयाँ पासवर्ड पुष्टि गर्नुहोस्"
 
 #: src/lib/components/layout/language-dialog.tsx:49
 msgid "Select display language"
@@ -3390,11 +3434,11 @@ msgstr "प्रदर्शन भाषा चयन गर्नुहोस
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-handler-selector.tsx:37
 msgid "Select Payment Handler"
-msgstr ""
+msgstr "भुक्तानी ह्यान्डलर चयन गर्नुहोस्"
 
 #: src/lib/components/login/reset-password-form.tsx:119
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
-msgstr ""
+msgstr "पासवर्ड रिसेट लिङ्कहरू सीमित समयका लागि मात्र मान्य हुन्छन्। पासवर्ड रिसेट गर्न नयाँ लिङ्क अनुरोध गर्नुहोस्।"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:128
 msgid "Authentication methods"
@@ -3420,6 +3464,10 @@ msgstr "भूमिकाहरू खोज्नुहोस्..."
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:35
 #~ msgid "Successfully cancelled {fulfilled} jobs"
 #~ msgstr ""
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:117
+msgid "None of the {CANDIDATE_POOL_SIZE} sampled variants are at or below {threshold}. Others may still be low."
+msgstr "नमूना गरिएका {CANDIDATE_POOL_SIZE} भेरियन्टहरूमध्ये कुनै पनि {threshold} मा वा त्यसभन्दा तल छैनन्। अरूहरू अझै कम हुन सक्छन्।"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:71
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:19
@@ -3458,7 +3506,7 @@ msgstr "API Key घुमाउनुहोस्"
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:48
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:58
 msgid "Insert table"
-msgstr ""
+msgstr "तालिका सम्मिलित गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:63
 msgid "Category"
@@ -3476,9 +3524,12 @@ msgstr "असाइन गर्नुहोस्"
 msgid "Successfully created seller"
 msgstr "विक्रेता सफलतापूर्वक सिर्जना गरियो"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:104
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:105
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:126
 msgid "Try again"
-msgstr ""
+msgstr "फेरि प्रयास गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:91
 msgid "Successfully updated shipping method"
@@ -3511,12 +3562,16 @@ msgstr "नोट"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:147
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:59
 msgid "Bold"
-msgstr ""
+msgstr "बोल्ड"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:160
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "उपलब्ध भाषाहरू"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:102
+msgid "{saleable} in stock"
+msgstr "{saleable} स्टकमा"
 
 #. placeholder {0}: Math.min(remaining, CHILDREN_PAGE_SIZE)
 #: src/app/routes/_authenticated/_collections/collections.tsx:503
@@ -3525,7 +3580,7 @@ msgstr "थप {0} लोड गर्नुहोस् ({remaining} बाँ�
 
 #: src/lib/components/shared/error-page.tsx:94
 msgid "Not found"
-msgstr ""
+msgstr "फेला परेन"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:143
 #: src/app/routes/_authenticated/_product-variants/product-variants.tsx:82
@@ -3537,7 +3592,7 @@ msgstr "विशेषता मानहरू"
 msgid "Failed to reorder items"
 msgstr "वस्तुहरू पुनः क्रमबद्ध गर्न असफल"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:90
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:91
 msgid "Total Orders"
 msgstr "कुल अर्डरहरू"
 
@@ -3632,9 +3687,18 @@ msgid "Update the note content or visibility"
 msgstr "टिप्पणी सामग्री वा दृश्यता अपडेट गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:272
+#: src/lib/framework/defaults.ts:315
+msgid "Latest Customers Widget"
+msgstr "पछिल्ला ग्राहकहरू विजेट"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:277
 msgid "Latest Orders Widget"
 msgstr "पछिल्लो अर्डरहरू विजेट"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:74
+msgid "Loading stock levels…"
+msgstr "स्टक स्तरहरू लोड हुँदै…"
 
 #: src/app/routes/_authenticated/_collections/components/collection-contents-sheet.tsx:34
 msgid "Collection contents for {collectionName}"
@@ -3657,6 +3721,7 @@ msgstr "बराबर वा कम छ"
 msgid "is not equal to"
 msgstr "बराबर छैन"
 
+#: src/app/routes/_authenticated/index.tsx:424
 #: src/lib/components/data-table/data-table-settings-menu.tsx:72
 msgid "Refresh"
 msgstr "रिफ्रेस गर्नुहोस्"
@@ -3667,7 +3732,7 @@ msgstr "रिफ्रेस गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:38
 msgid "No checkers found"
-msgstr ""
+msgstr "कुनै जाँचकर्ताहरू फेला परेनन्"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:139
 msgid "Settle payment"
@@ -3733,17 +3798,22 @@ msgstr "{0} नक्कल गर्नुहोस्"
 msgid "Remove from group"
 msgstr "समूहबाट हटाउनुहोस्"
 
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:304
+msgid "Low Stock Widget"
+msgstr "न्यून स्टक विजेट"
+
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:34
 msgid "Search API keys..."
-msgstr ""
+msgstr "API कुञ्जीहरू खोज्नुहोस्..."
 
 #: src/lib/components/login/reset-password-form.tsx:61
 msgid "Passwords do not match"
-msgstr ""
+msgstr "पासवर्डहरू मेल खाँदैनन्"
 
 #: src/lib/components/data-input/datetime-input.tsx:45
 msgid "Pick a date and time"
-msgstr ""
+msgstr "मिति र समय छान्नुहोस्"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:53
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:57
@@ -3801,7 +3871,7 @@ msgstr "ड्राफ्ट अर्डर स्थिति"
 #: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:147
 #: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
-msgstr ""
+msgstr "भेरियन्टहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:119
 #~ msgid "Successfully created product options"
@@ -3816,7 +3886,7 @@ msgid "Successfully created facet value"
 msgstr "विशेषता मान सफलतापूर्वक सिर्जना गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:114
+#: src/lib/framework/defaults.ts:117
 msgid "Marketing"
 msgstr "मार्केटिङ"
 
@@ -3829,7 +3899,7 @@ msgid "greater than"
 msgstr "भन्दा ठूलो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:263
+#: src/lib/framework/defaults.ts:266
 msgid "Metrics Widget"
 msgstr "मेट्रिक्स विजेट"
 
@@ -3871,6 +3941,10 @@ msgstr "ट्यागहरू लोड गर्दै..."
 msgid "Successfully created facet"
 msgstr "विशेषता सफलतापूर्वक सिर्जना गरियो"
 
+#: src/app/routes/_authenticated/index.tsx:489
+msgid "No widgets to display. Use \"Edit Layout\" to add widgets."
+msgstr "प्रदर्शन गर्न कुनै विजेटहरू छैनन्। विजेटहरू थप्न \"लेआउट सम्पादन गर्नुहोस्\" प्रयोग गर्नुहोस्।"
+
 #. placeholder {0}: row.original.productVariantCount
 #: src/app/routes/_authenticated/_collections/collections.tsx:432
 msgid "{0} variants"
@@ -3891,7 +3965,7 @@ msgstr "विशेषता"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:124
 msgid "Unsaved view"
-msgstr ""
+msgstr "सुरक्षित नगरिएको दृश्य"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:41
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -3969,7 +4043,7 @@ msgstr "विकल्प समूह थप्नुहोस्"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:84
 msgid "All"
-msgstr ""
+msgstr "सबै"
 
 #. placeholder {0}: formatCurrency(refund.amountToRefundTotal, order.currencyCode)
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:372
@@ -3981,8 +4055,8 @@ msgid "Enter slug manually"
 msgstr "स्लग म्यानुअल रूपमा प्रविष्ट गर्नुहोस्"
 
 #: src/app/routes/_authenticated/index.tsx:230
-msgid "No widgets available"
-msgstr "कुनै विजेटहरू उपलब्ध छैनन्"
+#~ msgid "No widgets available"
+#~ msgstr "कुनै विजेटहरू उपलब्ध छैनन्"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:75
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:79
@@ -3999,7 +4073,7 @@ msgstr "ग्लोबल दृश्य सफलतापूर्वक न
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:26
 msgid "Search administrators..."
-msgstr ""
+msgstr "प्रशासकहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:210
 #: src/app/routes/_authenticated/_api-keys/api-keys.tsx:70
@@ -4008,7 +4082,7 @@ msgstr "द्वारा सिर्जित"
 
 #: src/lib/components/data-table/data-table.tsx:579
 msgid "No items match your current filters. Try clearing them to see more."
-msgstr ""
+msgstr "तपाईंका हालका फिल्टरहरूसँग कुनै वस्तु मेल खाँदैन। थप हेर्न तिनीहरूलाई हटाउने प्रयास गर्नुहोस्।"
 
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:240
 msgid "Filter variants..."
@@ -4157,12 +4231,12 @@ msgstr "देशहरू"
 #: src/lib/components/login/forgot-password-form.tsx:61
 #: src/lib/components/login/reset-password-form.tsx:91
 msgid "Something went wrong"
-msgstr ""
+msgstr "केही गडबड भयो"
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:162
 msgid "Failed to remove order line: {0}"
-msgstr ""
+msgstr "अर्डर लाइन हटाउन असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/test-address-form.tsx:182
 msgid "Street Address 2"
@@ -4173,8 +4247,8 @@ msgid "Global view deleted successfully"
 msgstr "ग्लोबल दृश्य सफलतापूर्वक मेटियो"
 
 #: src/app/routes/_authenticated/index.tsx:199
-msgid "Edit Layout"
-msgstr "लेआउट सम्पादन गर्नुहोस्"
+#~ msgid "Edit Layout"
+#~ msgstr "लेआउट सम्पादन गर्नुहोस्"
 
 #: src/lib/components/shared/assign-to-channel-bulk-action.tsx:55
 #: src/lib/components/shared/assigned-channels.tsx:98
@@ -4206,7 +4280,7 @@ msgstr "इमेल"
 
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
-msgstr ""
+msgstr "फिल्टर"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:86
 msgid "Failed to update administrator"
@@ -4215,6 +4289,10 @@ msgstr "प्रशासक अपडेट गर्न असफल"
 #: src/lib/components/data-table/views-sheet.tsx:132
 msgid "Manage your personal saved views for this table"
 msgstr "यस तालिकाको लागि तपाईंको व्यक्तिगत सुरक्षित दृश्यहरू व्यवस्थापन गर्नुहोस्"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:50
+msgid "Loading customers…"
+msgstr "ग्राहकहरू लोड हुँदै…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
 msgid "Filter by tags"
@@ -4248,7 +4326,7 @@ msgstr "बराबर छ"
 
 #: src/lib/components/shared/asset/asset-properties.tsx:17
 msgid "Source File"
-msgstr ""
+msgstr "स्रोत फाइल"
 
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:249
 #: src/app/routes/_authenticated/_products/components/create-product-options-dialog.tsx:408
@@ -4282,18 +4360,18 @@ msgstr "संग्रहहरू सार्न असफल"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:210
 msgid "Blockquote"
-msgstr ""
+msgstr "ब्लककोट"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:93
 msgid "Select table size"
-msgstr ""
+msgstr "तालिका आकार चयन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:60
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:64
 msgid "Failed to update payment state"
 msgstr "भुक्तानी स्थिति अपडेट गर्न असफल"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:86
 msgid "Your orders summary"
 msgstr "तपाईंको अर्डर सारांश"
 
@@ -4322,7 +4400,7 @@ msgid "+ {0} more"
 msgstr "+ {0} थप"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:45
+#: src/lib/framework/defaults.ts:48
 msgid "Option Groups"
 msgstr "विकल्प समूहहरू"
 
@@ -4335,12 +4413,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "सबै सम्भावित अर्डर अवस्थाहरू र तिनीहरूको संक्रमणहरू। हालको अवस्था हाइलाइट गरिएको छ।"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:82
+#: src/lib/framework/defaults.ts:85
 msgid "Orders"
 msgstr "अर्डरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:280
+#: src/lib/framework/defaults.ts:285
 msgid "Orders Summary Widget"
 msgstr "अर्डर सारांश विजेट"
 
@@ -4419,14 +4497,14 @@ msgstr "निकाय जानकारी"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:48
 msgid "Default"
-msgstr ""
+msgstr "पूर्वनिर्धारित"
 
 #: src/lib/components/data-table/data-table-views-tabs.tsx:144
 msgid "Manage my views"
-msgstr ""
+msgstr "मेरा दृश्यहरू व्यवस्थापन गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:35
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:82
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:41
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:87
 msgid "Order Total"
 msgstr "कुल अर्डर"
 
@@ -4441,7 +4519,7 @@ msgstr "मात्रा"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:183
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:91
 msgid "Inline code"
-msgstr ""
+msgstr "इनलाइन कोड"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
 msgid "Tags"
@@ -4457,7 +4535,7 @@ msgstr "सुपर प्रशासक"
 
 #: src/lib/components/shared/rich-text-editor/resizable-image.tsx:90
 msgid "Resize image from left"
-msgstr ""
+msgstr "बायाँबाट छविको आकार परिवर्तन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_promotions/components/promotion-actions-selector.tsx:38
 msgid "Available Actions"
@@ -4466,11 +4544,16 @@ msgstr "उपलब्ध कार्यहरू"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:143
 msgid "Failed to update order line: {0}"
-msgstr ""
+msgstr "अर्डर लाइन अद्यावधिक गर्न असफल भयो: {0}"
+
+#: src/app/routes/_authenticated/index.tsx:440
+#: src/app/routes/_authenticated/index.tsx:448
+msgid "Edit layout"
+msgstr "लेआउट सम्पादन गर्नुहोस्"
 
 #: src/lib/components/login/reset-password-form.tsx:116
 msgid "This link is invalid or has expired"
-msgstr ""
+msgstr "यो लिङ्क अमान्य छ वा म्याद सकिएको छ"
 
 #: src/lib/components/shared/rich-text-editor/link-dialog.tsx:84
 #~ msgid "Insert link"
@@ -4503,7 +4586,7 @@ msgid "Enable"
 msgstr "सक्षम पार्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:216
+#: src/lib/framework/defaults.ts:219
 msgid "Payment Methods"
 msgstr "भुक्तानी विधिहरू"
 
@@ -4548,8 +4631,8 @@ msgstr "पेन्डिङमा"
 msgid "paymentState.Settled"
 msgstr "मिलान गरिएको"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:37
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:84
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:43
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:89
 msgid "Average Order Value"
 msgstr "औसत अर्डर मूल्य"
 
@@ -4599,7 +4682,7 @@ msgstr "एकाइ मूल्य"
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
-msgstr ""
+msgstr "यदि {submittedEmailAddress} का लागि खाता अवस्थित छ भने, तपाईंले पासवर्ड रिसेट गर्ने लिङ्क सहितको इमेल प्राप्त गर्नुहुनेछ।"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:145
 msgid "Schedule Pattern"
@@ -4649,7 +4732,11 @@ msgstr "ग्राहक जानकारी अपडेट गरियो
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:358
 msgid "Failed to delete draft order: {0}"
-msgstr ""
+msgstr "ड्राफ्ट अर्डर मेट्न असफल भयो: {0}"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:91
+msgid "No new customers for this period"
+msgstr "यस अवधिमा कुनै नयाँ ग्राहकहरू छैनन्"
 
 #: src/lib/components/data-table/views-sheet.tsx:120
 msgid "Failed to convert view to global"
@@ -4657,24 +4744,24 @@ msgstr "दृश्यलाई ग्लोबलमा रूपान्त�
 
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
-msgstr ""
+msgstr "भुक्तानी योग्यता जाँचकर्ता चयन गर्नुहोस्"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
-msgstr ""
+msgstr "अपरेटर चयन गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:38
+#: src/lib/framework/defaults.ts:41
 msgid "Product Variants"
 msgstr "उत्पादन भेरियन्टहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:31
+#: src/lib/framework/defaults.ts:34
 msgid "Products"
 msgstr "उत्पादनहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:121
+#: src/lib/framework/defaults.ts:124
 msgid "Promotions"
 msgstr "प्रमोशनहरू"
 
@@ -4700,7 +4787,7 @@ msgstr "यो भेरियन्ट स्टक बाहिर मान�
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:40
 msgid "Search promotions..."
-msgstr ""
+msgstr "प्रमोशनहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:45
 #: src/app/routes/_authenticated/_api-keys/components/rotate-api-key-button.tsx:68
@@ -4717,7 +4804,7 @@ msgstr "पासवर्ड लुकाउनुहोस्"
 
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:71
 msgid "Bulk actions"
-msgstr ""
+msgstr "बल्क कार्यहरू"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:30
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:71
@@ -4726,7 +4813,7 @@ msgstr "नयाँ विक्रेता"
 
 #: src/lib/components/ui/state-views.tsx:14
 msgid "Loading…"
-msgstr ""
+msgstr "लोड हुँदै…"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "e.g., Red, Large, Cotton"
@@ -4739,7 +4826,7 @@ msgstr "प्रोफाइल अपडेट गर्न असफल"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:156
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:67
 msgid "Italic"
-msgstr ""
+msgstr "इटालिक"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-summary.tsx:221
 msgid "Removed coupon codes"
@@ -4779,7 +4866,7 @@ msgstr "नयाँ विकल्प समूह"
 #: src/lib/components/login/forgot-password-form.tsx:147
 #: src/lib/components/login/reset-password-form.tsx:199
 msgid "Back to sign in"
-msgstr ""
+msgstr "साइन इनमा फर्कनुहोस्"
 
 #: src/lib/components/data-table/views-sheet.tsx:141
 msgid "No global views have been created yet."
@@ -4842,12 +4929,12 @@ msgstr "अर्डर पूरा गरियो"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx:438
 msgid "Loading selected items..."
-msgstr ""
+msgstr "चयन गरिएका वस्तुहरू लोड हुँदै..."
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:250
 msgid "Failed to set billing address for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि बिलिङ ठेगाना सेट गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_orders/orders_.$id_.modify.tsx:271
 msgid "No shipping address"
@@ -4967,7 +5054,7 @@ msgstr "परिमार्जनहरूको सारांश"
 
 #: src/lib/components/login/reset-password-form.tsx:191
 msgid "Reset password"
-msgstr ""
+msgstr "पासवर्ड रिसेट गर्नुहोस्"
 
 #. placeholder {0}: payment.refunds.length
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:206
@@ -4999,6 +5086,10 @@ msgstr "प्रत्येक ६० सेकेन्ड"
 msgid "Failed to update customer group"
 msgstr "ग्राहक समूह अपडेट गर्न असफल"
 
+#: src/app/routes/_authenticated/index.tsx:298
+msgid "Remove widget"
+msgstr "विजेट हटाउनुहोस्"
+
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:189
 msgid "Payment metadata"
 msgstr "भुक्तानी मेटाडेटा"
@@ -5017,10 +5108,10 @@ msgstr "तालिकामा फिल्टरहरू लागू गर
 
 #: src/lib/components/shared/rich-text-editor/link-bubble-menu.tsx:144
 msgid "Link URL"
-msgstr ""
+msgstr "लिङ्क URL"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:202
+#: src/lib/framework/defaults.ts:205
 msgid "Roles"
 msgstr "भूमिकाहरू"
 
@@ -5039,7 +5130,7 @@ msgstr "चयन गरिएकासँग..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
-msgstr ""
+msgstr "आफ्नो खाताका लागि नयाँ पासवर्ड छान्नुहोस्"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations_.$id.tsx:77
 msgid "Failed to create stock location"
@@ -5056,7 +5147,7 @@ msgstr "{customerGroupName} को ग्राहक समूह सदस्�
 #. placeholder {0}: e instanceof Error ? e.message : String(e)
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:217
 msgid "Failed to set address for order: {0}"
-msgstr ""
+msgstr "अर्डरका लागि ठेगाना सेट गर्न असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:120
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:215
@@ -5132,7 +5223,7 @@ msgstr "ID"
 #: src/lib/components/shared/error-page.tsx:113
 #: src/lib/components/shared/error-page.tsx:117
 msgid "Access denied"
-msgstr ""
+msgstr "पहुँच अस्वीकृत"
 
 #: src/lib/components/shared/alerts.tsx:33
 msgid "Alerts"
@@ -5159,7 +5250,7 @@ msgstr "भेरियन्ट सफलतापूर्वक मेटि�
 #~ msgstr "चयन गरिएको लिंकको गुणहरू सम्पादन गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:75
+#: src/lib/framework/defaults.ts:78
 msgid "Sales"
 msgstr "बिक्री"
 
@@ -5167,12 +5258,12 @@ msgstr "बिक्री"
 msgid "Select a destination collection"
 msgstr "गन्तव्य संग्रह चयन गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:53
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Your latest orders"
 msgstr "तपाईंको नवीनतम अर्डरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:144
+#: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "अनुसूचित कार्यहरू"
 
@@ -5185,17 +5276,17 @@ msgid "Variants"
 msgstr "भेरियन्टहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:174
+#: src/lib/framework/defaults.ts:177
 msgid "Sellers"
 msgstr "विक्रेताहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:167
+#: src/lib/framework/defaults.ts:170
 msgid "Settings"
 msgstr "सेटिङहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:151
+#: src/lib/framework/defaults.ts:154
 msgid "Settings Store"
 msgstr "सेटिङ स्टोर"
 
@@ -5208,7 +5299,7 @@ msgid "Welcome to Vendure"
 msgstr "Vendure मा स्वागत छ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:209
+#: src/lib/framework/defaults.ts:212
 msgid "Shipping Methods"
 msgstr "ढुवानी विधिहरू"
 
@@ -5222,7 +5313,7 @@ msgstr "पहिचानकर्ता"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/fulfillment-handler-selector.tsx:51
 msgid "Select a fulfillment handler"
-msgstr ""
+msgstr "फुलफिलमेन्ट ह्यान्डलर चयन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:119
 msgid "Failed to update collection"
@@ -5231,6 +5322,10 @@ msgstr "संग्रह अपडेट गर्न असफल"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:304
 msgid "Price and tax"
 msgstr "मूल्य र कर"
+
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:124
+msgid "We couldn't load the top products"
+msgstr "हामीले शीर्ष उत्पादनहरू लोड गर्न सकेनौं"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-container.tsx:56
 msgid "Order not found"
@@ -5250,7 +5345,7 @@ msgstr "अर्डर परिमार्जन गरियो"
 
 #: src/lib/components/login/reset-password-form.tsx:143
 msgid "Reset your password"
-msgstr ""
+msgstr "आफ्नो पासवर्ड रिसेट गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-utils.tsx:59
 #: src/app/routes/_authenticated/_customers/components/customer-history/default-customer-history-components.tsx:128
@@ -5283,12 +5378,16 @@ msgstr "ट्यागहरू थप्नुहोस्..."
 msgid "{0} items selected"
 msgstr "{0} वस्तुहरू चयन गरियो"
 
+#: src/app/routes/_authenticated/index.tsx:484
+msgid "All widgets are hidden. Use the \"Add widget\" button to add them back."
+msgstr "सबै विजेटहरू लुकाइएका छन्। तिनीहरूलाई फेरि थप्न \"विजेट थप्नुहोस्\" बटन प्रयोग गर्नुहोस्।"
+
 #: src/lib/components/shared/language-selector.tsx:53
 msgid "Search languages..."
 msgstr "भाषाहरू खोज्नुहोस्..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:188
+#: src/lib/framework/defaults.ts:191
 msgid "Stock Locations"
 msgstr "स्टक स्थानहरू"
 
@@ -5326,7 +5425,7 @@ msgid "Add payment ({0})"
 msgstr "भुक्तानी थप्नुहोस् ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:130
+#: src/lib/framework/defaults.ts:133
 msgid "System"
 msgstr "प्रणाली"
 
@@ -5358,18 +5457,22 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {समूहबाट {count} ग्राहक हटाइयो} other {समूहबाट {count} ग्राहकहरू हटाइयो}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:223
+#: src/lib/framework/defaults.ts:226
 msgid "Tax Categories"
 msgstr "कर वर्गहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:230
+#: src/lib/framework/defaults.ts:233
 msgid "Tax Rates"
 msgstr "कर दरहरू"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "समूहबाट ग्राहकहरू हटाउन असफल भयो"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
+msgid "We couldn't load the latest customers"
+msgstr "हामीले पछिल्ला ग्राहकहरू लोड गर्न सकेनौं"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:273
 msgid "Failed to load global settings"
@@ -5410,6 +5513,10 @@ msgstr "पृष्ठ पूर्वनिर्धारित क्वे�
 msgid "Street Address"
 msgstr "सडक ठेगाना"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:115
+msgid "No low stock in this sample"
+msgstr "यस नमूनामा कुनै न्यून स्टक छैन"
+
 #: src/lib/components/shared/facet-value-selector.tsx:243
 msgid "No more facets"
 msgstr "थप फासेटहरू छैनन्"
@@ -5445,7 +5552,7 @@ msgstr "मूल प्रमाणीकरण रणनीति प्रय
 #: src/lib/components/login/forgot-password-form.tsx:136
 #: src/lib/components/login/reset-password-form.tsx:188
 msgid "Please wait"
-msgstr ""
+msgstr "कृपया पर्खनुहोस्"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
 msgid "Failed to assign {entityIdsLength} {entityType} to channel"
@@ -5454,6 +5561,11 @@ msgstr "च्यानलमा {entityIdsLength} {entityType} तोक्न 
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
 msgstr "पूर्वनिर्धारित भाषा"
+
+#. js-lingui-explicit-id
+#: src/lib/framework/defaults.ts:293
+msgid "Top Products Widget"
+msgstr "शीर्ष उत्पादनहरू विजेट"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:141
 msgid "Token"
@@ -5465,7 +5577,7 @@ msgstr "पूरा गर्दै..."
 
 #: src/app/routes/_authenticated/_collections/collections.tsx:524
 msgid "Search collections..."
-msgstr ""
+msgstr "संग्रहहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:148
 msgid "Add option group to product"
@@ -5592,6 +5704,10 @@ msgstr "नयाँ ढुवानी विधि"
 msgid "Every 10 seconds"
 msgstr "प्रत्येक १० सेकेन्ड"
 
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:55
+msgid "Low Stock"
+msgstr "न्यून स्टक"
+
 #: src/app/routes/_authenticated/_shipping-methods/components/price-display.tsx:17
 msgid "ex. tax:"
 msgstr "कर बाहेक:"
@@ -5615,7 +5731,7 @@ msgstr "विकल्प समूह हटाइयो"
 
 #: src/lib/components/login/login-form.tsx:101
 msgid "Forgot password?"
-msgstr ""
+msgstr "पासवर्ड बिर्सनुभयो?"
 
 #: src/app/routes/_authenticated/_orders/components/use-transition-order-to-state.tsx:130
 msgid "Transition to selected state"
@@ -5686,7 +5802,7 @@ msgstr "पहिलो नाम"
 
 #: src/lib/components/shared/product-variant-selector.tsx:83
 msgid "Add item to order"
-msgstr ""
+msgstr "अर्डरमा वस्तु थप्नुहोस्"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:58
 msgid "contains"
@@ -5694,11 +5810,11 @@ msgstr "समावेश गर्दछ"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:43
 msgid "Search shipping methods..."
-msgstr ""
+msgstr "ढुवानी विधिहरू खोज्नुहोस्..."
 
 #: src/lib/components/login/forgot-password-form.tsx:84
 msgid "Check your email"
-msgstr ""
+msgstr "आफ्नो इमेल जाँच गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_products/components/add-option-group-dialog.tsx:249
 msgid "No option groups found"
@@ -5711,7 +5827,7 @@ msgstr "कुनै वस्तुहरू फेला परेन"
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:54
 #: src/app/routes/_authenticated/_products/hooks/use-remove-option-group.ts:72
 msgid "Failed to remove option group"
-msgstr ""
+msgstr "विकल्प समूह हटाउन असफल भयो"
 
 #: src/app/routes/_authenticated/_orders/components/order-table-totals.tsx:52
 msgid "Sub total"
@@ -5724,7 +5840,7 @@ msgstr "पूरा गरिएका वस्तुहरू ({0})"
 
 #: src/app/routes/_authenticated/_products/products.tsx:102
 msgid "Create your first product"
-msgstr ""
+msgstr "आफ्नो पहिलो उत्पादन सिर्जना गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:246
 msgid "Value updated"
@@ -5738,6 +5854,7 @@ msgstr "प्रमाणित नगरिएको"
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:182
 #: src/app/routes/_authenticated/_orders/components/fulfill-order-dialog.tsx:268
 #: src/app/routes/_authenticated/_orders/components/order-table.tsx:78
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:107
 msgid "Quantity"
 msgstr "मात्रा"
 
@@ -5778,7 +5895,7 @@ msgstr "नक्कल मान \"{trimmed}\" पहिले नै अवस
 
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
-msgstr ""
+msgstr "आफ्नो पहिलो ग्राहक सिर्जना गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:231
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -5831,7 +5948,7 @@ msgstr "देश थप्नुहोस्"
 
 #: src/app/routes/_authenticated/_promotions/promotions.tsx:72
 msgid "Create your first promotion"
-msgstr ""
+msgstr "आफ्नो पहिलो प्रमोशन सिर्जना गर्नुहोस्"
 
 #: src/lib/components/data-input/custom-field-list-input.tsx:85
 msgid "Remove item"
@@ -5854,7 +5971,7 @@ msgstr "भेरियन्ट थप्न सकिएन। सुनिश
 #~ msgid "An unknown error occurred"
 #~ msgstr "अज्ञात त्रुटि भयो"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:75
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:81
 msgid "Metrics"
 msgstr "मेट्रिक्स"
 
@@ -5894,6 +6011,10 @@ msgstr "{label}"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to create shipping method"
 msgstr "ढुवानी विधि सिर्जना गर्न असफल"
+
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:46
+msgid "New registrations in the selected period"
+msgstr "चयन गरिएको अवधिमा नयाँ दर्ताहरू"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
 msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
@@ -5946,11 +6067,13 @@ msgstr "विशेषता सफलतापूर्वक अपडेट 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:174
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
-msgstr ""
+msgstr "स्ट्राइकथ्रु"
 
-#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:126
+#: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
+#: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
+#: src/lib/framework/dashboard-widget/top-products-widget/index.tsx:158
 msgid "Try selecting a different date range."
-msgstr ""
+msgstr "फरक मिति दायरा चयन गर्ने प्रयास गर्नुहोस्।"
 
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:61
 msgid "Successfully created zone"
@@ -6002,15 +6125,19 @@ msgstr "यी परिवर्तनहरूको लागि कुनै
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:72
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
-msgstr ""
+msgstr "{cancellableCount, plural, one {के तपाईं {cancellableCount} कार्य रद्द गर्न निश्चित हुनुहुन्छ? यो कार्य पूर्ववत गर्न सकिँदैन।} other {के तपाईं {cancellableCount} कार्यहरू रद्द गर्न निश्चित हुनुहुन्छ? यो कार्य पूर्ववत गर्न सकिँदैन।}}"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:100
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:101
 msgid "Total Revenue"
 msgstr "कुल राजस्व"
 
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:163
 msgid "Next Execution"
 msgstr "अर्को कार्यान्वयन"
+
+#: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:56
+msgid "Saleable stock at or below {threshold}, from a sample of {CANDIDATE_POOL_SIZE} variants"
+msgstr "{CANDIDATE_POOL_SIZE} भेरियन्टहरूको नमूनाबाट, {threshold} मा वा त्यसभन्दा तल रहेको बिक्रीयोग्य स्टक"
 
 #: src/lib/components/shared/history-timeline/history-note-checkbox.tsx:21
 msgid "Note is private"
@@ -6075,7 +6202,7 @@ msgstr "अर्डर अनुकूलन फिल्डहरू अद्
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:320
 msgid "Search entries..."
-msgstr ""
+msgstr "प्रविष्टिहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:193
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:191
@@ -6098,13 +6225,13 @@ msgstr "शीर्ष स्तरमा सार्नुहोस्"
 msgid "Clear"
 msgstr "खाली गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:84
+#: src/lib/framework/dashboard-widget/orders-summary/index.tsx:85
 msgid "Orders Summary"
 msgstr "अर्डर सारांश"
 
 #: src/app/routes/_authenticated/_stock-locations/stock-locations.tsx:33
 msgid "Search stock locations..."
-msgstr ""
+msgstr "स्टक स्थानहरू खोज्नुहोस्..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:349
 msgid "Search assets..."
@@ -6143,7 +6270,7 @@ msgstr "ठेगाना मेट्नुहोस्"
 
 #: src/lib/components/shared/error-page.tsx:130
 msgid "We couldn't load this page"
-msgstr ""
+msgstr "हामीले यो पृष्ठ लोड गर्न सकेनौं"
 
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:85
 msgid "Failed to update facet"
@@ -6155,7 +6282,7 @@ msgstr "useWidgetFilters लाई WidgetFiltersProvider भित्र प्�
 
 #: src/lib/components/shared/configurable-operation-input.tsx:104
 msgid "Edit as form"
-msgstr ""
+msgstr "फारमको रूपमा सम्पादन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_customers/components/customer-address-card.tsx:129
 msgid "Edit Address"
@@ -6171,7 +6298,7 @@ msgstr "च्यानलबाट विशेषता हटाउन अस
 
 #: src/lib/components/data-table/data-table.tsx:704
 msgid "Pagination"
-msgstr ""
+msgstr "पृष्ठाङ्कन"
 
 #: src/app/routes/_authenticated/_sellers/sellers.tsx:47
 msgid "New Seller"
@@ -6179,7 +6306,7 @@ msgstr "नयाँ विक्रेता"
 
 #: src/app/routes/_authenticated/_tax-categories/tax-categories.tsx:29
 msgid "Search tax categories..."
-msgstr ""
+msgstr "कर वर्गहरू खोज्नुहोस्..."
 
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:106
 msgid "Edit image"
@@ -6189,9 +6316,9 @@ msgstr "छवि सम्पादन गर्नुहोस्"
 msgid "Manage Variants"
 msgstr "भेरियन्टहरू व्यवस्थापन गर्नुहोस्"
 
-#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:134
+#: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:138
 msgid "There was a problem loading your latest orders."
-msgstr ""
+msgstr "तपाईंका पछिल्ला अर्डरहरू लोड गर्दा समस्या आयो।"
 
 #: src/lib/components/shared/stock-level-label.tsx:18
 msgid "Stock allocated"
@@ -6261,11 +6388,11 @@ msgstr "{groupName} मा विकल्प मान थप्नुहोस
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:261
 msgid "Failed to unset shipping address for order: {0}"
-msgstr ""
+msgstr "अर्डरको ढुवानी ठेगाना हटाउन असफल भयो: {0}"
 
 #: src/app/routes/_authenticated/_orders/orders.tsx:38
 msgid "Search orders..."
-msgstr ""
+msgstr "अर्डरहरू खोज्नुहोस्..."
 
 #: src/app/routes/_authenticated/_orders/components/add-surcharge-form.tsx:82
 #: src/app/routes/_authenticated/_orders/components/edit-order-table.tsx:167
@@ -6279,11 +6406,11 @@ msgstr "SKU"
 
 #: src/lib/components/shared/rich-text-editor/table-grid-picker.tsx:68
 msgid "Table size"
-msgstr ""
+msgstr "तालिका आकार"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:387
 msgid "More formatting options"
-msgstr ""
+msgstr "थप ढाँचा विकल्पहरू"
 
 #: src/app/routes/_authenticated/_orders/components/order-history/default-order-history-components.tsx:117
 msgid "{totalQuantity} item(s) refunded"
@@ -6318,7 +6445,7 @@ msgstr "उत्पादन भेरियन्ट सिर्जना ग
 #: src/lib/components/data-input/relation-selector.tsx:418
 #: src/lib/components/data-table/data-table.tsx:489
 msgid "Search..."
-msgstr ""
+msgstr "खोज्नुहोस्..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
 #: src/lib/components/layout/channel-switcher.tsx:130
@@ -6335,7 +6462,7 @@ msgstr "कर दर सफलतापूर्वक सिर्जना �
 
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:46
 msgid "Remove option group {name}"
-msgstr ""
+msgstr "विकल्प समूह {name} हटाउनुहोस्"
 
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:135
 msgid "Heading 6"
@@ -6405,7 +6532,7 @@ msgstr "भन्दा ठूलो छ"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:165
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:75
 msgid "Underline"
-msgstr ""
+msgstr "अन्डरलाइन"
 
 #: src/app/routes/_authenticated/_api-keys/components/api-key-secret-dialog.tsx:125
 msgid "Close"
@@ -6414,7 +6541,7 @@ msgstr "बन्द गर्नुहोस्"
 #: src/lib/components/shared/rich-text-editor/responsive-toolbar.tsx:228
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:99
 msgid "Link"
-msgstr ""
+msgstr "लिङ्क"
 
 #: src/app/routes/_authenticated/_orders/components/add-manual-payment-dialog.tsx:127
 msgid "Add payment to order"
@@ -6450,7 +6577,7 @@ msgstr "फिर्ताको लागि भुक्तानीहरू 
 
 #: src/lib/components/shared/error-page.tsx:101
 msgid "The page you are looking for does not exist or may have been moved."
-msgstr ""
+msgstr "तपाईंले खोज्नुभएको पृष्ठ अवस्थित छैन वा सारिएको हुन सक्छ।"
 
 #: src/app/common/delete-bulk-action.tsx:115
 msgid "Failed to delete {failed} {entityName}"
@@ -6501,7 +6628,7 @@ msgid "Customer registered"
 msgstr "ग्राहक दर्ता गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:244
+#: src/lib/framework/defaults.ts:247
 msgid "Zones"
 msgstr "क्षेत्रहरू"
 

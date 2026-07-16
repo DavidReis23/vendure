@@ -22,6 +22,164 @@ export interface GridLayout {
     maxH?: number;
 }
 
+const DEFAULT_COLS = 12;
+
+/**
+ * Returns true when the two grid items occupy any of the same cells.
+ */
+export function layoutsOverlap(a: GridLayout, b: GridLayout): boolean {
+    return !(
+        a.x + a.w <= b.x || // a is left of b
+        b.x + b.w <= a.x || // b is left of a
+        a.y + a.h <= b.y || // a is above b
+        b.y + b.h <= a.y // b is above a
+    );
+}
+
+/**
+ * Finds the next free position for `widget`, scanning row by row (starting from the widget's
+ * current row) and left to right. `anchor`, when provided, is treated as immovable so the
+ * widget flows around it. Falls back to placing the widget below everything else.
+ */
+export function findNextAvailablePosition(
+    widget: GridLayout,
+    occupiedLayouts: GridLayout[],
+    anchor?: GridLayout,
+    cols: number = DEFAULT_COLS,
+): GridLayout {
+    const others = occupiedLayouts
+        .filter(l => l.i !== widget.i && l.i !== anchor?.i)
+        .sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+
+    for (let y = widget.y; y < MAX_SEARCH_ROWS; y++) {
+        for (let x = 0; x <= cols - widget.w; x++) {
+            const testLayout = { ...widget, x, y };
+            const hasOverlap = others.some(layout => layoutsOverlap(testLayout, layout));
+            if (!hasOverlap && (!anchor || !layoutsOverlap(testLayout, anchor))) {
+                return testLayout;
+            }
+        }
+    }
+
+    const maxY = Math.max(...others.map(l => l.y + l.h), 0);
+    return { ...widget, x: 0, y: maxY };
+}
+
+/**
+ * Reflows the grid around a priority `anchor` item (a dragged or freshly-inserted widget):
+ * the anchor keeps its position, and every other item overlapping it is moved to the next
+ * free slot. This is the shared collision-resolution used both during drag and on insertion.
+ */
+export function reflowAroundAnchor(
+    layouts: GridLayout[],
+    anchor: GridLayout,
+    cols: number = DEFAULT_COLS,
+): GridLayout[] {
+    const result = layouts.map(l => (l.i === anchor.i ? anchor : l));
+    for (let i = 0; i < result.length; i++) {
+        if (result[i].i !== anchor.i && layoutsOverlap(anchor, result[i])) {
+            result[i] = findNextAvailablePosition(result[i], result, anchor, cols);
+        }
+    }
+    return result;
+}
+
+/**
+ * Inserts `item` at its desired position and reflows every overlapping widget out of the way,
+ * so a re-added widget reclaims its saved space instead of overlapping or being dumped at the
+ * next free slot. The returned array preserves input order with `item` appended.
+ */
+export function insertWithReflow(
+    layouts: GridLayout[],
+    item: GridLayout,
+    cols: number = DEFAULT_COLS,
+): GridLayout[] {
+    return reflowAroundAnchor([...layouts, item], item, cols);
+}
+
+/**
+ * Vertically compacts the layout: every widget floats up as far as it can without colliding
+ * with a widget already placed above it, filling the space freed when a widget is removed.
+ * Horizontal positions are preserved. The returned array preserves the input order.
+ */
+export function compactLayouts(layouts: GridLayout[]): GridLayout[] {
+    const sorted = [...layouts].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+    const compacted: GridLayout[] = [];
+    for (const item of sorted) {
+        let moved = { ...item };
+        while (moved.y > 0) {
+            const test = { ...moved, y: moved.y - 1 };
+            if (compacted.some(other => layoutsOverlap(test, other))) break;
+            moved = test;
+        }
+        compacted.push(moved);
+    }
+    return layouts.map(l => compacted.find(c => c.i === l.i) ?? l);
+}
+
+/**
+ * Grows already-placed widgets to fill the empty cells left by the packing, so rows are padded
+ * out and holes are minimized. Each widget is expanded — first rightward, then downward — one
+ * cell at a time as far as it can without overlapping another widget, staying within its own
+ * `maxW`/`maxH` bounds (a widget with no bound may grow to the grid edge / bottom of the packed
+ * area). Positions and the overall packed height are never changed, and widgets are never shrunk
+ * below their input size, so the result is never worse-packed than the plain placement. Because
+ * growth only ever adds cells (never moves a widget), this converges to a fixed point.
+ */
+function growToFill(placed: GridLayout[], cols: number): GridLayout[] {
+    // Bounded by the packed height so tidying never makes the grid taller.
+    const maxRow = Math.max(0, ...placed.map(l => l.y + l.h));
+    const items = placed.map(l => ({ ...l }));
+    const order = [...items].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+    let changed = true;
+    while (changed) {
+        changed = false;
+        for (const item of order) {
+            const others = items.filter(other => other.i !== item.i);
+            const maxW = item.maxW ?? cols;
+            while (
+                item.w + 1 <= maxW &&
+                item.x + item.w + 1 <= cols &&
+                !others.some(other => layoutsOverlap({ ...item, w: item.w + 1 }, other))
+            ) {
+                item.w += 1;
+                changed = true;
+            }
+            const maxH = item.maxH ?? Number.POSITIVE_INFINITY;
+            while (
+                item.h + 1 <= maxH &&
+                item.y + item.h + 1 <= maxRow &&
+                !others.some(other => layoutsOverlap({ ...item, h: item.h + 1 }, other))
+            ) {
+                item.h += 1;
+                changed = true;
+            }
+        }
+    }
+    return items;
+}
+
+/**
+ * Re-arranges every widget into the tightest gap-free arrangement. Widgets are first placed one
+ * at a time in reading order (top-to-bottom, then left-to-right), each at the topmost-then-
+ * leftmost slot where it fits without overlapping an already-placed widget. Widgets are then
+ * grown within their own `maxW`/`maxH` bounds to fill the leftover gaps, so the
+ * packed area ends up as full as possible. The result is deterministic, has no overlaps, respects
+ * every widget's size bounds strictly, is never worse-packed (nor taller) than the input, and is
+ * idempotent — tidying an already-tidy layout is a no-op. The returned array preserves the input
+ * order.
+ */
+export function tidyLayouts(layouts: GridLayout[], cols: number = DEFAULT_COLS): GridLayout[] {
+    const ordered = [...layouts].sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
+    const placed: GridLayout[] = [];
+    for (const item of ordered) {
+        // Scanning from y=0 finds the globally topmost-leftmost free slot, for stronger compaction.
+        placed.push(findNextAvailablePosition({ ...item, x: 0, y: 0 }, placed, undefined, cols));
+    }
+    const grown = growToFill(placed, cols);
+    return layouts.map(l => grown.find(p => p.i === l.i) ?? l);
+}
+
 export interface GridLayoutProps {
     children: React.ReactElement[];
     layouts: GridLayout[];
@@ -228,75 +386,12 @@ export function GridLayout({
     const maxRow = Math.max(...effectiveLayouts.map(l => l.y + l.h), MIN_CONTAINER_ROWS);
     const containerHeight = maxRow * rowHeight + (maxRow - 1) * effectiveGutter;
 
-    // Helper function to check if two layouts overlap
-    const layoutsOverlap = (a: GridLayout, b: GridLayout): boolean => {
-        return !(
-            a.x + a.w <= b.x || // a is left of b
-            b.x + b.w <= a.x || // b is left of a
-            a.y + a.h <= b.y || // a is above b
-            b.y + b.h <= a.y // b is above a
-        );
-    };
-
-    // Helper function to find the next available position for a widget
-    const findNextAvailablePosition = (
-        widget: GridLayout,
-        occupiedLayouts: GridLayout[],
-        draggedWidget?: GridLayout,
-    ): GridLayout => {
-        const sortedLayouts = [...occupiedLayouts]
-            .filter(l => l.i !== widget.i && l.i !== draggedWidget?.i)
-            .sort((a, b) => (a.y === b.y ? a.x - b.x : a.y - b.y));
-
-        // Try to place widget in rows, starting from its current position
-        for (let y = widget.y; y < MAX_SEARCH_ROWS; y++) {
-            for (let x = 0; x <= cols - widget.w; x++) {
-                const testLayout = { ...widget, x, y };
-
-                // Check if this position overlaps with any other widget
-                const hasOverlap = sortedLayouts.some(layout => layoutsOverlap(testLayout, layout));
-
-                // Also check overlap with dragged widget if provided
-                if (!hasOverlap && (!draggedWidget || !layoutsOverlap(testLayout, draggedWidget))) {
-                    return testLayout;
-                }
-            }
-        }
-
-        // Fallback: place at the bottom
-        const maxY = Math.max(...sortedLayouts.map(l => l.y + l.h), 0);
-        return { ...widget, x: 0, y: maxY };
-    };
-
     const handleItemLayoutChange = useCallback(
         (newLayout: GridLayout) => {
             if (onLayoutChange && !isMobile) {
                 // Disable layout changes on mobile
-                const newLayouts = [...layouts];
-                const draggedIndex = layouts.findIndex(l => l.i === newLayout.i);
-
-                if (draggedIndex === -1) return;
-
-                // Update the dragged widget's position
-                newLayouts[draggedIndex] = newLayout;
-
-                // Find widgets that overlap with the new position
-                const overlappingWidgets: number[] = [];
-
-                for (let i = 0; i < newLayouts.length; i++) {
-                    if (i !== draggedIndex && layoutsOverlap(newLayout, newLayouts[i])) {
-                        overlappingWidgets.push(i);
-                    }
-                }
-
-                // Move overlapping widgets to new positions
-                for (const index of overlappingWidgets) {
-                    const widgetToMove = newLayouts[index];
-                    const newPosition = findNextAvailablePosition(widgetToMove, newLayouts, newLayout);
-                    newLayouts[index] = newPosition;
-                }
-
-                onLayoutChange(newLayouts);
+                if (!layouts.some(l => l.i === newLayout.i)) return;
+                onLayoutChange(reflowAroundAnchor(layouts, newLayout, cols));
             }
         },
         [layouts, onLayoutChange, cols, isMobile],

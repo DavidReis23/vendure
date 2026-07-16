@@ -7,6 +7,7 @@ import {
 import { Button } from '@/vdb/components/ui/button.js';
 import { ErrorState } from '@/vdb/components/ui/state-views.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
+import { INSIGHTS_WIDGET_QUERY_KEY } from '@/vdb/hooks/use-insights-refresh.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { useWidgetFilters } from '@/vdb/hooks/use-widget-filters.js';
 import { useLingui } from '@lingui/react/macro';
@@ -79,9 +80,11 @@ export function LatestOrdersWidget() {
                             },
                         },
                     })}
-                    // transformVariables output is not part of the query key, so
-                    // the date range must be appended for range changes to refetch.
+                    // transformVariables output is not part of the query key, so the date range
+                    // must be appended for range changes to refetch. INSIGHTS_WIDGET_QUERY_KEY is
+                    // prepended so a page-level refresh, which invalidates that prefix, refetches this too.
                     transformQueryKey={queryKey => [
+                        INSIGHTS_WIDGET_QUERY_KEY,
                         ...queryKey,
                         dateRange.from.toISOString(),
                         dateRange.to.toISOString(),

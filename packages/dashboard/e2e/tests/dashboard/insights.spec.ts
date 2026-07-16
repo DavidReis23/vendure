@@ -19,8 +19,8 @@ test.describe('Dashboard Insights', () => {
         await page.goto('/');
         await expect(page.getByTestId('page-heading')).toBeVisible();
 
-        // Click "Edit Layout" button
-        const editButton = page.getByRole('button', { name: 'Edit Layout' });
+        // Click the icon-only "Edit layout" button
+        const editButton = page.getByRole('button', { name: 'Edit layout' });
         await expect(editButton).toBeVisible();
         await editButton.click();
 
@@ -30,7 +30,7 @@ test.describe('Dashboard Insights', () => {
         // Click "Save Layout" to exit edit mode
         await page.getByRole('button', { name: 'Save Layout' }).click();
 
-        // Button should return to "Edit Layout"
-        await expect(page.getByRole('button', { name: 'Edit Layout' })).toBeVisible();
+        // Button should return to the "Edit layout" icon button
+        await expect(page.getByRole('button', { name: 'Edit layout' })).toBeVisible();
     });
 });
