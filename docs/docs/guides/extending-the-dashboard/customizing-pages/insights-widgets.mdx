@@ -64,10 +64,10 @@ This keeps refreshing explicit and per-widget: the dashboard deliberately does n
 window focus, so a widget whose key omits the prefix simply won't participate in page-level
 refreshes.
 
-:::note Be honest about sampled data
+:::note[Be honest about sampled data]
 Some data cannot be aggregated or sorted efficiently by the API (for example, best sellers or
-low-stock variants), so a widget may only inspect a bounded sample — e.g. the most recent 100
-orders, or the first 100 variants — rather than the full data set. When your widget samples,
+low-stock variants), so a widget may only inspect a bounded sample (e.g. the most recent 100
+orders, or the first 100 variants) rather than the full data set. When your widget samples,
 state the basis in its `description` (or a footer) and avoid absolute claims. The built-in
 **Top Products** and **Low Stock** widgets follow this: Top Products aggregates only orders in
 the active channel's default currency from the most recent 100 placed orders, and Low Stock
@@ -100,15 +100,15 @@ Your widget should now be available on the Insights page:
 
 ![Custom widget](./custom-widget.webp)
 
-:::info Deprecation notice
+:::info[Deprecation notice]
 The top-level `widgets` option is deprecated in favour of `insights.widgets`. It still works and
 is merged with `insights.widgets`, but will be removed in the next major version.
 :::
 
 ## Excluding widgets
 
-You can completely remove a widget from the Insights page — including built-in widgets or widgets
-registered by other plugins — using `insights.excludeWidgets`. Excluded widgets are never rendered
+You can completely remove a widget from the Insights page, including built-in widgets or widgets
+registered by other plugins, using `insights.excludeWidgets`. Excluded widgets are never rendered
 and never appear in the widget picker, and this cannot be overridden by a user setting.
 
 ```tsx title="index.tsx"
@@ -131,7 +131,7 @@ individual user. Declare the defaults with `defaultConfig` on the widget definit
 and update the effective config inside your widget component with the `useWidgetConfig()` hook.
 
 The effective config returned by the hook is your `defaultConfig` merged with any per-instance
-overrides the user has persisted. The setter merges a partial update and persists it immediately —
+overrides the user has persisted. The setter merges a partial update and persists it immediately,
 independently of the "Save Layout" action.
 
 ```tsx title="custom-widget.tsx"
@@ -196,8 +196,8 @@ defineDashboardExtension({
 });
 ```
 
-In edit mode, multi-instance widgets are always offered in the "Add widget" picker — even when an
-instance is already on the page — and each click adds a fresh instance at the next free grid slot.
+In edit mode, multi-instance widgets are always offered in the "Add widget" picker, even when an
+instance is already on the page, and each click adds a fresh instance at the next free grid slot.
 Removing one instance leaves the others untouched; removing the last instance hides the widget just
 like a single-instance widget.
 
@@ -205,7 +205,7 @@ like a single-instance widget.
 
 Alongside the built-in date range picker, you can register your own global filters via
 `insights.filters`. A filter renders a component in the Insights page action bar, and its value is
-shared with **every** widget on the page. This lets several widgets filter on a common constraint —
+shared with **every** widget on the page. This lets several widgets filter on a common constraint,
 for example a selected warehouse or sales channel.
 
 A filter definition has an `id`, a `component`, and an optional `defaultValue`. The component is a
@@ -271,6 +271,6 @@ export function CustomWidget() {
 }
 ```
 
-Changing a filter re-renders every consuming widget. Filter state is session-only — it is not
+Changing a filter re-renders every consuming widget. Filter state is session-only: it is not
 persisted across reloads. Filter ids must be unique; registering two filters with the same id logs a
 warning and ignores the duplicate.
