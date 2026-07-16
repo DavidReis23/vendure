@@ -1,0 +1,24 @@
+import { ScheduledTask } from '@vendure/core';
+
+import { McpOperationsService } from '../services/mcp-operations.service';
+
+/**
+ * @description
+ * A {@link ScheduledTask} that deletes expired MCP tool-call logs — rows older than the configured
+ * `logging.ttlDays` retention window. The schedule defaults to daily at 02:30AM.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export const mcpToolCallLogRetentionTask = new ScheduledTask({
+    id: 'mcp-tool-call-log-retention',
+    description: 'Deletes expired MCP tool call logs',
+    schedule: cron => cron.everyDayAt(2, 30),
+    params: {},
+    async execute({ injector, scheduledContext }) {
+        const deletedCount = await injector
+            .get(McpOperationsService)
+            .deleteExpiredToolCallLogs(scheduledContext);
+        return { deletedCount };
+    },
+});

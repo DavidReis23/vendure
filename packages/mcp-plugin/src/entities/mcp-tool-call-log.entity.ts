@@ -8,9 +8,7 @@ import { McpOauthGrant } from './mcp-oauth-grant.entity';
 
 /**
  * @description
- * Audit record of a single MCP tool call. Input and output are stored as JSON;
- * PII redaction is applied at write time. Rows are retained even if the associated
- * grant or OAuth client is later deleted.
+ * Audit record of a single MCP tool call.
  *
  * @docsCategory core plugins/McpPlugin
  * @since 3.8.0

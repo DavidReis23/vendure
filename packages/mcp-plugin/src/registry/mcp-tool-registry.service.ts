@@ -8,7 +8,7 @@ import {
 } from '@modelcontextprotocol/server';
 import { Inject, Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
-import { Logger, Permission, RequestContext, SettingsStoreService } from '@vendure/core';
+import { Instrument, Logger, Permission, RequestContext, SettingsStoreService } from '@vendure/core';
 import { McpJsonSchema, McpTool, McpToolBehavior, McpToolMetadata, McpToolset } from '@vendure/mcp-sdk';
 
 import { loggerCtx, MCP_PLUGIN_OPTIONS, MCP_TOOL_TOGGLES_STORE_KEY } from '../constants';
@@ -31,6 +31,7 @@ const NO_ARGS_SCHEMA: McpJsonSchema = { type: 'object', properties: {}, addition
  * @since 3.8.0
  */
 @Injectable()
+@Instrument()
 export class McpToolRegistryService implements OnApplicationBootstrap {
     private readonly tools = new Map<string, McpRegisteredTool>();
     private discoveryMetaTools: McpRegisteredTool[] = [];

@@ -496,4 +496,14 @@ describe('McpToolRegistryService', () => {
             warn.mockRestore();
         });
     });
+
+    describe('instrumentation (@Instrument())', () => {
+        it('constructs and dispatches callTool with instrumentation disabled and no telemetry plugin', async () => {
+            const { service, operationsService } = build([wrapper(shopTool())]);
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'get_thing', {});
+            expect(result.isError).toBeUndefined();
+            expect(operationsService.logToolCall).toHaveBeenCalledOnce();
+        });
+    });
 });

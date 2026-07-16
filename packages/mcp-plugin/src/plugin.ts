@@ -1,6 +1,12 @@
 import { OnApplicationBootstrap, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
-import { PluginCommonModule, ProcessContext, SettingsStoreScopes, VendurePlugin } from '@vendure/core';
+import {
+    Logger,
+    PluginCommonModule,
+    ProcessContext,
+    SettingsStoreScopes,
+    VendurePlugin,
+} from '@vendure/core';
 
 import {
     DEFAULT_OAUTH_OPTIONS,
@@ -9,6 +15,7 @@ import {
     MCP_PLUGIN_OPTIONS,
     MCP_SETTINGS_NAMESPACE,
     MCP_TOOL_TOGGLES_FIELD_NAME,
+    loggerCtx,
     mcpServerPermission,
 } from './constants';
 import {
@@ -22,6 +29,7 @@ import { McpOauthController } from './oauth/oauth.controller';
 import { McpOauthService } from './oauth/oauth.service';
 import { McpToolRegistryService } from './registry/mcp-tool-registry.service';
 import { McpOperationsService } from './services/mcp-operations.service';
+import { mcpToolCallLogRetentionTask } from './tasks/mcp-tool-call-log-retention.task';
 import { mcpBuiltInToolProviders } from './tools/built-in/providers';
 import { McpTransportController } from './transport/mcp-transport.controller';
 import { McpPluginOptions, McpRateLimitOptions } from './types';
@@ -74,6 +82,11 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
                 },
             ],
         };
+        config.schedulerOptions.tasks.push(
+            mcpToolCallLogRetentionTask.configure({
+                schedule: McpPlugin.options.logging?.retentionSchedule,
+            }),
+        );
         return config;
     },
     compatibility: '^3.8.0',
@@ -89,6 +102,12 @@ export class McpPlugin implements OnApplicationBootstrap {
             oauth: options.oauth && { ...DEFAULT_OAUTH_OPTIONS, ...options.oauth },
             rateLimits: McpPlugin.resolveRateLimits(options.rateLimits),
             dnsRebinding: options.dnsRebinding,
+            logging: {
+                ttlDays: options.logging?.ttlDays ?? 30,
+                capture: options.logging?.capture ?? 'metadata',
+                redact: options.logging?.redact,
+                retentionSchedule: options.logging?.retentionSchedule,
+            },
         };
         return McpPlugin;
     }
@@ -113,6 +132,15 @@ export class McpPlugin implements OnApplicationBootstrap {
         // Only the main server serves the OAuth routes, so only it needs this check.
         if (!this.processContext.isServer) {
             return;
+        }
+        const logging = McpPlugin.options.logging;
+        if (logging?.capture === 'full' && !logging.redact) {
+            Logger.warn(
+                'Full MCP logging is enabled without redaction. ' +
+                    'This may store sensitive data. Add logging.redact to sanitize logs, ' +
+                    'or switch to metadata-only logging.',
+                loggerCtx,
+            );
         }
         const oauth = McpPlugin.options.oauth;
         if (!oauth) {

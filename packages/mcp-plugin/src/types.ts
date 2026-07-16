@@ -1,5 +1,5 @@
 import type { StandardSchemaWithJSON, ToolAnnotations } from '@modelcontextprotocol/server';
-import { RequestContext } from '@vendure/core';
+import { RequestContext, type ScheduledTaskConfig } from '@vendure/core';
 import { McpJsonSchema, McpToolBehavior, McpToolHandler, McpToolMetadata } from '@vendure/mcp-sdk';
 import type { McpOauthGrant } from './entities/mcp-oauth-grant.entity';
 
@@ -144,6 +144,74 @@ export interface McpDnsRebindingOptions {
     allowedOrigins?: string[];
 }
 
+export type McpRetentionSchedule = Exclude<ScheduledTaskConfig['schedule'], string>;
+
+/** How much of each MCP tool call {@link McpLoggingOptions.capture} persists. */
+export type McpLogCapture = 'metadata' | 'full';
+
+/**
+ * @description
+ * Operator-supplied redaction for {@link McpLoggingOptions.redact}.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export type McpLogRedactFn = (entry: { toolName: string; input: unknown; output: unknown }) => {
+    input: unknown;
+    output: unknown;
+};
+
+/**
+ * @description
+ * Controls how MCP tool calls are logged and retained. Every call is recorded as an
+ * {@link McpToolCallLog} row and published as an `McpToolCallEvent`.
+ *
+ * @docsCategory core plugins/McpPlugin
+ * @since 3.8.0
+ */
+export interface McpLoggingOptions {
+    /**
+     * How long to keep tool-call logs before they are automatically deleted.
+     *
+     * @default 30 (days)
+     */
+    ttlDays?: number;
+
+    /**
+     * Controls how much data from each tool call is stored.
+     *
+     * - `'metadata'`: Stores only high-level info (tool name, actor, status, duration, IDs).
+     *
+     * - `'full'`: Also stores the full `input` and `output` of each call.
+     *   This may include sensitive data. Provide `redact` to sanitize it,
+     *   otherwise data is stored as-is.
+     *
+     * @default 'metadata'
+     */
+    capture?: McpLogCapture;
+
+    /**
+     * Optional function to sanitize a call's `input` and `output`
+     * before they are stored. Only applies when `capture` is `'full'`.
+     *
+     * @example
+     * ```ts
+     * redact: ({ input, output }) => ({
+     *   input,
+     *   output: { ...output, customer: undefined }
+     * })
+     * ```
+     */
+    redact?: McpLogRedactFn;
+
+    /**
+     * Cron-style schedule for the cleanup job that deletes expired logs.
+     *
+     * @default cron => cron.everyDayAt(2, 30)
+     */
+    retentionSchedule?: McpRetentionSchedule;
+}
+
 /**
  * @description
  * Options passed to {@link McpPlugin.init}.
@@ -175,6 +243,12 @@ export interface McpPluginOptions {
      * DNS-rebinding protection for the MCP transport. See {@link McpDnsRebindingOptions}.
      */
     dnsRebinding?: McpDnsRebindingOptions;
+    /**
+     * @description
+     * Tool-call logging and retention. Sensible defaults apply when omitted; see
+     * {@link McpLoggingOptions}.
+     */
+    logging?: McpLoggingOptions;
 }
 
 /**
