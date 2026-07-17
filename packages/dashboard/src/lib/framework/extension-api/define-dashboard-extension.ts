@@ -9,11 +9,11 @@ import {
     registerDetailFormExtensions,
     registerFormComponentExtensions,
     registerHistoryEntryComponents,
+    registerInsightsExtensions,
     registerLayoutExtensions,
     registerLoginExtensions,
     registerNavigationExtensions,
     registerToolbarExtensions,
-    registerWidgetExtensions,
 } from './logic/index.js';
 
 globalRegistry.register('extensionSourceChangeCallbacks', new Set<() => void>());
@@ -106,8 +106,8 @@ export function defineDashboardExtension(extension: DashboardExtension) {
         // Register layout extensions (action bar items and page blocks)
         registerLayoutExtensions(extension.actionBarItems, extension.pageBlocks);
 
-        // Register widget extensions
-        registerWidgetExtensions(extension.widgets);
+        // Register insights extensions; deprecated top-level `widgets` is merged with `insights.widgets`.
+        registerInsightsExtensions(extension.insights, extension.widgets);
 
         // Register form component extensions for custom fields and configurable operation arguments
         registerFormComponentExtensions(extension.customFormComponents);
