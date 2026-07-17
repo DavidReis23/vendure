@@ -1,21 +1,26 @@
+import { ChannelSelector } from '@/vdb/components/shared/channel-selector.js';
 import { ErrorPage } from '@/vdb/components/shared/error-page.js';
 import { FormFieldWrapper } from '@/vdb/components/shared/form-field-wrapper.js';
 import { RoleSelector } from '@/vdb/components/shared/role-selector.js';
 import { Button } from '@/vdb/components/ui/button.js';
 import { Input } from '@/vdb/components/ui/input.js';
+import { Label } from '@/vdb/components/ui/label.js';
 import { NEW_ENTITY_PATH } from '@/vdb/constants.js';
-import {    CustomFieldsPageBlock,
+import { ActionBarItem } from '@/vdb/framework/layout-engine/action-bar-item-wrapper.js';
+import {
+    CustomFieldsPageBlock,
     Page,
     PageActionBar,
     PageBlock,
     PageLayout,
     PageTitle,
 } from '@/vdb/framework/layout-engine/page-layout.js';
-import { ActionBarItem } from '@/vdb/framework/layout-engine/action-bar-item-wrapper.js';
 import { detailPageRouteLoader } from '@/vdb/framework/page/detail-page-route-loader.js';
 import { useDetailPage } from '@/vdb/framework/page/use-detail-page.js';
+import { useExperimentalFeature } from '@/vdb/hooks/use-server-config.js';
 import { Trans, useLingui } from '@lingui/react/macro';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
 import { toast } from 'sonner';
 import {
     administratorDetailDocument,
@@ -92,6 +97,13 @@ function AdministratorDetailPage() {
     const name = `${entity?.firstName} ${entity?.lastName}`;
     const roleIds = form.watch('roleIds');
 
+    // Experimental channel-scoped role assignments (`experimental.roleAssignments`):
+    // the channel picker is only rendered when the server has the flag enabled.
+    // Selections are not yet persisted, and the effective channels are resolved by the
+    // backend — this state exists only so the control is usable until the API lands.
+    const roleAssignmentsEnabled = useExperimentalFeature('roleAssignments');
+    const [assignmentChannelIds, setAssignmentChannelIds] = useState<string[]>([]);
+
     return (
         <Page pageId={pageId} form={form} submitHandler={submitHandler} entity={entity}>
             <PageTitle>{creatingNewEntity ? <Trans>New administrator</Trans> : name}</PageTitle>
@@ -148,6 +160,26 @@ function AdministratorDetailPage() {
                             />
                         )}
                     />
+                    {roleAssignmentsEnabled && (
+                        <div className="md:grid md:grid-cols-2 gap-4 my-4">
+                            <div className="space-y-2">
+                                <Label>
+                                    <Trans>Channels</Trans>
+                                </Label>
+                                <ChannelSelector
+                                    multiple={true}
+                                    value={assignmentChannelIds}
+                                    onChange={setAssignmentChannelIds}
+                                />
+                                <p className="text-sm text-muted-foreground">
+                                    <Trans>
+                                        The channels on which the selected roles apply to this administrator.
+                                        Experimental: selections are not yet persisted.
+                                    </Trans>
+                                </p>
+                            </div>
+                        </div>
+                    )}
                     <RolePermissionsDisplay value={roleIds ?? []} />
                 </PageBlock>
             </PageLayout>
