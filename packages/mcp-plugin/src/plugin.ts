@@ -8,6 +8,8 @@ import {
     VendurePlugin,
 } from '@vendure/core';
 
+import { adminApiExtensions } from './api/api-extensions';
+import { McpAdminResolver } from './api/mcp-admin.resolver';
 import {
     DEFAULT_OAUTH_OPTIONS,
     DEFAULT_RATE_LIMIT_OPTIONS,
@@ -66,6 +68,10 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         ...mcpBuiltInToolProviders,
     ],
     entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpOauthGrant, McpToolCallLog],
+    adminApiExtensions: {
+        schema: adminApiExtensions,
+        resolvers: [McpAdminResolver],
+    },
     configuration: config => {
         config.authOptions.customPermissions.push(mcpServerPermission);
         config.settingsStoreFields = {

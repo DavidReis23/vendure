@@ -3,6 +3,7 @@ import {
     AuthenticatedSession,
     ChannelService,
     ID,
+    idsAreEqual,
     RequestContext,
     RequestContextService,
     Session,
@@ -253,6 +254,13 @@ export class McpOauthService {
             .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { id: grantId } });
         if (!grant) {
+            return false;
+        }
+        if (
+            ctx.channelId != null &&
+            grant.channelId != null &&
+            !idsAreEqual(grant.channelId, ctx.channelId)
+        ) {
             return false;
         }
         if (!grant.revokedAt) {

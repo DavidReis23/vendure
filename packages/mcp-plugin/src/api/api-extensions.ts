@@ -1,0 +1,96 @@
+import { gql } from 'graphql-tag';
+
+/**
+ * Admin API for the MCP server: list tools and OAuth grants, page through the
+ * tool-call log, read usage stats, and run the maintenance mutations (toggle a
+ * tool, revoke a grant, delete old logs).
+ */
+export const adminApiExtensions = gql`
+    "A registered tool and whether it is currently enabled."
+    type McpToolInfo {
+        name: String!
+        toolset: String!
+        description: String!
+        pluginSource: String!
+        readOnly: Boolean!
+        requiresConfirmation: Boolean!
+        enabled: Boolean!
+    }
+
+    "An active OAuth grant, summarised for the admin overview."
+    type McpOauthGrantInfo {
+        id: ID!
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        actorId: String
+        actorType: String
+        channelId: ID
+        oauthClientName: String
+        lastActivityAt: DateTime!
+        expiresAt: DateTime!
+    }
+
+    """
+    One logged tool call. input and output are null unless the server is set to
+    capture full call bodies.
+    """
+    type McpToolCallLog implements Node {
+        id: ID!
+        createdAt: DateTime!
+        updatedAt: DateTime!
+        grantId: ID
+        actor: String
+        actorType: String!
+        channelId: ID
+        toolName: String!
+        pluginSource: String
+        input: JSON
+        output: JSON
+        durationMs: Int
+        status: String!
+        oauthClientId: ID
+    }
+
+    type McpToolCallLogList implements PaginatedList {
+        items: [McpToolCallLog!]!
+        totalItems: Int!
+    }
+
+    type McpTopTool {
+        toolName: String!
+        count: Int!
+    }
+
+    type McpStats {
+        totalCalls: Int!
+        successRate: Float!
+        errorRate: Float!
+        p50LatencyMs: Int
+        p95LatencyMs: Int
+        callsPerHour: Float!
+        topTools: [McpTopTool!]!
+    }
+
+    extend type Query {
+        "Every registered tool with its enabled state."
+        mcpTools: [McpToolInfo!]!
+        "OAuth grants that are still active, newest activity first."
+        mcpOauthGrants: [McpOauthGrantInfo!]!
+        "The tool-call log, paginated and filterable."
+        mcpToolCallLogs(options: McpToolCallLogListOptions): McpToolCallLogList!
+        "Usage stats for a time window. timeRange is one of 1h, 24h, 7d, 30d (default 24h); other values are rejected."
+        mcpStats(timeRange: String): McpStats!
+    }
+
+    extend type Mutation {
+        "Enable or disable a tool. Returns the tool with its new state."
+        setMcpToolEnabled(toolName: String!, toolset: String!, enabled: Boolean!): McpToolInfo!
+        "Revoke an OAuth grant. Returns false if no grant has that id."
+        revokeMcpOauthGrant(id: ID!): Boolean!
+        "Delete tool-call logs past the retention window. Returns how many were deleted."
+        removeExpiredMcpToolCallLogs: Int!
+    }
+
+    # Auto-generated at runtime
+    input McpToolCallLogListOptions
+`;

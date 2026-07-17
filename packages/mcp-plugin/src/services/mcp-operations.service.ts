@@ -222,18 +222,21 @@ export class McpOperationsService {
         }
     }
 
-    async deleteExpiredToolCallLogs(ctx: RequestContext): Promise<number> {
+    async deleteExpiredToolCallLogs(ctx: RequestContext, channelId?: ID | null): Promise<number> {
         const ttlDays = this.options.logging?.ttlDays ?? 30;
         const cutoff = new Date(Date.now() - ttlDays * 86_400_000);
         const repository = this.connection.getRepository(ctx, McpToolCallLog);
         let totalDeleted = 0;
         for (;;) {
-            const expired = await repository
+            const query = repository
                 .createQueryBuilder('log')
                 .select('log.id', 'id')
                 .where('log.createdAt < :cutoff', { cutoff })
-                .limit(RETENTION_DELETE_BATCH_SIZE)
-                .getRawMany<{ id: ID }>();
+                .limit(RETENTION_DELETE_BATCH_SIZE);
+            if (channelId != null) {
+                query.andWhere('log.channelId = :channelId', { channelId });
+            }
+            const expired = await query.getRawMany<{ id: ID }>();
             if (expired.length === 0) {
                 break;
             }
