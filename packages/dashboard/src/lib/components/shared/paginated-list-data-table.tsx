@@ -228,15 +228,15 @@ export interface PaginatedListDataTableProps<
     disableViewOptions?: boolean;
     /**
      * @description
-     * When true, suppresses the saved-views tabs even when a page context and
-     * filter handler are present. Useful for tables embedded in a detail page,
-     * where saved views (keyed only by page id and block id) would otherwise be
-     * shared across every entity showing that block. Filtering and column
-     * customization are unaffected.
+     * Enables saved-view controls for this table. This should be used for tables
+     * which represent a whole data set, such as top-level list pages. It should
+     * not be enabled for embedded tables or tables whose query is already scoped
+     * by a predefined filter.
      *
+     * @default false
      * @since 3.8.0
      */
-    hideViewsControls?: boolean;
+    enableViews?: boolean;
     transformData?: (data: PaginatedListItemFields<T>[]) => PaginatedListItemFields<T>[];
     setTableOptions?: (table: TableOptions<any>) => TableOptions<any>;
     /**
@@ -451,7 +451,7 @@ export function PaginatedListDataTable<
     rowActions,
     bulkActions,
     disableViewOptions,
-    hideViewsControls,
+    enableViews,
     setTableOptions,
     transformData,
     registerRefresher,
@@ -599,7 +599,7 @@ export function PaginatedListDataTable<
                     defaultColumnVisibility={columnVisibility}
                     facetedFilters={facetedFilters}
                     disableViewOptions={disableViewOptions}
-                    hideViewsControls={hideViewsControls}
+                    enableViews={enableViews}
                     bulkActions={bulkActions}
                     setTableOptions={setTableOptions}
                     onRefresh={refetchPaginatedList}

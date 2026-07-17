@@ -345,7 +345,7 @@ msgstr "Czy na pewno chcesz usunąć ten wariant?"
 msgid "Failed to create administrator"
 msgstr "Nie udało się utworzyć administratora"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "Nie"
@@ -469,8 +469,8 @@ msgstr "Zwróć na stan"
 msgid "Visibility"
 msgstr "Widoczność"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "Warianty produktu"
 
@@ -964,7 +964,7 @@ msgstr "Usunięto wiersz zamówienia"
 msgid "Content:"
 msgstr "Zawartość:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "Klucz"
 
@@ -1195,8 +1195,8 @@ msgstr "Zamówienie robocze"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Wpisz swój adres e-mail, a wyślemy Ci link do zresetowania hasła"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "Zakres"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "Zmień rozmiar obrazu od prawej"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "Ustawienia sklepu"
 
@@ -2182,9 +2182,9 @@ msgstr "Nie udało się zaktualizować notatki"
 msgid "Refund shipping"
 msgstr "Zwróć koszt wysyłki"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "Tylko do odczytu"
 
@@ -2201,7 +2201,7 @@ msgid "Test Shipping Method"
 msgstr "Testuj metodę wysyłki"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "Wartości aspektów"
 
@@ -2891,11 +2891,11 @@ msgstr "Przelicz wysyłkę"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "Zasoby"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "Spowoduje to usunięcie wszystkich grup opcji z tego produktu i powrót do wyboru konfiguracji wariantów."
 
@@ -2905,7 +2905,7 @@ msgstr "Spowoduje to usunięcie wszystkich grup opcji z tego produktu i powrót 
 msgid "Billing address"
 msgstr "Adres rozliczeniowy"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "Dodaj wartość aspektu"
@@ -3017,7 +3017,7 @@ msgid "Successfully created administrator"
 msgstr "Pomyślnie utworzono administratora"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "Opcje produktu"
 
@@ -3599,7 +3599,7 @@ msgstr "Przeciągnij, aby zmienić kolejność"
 msgid "Zones"
 msgstr "Strefy"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3710,7 +3710,7 @@ msgstr "Metody wysyłki"
 msgid "Select an address"
 msgstr "Wybierz adres"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "Tak"
@@ -3792,7 +3792,7 @@ msgstr "Rozlicz płatność"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3923,8 +3923,8 @@ msgstr "Suma podatków"
 msgid "Draft order status"
 msgstr "Status wersji roboczej zamówienia"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "Szukaj wariantów..."
 
@@ -5500,7 +5500,7 @@ msgid "System"
 msgstr "System"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "Nazwa wariantu"
 
@@ -5514,7 +5514,7 @@ msgstr "Usuń"
 msgid "Failed to update customer"
 msgstr "Nie udało się zaktualizować klienta"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "Usunąć grupy opcji?"
 
@@ -5925,7 +5925,7 @@ msgstr "Zrealizowane pozycje ({0})"
 msgid "Create your first product"
 msgstr "Utwórz swój pierwszy produkt"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "Wartość zaktualizowana"
 
@@ -6162,7 +6162,7 @@ msgstr "Spróbuj wybrać inny zakres dat."
 msgid "Successfully created zone"
 msgstr "Pomyślnie utworzono strefę"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "Wartość"
 
@@ -6299,7 +6299,7 @@ msgstr "ID zwrotu"
 msgid "Order custom fields updated"
 msgstr "Niestandardowe pola zamówienia zaktualizowane"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "Szukaj wpisów..."
 
@@ -6703,7 +6703,7 @@ msgstr "Próg braku w magazynie"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "Produkt został pomyślnie usunięty z kanału"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "Nie udało się zaktualizować wartości"
 
@@ -6727,7 +6727,7 @@ msgid "Failed to add customer to group"
 msgstr "Nie udało się dodać klienta do grupy"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "Zarządzaj wariantami"
 

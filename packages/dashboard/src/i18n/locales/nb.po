@@ -345,7 +345,7 @@ msgstr "Er du sikker på at du vil slette denne varianten?"
 msgid "Failed to create administrator"
 msgstr "Kunne ikke opprette administrator"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "Nei"
@@ -469,8 +469,8 @@ msgstr "Returner til lager"
 msgid "Visibility"
 msgstr "Synlighet"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "Produktvarianter"
 
@@ -964,7 +964,7 @@ msgstr "Bestillingslinje fjernet"
 msgid "Content:"
 msgstr "Innhold:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "Nøkkel"
 
@@ -1195,8 +1195,8 @@ msgstr "Utkastbestilling"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Skriv inn e-postadressen din, så sender vi deg en lenke for å tilbakestille passordet ditt"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "Omfang"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "Endre størrelse på bildet fra høyre"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "Innstillingslager"
 
@@ -2182,9 +2182,9 @@ msgstr "Kunne ikke oppdatere notat"
 msgid "Refund shipping"
 msgstr "Refunder frakt"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "Skrivebeskyttet"
 
@@ -2201,7 +2201,7 @@ msgid "Test Shipping Method"
 msgstr "Test fraktmetode"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "Fasettverdier"
 
@@ -2891,11 +2891,11 @@ msgstr "Beregn frakt på nytt"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "Ressurser"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "Dette vil fjerne alle opsjonsgrupper fra dette produktet og returnere til variantoppsettsvalget."
 
@@ -2905,7 +2905,7 @@ msgstr "Dette vil fjerne alle opsjonsgrupper fra dette produktet og returnere ti
 msgid "Billing address"
 msgstr "Fakturaadresse"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "Legg til fasettverdi"
@@ -3017,7 +3017,7 @@ msgid "Successfully created administrator"
 msgstr "Administrator opprettet"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "Produktopsjoner"
 
@@ -3599,7 +3599,7 @@ msgstr "Dra for å endre rekkefølge"
 msgid "Zones"
 msgstr "Soner"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3710,7 +3710,7 @@ msgstr "Fraktmetoder"
 msgid "Select an address"
 msgstr "Velg en adresse"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "Ja"
@@ -3792,7 +3792,7 @@ msgstr "Gjennomfør betaling"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3923,8 +3923,8 @@ msgstr "Mva totalt"
 msgid "Draft order status"
 msgstr "Utkast til ordrestatus"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "Søk etter varianter..."
 
@@ -5500,7 +5500,7 @@ msgid "System"
 msgstr "System"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "Variantnavn"
 
@@ -5514,7 +5514,7 @@ msgstr "Fjern"
 msgid "Failed to update customer"
 msgstr "Kunne ikke oppdatere kunde"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "Fjerne opsjonsgrupper?"
 
@@ -5925,7 +5925,7 @@ msgstr "Oppfylte varer ({0})"
 msgid "Create your first product"
 msgstr "Opprett ditt første produkt"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "Verdi oppdatert"
 
@@ -6162,7 +6162,7 @@ msgstr "Prøv å velge et annet datointervall."
 msgid "Successfully created zone"
 msgstr "Sone opprettet"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "Verdi"
 
@@ -6299,7 +6299,7 @@ msgstr "Refusjons-ID"
 msgid "Order custom fields updated"
 msgstr "Egendefinerte ordrefelt oppdatert"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "Søk etter oppføringer..."
 
@@ -6703,7 +6703,7 @@ msgstr "Utsolgt-terskel"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "Produkt fjernet fra kanal"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "Kunne ikke oppdatere verdi"
 
@@ -6727,7 +6727,7 @@ msgid "Failed to add customer to group"
 msgstr "Kunne ikke legge til kunde i gruppe"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "Administrer varianter"
 
