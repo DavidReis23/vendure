@@ -345,7 +345,7 @@ msgstr "के तपाईं निश्चित हुनुहुन्छ
 msgid "Failed to create administrator"
 msgstr "प्रशासक सिर्जना गर्न असफल"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "होइन"
@@ -469,8 +469,8 @@ msgstr "स्टकमा फिर्ता"
 msgid "Visibility"
 msgstr "दृश्यता"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "उत्पादन भेरियन्टहरू"
 
@@ -964,7 +964,7 @@ msgstr "अर्डर लाइन हटाइयो"
 msgid "Content:"
 msgstr "सामग्री:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "कुञ्जी"
 
@@ -1195,8 +1195,8 @@ msgstr "मस्यौदा अर्डर"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "तपाईंको इमेल ठेगाना प्रविष्ट गर्नुहोस्, हामी तपाईंलाई पासवर्ड रिसेट गर्ने लिङ्क पठाउनेछौं"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "दायरा"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "दायाँबाट छविको आकार परिवर्तन गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "सेटिङ स्टोर"
 
@@ -2182,9 +2182,9 @@ msgstr "टिप्पणी अपडेट गर्न असफल"
 msgid "Refund shipping"
 msgstr "ढुवानी फिर्ता"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "पढ्न मात्र"
 
@@ -2201,7 +2201,7 @@ msgid "Test Shipping Method"
 msgstr "ढुवानी विधि परीक्षण गर्नुहोस्"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "विशेषता मानहरू"
 
@@ -2891,11 +2891,11 @@ msgstr "ढुवानी पुन: गणना गर्नुहोस्"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "सम्पत्तिहरू"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "यसले यो उत्पादनबाट सबै विकल्प समूहहरू हटाउनेछ र भेरियन्ट सेटअप छनोटमा फर्काउनेछ।"
 
@@ -2905,7 +2905,7 @@ msgstr "यसले यो उत्पादनबाट सबै विक�
 msgid "Billing address"
 msgstr "बिलिङ ठेगाना"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "विशेषता मान थप्नुहोस्"
@@ -3017,7 +3017,7 @@ msgid "Successfully created administrator"
 msgstr "प्रशासक सफलतापूर्वक सिर्जना गरियो"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "उत्पादन विकल्पहरू"
 
@@ -3599,7 +3599,7 @@ msgstr "पुनः क्रम गर्न तान्नुहोस्"
 msgid "Zones"
 msgstr "क्षेत्रहरू"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3710,7 +3710,7 @@ msgstr "ढुवानी विधिहरू"
 msgid "Select an address"
 msgstr "ठेगाना चयन गर्नुहोस्"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "हो"
@@ -3792,7 +3792,7 @@ msgstr "भुक्तानी सम्पन्न गर्नुहोस�
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3923,8 +3923,8 @@ msgstr "कर कुल"
 msgid "Draft order status"
 msgstr "ड्राफ्ट अर्डर स्थिति"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "भेरियन्टहरू खोज्नुहोस्..."
 
@@ -5500,7 +5500,7 @@ msgid "System"
 msgstr "प्रणाली"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "भिन्नता नाम"
 
@@ -5514,7 +5514,7 @@ msgstr "हटाउनुहोस्"
 msgid "Failed to update customer"
 msgstr "ग्राहक अपडेट गर्न असफल"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "विकल्प समूहहरू हटाउने हो?"
 
@@ -5925,7 +5925,7 @@ msgstr "पूरा गरिएका वस्तुहरू ({0})"
 msgid "Create your first product"
 msgstr "आफ्नो पहिलो उत्पादन सिर्जना गर्नुहोस्"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "मान अपडेट गरियो"
 
@@ -6162,7 +6162,7 @@ msgstr "फरक मिति दायरा चयन गर्ने प्�
 msgid "Successfully created zone"
 msgstr "क्षेत्र सफलतापूर्वक सिर्जना गरियो"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "मान"
 
@@ -6299,7 +6299,7 @@ msgstr "रिफन्ड ID"
 msgid "Order custom fields updated"
 msgstr "अर्डर अनुकूलन फिल्डहरू अद्यावधिक गरियो"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "प्रविष्टिहरू खोज्नुहोस्..."
 
@@ -6703,7 +6703,7 @@ msgstr "स्टक बाहिर थ्रेसहोल्ड"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "च्यानलबाट उत्पादन सफलतापूर्वक हटाइयो"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "मान अपडेट गर्न असफल भयो"
 
@@ -6727,7 +6727,7 @@ msgid "Failed to add customer to group"
 msgstr "समूहमा ग्राहक थप्न असफल"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "भेरियन्टहरू व्यवस्थापन गर्नुहोस्"
 

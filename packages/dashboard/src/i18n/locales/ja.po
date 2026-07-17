@@ -345,7 +345,7 @@ msgstr "このバリエーションを削除してもよろしいですか？"
 msgid "Failed to create administrator"
 msgstr "管理者の作成に失敗しました"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "いいえ"
@@ -469,8 +469,8 @@ msgstr "在庫に戻す"
 msgid "Visibility"
 msgstr "公開設定"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "商品バリエーション"
 
@@ -964,7 +964,7 @@ msgstr "注文ラインを削除しました"
 msgid "Content:"
 msgstr "内容:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "キー"
 
@@ -1195,8 +1195,8 @@ msgstr "下書き注文"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "メールアドレスを入力すると、パスワードリセット用のリンクをお送りします"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "スコープ"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "画像を右からリサイズ"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "設定ストア"
 
@@ -2182,9 +2182,9 @@ msgstr "メモの更新に失敗しました"
 msgid "Refund shipping"
 msgstr "送料を返金"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "読み取り専用"
 
@@ -2201,7 +2201,7 @@ msgid "Test Shipping Method"
 msgstr "配送方法をテスト"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "ファセット値"
 
@@ -2891,11 +2891,11 @@ msgstr "送料を再計算"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "アセット"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "この商品からすべてのオプショングループが削除され、バリエーション設定の選択に戻ります。"
 
@@ -2905,7 +2905,7 @@ msgstr "この商品からすべてのオプショングループが削除され
 msgid "Billing address"
 msgstr "請求先住所"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "ファセット値を追加"
@@ -3017,7 +3017,7 @@ msgid "Successfully created administrator"
 msgstr "管理者を正常に作成しました"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "商品オプション"
 
@@ -3599,7 +3599,7 @@ msgstr "ドラッグして並べ替え"
 msgid "Zones"
 msgstr "ゾーン"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3710,7 +3710,7 @@ msgstr "配送方法"
 msgid "Select an address"
 msgstr "住所を選択"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "はい"
@@ -3792,7 +3792,7 @@ msgstr "支払いを決済"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3923,8 +3923,8 @@ msgstr "税合計"
 msgid "Draft order status"
 msgstr "下書き注文のステータス"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "バリエーションを検索..."
 
@@ -5500,7 +5500,7 @@ msgid "System"
 msgstr "システム"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "バリエーション名"
 
@@ -5514,7 +5514,7 @@ msgstr "削除"
 msgid "Failed to update customer"
 msgstr "顧客の更新に失敗しました"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "オプショングループを削除しますか？"
 
@@ -5925,7 +5925,7 @@ msgstr "フルフィルメント済みアイテム（{0}）"
 msgid "Create your first product"
 msgstr "最初の商品を作成しましょう"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "値が更新されました"
 
@@ -6162,7 +6162,7 @@ msgstr "別の日付範囲を選択してみてください。"
 msgid "Successfully created zone"
 msgstr "ゾーンを作成しました"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "値"
 
@@ -6299,7 +6299,7 @@ msgstr "返金ID"
 msgid "Order custom fields updated"
 msgstr "注文カスタムフィールドが更新されました"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "エントリーを検索..."
 
@@ -6703,7 +6703,7 @@ msgstr "在庫切れしきい値"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "チャネルから商品を正常に削除しました"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "値の更新に失敗しました"
 
@@ -6727,7 +6727,7 @@ msgid "Failed to add customer to group"
 msgstr "顧客のグループへの追加に失敗しました"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "バリエーションを管理"
 

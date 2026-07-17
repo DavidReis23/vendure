@@ -345,7 +345,7 @@ msgstr "¿Está seguro de que desea eliminar esta variante?"
 msgid "Failed to create administrator"
 msgstr "Error al crear el administrador"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "No"
@@ -469,8 +469,8 @@ msgstr "Devolver al stock"
 msgid "Visibility"
 msgstr "Visibilidad"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "Variantes de producto"
 
@@ -964,7 +964,7 @@ msgstr "Línea de pedido eliminada"
 msgid "Content:"
 msgstr "Contenido:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "Clave"
 
@@ -1195,8 +1195,8 @@ msgstr "Pedido borrador"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Ingrese su dirección de correo electrónico y le enviaremos un enlace para restablecer su contraseña"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "Alcance"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "Redimensionar imagen desde la derecha"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "Almacén de configuración"
 
@@ -2182,9 +2182,9 @@ msgstr "Error al actualizar nota"
 msgid "Refund shipping"
 msgstr "Reembolsar envío"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "Solo lectura"
 
@@ -2201,7 +2201,7 @@ msgid "Test Shipping Method"
 msgstr "Probar método de envío"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "Valores de Faceta"
 
@@ -2891,11 +2891,11 @@ msgstr "Recalcular envío"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "Recursos"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "Esto eliminará todos los grupos de opciones de este producto y volverá a la selección de configuración de variantes."
 
@@ -2905,7 +2905,7 @@ msgstr "Esto eliminará todos los grupos de opciones de este producto y volverá
 msgid "Billing address"
 msgstr "Dirección de facturación"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "Agregar valor de faceta"
@@ -3017,7 +3017,7 @@ msgid "Successfully created administrator"
 msgstr "Administrador creado correctamente"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "Opciones de Producto"
 
@@ -3599,7 +3599,7 @@ msgstr "Arrastrar para reordenar"
 msgid "Zones"
 msgstr "Zonas"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3710,7 +3710,7 @@ msgstr "Métodos de envío"
 msgid "Select an address"
 msgstr "Seleccione una dirección"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "Sí"
@@ -3792,7 +3792,7 @@ msgstr "Liquidar pago"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3923,8 +3923,8 @@ msgstr "Total de impuestos"
 msgid "Draft order status"
 msgstr "Estado del borrador del pedido"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "Buscar variantes..."
 
@@ -5500,7 +5500,7 @@ msgid "System"
 msgstr "Sistema"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "Nombre de la variante"
 
@@ -5514,7 +5514,7 @@ msgstr "Quitar"
 msgid "Failed to update customer"
 msgstr "Error al actualizar cliente"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "¿Eliminar grupos de opciones?"
 
@@ -5925,7 +5925,7 @@ msgstr "Elementos cumplidos ({0})"
 msgid "Create your first product"
 msgstr "Cree su primer producto"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "Valor actualizado"
 
@@ -6162,7 +6162,7 @@ msgstr "Intente seleccionar un rango de fechas diferente."
 msgid "Successfully created zone"
 msgstr "Zona creada exitosamente"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "Valor"
 
@@ -6299,7 +6299,7 @@ msgstr "ID de Reembolso"
 msgid "Order custom fields updated"
 msgstr "Campos personalizados del pedido actualizados"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "Buscar entradas..."
 
@@ -6703,7 +6703,7 @@ msgstr "Umbral de agotamiento"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "Producto eliminado del canal correctamente"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "Error al actualizar el valor"
 
@@ -6727,7 +6727,7 @@ msgid "Failed to add customer to group"
 msgstr "Error al agregar cliente al grupo"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "Gestionar variantes"
 

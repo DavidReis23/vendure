@@ -345,7 +345,7 @@ msgstr "Biztosan törli ezt a termékváltozatot?"
 msgid "Failed to create administrator"
 msgstr "Rendszergazda létrehozása sikertelen"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:338
+#: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "No"
 msgstr "Nem"
@@ -469,8 +469,8 @@ msgstr "Visszahelyezés a készletbe"
 msgid "Visibility"
 msgstr "Láthatóság"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:288
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:302
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:287
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:301
 msgid "Product variants"
 msgstr "Termékvariánsok"
 
@@ -964,7 +964,7 @@ msgstr "Megrendeléssor eltávolítva"
 msgid "Content:"
 msgstr "Tartalom:"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:270
+#: src/app/routes/_authenticated/_system/settings-store.tsx:360
 msgid "Key"
 msgstr "Kulcs"
 
@@ -1195,8 +1195,8 @@ msgstr "Piszkozat megrendelés"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Adja meg az e-mail címét, és küldünk egy linket a jelszava visszaállításához"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:291
-#: src/app/routes/_authenticated/_system/settings-store.tsx:325
+#: src/app/routes/_authenticated/_system/settings-store.tsx:362
+#: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
 msgstr "Hatókör"
 
@@ -1327,7 +1327,7 @@ msgid "Resize image from right"
 msgstr "Kép átméretezése jobbról"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:37
-#: src/app/routes/_authenticated/_system/settings-store.tsx:314
+#: src/app/routes/_authenticated/_system/settings-store.tsx:377
 msgid "Settings Store"
 msgstr "Beállítástár"
 
@@ -2176,9 +2176,9 @@ msgstr "Megjegyzés frissítése sikertelen"
 msgid "Refund shipping"
 msgstr "Szállítási díj visszatérítése"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:299
-#: src/app/routes/_authenticated/_system/settings-store.tsx:303
-#: src/app/routes/_authenticated/_system/settings-store.tsx:335
+#: src/app/routes/_authenticated/_system/settings-store.tsx:321
+#: src/app/routes/_authenticated/_system/settings-store.tsx:363
+#: src/app/routes/_authenticated/_system/settings-store.tsx:399
 msgid "Readonly"
 msgstr "Csak olvasható"
 
@@ -2195,7 +2195,7 @@ msgid "Test Shipping Method"
 msgstr "Szállítási mód tesztelése"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:767
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:348
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:347
 msgid "Facet Values"
 msgstr "Tulajdonságértékek"
 
@@ -2881,11 +2881,11 @@ msgstr "Szállítási díj újraszámítása"
 #: src/app/routes/_authenticated/_assets/assets.tsx:40
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:381
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:380
 msgid "Assets"
 msgstr "Média"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:321
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
 msgid "This will remove all option groups from this product and return to the variant setup choice."
 msgstr "Ez eltávolítja az összes opciócsoportot ebből a termékből és visszatér a variáns beállítási lehetőséghez."
 
@@ -2895,7 +2895,7 @@ msgstr "Ez eltávolítja az összes opciócsoportot ebből a termékből és vis
 msgid "Billing address"
 msgstr "Számlázási cím"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:65
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:64
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:173
 msgid "Add facet value"
 msgstr "Tulajdonságérték hozzáadása"
@@ -3007,7 +3007,7 @@ msgid "Successfully created administrator"
 msgstr "A rendszergazda sikeresen létrehozva"
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:196
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:329
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:328
 msgid "Product Options"
 msgstr "Termékopciók"
 
@@ -3589,7 +3589,7 @@ msgstr "Húzza az átrendezéshez"
 msgid "Zones"
 msgstr "Zónák"
 
-#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:112
+#: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
 msgid "Search facet values..."
@@ -3700,7 +3700,7 @@ msgstr "Szállítási módok"
 msgid "Select an address"
 msgstr "Válasszon egy címet"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:337
+#: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:71
 msgid "Yes"
 msgstr "Igen"
@@ -3782,7 +3782,7 @@ msgstr "Fizetés rendezése"
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:358
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
 #: src/lib/components/layout/channel-switcher.tsx:146
 msgid "Channels"
@@ -3910,8 +3910,8 @@ msgstr "Adó összesen"
 msgid "Draft order status"
 msgstr "Piszkozat megrendelés állapota"
 
-#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:167
-#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:80
+#: src/app/routes/_authenticated/_collections/components/collection-contents-preview-table.tsx:166
+#: src/app/routes/_authenticated/_collections/components/collection-contents-table.tsx:79
 msgid "Search variants..."
 msgstr "Termékváltozatok keresése..."
 
@@ -5487,7 +5487,7 @@ msgid "System"
 msgstr "Rendszer"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:563
-#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:88
+#: src/app/routes/_authenticated/_products/components/product-variants-table.tsx:85
 msgid "Variant name"
 msgstr "Termékváltozat neve"
 
@@ -5501,7 +5501,7 @@ msgstr "Eltávolítás"
 msgid "Failed to update customer"
 msgstr "Vásárló frissítése sikertelen"
 
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:320
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:319
 msgid "Remove option groups?"
 msgstr "Opciócsoportok eltávolítása?"
 
@@ -5912,7 +5912,7 @@ msgstr "Teljesített tételek ({0})"
 msgid "Create your first product"
 msgstr "Hozza létre első termékét"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:246
+#: src/app/routes/_authenticated/_system/settings-store.tsx:345
 msgid "Value updated"
 msgstr "Érték frissítve"
 
@@ -6149,7 +6149,7 @@ msgstr "Próbáljon másik dátumtartományt választani."
 msgid "Successfully created zone"
 msgstr "Zóna sikeresen létrehozva"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:278
+#: src/app/routes/_authenticated/_system/settings-store.tsx:361
 msgid "Value"
 msgstr "Érték"
 
@@ -6286,7 +6286,7 @@ msgstr "Visszatérítés ID"
 msgid "Order custom fields updated"
 msgstr "A megrendelés egyéni mezői frissítve"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:320
+#: src/app/routes/_authenticated/_system/settings-store.tsx:384
 msgid "Search entries..."
 msgstr "Bejegyzések keresése..."
 
@@ -6686,7 +6686,7 @@ msgstr "Készlethiány küszöbértéke"
 #~ msgid "Successfully removed product from channel"
 #~ msgstr "Termék sikeresen eltávolítva a csatornából"
 
-#: src/app/routes/_authenticated/_system/settings-store.tsx:249
+#: src/app/routes/_authenticated/_system/settings-store.tsx:348
 msgid "Failed to update value"
 msgstr "Nem sikerült frissíteni az értéket"
 
@@ -6710,7 +6710,7 @@ msgid "Failed to add customer to group"
 msgstr "Vásárló csoporthoz adása sikertelen"
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
-#: src/app/routes/_authenticated/_products/products_.$id.tsx:292
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:291
 msgid "Manage variants"
 msgstr "Termékváltozatok kezelése"
 

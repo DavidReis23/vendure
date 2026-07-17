@@ -153,15 +153,15 @@ interface DataTableProps<TData> {
     disableViewOptions?: boolean;
     /**
      * @description
-     * When true, suppresses the saved-views tabs even when a page context and
-     * filter handler are present. Useful for tables embedded in a detail page,
-     * where saved views (keyed only by page id and block id) would otherwise be
-     * shared across every entity showing that block. Filtering and column
-     * customization are unaffected.
+     * Enables saved-view controls for this table. This should be used for tables
+     * which represent a whole data set, such as top-level list pages. It should
+     * not be enabled for embedded tables or tables whose query is already scoped
+     * by a predefined filter.
      *
+     * @default false
      * @since 3.8.0
      */
-    hideViewsControls?: boolean;
+    enableViews?: boolean;
     bulkActions?: BulkActionsInput;
     /**
      * @description
@@ -261,7 +261,7 @@ export function DataTable<TData>({
     defaultColumnVisibility,
     facetedFilters,
     disableViewOptions,
-    hideViewsControls,
+    enableViews,
     bulkActions,
     setTableOptions,
     onRefresh,
@@ -453,7 +453,7 @@ export function DataTable<TData>({
         return merged;
     };
 
-    const showViewsControls = !hideViewsControls && !!pageId && !!onFilterChange;
+    const showViewsControls = !!enableViews && !!pageId && !!onFilterChange;
     const hasHeaderControls = actions != null || !disableViewOptions || onRefresh != null;
     // With a title, the icon controls and CTAs move up next to it (header band
     // line 1) and the toolbar row carries only search/filters. Without a title,
