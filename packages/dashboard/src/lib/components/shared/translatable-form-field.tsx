@@ -4,13 +4,13 @@ import { useChannel } from '@/vdb/hooks/use-channel.js';
 import { useLocalFormat } from '@/vdb/hooks/use-local-format.js';
 import { useUserSettings } from '@/vdb/hooks/use-user-settings.js';
 import { getLocaleFallbackPlaceholder } from '@/vdb/utils/get-locale-fallback-placeholder.js';
-import { Trans, useLingui } from '@lingui/react/macro';
+import { Trans } from '@lingui/react/macro';
 import { CircleAlert } from 'lucide-react';
 import React, { useEffect, useMemo } from 'react';
 import { Controller, ControllerProps, FieldPath, FieldValues, useFormContext } from 'react-hook-form';
+import { Badge } from '../ui/badge.js';
 import { Field, FieldDescription, FieldError, FieldLabel } from '../ui/field.js';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select.js';
-import { Tabs, TabsList, TabsTrigger } from '../ui/tabs.js';
 import { applyControlProps } from './apply-control-props.js';
 import { FormFieldWrapper } from './form-field-wrapper.js';
 import { TranslatableFormGroupContext, useResolvedContentLanguage } from './translatable-form-context.js';
@@ -21,9 +21,9 @@ function getValueAtPath(value: unknown, path: string): unknown {
 
 /**
  * @description
- * Groups translatable form fields under a local language selector. Switching the selected language only
- * changes which entry in the form's `translations` array is edited; it does not change the Dashboard's
- * global content language.
+ * Groups translatable form fields under synchronized, field-level language selectors. Switching the
+ * selected language from any localized field only changes which entry in the form's `translations` array
+ * is edited; it does not change the Dashboard's global content language.
  *
  * @docsCategory form-components
  * @docsPage TranslatableFormFieldWrapper
@@ -34,8 +34,6 @@ export function TranslatableFormGroup({
     className,
 }: Readonly<{ children: React.ReactNode; className?: string }>) {
     const { activeChannel } = useChannel();
-    const { formatLanguageName } = useLocalFormat();
-    const { t } = useLingui();
     const { contentLanguage } = useUserSettings().settings;
     const {
         formState: { errors, submitCount },
@@ -88,92 +86,92 @@ export function TranslatableFormGroup({
         previousSubmitCount.current = submitCount;
     }, [languagesWithErrors, submitCount]);
 
-    const content = (
-        <TranslatableFormGroupContext.Provider value={{ languageCode, registerField }}>
-            {children}
+    return (
+        <TranslatableFormGroupContext.Provider
+            value={{ languageCode, languages, languagesWithErrors, setLanguageCode, registerField }}
+        >
+            <div className={className}>{children}</div>
         </TranslatableFormGroupContext.Provider>
     );
+}
 
-    if (languages.length <= 1) {
-        return <div className={className}>{content}</div>;
+/**
+ * A field label with an inline language selector which stays synchronized with every other localized
+ * field in the nearest {@link TranslatableFormGroup}.
+ */
+export function TranslatableFormFieldLabel({ children, ...props }: React.ComponentProps<typeof FieldLabel>) {
+    return (
+        <div className="flex min-h-6 items-center gap-2">
+            <FieldLabel {...props}>{children}</FieldLabel>
+            <TranslatableFormLanguageSelector />
+        </div>
+    );
+}
+
+function TranslatableFormLanguageSelector() {
+    const group = React.useContext(TranslatableFormGroupContext);
+    const { formatLanguageName } = useLocalFormat();
+
+    if (!group || group.languages.length === 0) {
+        return null;
     }
 
-    if (languages.length > 3) {
-        const languageItems = Object.fromEntries(
-            languages.map(code => [code, `${code.toUpperCase()} — ${formatLanguageName(code)}`]),
-        );
-        const currentLanguageHasErrors = languagesWithErrors.includes(languageCode as any);
+    const { languageCode, languages, languagesWithErrors, setLanguageCode } = group;
+    const languageName = formatLanguageName(languageCode);
+
+    if (languages.length === 1) {
         return (
-            <div className="flex flex-col gap-2">
-                <Select
-                    items={languageItems}
-                    value={languageCode}
-                    onValueChange={value => value != null && setLanguageCode(String(value))}
-                >
-                    <SelectTrigger
-                        aria-label={
-                            currentLanguageHasErrors
-                                ? t`Content language, has validation errors`
-                                : t`Content language`
-                        }
-                        className="w-[220px] max-w-full"
-                    >
-                        <SelectValue />
-                        {currentLanguageHasErrors && (
-                            <CircleAlert className="size-4 text-destructive" aria-hidden="true" />
-                        )}
-                    </SelectTrigger>
-                    <SelectContent>
-                        {languages.map(code => {
-                            const hasErrors = languagesWithErrors.includes(code);
-                            return (
-                                <SelectItem key={code} value={code}>
-                                    {languageItems[code]}
-                                    {hasErrors && (
-                                        <>
-                                            <CircleAlert
-                                                className="ms-auto size-4 text-destructive"
-                                                aria-hidden="true"
-                                            />
-                                            <span className="sr-only">
-                                                <Trans>Has validation errors</Trans>
-                                            </span>
-                                        </>
-                                    )}
-                                </SelectItem>
-                            );
-                        })}
-                    </SelectContent>
-                </Select>
-                <div className={className}>{content}</div>
-            </div>
+            <Badge variant="outline" className="text-muted-foreground" title={languageName}>
+                {languageCode.toUpperCase()}
+            </Badge>
         );
     }
+
+    const languageItems = Object.fromEntries(languages.map(code => [code, formatLanguageName(code)]));
+    const currentLanguageHasErrors = languagesWithErrors.includes(languageCode);
 
     return (
-        <Tabs value={languageCode} onValueChange={value => value != null && setLanguageCode(String(value))}>
-            <TabsList className="max-w-full justify-start">
-                {languages.map(code => (
-                    <TabsTrigger
-                        key={code}
-                        value={code}
-                        aria-label={
-                            languagesWithErrors.includes(code)
-                                ? t`${formatLanguageName(code)}, has validation errors`
-                                : formatLanguageName(code)
-                        }
-                        title={formatLanguageName(code)}
-                        data-invalid={languagesWithErrors.includes(code) || undefined}
-                    >
-                        {code.toUpperCase()}
-                        {languagesWithErrors.includes(code) && (
-                            <CircleAlert className="size-4 text-destructive" aria-hidden="true" />
-                        )}
-                    </TabsTrigger>
-                ))}
-            </TabsList>
-            <div className={className}>{content}</div>
-        </Tabs>
+        <Select
+            items={languageItems}
+            value={languageCode}
+            onValueChange={value => value != null && setLanguageCode(String(value))}
+        >
+            <SelectTrigger
+                size="sm"
+                aria-label={languageName}
+                aria-invalid={currentLanguageHasErrors || undefined}
+                className="h-6! gap-1 px-1.5 py-0 text-xs font-medium"
+            >
+                <SelectValue>{languageCode.toUpperCase()}</SelectValue>
+                {currentLanguageHasErrors && (
+                    <CircleAlert className="size-3 text-destructive" aria-hidden="true" />
+                )}
+            </SelectTrigger>
+            <SelectContent align="start">
+                {languages.map(code => {
+                    const hasErrors = languagesWithErrors.includes(code);
+                    return (
+                        <SelectItem key={code} value={code}>
+                            <Badge variant="outline" className="min-w-8 px-1.5 text-muted-foreground">
+                                {code.toUpperCase()}
+                            </Badge>
+                            {languageItems[code]}
+                            {hasErrors && (
+                                <>
+                                    <CircleAlert
+                                        className="ms-auto me-5 size-4 text-destructive"
+                                        aria-hidden="true"
+                                    />
+                                    <span className="sr-only">
+                                        <Trans>Has validation errors</Trans>
+                                    </span>
+                                </>
+                            )}
+                        </SelectItem>
+                    );
+                })}
+            </SelectContent>
+        </Select>
     );
 }
 
@@ -236,7 +234,7 @@ export const TranslatableFormField = <
     if (index === undefined || index === -1) {
         return (
             <Field>
-                {label && <FieldLabel>{label}</FieldLabel>}
+                {label && <TranslatableFormFieldLabel>{label}</TranslatableFormFieldLabel>}
                 <div className="text-sm text-muted-foreground">
                     <Trans>No translation found for {formatLanguageName(contentLanguage)}</Trans>
                 </div>
@@ -362,7 +360,11 @@ export const TranslatableFormFieldWrapper = <
                     }
                     return (
                         <Field data-invalid={fieldState.invalid || undefined}>
-                            {label && <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>}
+                            {label && (
+                                <TranslatableFormFieldLabel htmlFor={fieldId}>
+                                    {label}
+                                </TranslatableFormFieldLabel>
+                            )}
                             <OverriddenFormComponent field={renderArgs.field} fieldName={name as string}>
                                 {renderFormControl
                                     ? applyControlProps(render(renderArgs), controlProps)

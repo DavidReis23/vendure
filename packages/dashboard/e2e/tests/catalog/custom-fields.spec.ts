@@ -162,8 +162,8 @@ test.describe('Custom Fields', () => {
         await expect(dp.formItem('Weight').getByRole('spinbutton')).toBeVisible();
     });
 
-    // #4972 — localized custom fields share one selector above their category tabs
-    test('switches and persists localized custom fields with the shared language selector', async ({
+    // #4972 — localized custom fields use synchronized inline language selectors
+    test('switches and persists localized custom fields with an inline language selector', async ({
         page,
     }) => {
         const client = new VendureAdminClient(page);
@@ -201,19 +201,17 @@ test.describe('Custom Fields', () => {
             });
             const seoTitleInput = seoTitleItem.getByRole('textbox');
             await expect(seoTitleInput).toBeVisible();
-            const languageGroup = seoTitleItem.locator('xpath=ancestor::*[@data-slot="tabs"][2]');
-            const englishTab = languageGroup.getByRole('tab', { name: 'English' });
-            const germanTab = languageGroup.getByRole('tab', { name: 'German' });
-            const languageTabsBox = await englishTab.boundingBox();
-            const categoryTabBox = await seoCategoryTab.boundingBox();
-            expect(languageTabsBox?.y).toBeLessThan(categoryTabBox?.y ?? 0);
+            const languageSelector = seoTitleItem.getByRole('combobox');
+            await expect(languageSelector).toContainText('EN');
 
             const englishTitle = `English SEO title ${unique}`;
             const germanTitle = `Deutscher SEO-Titel ${unique}`;
             await seoTitleInput.fill(englishTitle);
-            await germanTab.click();
+            await languageSelector.click();
+            await page.getByRole('option', { name: /DE German/ }).click();
             await seoTitleInput.fill(germanTitle);
-            await englishTab.click();
+            await languageSelector.click();
+            await page.getByRole('option', { name: /EN English/ }).click();
             await expect(seoTitleInput).toHaveValue(englishTitle);
 
             await Promise.all([

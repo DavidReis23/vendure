@@ -3,6 +3,9 @@ import React from 'react';
 
 export interface TranslatableFormGroupContextValue {
     languageCode: string;
+    languages: string[];
+    languagesWithErrors: string[];
+    setLanguageCode: (languageCode: string) => void;
     registerField: (fieldName: string) => () => void;
 }
 

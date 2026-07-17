@@ -18,7 +18,11 @@ import { Control, Controller, ControllerFieldState, useFormContext } from 'react
 import { FormControlAdapter } from '../../framework/form-engine/form-control-adapter.js';
 import { applyControlProps } from './apply-control-props.js';
 import { useResolvedContentLanguage } from './translatable-form-context.js';
-import { TranslatableFormField, TranslatableFormGroup } from './translatable-form-field.js';
+import {
+    TranslatableFormField,
+    TranslatableFormFieldLabel,
+    TranslatableFormGroup,
+} from './translatable-form-field.js';
 
 type CustomFieldConfig = Omit<ResultOf<typeof customFieldConfigFragment>, '__typename'>;
 
@@ -266,6 +270,7 @@ function CustomFieldItem({ fieldDef, control, fieldName, disabled }: Readonly<Cu
                                 getTranslation={getTranslation}
                                 fieldName={field.name}
                                 fieldState={fieldState}
+                                localized
                             >
                                 {localeFallbackPlaceholder
                                     ? applyControlProps(inputElement, {
@@ -388,6 +393,7 @@ interface CustomFieldFormItemProps {
     ) => string | undefined;
     fieldName: string;
     fieldState?: ControllerFieldState;
+    localized?: boolean;
     children: React.ReactNode;
 }
 
@@ -396,12 +402,18 @@ function CustomFieldFormItem({
     getTranslation,
     fieldName,
     fieldState,
+    localized,
     children,
 }: Readonly<CustomFieldFormItemProps>) {
     const fieldId = `field-${fieldName}`;
+    const label = getTranslation(fieldDef.label) ?? fieldName;
     return (
         <Field data-invalid={fieldState?.invalid || undefined}>
-            <FieldLabel htmlFor={fieldId}>{getTranslation(fieldDef.label) ?? fieldName}</FieldLabel>
+            {localized ? (
+                <TranslatableFormFieldLabel htmlFor={fieldId}>{label}</TranslatableFormFieldLabel>
+            ) : (
+                <FieldLabel htmlFor={fieldId}>{label}</FieldLabel>
+            )}
             {children}
             {getTranslation(fieldDef.description) && (
                 <FieldDescription>{getTranslation(fieldDef.description)}</FieldDescription>
