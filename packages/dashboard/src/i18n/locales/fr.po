@@ -31,11 +31,11 @@ msgstr "Sélectionner des éléments"
 msgid "View changes"
 msgstr "Voir les modifications"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:139
 msgid "Tracking code"
 msgstr "Code de suivi"
 
-#: src/lib/components/data-table/data-table.tsx:713
+#: src/lib/components/data-table/data-table.tsx:772
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
 msgstr "Sélectionner toutes les lignes"
@@ -162,7 +162,7 @@ msgstr "Supprimé avec succès"
 #~ msgid "Remove from current channel"
 #~ msgstr "Supprimer du canal actuel"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:25
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:23
 msgid "Deleted {selectionLength} assets"
 msgstr "{selectionLength} ressources supprimées"
 
@@ -174,14 +174,16 @@ msgstr "Taux de taxe mis à jour avec succès"
 msgid "Enter custom reason..."
 msgstr "Entrez une raison personnalisée..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:751
+#: src/lib/components/shared/asset/asset-gallery.tsx:1027
 msgid "Type"
 msgstr "Type"
 
+#. placeholder {0}: asset.name
 #. placeholder {0}: entityName.toLowerCase()
 #. placeholder {0}: group.name
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:57
 #: src/lib/components/data-input/default-relation-input.tsx:671
+#: src/lib/components/shared/asset/asset-gallery.tsx:901
 msgid "Select {0}"
 msgstr "Sélectionner {0}"
 
@@ -241,7 +243,7 @@ msgstr "Actualisation automatique : {0}"
 msgid "Deleted {deleted} {entityName}"
 msgstr "{deleted} {entityName} supprimé(s)"
 
-#: src/lib/components/data-table/data-table.tsx:602
+#: src/lib/components/data-table/data-table.tsx:660
 msgid "There are no items to display yet."
 msgstr "Il n'y a pas encore d'éléments à afficher."
 
@@ -341,6 +343,16 @@ msgstr "Êtes-vous sûr de vouloir supprimer cette variante ?"
 #~ msgid "All resources are up and running"
 #~ msgstr "Toutes les ressources sont opérationnelles"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:940
+#: src/lib/components/shared/asset/asset-gallery.tsx:1086
+msgid "Open"
+msgstr ""
+
+#. placeholder {0}: asset.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:914
+msgid "Toggle selection for {0}"
+msgstr ""
+
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:87
 msgid "Failed to create administrator"
 msgstr "Échec de la création de l'administrateur"
@@ -353,6 +365,10 @@ msgstr "Non"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:176
 msgid "Successfully updated product variant"
 msgstr "Variante de produit mise à jour avec succès"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:814
+msgid "Upload images, videos, or files to start building your asset library."
+msgstr ""
 
 #: src/app/common/delete-bulk-action.tsx:114
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
@@ -409,6 +425,7 @@ msgstr "Aucun widget à ajouter"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/lib/components/shared/asset/asset-gallery.tsx:304
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
 msgstr "Erreur inconnue"
@@ -418,7 +435,7 @@ msgid "Uploading image..."
 msgstr "Téléversement de l'image..."
 
 #. placeholder {0}: fulfillment.lines.reduce((acc, line) => acc + line.quantity, 0)
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:146
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:149
 msgid "View fulfilled items ({0})"
 msgstr "Afficher les articles exécutés ({0})"
 
@@ -462,7 +479,7 @@ msgstr "Mode développeur"
 msgid "New Role"
 msgstr "Nouveau rôle"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:28
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:26
 msgid "Failed to delete assets: {message}"
 msgstr "Échec de la suppression des ressources : {message}"
 
@@ -543,6 +560,10 @@ msgstr "Nouvelle collection"
 msgid "Insights"
 msgstr "Aperçus"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:303
+msgid "Failed to upload assets"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:226
 msgid "Run"
 msgstr "Exécuter"
@@ -587,7 +608,7 @@ msgstr "Administrateurs"
 #~ msgstr "Prix brut : <0/>"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:82
-#: src/lib/components/data-table/data-table.tsx:718
+#: src/lib/components/data-table/data-table.tsx:777
 msgid "Go to next page"
 msgstr "Aller à la page suivante"
 
@@ -612,7 +633,7 @@ msgstr "Rechercher des options..."
 msgid "Order Count"
 msgstr "Nombre de commandes"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:154
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
 msgid "Fulfilled items"
 msgstr "Articles exécutés"
 
@@ -703,7 +724,7 @@ msgstr "Déplacer les collections"
 msgid "Roles"
 msgstr "Rôles"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:395
+#: src/lib/components/shared/asset/asset-gallery.tsx:519
 msgid "Grid view"
 msgstr "Vue en grille"
 
@@ -731,7 +752,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer {selectionLength} ressources ?"
 msgid "Sign in"
 msgstr "Se connecter"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:398
+#: src/lib/components/shared/asset/asset-gallery.tsx:522
 msgid "List view"
 msgstr "Vue en liste"
 
@@ -866,7 +887,6 @@ msgstr "Terminer le brouillon"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:47
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:165
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:152
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:192
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:104
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:104
@@ -885,7 +905,7 @@ msgstr "Terminer le brouillon"
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:106
 #: src/app/routes/_authenticated/_tax-rates/tax-rates_.$id.tsx:113
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:93
-#: src/lib/components/shared/asset/asset-gallery.tsx:750
+#: src/lib/components/shared/asset/asset-gallery.tsx:1015
 msgid "Name"
 msgstr "Nom"
 
@@ -925,7 +945,7 @@ msgstr "Exécution créée"
 msgid "Found {0} eligible shipping method{1}"
 msgstr "Trouvé {0} méthode(s) d'expédition éligible(s)"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:753
+#: src/lib/components/shared/asset/asset-gallery.tsx:1059
 #: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "Dimensions"
@@ -951,7 +971,7 @@ msgstr "Ajouter une colonne après"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:421
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:241
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:209
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:82
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:91
 #: src/lib/components/data-table/use-generated-columns.tsx:262
 msgid "Actions"
 msgstr "Actions"
@@ -1022,7 +1042,7 @@ msgstr "Erreur lors du chargement de l'historique des commandes : {0}"
 msgid "Shipping address set for order"
 msgstr "Adresse de livraison définie pour la commande"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:173
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:219
 #: src/lib/components/shared/asset/asset-preview.tsx:153
 msgid "Focal Point"
 msgstr "Point focal"
@@ -1106,7 +1126,7 @@ msgstr "La tâche planifiée sera exécutée"
 msgid "New stock location"
 msgstr "Nouvel emplacement de stock"
 
-#: src/lib/components/data-table/data-table.tsx:714
+#: src/lib/components/data-table/data-table.tsx:773
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
 msgstr "Sélectionner la ligne"
@@ -1262,8 +1282,9 @@ msgstr "Ouvrir dans un nouvel onglet"
 msgid "Failed to update promotion"
 msgstr "Échec de la mise à jour de la promotion"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:368
-#: src/lib/components/shared/asset/asset-gallery.tsx:380
+#: src/lib/components/shared/asset/asset-gallery.tsx:91
+#: src/lib/components/shared/asset/asset-gallery.tsx:477
+#: src/lib/components/shared/asset/asset-gallery.tsx:494
 msgid "Images"
 msgstr "Images"
 
@@ -1276,7 +1297,7 @@ msgstr "API Keys"
 msgid "Search {name}..."
 msgstr "Rechercher {name}..."
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:110
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:151
 msgid "Edit asset"
 msgstr "Modifier la ressource"
 
@@ -1390,7 +1411,7 @@ msgid "No items selected"
 msgstr "Aucun élément sélectionné"
 
 #. placeholder {0}: selected.length
-#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:636
 msgid ", {0} selected"
 msgstr ", {0} sélectionné(s)"
 
@@ -1596,6 +1617,10 @@ msgstr "Sélectionner un canal"
 msgid "Display language"
 msgstr "Langue d'affichage"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:195
+msgid "The source file remains unchanged. Keep the original extension or omit it."
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:282
 msgid "Fulfillment details"
 msgstr "Détails de l'exécution"
@@ -1622,7 +1647,7 @@ msgstr "avant"
 msgid "Failed to set customer for order: {0}"
 msgstr "Échec de la définition du client pour la commande : {0}"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:752
+#: src/lib/components/shared/asset/asset-gallery.tsx:1036
 msgid "Size"
 msgstr "Taille"
 
@@ -1634,6 +1659,10 @@ msgstr "Aucune traduction trouvée pour {0}"
 #: src/app/routes/_authenticated/_customers/customers.tsx:103
 msgid "New Customer"
 msgstr "Nouveau client"
+
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:76
+msgid "Filter assets by tags"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
@@ -1749,8 +1778,8 @@ msgid "Address updated successfully"
 msgstr "Adresse mise à jour avec succès"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:138
-#: src/lib/components/shared/asset/asset-gallery.tsx:754
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
+#: src/lib/components/shared/asset/asset-gallery.tsx:1043
 #: src/lib/framework/layout-engine/page-layout.tsx:746
 msgid "Created"
 msgstr "Créé"
@@ -2009,7 +2038,7 @@ msgstr "Remboursement réglé avec succès"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:115
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:156
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:122
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
@@ -2098,8 +2127,8 @@ msgstr "Commence à"
 msgid "Duplicate"
 msgstr "Dupliquer"
 
-#: src/lib/components/data-table/data-table.tsx:590
-#: src/lib/components/data-table/data-table.tsx:601
+#: src/lib/components/data-table/data-table.tsx:648
+#: src/lib/components/data-table/data-table.tsx:659
 #: src/lib/components/shared/customer-group-selector.tsx:60
 msgid "No results"
 msgstr "Aucun résultat"
@@ -2146,7 +2175,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer cette adresse ?"
 msgid "Failed to assign option group"
 msgstr "Échec de l'assignation du groupe d'options"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:89
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:104
 msgid "Failed to update asset"
 msgstr "Échec de la mise à jour de la ressource"
 
@@ -2217,7 +2246,7 @@ msgstr "Méthode d'Expédition de Test"
 msgid "Facet Values"
 msgstr "Valeurs de facette"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:85
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:100
 msgid "Successfully updated asset"
 msgstr "Ressource mise à jour avec succès"
 
@@ -2583,7 +2612,7 @@ msgstr "Zone"
 msgid "No metrics for this period"
 msgstr "Aucune métrique pour cette période"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:134
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:137
 msgid "Method"
 msgstr "Méthode"
 
@@ -2619,6 +2648,10 @@ msgstr "Échec de la définition de l'adresse de livraison pour la commande : {0
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
 msgstr "Annuler la tâche"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets yet"
+msgstr ""
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:194
 msgid "Ends at"
@@ -2679,12 +2712,12 @@ msgid "Save View"
 msgstr "Enregistrer la vue"
 
 #. placeholder {0}: selectedIds.size
+#. placeholder {0}: selectedTags.length
 #. placeholder {0}: selectedValues.size
-#. placeholder {0}: selection.length
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:76
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:48
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:85
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:137
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:139
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:80
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:67
 msgid "{0} selected"
 msgstr "{0} sélectionné(s)"
@@ -2882,7 +2915,7 @@ msgstr "Suppression réussie de {successCount} facettes du canal"
 msgid "New Product"
 msgstr "Nouveau produit"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:55
 msgid "New asset"
 msgstr "Nouvelle ressource"
 
@@ -2898,9 +2931,9 @@ msgstr "Recalculer les frais de livraison"
 #~ msgid "Select which options should apply to the existing variant \"{0}\""
 #~ msgstr "Sélectionnez les options qui doivent s'appliquer à la variante existante « {0} »"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:39
-#: src/app/routes/_authenticated/_assets/assets.tsx:17
-#: src/app/routes/_authenticated/_assets/assets.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:54
+#: src/app/routes/_authenticated/_assets/assets.tsx:16
+#: src/app/routes/_authenticated/_assets/assets.tsx:42
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:380
@@ -2956,8 +2989,8 @@ msgstr "Remise"
 msgid "Top Products"
 msgstr "Meilleurs produits"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:367
-#: src/lib/components/shared/asset/asset-gallery.tsx:379
+#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:493
 msgid "All types"
 msgstr "Tous les types"
 
@@ -3087,6 +3120,13 @@ msgstr ""
 #: src/lib/components/data-input/select-with-options.tsx:107
 msgid "Select an option"
 msgstr "Sélectionner une option"
+
+#. placeholder {0}: asset.name
+#. placeholder {0}: row.original.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:937
+#: src/lib/components/shared/asset/asset-gallery.tsx:1083
+msgid "Open {0}"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:251
 msgid "Copy to Personal"
@@ -3300,7 +3340,7 @@ msgstr "Enregistrer les modifications"
 msgid "Search products..."
 msgstr "Rechercher des produits..."
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:163
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:166
 msgid "Unknown product"
 msgstr "Produit inconnu"
 
@@ -3408,6 +3448,10 @@ msgstr "Colonnes"
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
 msgstr "Échec du téléversement de l'image"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets match these filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "Option value name"
@@ -3548,10 +3592,9 @@ msgstr "Gérer les vues globales"
 msgid "Processing..."
 msgstr "Traitement en cours..."
 
-#. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx:472
-msgid "{totalItems} {0} found"
-msgstr "{totalItems} {0} trouvé(s)"
+#~ msgid "{totalItems} {0} found"
+#~ msgstr "{totalItems} {0} trouvé(s)"
 
 #: src/lib/components/date-range-picker.tsx:122
 msgid "Select date range"
@@ -3589,6 +3632,10 @@ msgstr "Assigner"
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "Vendeur créé avec succès"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:863
+msgid "We couldn't load assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
@@ -3654,7 +3701,7 @@ msgstr "Introuvable"
 msgid "Facet values"
 msgstr "Valeurs de facette"
 
-#: src/lib/components/data-table/data-table.tsx:312
+#: src/lib/components/data-table/data-table.tsx:370
 msgid "Failed to reorder items"
 msgstr "Échec de la réorganisation des articles"
 
@@ -3707,6 +3754,10 @@ msgstr "Paiement autorisé"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:62
 msgid "Successfully updated role"
 msgstr "Rôle mis à jour avec succès"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:136
+msgid "The display name can omit the extension or keep {sourceExtensionLabel}. It cannot use a different file extension."
+msgstr ""
 
 #: src/lib/components/shared/customer-address-form.tsx:184
 msgid "Select a country"
@@ -3823,7 +3874,7 @@ msgstr "Frais de port remboursés"
 msgid "Failed to create option in group \"{0}\""
 msgstr ""
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:376
+#: src/lib/components/shared/asset/asset-gallery.tsx:490
 msgid "Asset type"
 msgstr "Type d'asset"
 
@@ -4046,7 +4097,7 @@ msgstr "Vue non enregistrée"
 msgid "Cannot remove from active channel"
 msgstr "Impossible de supprimer du canal actif"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:179
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:226
 #: src/lib/components/shared/asset/asset-preview.tsx:162
 msgid "Not set"
 msgstr "Non défini"
@@ -4125,7 +4176,7 @@ msgstr "Rembourser {0}"
 msgid "Enter slug manually"
 msgstr "Saisir le slug manuellement"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:160
 msgid "Items included in this fulfillment."
 msgstr "Articles inclus dans cette exécution."
 
@@ -4155,7 +4206,7 @@ msgstr "Rechercher des administrateurs..."
 msgid "Created by"
 msgstr "Créé par"
 
-#: src/lib/components/data-table/data-table.tsx:591
+#: src/lib/components/data-table/data-table.tsx:649
 msgid "No items match your current filters. Try clearing them to see more."
 msgstr "Aucun élément ne correspond à vos filtres actuels. Essayez de les effacer pour en voir plus."
 
@@ -4352,6 +4403,7 @@ msgstr "est dans"
 msgid "Email"
 msgstr "E-mail"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:80
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
 msgstr "Filtrer"
@@ -4369,8 +4421,8 @@ msgid "Loading customers…"
 msgstr "Chargement des clients…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
-msgid "Filter by tags"
-msgstr "Filtrer par étiquettes"
+#~ msgid "Filter by tags"
+#~ msgstr "Filtrer par étiquettes"
 
 #: src/lib/components/login/login-form.tsx:74
 msgid "Sign in to access the admin dashboard"
@@ -4383,6 +4435,10 @@ msgstr "Connectez-vous pour accéder au tableau de bord administrateur"
 #: src/lib/components/data-table/filters/data-table-boolean-filter.tsx:57
 msgid "False"
 msgstr "Faux"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:139
+msgid "Asset name extension does not match the source file"
+msgstr ""
 
 #: src/lib/components/layout/nav-user.tsx:127
 msgctxt "theme"
@@ -4449,7 +4505,7 @@ msgstr "Échec de la mise à jour de l'état de paiement"
 msgid "Your orders summary"
 msgstr "Résumé de vos commandes"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:406
+#: src/lib/components/shared/asset/asset-gallery.tsx:540
 msgid "Upload"
 msgstr "Télécharger"
 
@@ -4458,7 +4514,7 @@ msgid "Product with options"
 msgstr "Produit avec options"
 
 #. placeholder {0}: filteredTags.length
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:163
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:196
 msgid "Showing all {0} results"
 msgstr "Affichage de tous les {0} résultats"
 
@@ -4600,7 +4656,9 @@ msgstr "Qté"
 msgid "Inline code"
 msgstr "Code en ligne"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:45
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
+#: src/lib/components/shared/asset/asset-gallery.tsx:1127
 msgid "Tags"
 msgstr "Étiquettes"
 
@@ -4745,6 +4803,10 @@ msgstr "Échec du renommage de la vue globale"
 #~ msgid "Insert a new hyperlink with URL and target options"
 #~ msgstr "Insérer un nouveau lien hypertexte avec URL et options de cible"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:193
+msgid "Display name"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:194
 msgid "Height"
 msgstr "Hauteur"
@@ -4758,6 +4820,10 @@ msgstr "Un remboursement de {formattedDiff} est requis. Sélectionnez les montan
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:100
 msgid "Unit price"
 msgstr "Prix unitaire"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:812
+msgid "Try changing your search, asset type, or selected tags."
+msgstr ""
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
@@ -4792,7 +4858,7 @@ msgstr "Ajouter des groupes de clients"
 msgid "Available Languages"
 msgstr "Langues disponibles"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:114
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:123
 msgid "Reset selection"
 msgstr "Réinitialiser la sélection"
 
@@ -4856,6 +4922,10 @@ msgstr "Ancien e-mail :"
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "Enregistrez une vue comme « Globale » pour la rendre disponible à tous les utilisateurs."
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:147
+msgid "Search tags..."
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/generate-missing-variants-dialog.tsx:154
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:90
 msgid "Failed to create variants"
@@ -4882,7 +4952,7 @@ msgstr "Rotation de la clé"
 msgid "Hide password"
 msgstr "Masquer le mot de passe"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:71
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:80
 msgid "Bulk actions"
 msgstr "Actions groupées"
 
@@ -4920,7 +4990,7 @@ msgstr "Effacer le filtre"
 msgid "Regions"
 msgstr "Régions"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:445
+#: src/lib/components/shared/asset/asset-gallery.tsx:581
 msgid "Drop files here to upload"
 msgstr "Déposez les fichiers ici pour les téléverser"
 
@@ -5213,8 +5283,8 @@ msgid "Failed to update order"
 msgstr "Échec de la mise à jour de la commande"
 
 #: src/lib/components/shared/asset/asset-bulk-actions.tsx:84
-msgid "With selected..."
-msgstr "Avec la sélection..."
+#~ msgid "With selected..."
+#~ msgstr "Avec la sélection..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
@@ -5287,7 +5357,7 @@ msgstr "État / Province"
 msgid "Enabled"
 msgstr "Activé"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:483
+#: src/lib/components/shared/asset/asset-gallery.tsx:643
 msgid "Items per page"
 msgstr "Éléments par page"
 
@@ -5353,6 +5423,10 @@ msgstr "Vos dernières commandes"
 #: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Tâches planifiées"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:140
+msgid "Use {sourceExtensionLabel} or remove the extension from the display name."
+msgstr ""
 
 #: src/lib/components/data-table/use-generated-columns.tsx:428
 msgid "Are you sure you want to delete this item? This action cannot be undone."
@@ -5484,12 +5558,12 @@ msgid "Failed to update variant"
 msgstr "Échec de la mise à jour de la variante"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:69
-#: src/lib/components/data-table/data-table.tsx:717
+#: src/lib/components/data-table/data-table.tsx:776
 msgid "Go to previous page"
 msgstr "Aller à la page précédente"
 
 #. placeholder {0}: line.quantity
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:171
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:174
 msgid "Quantity: {0}"
 msgstr "Quantité : {0}"
 
@@ -5566,6 +5640,11 @@ msgstr "Taux de taxes"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Échec de la suppression des clients du groupe"
+
+#. placeholder {0}: failedAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:295
+msgid "Failed to upload {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
 msgid "We couldn't load the latest customers"
@@ -5733,8 +5812,8 @@ msgid "Edit Note"
 msgstr "Modifier la note"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:635
-msgid "No assets found. Try adjusting your filters."
-msgstr "Aucun asset trouvé. Essayez d'ajuster vos filtres."
+#~ msgid "No assets found. Try adjusting your filters."
+#~ msgstr "Aucun asset trouvé. Essayez d'ajuster vos filtres."
 
 #: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
@@ -5762,8 +5841,10 @@ msgstr "Administrateur mis à jour avec succès"
 
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:263
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:225
-#: src/lib/components/data-table/data-table.tsx:594
-#: src/lib/components/shared/asset/asset-gallery.tsx:361
+#: src/lib/components/data-table/data-table.tsx:652
+#: src/lib/components/shared/asset/asset-gallery.tsx:458
+#: src/lib/components/shared/asset/asset-gallery.tsx:465
+#: src/lib/components/shared/asset/asset-gallery.tsx:821
 msgid "Clear filters"
 msgstr "Effacer les filtres"
 
@@ -5792,8 +5873,13 @@ msgstr "Statut"
 msgid "No options found"
 msgstr "Aucune option trouvée"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:370
-#: src/lib/components/shared/asset/asset-gallery.tsx:382
+#: src/lib/components/shared/asset/asset-gallery.tsx:826
+msgid "Upload assets"
+msgstr ""
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:95
+#: src/lib/components/shared/asset/asset-gallery.tsx:479
+#: src/lib/components/shared/asset/asset-gallery.tsx:496
 msgid "Binary"
 msgstr "Binaire"
 
@@ -6063,8 +6149,9 @@ msgstr "Créez votre première promotion"
 msgid "Remove item"
 msgstr "Supprimer l'élément"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:369
-#: src/lib/components/shared/asset/asset-gallery.tsx:381
+#: src/lib/components/shared/asset/asset-gallery.tsx:93
+#: src/lib/components/shared/asset/asset-gallery.tsx:478
+#: src/lib/components/shared/asset/asset-gallery.tsx:495
 msgid "Video"
 msgstr "Vidéo"
 
@@ -6146,8 +6233,7 @@ msgstr "Supprimer le brouillon"
 msgid "Source"
 msgstr "Source"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:107
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:98
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:116
 msgid "No actions available"
 msgstr "Aucune action disponible"
 
@@ -6177,6 +6263,11 @@ msgstr "Facette mise à jour avec succès"
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
 msgstr "Barré"
+
+#. placeholder {0}: createdAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:292
+msgid "Uploaded {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
@@ -6218,7 +6309,7 @@ msgstr "Êtes-vous sûr de vouloir supprimer ce groupe d'options du produit ?"
 msgid "Description (alt)"
 msgstr "Description (alt)"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:124
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:154
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:164
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:99
 msgid "No tags found"
@@ -6358,7 +6449,8 @@ msgstr "Résumé des commandes"
 msgid "Search stock locations..."
 msgstr "Rechercher des emplacements de stock..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:349
+#: src/lib/components/shared/asset/asset-gallery.tsx:440
+#: src/lib/components/shared/asset/asset-gallery.tsx:1124
 msgid "Search assets..."
 msgstr "Rechercher des assets..."
 
@@ -6421,7 +6513,7 @@ msgstr "Échec de la suppression de la facette du canal : {message}"
 #~ msgid "Set link"
 #~ msgstr "Définir le lien"
 
-#: src/lib/components/data-table/data-table.tsx:716
+#: src/lib/components/data-table/data-table.tsx:775
 msgid "Pagination"
 msgstr "Pagination"
 
@@ -6472,7 +6564,7 @@ msgid "View result"
 msgstr "Voir le résultat"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:20
-#: src/lib/components/data-table/data-table.tsx:719
+#: src/lib/components/data-table/data-table.tsx:778
 msgid "Rows per page"
 msgstr "Lignes par page"
 
@@ -6569,7 +6661,7 @@ msgid "Failed to create product variant"
 msgstr "Échec de la création de la variante de produit"
 
 #: src/lib/components/data-input/relation-selector.tsx:418
-#: src/lib/components/data-table/data-table.tsx:501
+#: src/lib/components/data-table/data-table.tsx:559
 msgid "Search..."
 msgstr "Rechercher..."
 
@@ -6653,9 +6745,8 @@ msgstr "Conditions disponibles"
 msgid "Active filters"
 msgstr "Filtres actifs"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:176
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:54
-#: src/lib/components/data-table/data-table.tsx:577
+#: src/lib/components/data-table/data-table.tsx:635
 msgid "Clear all"
 msgstr "Tout effacer"
 
@@ -6705,7 +6796,7 @@ msgstr "Le jeton est utilisé pour spécifier le canal lors des requêtes API."
 msgid "No addresses found"
 msgstr "Aucune adresse trouvée"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:133
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
 msgid "Fulfillment ID"
 msgstr "ID d'exécution"
 
@@ -6751,6 +6842,10 @@ msgstr "La méthode de paiement est requise"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:134
 msgid "Failed to add customer to group"
 msgstr "Échec de l'ajout du client au groupe"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:630
+msgid "{totalItems, plural, one {{totalItems} asset found} other {{totalItems} assets found}}"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:291
