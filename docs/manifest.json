@@ -4219,7 +4219,7 @@
                   "title": "DataTable",
                   "slug": "data-table",
                   "file": "docs/reference/dashboard/list-views/data-table.mdx",
-                  "lastModified": "2026-07-16T14:41:21+02:00"
+                  "lastModified": "2026-07-17T10:14:44Z"
                 },
                 {
                   "title": "DataTableCellComponent",
@@ -4243,7 +4243,7 @@
                   "title": "PaginatedListDataTable",
                   "slug": "paginated-list-data-table",
                   "file": "docs/reference/dashboard/list-views/paginated-list-data-table.mdx",
-                  "lastModified": "2026-07-16T14:41:21+02:00"
+                  "lastModified": "2026-07-17T10:14:44Z"
                 }
               ],
               "lastModified": "2026-01-28T14:49:21+01:00"
