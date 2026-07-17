@@ -6,10 +6,10 @@ import {
     SUPER_ADMIN_USER_IDENTIFIER,
 } from '@vendure/common/lib/shared-constants';
 import {
+    mergeConfig,
     RoleAssignmentMigrationService,
     RoleAssignmentPlugin,
     TransactionalConnection,
-    mergeConfig,
 } from '@vendure/core';
 import { preBootstrapConfig } from '@vendure/core/dist/bootstrap';
 import { createErrorResultGuard, createTestEnvironment, ErrorResultGuard } from '@vendure/testing';
@@ -20,11 +20,22 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
 
+import { graphql } from './graphql/graphql-admin';
 import {
     createAdministratorDocument,
     createChannelDocument,
     createRoleDocument,
 } from './graphql/shared-definitions';
+
+const getExperimentalFeaturesDocument = graphql(`
+    query GetExperimentalFeatures {
+        globalSettings {
+            serverConfig {
+                experimentalFeatures
+            }
+        }
+    }
+`);
 
 /**
  * These tests exercise the `experimental.roleAssignments` flag, which is currently only a
@@ -43,9 +54,9 @@ describe('experimental.roleAssignments flag disabled (default)', () => {
         const config = await preBootstrapConfig({ plugins: [] });
 
         expect(config.plugins).not.toContain(RoleAssignmentPlugin);
-        expect(
-            (config.dbConnectionOptions.entities as any[]).some(e => e.name === 'RoleAssignment'),
-        ).toBe(false);
+        expect((config.dbConnectionOptions.entities as any[]).some(e => e.name === 'RoleAssignment')).toBe(
+            false,
+        );
     });
 });
 
@@ -79,14 +90,17 @@ describe('experimental.roleAssignments flag enabled', () => {
         await adminClient.asSuperAdmin();
     });
 
+    it('exposes the flag via serverConfig.experimentalFeatures', async () => {
+        const { globalSettings } = await adminClient.query(getExperimentalFeaturesDocument);
+        expect(globalSettings.serverConfig.experimentalFeatures).toEqual(['roleAssignments']);
+    });
+
     it('creates the role_assignment table with the expected columns', async () => {
         expect(await queryRunner.hasTable('role_assignment')).toBe(true);
 
         const table = await getRoleAssignmentTable(queryRunner);
         const columnNames = table.columns.map(c => c.name).sort();
-        expect(columnNames).toEqual(
-            ['channelId', 'createdAt', 'id', 'roleId', 'updatedAt', 'userId'].sort(),
-        );
+        expect(columnNames).toEqual(['channelId', 'createdAt', 'id', 'roleId', 'updatedAt', 'userId'].sort());
     });
 
     it('has non-nullable foreign key columns', async () => {
@@ -132,9 +146,7 @@ describe('experimental.roleAssignments flag enabled', () => {
         it('manual re-run picks up relations created after the first boot', async () => {
             // The seed customer (Customer role on the default channel) was created after
             // the first-boot migration had already run.
-            const result = await server.app
-                .get(RoleAssignmentMigrationService)
-                .migrateLegacyRoles();
+            const result = await server.app.get(RoleAssignmentMigrationService).migrateLegacyRoles();
 
             expect(result.created).toBe(1);
             const assignments = await getAssignments(queryRunner);
@@ -175,9 +187,7 @@ describe('experimental.roleAssignments flag enabled', () => {
                 },
             });
 
-            const result = await server.app
-                .get(RoleAssignmentMigrationService)
-                .migrateLegacyRoles();
+            const result = await server.app.get(RoleAssignmentMigrationService).migrateLegacyRoles();
 
             // Two new assignments: bob on the new channel, plus the superadmin on the new
             // channel (the SuperAdmin role is auto-assigned to newly created channels, and
@@ -211,9 +221,7 @@ describe('experimental.roleAssignments flag enabled', () => {
         });
 
         it('is idempotent', async () => {
-            const result = await server.app
-                .get(RoleAssignmentMigrationService)
-                .migrateLegacyRoles();
+            const result = await server.app.get(RoleAssignmentMigrationService).migrateLegacyRoles();
 
             expect(result.created).toBe(0);
             expect(await getAssignments(queryRunner)).toHaveLength(4);
