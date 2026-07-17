@@ -26,7 +26,6 @@ import { EventBus } from './event-bus';
 import { BootstrappedEvent } from './event-bus/events/bootstrapped-event';
 import { getCompatibility, getConfigurationFunction, getEntitiesFromPlugins } from './plugin/plugin-metadata';
 import { getPluginStartupMessages } from './plugin/plugin-utils';
-import { RoleAssignmentPlugin } from './plugin/role-assignment-plugin/role-assignment-plugin';
 import { setProcessContext } from './process-context/process-context';
 import { isTelemetryDisabled } from './telemetry/helpers/is-telemetry-disabled.helper';
 import { VENDURE_VERSION } from './version';
@@ -289,6 +288,13 @@ export async function preBootstrapConfig(
     userConfig: Partial<VendureConfig>,
 ): Promise<Readonly<RuntimeVendureConfig>> {
     if (userConfig?.experimental?.roleAssignments?.enabled) {
+        // Imported lazily: a static import would evaluate the plugin's NestJS module graph
+        // (via PluginCommonModule) as soon as this file is loaded, which calls `getConfig()`
+        // before any config has been set and breaks consumers which import from this file
+        // without bootstrapping, e.g. `migrate.ts` and unit tests.
+        const { RoleAssignmentPlugin } = await import(
+            './plugin/role-assignment-plugin/role-assignment-plugin.js'
+        );
         userConfig.plugins = userConfig.plugins ?? [];
         if (!userConfig.plugins.includes(RoleAssignmentPlugin)) {
             userConfig.plugins.push(RoleAssignmentPlugin);
