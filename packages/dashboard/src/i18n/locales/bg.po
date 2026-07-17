@@ -31,11 +31,11 @@ msgstr "Изберете елементи"
 msgid "View changes"
 msgstr "Виж промените"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:139
 msgid "Tracking code"
 msgstr "Проследяващ код"
 
-#: src/lib/components/data-table/data-table.tsx:713
+#: src/lib/components/data-table/data-table.tsx:772
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
 msgstr "Избери всички редове"
@@ -162,7 +162,7 @@ msgstr "Изтрито успешно"
 #~ msgid "Remove from current channel"
 #~ msgstr "Премахване от текущия канал"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:25
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:23
 msgid "Deleted {selectionLength} assets"
 msgstr "Изтрити {selectionLength} медийни файла"
 
@@ -174,14 +174,16 @@ msgstr "Успешно актуализирана данъчна ставка"
 msgid "Enter custom reason..."
 msgstr "Въведете персонализирана причина..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:751
+#: src/lib/components/shared/asset/asset-gallery.tsx:1027
 msgid "Type"
 msgstr "Тип"
 
+#. placeholder {0}: asset.name
 #. placeholder {0}: entityName.toLowerCase()
 #. placeholder {0}: group.name
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:57
 #: src/lib/components/data-input/default-relation-input.tsx:671
+#: src/lib/components/shared/asset/asset-gallery.tsx:901
 msgid "Select {0}"
 msgstr "Изберете {0}"
 
@@ -241,7 +243,7 @@ msgstr "Автоматично опресняване: {0}"
 msgid "Deleted {deleted} {entityName}"
 msgstr "Изтрито {deleted} {entityName}"
 
-#: src/lib/components/data-table/data-table.tsx:602
+#: src/lib/components/data-table/data-table.tsx:660
 msgid "There are no items to display yet."
 msgstr "Все още няма елементи за показване."
 
@@ -344,6 +346,16 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 #~ msgid "All resources are up and running"
 #~ msgstr "Всички ресурси работят"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:940
+#: src/lib/components/shared/asset/asset-gallery.tsx:1086
+msgid "Open"
+msgstr ""
+
+#. placeholder {0}: asset.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:914
+msgid "Toggle selection for {0}"
+msgstr ""
+
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:87
 msgid "Failed to create administrator"
 msgstr "Неуспешно създаване на администратор"
@@ -356,6 +368,10 @@ msgstr "Не"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:176
 msgid "Successfully updated product variant"
 msgstr "Успешно актуализиран вариант на продукта"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:814
+msgid "Upload images, videos, or files to start building your asset library."
+msgstr ""
 
 #: src/app/common/delete-bulk-action.tsx:114
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
@@ -412,6 +428,7 @@ msgstr "Няма уиджети за добавяне"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/lib/components/shared/asset/asset-gallery.tsx:304
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
 msgstr "Неизвестна грешка"
@@ -421,7 +438,7 @@ msgid "Uploading image..."
 msgstr "Качване на изображение..."
 
 #. placeholder {0}: fulfillment.lines.reduce((acc, line) => acc + line.quantity, 0)
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:146
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:149
 msgid "View fulfilled items ({0})"
 msgstr "Преглед на изпълнените елементи ({0})"
 
@@ -468,7 +485,7 @@ msgstr "Режим за разработка"
 msgid "New Role"
 msgstr "Нова роля"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:28
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:26
 msgid "Failed to delete assets: {message}"
 msgstr "Неуспешно изтриване на медийни файлове: {message}"
 
@@ -549,6 +566,10 @@ msgstr "Нова колекция"
 msgid "Insights"
 msgstr "Анализи"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:303
+msgid "Failed to upload assets"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:226
 msgid "Run"
 msgstr "Старирай"
@@ -593,7 +614,7 @@ msgstr "Администратори"
 #~ msgstr "Цена бруто: <0/>"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:82
-#: src/lib/components/data-table/data-table.tsx:718
+#: src/lib/components/data-table/data-table.tsx:777
 msgid "Go to next page"
 msgstr "Към следващата страница"
 
@@ -618,7 +639,7 @@ msgstr "Търсене на опции..."
 msgid "Order Count"
 msgstr "Брой поръчки"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:154
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
 msgid "Fulfilled items"
 msgstr "Изпълнени елементи"
 
@@ -709,7 +730,7 @@ msgstr "Преместване на колекции"
 msgid "Roles"
 msgstr "Роли"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:395
+#: src/lib/components/shared/asset/asset-gallery.tsx:519
 msgid "Grid view"
 msgstr "Изглед мрежа"
 
@@ -737,7 +758,7 @@ msgstr "Сигурни ли сте, че искате да изтриете {sel
 msgid "Sign in"
 msgstr "Вход"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:398
+#: src/lib/components/shared/asset/asset-gallery.tsx:522
 msgid "List view"
 msgstr "Изглед списък"
 
@@ -872,7 +893,6 @@ msgstr "Приключи черновата"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:47
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:165
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:152
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:192
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:104
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:104
@@ -891,7 +911,7 @@ msgstr "Приключи черновата"
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:106
 #: src/app/routes/_authenticated/_tax-rates/tax-rates_.$id.tsx:113
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:93
-#: src/lib/components/shared/asset/asset-gallery.tsx:750
+#: src/lib/components/shared/asset/asset-gallery.tsx:1015
 msgid "Name"
 msgstr "Име"
 
@@ -931,7 +951,7 @@ msgstr "Създадено изпълнение"
 msgid "Found {0} eligible shipping method{1}"
 msgstr "Намерен е {0} отговарящ на условията метод за доставка{1}"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:753
+#: src/lib/components/shared/asset/asset-gallery.tsx:1059
 #: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "Размери"
@@ -957,7 +977,7 @@ msgstr "Добавете колона след"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:421
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:241
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:209
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:82
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:91
 #: src/lib/components/data-table/use-generated-columns.tsx:262
 msgid "Actions"
 msgstr "Действия"
@@ -1028,7 +1048,7 @@ msgstr "Грешка при зареждането на хронологията
 msgid "Shipping address set for order"
 msgstr "Зададен адрес за доставка за поръчка"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:173
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:219
 #: src/lib/components/shared/asset/asset-preview.tsx:153
 msgid "Focal Point"
 msgstr "Фокусна точка"
@@ -1112,7 +1132,7 @@ msgstr "Планираната задача ще бъде изпълнена"
 msgid "New stock location"
 msgstr "Ново складово местоположение"
 
-#: src/lib/components/data-table/data-table.tsx:714
+#: src/lib/components/data-table/data-table.tsx:773
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
 msgstr "Избери ред"
@@ -1268,8 +1288,9 @@ msgstr "Отвори в нов раздел"
 msgid "Failed to update promotion"
 msgstr "Неуспешно актуализиране на промоцията"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:368
-#: src/lib/components/shared/asset/asset-gallery.tsx:380
+#: src/lib/components/shared/asset/asset-gallery.tsx:91
+#: src/lib/components/shared/asset/asset-gallery.tsx:477
+#: src/lib/components/shared/asset/asset-gallery.tsx:494
 msgid "Images"
 msgstr "Изображения"
 
@@ -1282,7 +1303,7 @@ msgstr "API Keys"
 msgid "Search {name}..."
 msgstr "Търсене на {name}..."
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:110
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:151
 msgid "Edit asset"
 msgstr "Редакция на актив"
 
@@ -1396,7 +1417,7 @@ msgid "No items selected"
 msgstr "Няма избрани елементи"
 
 #. placeholder {0}: selected.length
-#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:636
 msgid ", {0} selected"
 msgstr ", {0} избрани"
 
@@ -1602,6 +1623,10 @@ msgstr "Изберете канал"
 msgid "Display language"
 msgstr "Език на дисплея"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:195
+msgid "The source file remains unchanged. Keep the original extension or omit it."
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:282
 msgid "Fulfillment details"
 msgstr "Подробности за изпълнението"
@@ -1628,7 +1653,7 @@ msgstr "преди"
 msgid "Failed to set customer for order: {0}"
 msgstr "Неуспешно задаване на клиент за поръчката: {0}"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:752
+#: src/lib/components/shared/asset/asset-gallery.tsx:1036
 msgid "Size"
 msgstr "Размер"
 
@@ -1640,6 +1665,10 @@ msgstr "Няма намерен превод за {0}"
 #: src/app/routes/_authenticated/_customers/customers.tsx:103
 msgid "New Customer"
 msgstr "Нов клиент"
+
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:76
+msgid "Filter assets by tags"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
@@ -1758,8 +1787,8 @@ msgid "Address updated successfully"
 msgstr "Адресът е актуализиран успешно"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:138
-#: src/lib/components/shared/asset/asset-gallery.tsx:754
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
+#: src/lib/components/shared/asset/asset-gallery.tsx:1043
 #: src/lib/framework/layout-engine/page-layout.tsx:746
 msgid "Created"
 msgstr "Създаден"
@@ -2024,7 +2053,7 @@ msgstr "Възстановяването е приключено успешно"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:115
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:156
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:122
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
@@ -2113,8 +2142,8 @@ msgstr "Започва в"
 msgid "Duplicate"
 msgstr "Дубликат"
 
-#: src/lib/components/data-table/data-table.tsx:590
-#: src/lib/components/data-table/data-table.tsx:601
+#: src/lib/components/data-table/data-table.tsx:648
+#: src/lib/components/data-table/data-table.tsx:659
 #: src/lib/components/shared/customer-group-selector.tsx:60
 msgid "No results"
 msgstr "Няма резултати"
@@ -2161,7 +2190,7 @@ msgstr "Сигурни ли сте, че искате да изтриете то
 msgid "Failed to assign option group"
 msgstr "Неуспешно присвояване на група опции"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:89
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:104
 msgid "Failed to update asset"
 msgstr "Неуспешно актуализиране на актива"
 
@@ -2235,7 +2264,7 @@ msgstr "Тестване на метод за доставка"
 msgid "Facet Values"
 msgstr "Атрибутни стойности"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:85
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:100
 msgid "Successfully updated asset"
 msgstr "Успешно актуализиран актив"
 
@@ -2601,7 +2630,7 @@ msgstr "Зона"
 msgid "No metrics for this period"
 msgstr "Няма метрики за този период"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:134
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:137
 msgid "Method"
 msgstr "Метод"
 
@@ -2637,6 +2666,10 @@ msgstr "Неуспешно задаване на адрес за доставк�
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
 msgstr "Отмени задание"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets yet"
+msgstr ""
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:194
 msgid "Ends at"
@@ -2697,12 +2730,12 @@ msgid "Save View"
 msgstr "Запазване на изгледа"
 
 #. placeholder {0}: selectedIds.size
+#. placeholder {0}: selectedTags.length
 #. placeholder {0}: selectedValues.size
-#. placeholder {0}: selection.length
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:76
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:48
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:85
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:137
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:139
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:80
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:67
 msgid "{0} selected"
 msgstr "{0} избрани"
@@ -2899,7 +2932,7 @@ msgstr "Успешно премахнати {successCount} атрибути от
 msgid "New Product"
 msgstr "Нов продукт"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:55
 msgid "New asset"
 msgstr "Нов актив"
 
@@ -2915,9 +2948,9 @@ msgstr "Преизчисляване на доставката"
 #~ msgid "Select which options should apply to the existing variant \"{0}\""
 #~ msgstr "Изберете кои опции да се прилагат към съществуващия вариант „{0}“"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:39
-#: src/app/routes/_authenticated/_assets/assets.tsx:17
-#: src/app/routes/_authenticated/_assets/assets.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:54
+#: src/app/routes/_authenticated/_assets/assets.tsx:16
+#: src/app/routes/_authenticated/_assets/assets.tsx:42
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:380
@@ -2973,8 +3006,8 @@ msgstr "Отстъпка"
 msgid "Top Products"
 msgstr "Топ продукти"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:367
-#: src/lib/components/shared/asset/asset-gallery.tsx:379
+#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:493
 msgid "All types"
 msgstr "Всички типове"
 
@@ -3107,6 +3140,13 @@ msgstr ""
 #: src/lib/components/data-input/select-with-options.tsx:107
 msgid "Select an option"
 msgstr "Изберете опция"
+
+#. placeholder {0}: asset.name
+#. placeholder {0}: row.original.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:937
+#: src/lib/components/shared/asset/asset-gallery.tsx:1083
+msgid "Open {0}"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:251
 msgid "Copy to Personal"
@@ -3320,7 +3360,7 @@ msgstr "Запазване на промените"
 msgid "Search products..."
 msgstr "Търсене на продукти..."
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:163
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:166
 msgid "Unknown product"
 msgstr "Неизвестен продукт"
 
@@ -3428,6 +3468,10 @@ msgstr "Колони"
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
 msgstr "Неуспешно качване на изображение"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets match these filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "Option value name"
@@ -3568,10 +3612,9 @@ msgstr "Управление на глобалните изгледи"
 msgid "Processing..."
 msgstr "Обработка..."
 
-#. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx:472
-msgid "{totalItems} {0} found"
-msgstr "Намерени {totalItems} {0}"
+#~ msgid "{totalItems} {0} found"
+#~ msgstr "Намерени {totalItems} {0}"
 
 #: src/lib/components/date-range-picker.tsx:122
 msgid "Select date range"
@@ -3609,6 +3652,10 @@ msgstr "Присвояване"
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "Успешно създаден продавач"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:863
+msgid "We couldn't load assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
@@ -3674,7 +3721,7 @@ msgstr "Не е намерено"
 msgid "Facet values"
 msgstr "Атрибутни стойности"
 
-#: src/lib/components/data-table/data-table.tsx:312
+#: src/lib/components/data-table/data-table.tsx:370
 msgid "Failed to reorder items"
 msgstr "Неуспешно пренареждане на артикули"
 
@@ -3727,6 +3774,10 @@ msgstr "Разрешено плащане"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:62
 msgid "Successfully updated role"
 msgstr "Успешно актуализирана роля"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:136
+msgid "The display name can omit the extension or keep {sourceExtensionLabel}. It cannot use a different file extension."
+msgstr ""
 
 #: src/lib/components/shared/customer-address-form.tsx:184
 msgid "Select a country"
@@ -3843,7 +3894,7 @@ msgstr "Доставката е възстановена"
 msgid "Failed to create option in group \"{0}\""
 msgstr ""
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:376
+#: src/lib/components/shared/asset/asset-gallery.tsx:490
 msgid "Asset type"
 msgstr "Тип на ресурса"
 
@@ -4066,7 +4117,7 @@ msgstr "Незапазен изглед"
 msgid "Cannot remove from active channel"
 msgstr "Не може да се премахне от активния канал"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:179
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:226
 #: src/lib/components/shared/asset/asset-preview.tsx:162
 msgid "Not set"
 msgstr "Не е зададено"
@@ -4145,7 +4196,7 @@ msgstr "Възстановяване {0}"
 msgid "Enter slug manually"
 msgstr "Въведете slug ръчно"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:160
 msgid "Items included in this fulfillment."
 msgstr "Елементи, включени в това изпълнение."
 
@@ -4175,7 +4226,7 @@ msgstr "Търсене на администратори..."
 msgid "Created by"
 msgstr "Създаден от"
 
-#: src/lib/components/data-table/data-table.tsx:591
+#: src/lib/components/data-table/data-table.tsx:649
 msgid "No items match your current filters. Try clearing them to see more."
 msgstr "Няма елементи, отговарящи на текущите филтри. Опитайте да ги изчистите, за да видите повече."
 
@@ -4372,6 +4423,7 @@ msgstr "е в"
 msgid "Email"
 msgstr "Имейл"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:80
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
 msgstr "Филтър"
@@ -4389,8 +4441,8 @@ msgid "Loading customers…"
 msgstr "Зареждане на клиенти…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
-msgid "Filter by tags"
-msgstr "Филтриране по тагове"
+#~ msgid "Filter by tags"
+#~ msgstr "Филтриране по тагове"
 
 #: src/lib/components/login/login-form.tsx:74
 msgid "Sign in to access the admin dashboard"
@@ -4403,6 +4455,10 @@ msgstr "Влезте за достъп до администраторското
 #: src/lib/components/data-table/filters/data-table-boolean-filter.tsx:57
 msgid "False"
 msgstr "Грешно"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:139
+msgid "Asset name extension does not match the source file"
+msgstr ""
 
 #: src/lib/components/layout/nav-user.tsx:127
 msgctxt "theme"
@@ -4469,7 +4525,7 @@ msgstr "Неуспешно актуализиране на състояниет�
 msgid "Your orders summary"
 msgstr "Резюме на вашите поръчки"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:406
+#: src/lib/components/shared/asset/asset-gallery.tsx:540
 msgid "Upload"
 msgstr "Качване"
 
@@ -4478,7 +4534,7 @@ msgid "Product with options"
 msgstr "Продукт с опции"
 
 #. placeholder {0}: filteredTags.length
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:163
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:196
 msgid "Showing all {0} results"
 msgstr "Показани са всички {0} резултати"
 
@@ -4623,7 +4679,9 @@ msgstr "Кол."
 msgid "Inline code"
 msgstr "Вграден код"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:45
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
+#: src/lib/components/shared/asset/asset-gallery.tsx:1127
 msgid "Tags"
 msgstr "Етикети"
 
@@ -4768,6 +4826,10 @@ msgstr "Неуспешно преименуване на глобалния из
 #~ msgid "Insert a new hyperlink with URL and target options"
 #~ msgstr "Вмъкване на нова хипервръзка с URL и опции за цел"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:193
+msgid "Display name"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:194
 msgid "Height"
 msgstr "Височина"
@@ -4781,6 +4843,10 @@ msgstr "Изисква се възстановяване на сума от {for
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:100
 msgid "Unit price"
 msgstr "Единична цена"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:812
+msgid "Try changing your search, asset type, or selected tags."
+msgstr ""
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
@@ -4815,7 +4881,7 @@ msgstr "Добавете групи клиенти"
 msgid "Available Languages"
 msgstr "Налични езици"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:114
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:123
 msgid "Reset selection"
 msgstr "Нулиране на избора"
 
@@ -4879,6 +4945,10 @@ msgstr "Стар имейл:"
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "Запазете изглед като „Глобален“, за да го направите достъпен за всички потребители."
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:147
+msgid "Search tags..."
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/generate-missing-variants-dialog.tsx:154
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:90
 msgid "Failed to create variants"
@@ -4908,7 +4978,7 @@ msgstr "Ротация на ключ"
 msgid "Hide password"
 msgstr "Скриване на паролата"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:71
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:80
 msgid "Bulk actions"
 msgstr "Групови действия"
 
@@ -4946,7 +5016,7 @@ msgstr "Изчистване на филтъра"
 msgid "Regions"
 msgstr "Региони"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:445
+#: src/lib/components/shared/asset/asset-gallery.tsx:581
 msgid "Drop files here to upload"
 msgstr "Пуснете файлове тук за качване"
 
@@ -5239,8 +5309,8 @@ msgid "Failed to update order"
 msgstr "Неуспешно актуализиране на поръчката"
 
 #: src/lib/components/shared/asset/asset-bulk-actions.tsx:84
-msgid "With selected..."
-msgstr "С избраните..."
+#~ msgid "With selected..."
+#~ msgstr "С избраните..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
@@ -5316,7 +5386,7 @@ msgstr "Област / провинция"
 msgid "Enabled"
 msgstr "Активирано"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:483
+#: src/lib/components/shared/asset/asset-gallery.tsx:643
 msgid "Items per page"
 msgstr "Елементи на страница"
 
@@ -5382,6 +5452,10 @@ msgstr "Вашите най-нови поръчки"
 #: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "Планирани задачи"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:140
+msgid "Use {sourceExtensionLabel} or remove the extension from the display name."
+msgstr ""
 
 #: src/lib/components/data-table/use-generated-columns.tsx:428
 msgid "Are you sure you want to delete this item? This action cannot be undone."
@@ -5513,12 +5587,12 @@ msgid "Failed to update variant"
 msgstr "Неуспешно актуализиране на варианта"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:69
-#: src/lib/components/data-table/data-table.tsx:717
+#: src/lib/components/data-table/data-table.tsx:776
 msgid "Go to previous page"
 msgstr "Към предишната страница"
 
 #. placeholder {0}: line.quantity
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:171
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:174
 msgid "Quantity: {0}"
 msgstr "Количество: {0}"
 
@@ -5595,6 +5669,11 @@ msgstr "Данъчни ставки"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "Неуспешно премахване на клиенти от групата"
+
+#. placeholder {0}: failedAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:295
+msgid "Failed to upload {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
 msgid "We couldn't load the latest customers"
@@ -5762,8 +5841,8 @@ msgid "Edit Note"
 msgstr "Редакция на бележка"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:635
-msgid "No assets found. Try adjusting your filters."
-msgstr "Няма намерени ресурси. Опитайте да промените филтрите."
+#~ msgid "No assets found. Try adjusting your filters."
+#~ msgstr "Няма намерени ресурси. Опитайте да промените филтрите."
 
 #: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
@@ -5791,8 +5870,10 @@ msgstr "Успешно актуализиран администратор"
 
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:263
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:225
-#: src/lib/components/data-table/data-table.tsx:594
-#: src/lib/components/shared/asset/asset-gallery.tsx:361
+#: src/lib/components/data-table/data-table.tsx:652
+#: src/lib/components/shared/asset/asset-gallery.tsx:458
+#: src/lib/components/shared/asset/asset-gallery.tsx:465
+#: src/lib/components/shared/asset/asset-gallery.tsx:821
 msgid "Clear filters"
 msgstr "Изчистване на филтрите"
 
@@ -5821,8 +5902,13 @@ msgstr "Статус"
 msgid "No options found"
 msgstr "Не са намерени опции"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:370
-#: src/lib/components/shared/asset/asset-gallery.tsx:382
+#: src/lib/components/shared/asset/asset-gallery.tsx:826
+msgid "Upload assets"
+msgstr ""
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:95
+#: src/lib/components/shared/asset/asset-gallery.tsx:479
+#: src/lib/components/shared/asset/asset-gallery.tsx:496
 msgid "Binary"
 msgstr "Двоичен"
 
@@ -6095,8 +6181,9 @@ msgstr "Създайте първата си промоция"
 msgid "Remove item"
 msgstr "Премахване на елемент"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:369
-#: src/lib/components/shared/asset/asset-gallery.tsx:381
+#: src/lib/components/shared/asset/asset-gallery.tsx:93
+#: src/lib/components/shared/asset/asset-gallery.tsx:478
+#: src/lib/components/shared/asset/asset-gallery.tsx:495
 msgid "Video"
 msgstr "Видео"
 
@@ -6178,8 +6265,7 @@ msgstr "Изтриване на чернова"
 msgid "Source"
 msgstr "Източник"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:107
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:98
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:116
 msgid "No actions available"
 msgstr "Няма налични действия"
 
@@ -6209,6 +6295,11 @@ msgstr "Успешно актуализиран аспект"
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
 msgstr "Зачертан"
+
+#. placeholder {0}: createdAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:292
+msgid "Uploaded {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
@@ -6250,7 +6341,7 @@ msgstr "Сигурни ли сте, че искате да премахнете 
 msgid "Description (alt)"
 msgstr "Описание (алт)"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:124
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:154
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:164
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:99
 msgid "No tags found"
@@ -6390,7 +6481,8 @@ msgstr "Резюме на поръчките"
 msgid "Search stock locations..."
 msgstr "Търсене на складови местоположения..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:349
+#: src/lib/components/shared/asset/asset-gallery.tsx:440
+#: src/lib/components/shared/asset/asset-gallery.tsx:1124
 msgid "Search assets..."
 msgstr "Търсене на ресурси..."
 
@@ -6453,7 +6545,7 @@ msgstr "Неуспешно премахване на атрибут от кан�
 #~ msgid "Set link"
 #~ msgstr "Задайте връзка"
 
-#: src/lib/components/data-table/data-table.tsx:716
+#: src/lib/components/data-table/data-table.tsx:775
 msgid "Pagination"
 msgstr "Странициране"
 
@@ -6504,7 +6596,7 @@ msgid "View result"
 msgstr "Виж резултата"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:20
-#: src/lib/components/data-table/data-table.tsx:719
+#: src/lib/components/data-table/data-table.tsx:778
 msgid "Rows per page"
 msgstr "Редове на страница"
 
@@ -6606,7 +6698,7 @@ msgid "Failed to create product variant"
 msgstr "Неуспешно създаване на вариант на продукта"
 
 #: src/lib/components/data-input/relation-selector.tsx:418
-#: src/lib/components/data-table/data-table.tsx:501
+#: src/lib/components/data-table/data-table.tsx:559
 msgid "Search..."
 msgstr "Търсене..."
 
@@ -6690,9 +6782,8 @@ msgstr "Налични условия"
 msgid "Active filters"
 msgstr "Активни филтри"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:176
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:54
-#: src/lib/components/data-table/data-table.tsx:577
+#: src/lib/components/data-table/data-table.tsx:635
 msgid "Clear all"
 msgstr "Изчисти всички"
 
@@ -6742,7 +6833,7 @@ msgstr "Токенът се използва за указване на кана
 msgid "No addresses found"
 msgstr "Няма намерени адреси"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:133
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
 msgid "Fulfillment ID"
 msgstr "ID на изпълнение"
 
@@ -6788,6 +6879,10 @@ msgstr "Изисква се начин на плащане"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:134
 msgid "Failed to add customer to group"
 msgstr "Неуспешно добавяне на клиент към групата"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:630
+msgid "{totalItems, plural, one {{totalItems} asset found} other {{totalItems} assets found}}"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:291

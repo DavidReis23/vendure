@@ -31,11 +31,11 @@ msgstr "בחר פריטים"
 msgid "View changes"
 msgstr "צפה בשינויים"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:139
 msgid "Tracking code"
 msgstr "קוד מעקב"
 
-#: src/lib/components/data-table/data-table.tsx:713
+#: src/lib/components/data-table/data-table.tsx:772
 #: src/lib/components/data-table/use-generated-columns.tsx:226
 msgid "Select all rows"
 msgstr "בחר את כל השורות"
@@ -162,7 +162,7 @@ msgstr "נמחק בהצלחה"
 #~ msgid "Remove from current channel"
 #~ msgstr "הסר מהערוץ הנוכחי"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:25
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:23
 msgid "Deleted {selectionLength} assets"
 msgstr "נמחקו {selectionLength} קבצים"
 
@@ -174,14 +174,16 @@ msgstr "שיעור המס עודכן בהצלחה"
 msgid "Enter custom reason..."
 msgstr "הזן סיבה מותאמת אישית..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:751
+#: src/lib/components/shared/asset/asset-gallery.tsx:1027
 msgid "Type"
 msgstr "סוג"
 
+#. placeholder {0}: asset.name
 #. placeholder {0}: entityName.toLowerCase()
 #. placeholder {0}: group.name
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:57
 #: src/lib/components/data-input/default-relation-input.tsx:671
+#: src/lib/components/shared/asset/asset-gallery.tsx:901
 msgid "Select {0}"
 msgstr "בחר {0}"
 
@@ -241,7 +243,7 @@ msgstr "רענון אוטומטי: {0}"
 msgid "Deleted {deleted} {entityName}"
 msgstr "נמחקו {deleted} {entityName}"
 
-#: src/lib/components/data-table/data-table.tsx:602
+#: src/lib/components/data-table/data-table.tsx:660
 msgid "There are no items to display yet."
 msgstr "אין עדיין פריטים להצגה."
 
@@ -341,6 +343,16 @@ msgstr "האם אתה בטוח שברצונך למחוק גרסה זו?"
 #~ msgid "All resources are up and running"
 #~ msgstr "כל המשאבים פעילים"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:940
+#: src/lib/components/shared/asset/asset-gallery.tsx:1086
+msgid "Open"
+msgstr ""
+
+#. placeholder {0}: asset.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:914
+msgid "Toggle selection for {0}"
+msgstr ""
+
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:87
 msgid "Failed to create administrator"
 msgstr "יצירת מנהל נכשלה"
@@ -353,6 +365,10 @@ msgstr "לא"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:176
 msgid "Successfully updated product variant"
 msgstr "גרסת המוצר עודכנה בהצלחה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:814
+msgid "Upload images, videos, or files to start building your asset library."
+msgstr ""
 
 #: src/app/common/delete-bulk-action.tsx:114
 msgid "Failed to delete {failed} {entityName}: {allErrors}"
@@ -409,6 +425,7 @@ msgstr "אין ווידג'טים להוספה"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/lib/components/shared/asset/asset-gallery.tsx:304
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
 msgstr "שגיאה לא ידועה"
@@ -418,7 +435,7 @@ msgid "Uploading image..."
 msgstr "מעלה תמונה..."
 
 #. placeholder {0}: fulfillment.lines.reduce((acc, line) => acc + line.quantity, 0)
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:146
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:149
 msgid "View fulfilled items ({0})"
 msgstr "הצגת פריטים שמולאו ({0})"
 
@@ -462,7 +479,7 @@ msgstr "מצב פיתוח"
 msgid "New Role"
 msgstr "תפקיד חדש"
 
-#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:28
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:26
 msgid "Failed to delete assets: {message}"
 msgstr "מחיקת הקבצים נכשלה: {message}"
 
@@ -543,6 +560,10 @@ msgstr "אוסף חדש"
 msgid "Insights"
 msgstr "תובנות"
 
+#: src/lib/components/shared/asset/asset-gallery.tsx:303
+msgid "Failed to upload assets"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:226
 msgid "Run"
 msgstr "הרץ"
@@ -587,7 +608,7 @@ msgstr "מנהלים"
 #~ msgstr "מחיר ברוטו: <0/>"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:82
-#: src/lib/components/data-table/data-table.tsx:718
+#: src/lib/components/data-table/data-table.tsx:777
 msgid "Go to next page"
 msgstr "עבור לעמוד הבא"
 
@@ -612,7 +633,7 @@ msgstr "חיפוש אפשרויות..."
 msgid "Order Count"
 msgstr "מספר הזמנות"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:154
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
 msgid "Fulfilled items"
 msgstr "פריטים שמולאו"
 
@@ -703,7 +724,7 @@ msgstr "העבר אוספים"
 msgid "Roles"
 msgstr "תפקידים"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:395
+#: src/lib/components/shared/asset/asset-gallery.tsx:519
 msgid "Grid view"
 msgstr "תצוגת רשת"
 
@@ -731,7 +752,7 @@ msgstr "האם אתה בטוח שברצונך למחוק {selectionLength} קב�
 msgid "Sign in"
 msgstr "התחבר"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:398
+#: src/lib/components/shared/asset/asset-gallery.tsx:522
 msgid "List view"
 msgstr "תצוגת רשימה"
 
@@ -866,7 +887,6 @@ msgstr "השלם טיוטה"
 
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:47
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:165
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:152
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:192
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:104
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:104
@@ -885,7 +905,7 @@ msgstr "השלם טיוטה"
 #: src/app/routes/_authenticated/_tax-categories/tax-categories_.$id.tsx:106
 #: src/app/routes/_authenticated/_tax-rates/tax-rates_.$id.tsx:113
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:93
-#: src/lib/components/shared/asset/asset-gallery.tsx:750
+#: src/lib/components/shared/asset/asset-gallery.tsx:1015
 msgid "Name"
 msgstr "שם"
 
@@ -925,7 +945,7 @@ msgstr "המשלוח נוצר"
 msgid "Found {0} eligible shipping method{1}"
 msgstr "נמצאו {0} שיטות משלוח זכאיות"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:753
+#: src/lib/components/shared/asset/asset-gallery.tsx:1059
 #: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "ממדים"
@@ -951,7 +971,7 @@ msgstr "הוסף עמודה אחרי"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:421
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:241
 #: src/app/routes/_authenticated/_system/scheduled-tasks.tsx:209
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:82
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:91
 #: src/lib/components/data-table/use-generated-columns.tsx:262
 msgid "Actions"
 msgstr "פעולות"
@@ -1022,7 +1042,7 @@ msgstr "שגיאה בטעינת היסטוריית הזמנה: {0}"
 msgid "Shipping address set for order"
 msgstr "כתובת משלוח הוגדרה להזמנה"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:173
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:219
 #: src/lib/components/shared/asset/asset-preview.tsx:153
 msgid "Focal Point"
 msgstr "נקודת מיקוד"
@@ -1106,7 +1126,7 @@ msgstr "המשימה המתוזמנת תתבצע"
 msgid "New stock location"
 msgstr "מיקום מלאי חדש"
 
-#: src/lib/components/data-table/data-table.tsx:714
+#: src/lib/components/data-table/data-table.tsx:773
 #: src/lib/components/data-table/use-generated-columns.tsx:238
 msgid "Select row"
 msgstr "בחר שורה"
@@ -1262,8 +1282,9 @@ msgstr "פתח בלשונית חדשה"
 msgid "Failed to update promotion"
 msgstr "עדכון המבצע נכשל"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:368
-#: src/lib/components/shared/asset/asset-gallery.tsx:380
+#: src/lib/components/shared/asset/asset-gallery.tsx:91
+#: src/lib/components/shared/asset/asset-gallery.tsx:477
+#: src/lib/components/shared/asset/asset-gallery.tsx:494
 msgid "Images"
 msgstr "תמונות"
 
@@ -1276,7 +1297,7 @@ msgstr "מפתחות API"
 msgid "Search {name}..."
 msgstr "חפש {name}..."
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:110
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:151
 msgid "Edit asset"
 msgstr "ערוך קובץ"
 
@@ -1390,7 +1411,7 @@ msgid "No items selected"
 msgstr "לא נבחרו פריטים"
 
 #. placeholder {0}: selected.length
-#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:636
 msgid ", {0} selected"
 msgstr ", {0} נבחרו"
 
@@ -1596,6 +1617,10 @@ msgstr "בחר ערוץ"
 msgid "Display language"
 msgstr "שפת תצוגה"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:195
+msgid "The source file remains unchanged. Keep the original extension or omit it."
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-detail-shared.tsx:282
 msgid "Fulfillment details"
 msgstr "פרטי משלוח"
@@ -1622,7 +1647,7 @@ msgstr "לפני"
 msgid "Failed to set customer for order: {0}"
 msgstr "הגדרת לקוח להזמנה נכשלה: {0}"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:752
+#: src/lib/components/shared/asset/asset-gallery.tsx:1036
 msgid "Size"
 msgstr "גודל"
 
@@ -1634,6 +1659,10 @@ msgstr "לא נמצא תרגום עבור {0}"
 #: src/app/routes/_authenticated/_customers/customers.tsx:103
 msgid "New Customer"
 msgstr "לקוח חדש"
+
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:76
+msgid "Filter assets by tags"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-orders-widget/index.tsx:54
 msgid "Latest Orders"
@@ -1749,8 +1778,8 @@ msgid "Address updated successfully"
 msgstr "הכתובת עודכנה בהצלחה"
 
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:138
-#: src/lib/components/shared/asset/asset-gallery.tsx:754
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
+#: src/lib/components/shared/asset/asset-gallery.tsx:1043
 #: src/lib/framework/layout-engine/page-layout.tsx:746
 msgid "Created"
 msgstr "נוצר"
@@ -2009,7 +2038,7 @@ msgstr "ההחזר סולק בהצלחה"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:115
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:156
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:122
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
@@ -2098,8 +2127,8 @@ msgstr "מתחיל ב"
 msgid "Duplicate"
 msgstr "שכפל"
 
-#: src/lib/components/data-table/data-table.tsx:590
-#: src/lib/components/data-table/data-table.tsx:601
+#: src/lib/components/data-table/data-table.tsx:648
+#: src/lib/components/data-table/data-table.tsx:659
 #: src/lib/components/shared/customer-group-selector.tsx:60
 msgid "No results"
 msgstr "אין תוצאות"
@@ -2146,7 +2175,7 @@ msgstr "האם אתה בטוח שברצונך למחוק כתובת זו?"
 msgid "Failed to assign option group"
 msgstr "הקצאת קבוצת האפשרויות נכשלה"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:89
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:104
 msgid "Failed to update asset"
 msgstr "עדכון הקובץ נכשל"
 
@@ -2217,7 +2246,7 @@ msgstr "בדוק שיטת משלוח"
 msgid "Facet Values"
 msgstr "ערכי מאפיינים"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:85
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:100
 msgid "Successfully updated asset"
 msgstr "הקובץ עודכן בהצלחה"
 
@@ -2583,7 +2612,7 @@ msgstr "אזור"
 msgid "No metrics for this period"
 msgstr "אין מדדים לתקופה זו"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:134
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:137
 msgid "Method"
 msgstr "שיטה"
 
@@ -2619,6 +2648,10 @@ msgstr "הגדרת כתובת משלוח להזמנה נכשלה: {0}"
 #: src/app/routes/_authenticated/_system/job-queue.tsx:228
 msgid "Cancel Job"
 msgstr "בטל משימה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets yet"
+msgstr ""
 
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:194
 msgid "Ends at"
@@ -2679,12 +2712,12 @@ msgid "Save View"
 msgstr "שמור תצוגה"
 
 #. placeholder {0}: selectedIds.size
+#. placeholder {0}: selectedTags.length
 #. placeholder {0}: selectedValues.size
-#. placeholder {0}: selection.length
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:76
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:48
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:85
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:137
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:139
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:80
 #: src/lib/components/shared/configurable-operation-arg-summary.tsx:67
 msgid "{0} selected"
 msgstr "{0} נבחרו"
@@ -2882,7 +2915,7 @@ msgstr "{successCount} מאפיינים הוסרו מהערוץ בהצלחה"
 msgid "New Product"
 msgstr "מוצר חדש"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:55
 msgid "New asset"
 msgstr "קובץ חדש"
 
@@ -2898,9 +2931,9 @@ msgstr "חישוב מחדש של המשלוח"
 #~ msgid "Select which options should apply to the existing variant \"{0}\""
 #~ msgstr "בחר אילו אפשרויות יחולו על הגרסה הקיימת \"{0}\""
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:39
-#: src/app/routes/_authenticated/_assets/assets.tsx:17
-#: src/app/routes/_authenticated/_assets/assets.tsx:40
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:54
+#: src/app/routes/_authenticated/_assets/assets.tsx:16
+#: src/app/routes/_authenticated/_assets/assets.tsx:42
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:248
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:777
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:380
@@ -2956,8 +2989,8 @@ msgstr "הנחה"
 msgid "Top Products"
 msgstr "מוצרים מובילים"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:367
-#: src/lib/components/shared/asset/asset-gallery.tsx:379
+#: src/lib/components/shared/asset/asset-gallery.tsx:476
+#: src/lib/components/shared/asset/asset-gallery.tsx:493
 msgid "All types"
 msgstr "כל הסוגים"
 
@@ -3087,6 +3120,13 @@ msgstr ""
 #: src/lib/components/data-input/select-with-options.tsx:107
 msgid "Select an option"
 msgstr "בחר אפשרות"
+
+#. placeholder {0}: asset.name
+#. placeholder {0}: row.original.name
+#: src/lib/components/shared/asset/asset-gallery.tsx:937
+#: src/lib/components/shared/asset/asset-gallery.tsx:1083
+msgid "Open {0}"
+msgstr ""
 
 #: src/lib/components/data-table/views-sheet.tsx:251
 msgid "Copy to Personal"
@@ -3300,7 +3340,7 @@ msgstr "שמור שינויים"
 msgid "Search products..."
 msgstr "חיפוש מוצרים..."
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:163
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:166
 msgid "Unknown product"
 msgstr "מוצר לא ידוע"
 
@@ -3408,6 +3448,10 @@ msgstr "עמודות"
 #: src/lib/components/shared/rich-text-editor/rich-text-editor.tsx:163
 msgid "Failed to upload image"
 msgstr "העלאת התמונה נכשלה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:809
+msgid "No assets match these filters"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:146
 msgid "Option value name"
@@ -3548,10 +3592,9 @@ msgstr "נהל תצוגות גלובליות"
 msgid "Processing..."
 msgstr "מעבד..."
 
-#. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
 #: src/lib/components/shared/asset/asset-gallery.tsx:472
-msgid "{totalItems} {0} found"
-msgstr "נמצאו {totalItems} {0}"
+#~ msgid "{totalItems} {0} found"
+#~ msgstr "נמצאו {totalItems} {0}"
 
 #: src/lib/components/date-range-picker.tsx:122
 msgid "Select date range"
@@ -3589,6 +3632,10 @@ msgstr "הקצה"
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "המוכר נוצר בהצלחה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:863
+msgid "We couldn't load assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:58
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:80
@@ -3654,7 +3701,7 @@ msgstr "לא נמצא"
 msgid "Facet values"
 msgstr "ערכי מאפיינים"
 
-#: src/lib/components/data-table/data-table.tsx:312
+#: src/lib/components/data-table/data-table.tsx:370
 msgid "Failed to reorder items"
 msgstr "נכשל בסידור מחדש של הפריטים"
 
@@ -3707,6 +3754,10 @@ msgstr "התשלום אושר"
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:62
 msgid "Successfully updated role"
 msgstr "התפקיד עודכן בהצלחה"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:136
+msgid "The display name can omit the extension or keep {sourceExtensionLabel}. It cannot use a different file extension."
+msgstr ""
 
 #: src/lib/components/shared/customer-address-form.tsx:184
 msgid "Select a country"
@@ -3823,7 +3874,7 @@ msgstr "דמי משלוח הוחזרו"
 msgid "Failed to create option in group \"{0}\""
 msgstr ""
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:376
+#: src/lib/components/shared/asset/asset-gallery.tsx:490
 msgid "Asset type"
 msgstr "סוג קובץ"
 
@@ -4046,7 +4097,7 @@ msgstr "תצוגה לא שמורה"
 msgid "Cannot remove from active channel"
 msgstr "לא ניתן להסיר מערוץ פעיל"
 
-#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:179
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:226
 #: src/lib/components/shared/asset/asset-preview.tsx:162
 msgid "Not set"
 msgstr "לא מוגדר"
@@ -4125,7 +4176,7 @@ msgstr "החזר {0}"
 msgid "Enter slug manually"
 msgstr "הזן slug באופן ידני"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:157
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:160
 msgid "Items included in this fulfillment."
 msgstr "פריטים הכלולים במילוי זה."
 
@@ -4155,7 +4206,7 @@ msgstr "חיפוש מנהלים..."
 msgid "Created by"
 msgstr "נוצר על ידי"
 
-#: src/lib/components/data-table/data-table.tsx:591
+#: src/lib/components/data-table/data-table.tsx:649
 msgid "No items match your current filters. Try clearing them to see more."
 msgstr "אין פריטים התואמים למסננים הנוכחיים שלך. נסה לנקות אותם כדי לראות עוד."
 
@@ -4352,6 +4403,7 @@ msgstr "ב"
 msgid "Email"
 msgstr "דוא״ל"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:80
 #: src/lib/components/data-table/add-filter-menu.tsx:47
 msgid "Filter"
 msgstr "סינון"
@@ -4369,8 +4421,8 @@ msgid "Loading customers…"
 msgstr "טוען לקוחות…"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:104
-msgid "Filter by tags"
-msgstr "סנן לפי תגיות"
+#~ msgid "Filter by tags"
+#~ msgstr "סנן לפי תגיות"
 
 #: src/lib/components/login/login-form.tsx:74
 msgid "Sign in to access the admin dashboard"
@@ -4383,6 +4435,10 @@ msgstr "התחבר כדי לגשת ללוח הבקרה של המנהל"
 #: src/lib/components/data-table/filters/data-table-boolean-filter.tsx:57
 msgid "False"
 msgstr "שקר"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:139
+msgid "Asset name extension does not match the source file"
+msgstr ""
 
 #: src/lib/components/layout/nav-user.tsx:127
 msgctxt "theme"
@@ -4449,7 +4505,7 @@ msgstr "עדכון מצב התשלום נכשל"
 msgid "Your orders summary"
 msgstr "סיכום ההזמנות שלך"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:406
+#: src/lib/components/shared/asset/asset-gallery.tsx:540
 msgid "Upload"
 msgstr "העלה"
 
@@ -4458,7 +4514,7 @@ msgid "Product with options"
 msgstr "מוצר עם אפשרויות"
 
 #. placeholder {0}: filteredTags.length
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:163
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:196
 msgid "Showing all {0} results"
 msgstr "מציג את כל {0} התוצאות"
 
@@ -4600,7 +4656,9 @@ msgstr "כמות"
 msgid "Inline code"
 msgstr "קוד בתוך שורה"
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:45
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:104
+#: src/lib/components/shared/asset/asset-gallery.tsx:1127
 msgid "Tags"
 msgstr "תגיות"
 
@@ -4745,6 +4803,10 @@ msgstr "שינוי שם התצוגה הגלובלית נכשל"
 #~ msgid "Insert a new hyperlink with URL and target options"
 #~ msgstr "הוספת קישור חדש עם URL ואפשרויות יעד"
 
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:193
+msgid "Display name"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/image-dialog.tsx:194
 msgid "Height"
 msgstr "גובה"
@@ -4758,6 +4820,10 @@ msgstr "נדרש החזר כספי של {formattedDiff}. בחר סכומי תש�
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:100
 msgid "Unit price"
 msgstr "מחיר ליחידה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:812
+msgid "Try changing your search, asset type, or selected tags."
+msgstr ""
 
 #: src/lib/components/login/forgot-password-form.tsx:87
 msgid "If an account exists for {submittedEmailAddress}, you will receive an email with a link to reset your password."
@@ -4792,7 +4858,7 @@ msgstr "הוסף קבוצות לקוחות"
 msgid "Available Languages"
 msgstr "שפות זמינות"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:114
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:123
 msgid "Reset selection"
 msgstr "איפוס בחירה"
 
@@ -4856,6 +4922,10 @@ msgstr "דוא\"ל ישן:"
 msgid "Save a view as \"Global\" to make it available to all users."
 msgstr "שמור תצוגה כ\"גלובלית\" כדי להפוך אותה לזמינה לכל המשתמשים."
 
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:147
+msgid "Search tags..."
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/generate-missing-variants-dialog.tsx:154
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:90
 msgid "Failed to create variants"
@@ -4882,7 +4952,7 @@ msgstr "סיבוב מפתח"
 msgid "Hide password"
 msgstr "הסתר סיסמה"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:71
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:80
 msgid "Bulk actions"
 msgstr "פעולות מרובות"
 
@@ -4920,7 +4990,7 @@ msgstr "נקה מסנן"
 msgid "Regions"
 msgstr "אזורים"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:445
+#: src/lib/components/shared/asset/asset-gallery.tsx:581
 msgid "Drop files here to upload"
 msgstr "גרור קבצים לכאן כדי להעלות"
 
@@ -5213,8 +5283,8 @@ msgid "Failed to update order"
 msgstr "עדכון ההזמנה נכשל"
 
 #: src/lib/components/shared/asset/asset-bulk-actions.tsx:84
-msgid "With selected..."
-msgstr "עם הנבחרים..."
+#~ msgid "With selected..."
+#~ msgstr "עם הנבחרים..."
 
 #: src/lib/components/login/reset-password-form.tsx:146
 msgid "Choose a new password for your account"
@@ -5287,7 +5357,7 @@ msgstr "מדינה / מחוז"
 msgid "Enabled"
 msgstr "מופעל"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:483
+#: src/lib/components/shared/asset/asset-gallery.tsx:643
 msgid "Items per page"
 msgstr "פריטים בעמוד"
 
@@ -5353,6 +5423,10 @@ msgstr "ההזמנות האחרונות שלך"
 #: src/lib/framework/defaults.ts:147
 msgid "Scheduled Tasks"
 msgstr "משימות מתוזמנות"
+
+#: src/app/routes/_authenticated/_assets/assets_.$id.tsx:140
+msgid "Use {sourceExtensionLabel} or remove the extension from the display name."
+msgstr ""
 
 #: src/lib/components/data-table/use-generated-columns.tsx:428
 msgid "Are you sure you want to delete this item? This action cannot be undone."
@@ -5484,12 +5558,12 @@ msgid "Failed to update variant"
 msgstr "עדכון הווריאנט נכשל"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:69
-#: src/lib/components/data-table/data-table.tsx:717
+#: src/lib/components/data-table/data-table.tsx:776
 msgid "Go to previous page"
 msgstr "עבור לעמוד הקודם"
 
 #. placeholder {0}: line.quantity
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:171
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:174
 msgid "Quantity: {0}"
 msgstr "כמות: {0}"
 
@@ -5566,6 +5640,11 @@ msgstr "שיעורי מס"
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-bulk-actions.tsx:40
 msgid "Failed to remove customers from group"
 msgstr "הסרת לקוחות מהקבוצה נכשלה"
+
+#. placeholder {0}: failedAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:295
+msgid "Failed to upload {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:56
 msgid "We couldn't load the latest customers"
@@ -5733,8 +5812,8 @@ msgid "Edit Note"
 msgstr "ערוך הערה"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:635
-msgid "No assets found. Try adjusting your filters."
-msgstr "לא נמצאו קבצים. נסה לשנות את המסננים שלך."
+#~ msgid "No assets found. Try adjusting your filters."
+#~ msgstr "לא נמצאו קבצים. נסה לשנות את המסננים שלך."
 
 #: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
@@ -5762,8 +5841,10 @@ msgstr "מנהל עודכן בהצלחה"
 
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:263
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:225
-#: src/lib/components/data-table/data-table.tsx:594
-#: src/lib/components/shared/asset/asset-gallery.tsx:361
+#: src/lib/components/data-table/data-table.tsx:652
+#: src/lib/components/shared/asset/asset-gallery.tsx:458
+#: src/lib/components/shared/asset/asset-gallery.tsx:465
+#: src/lib/components/shared/asset/asset-gallery.tsx:821
 msgid "Clear filters"
 msgstr "נקה מסננים"
 
@@ -5792,8 +5873,13 @@ msgstr "סטטוס"
 msgid "No options found"
 msgstr "לא נמצאו אפשרויות"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:370
-#: src/lib/components/shared/asset/asset-gallery.tsx:382
+#: src/lib/components/shared/asset/asset-gallery.tsx:826
+msgid "Upload assets"
+msgstr ""
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:95
+#: src/lib/components/shared/asset/asset-gallery.tsx:479
+#: src/lib/components/shared/asset/asset-gallery.tsx:496
 msgid "Binary"
 msgstr "בינארי"
 
@@ -6063,8 +6149,9 @@ msgstr "צור את המבצע הראשון שלך"
 msgid "Remove item"
 msgstr "הסר פריט"
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:369
-#: src/lib/components/shared/asset/asset-gallery.tsx:381
+#: src/lib/components/shared/asset/asset-gallery.tsx:93
+#: src/lib/components/shared/asset/asset-gallery.tsx:478
+#: src/lib/components/shared/asset/asset-gallery.tsx:495
 msgid "Video"
 msgstr "וידאו"
 
@@ -6146,8 +6233,7 @@ msgstr "מחק טיוטה"
 msgid "Source"
 msgstr "מקור"
 
-#: src/lib/components/data-table/data-table-bulk-actions.tsx:107
-#: src/lib/components/shared/asset/asset-bulk-actions.tsx:98
+#: src/lib/components/data-table/data-table-bulk-actions.tsx:116
 msgid "No actions available"
 msgstr "אין פעולות זמינות"
 
@@ -6177,6 +6263,11 @@ msgstr "המאפיין עודכן בהצלחה"
 #: src/lib/components/shared/rich-text-editor/selection-bubble-menu.tsx:83
 msgid "Strikethrough"
 msgstr "קו חוצה"
+
+#. placeholder {0}: createdAssets.length
+#: src/lib/components/shared/asset/asset-gallery.tsx:292
+msgid "Uploaded {0} assets"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/latest-customers-widget/index.tsx:92
 #: src/lib/framework/dashboard-widget/metrics-widget/index.tsx:127
@@ -6218,7 +6309,7 @@ msgstr "האם אתה בטוח שברצונך להסיר את קבוצת האפ�
 msgid "Description (alt)"
 msgstr "תיאור (טקסט חלופי)"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:124
+#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:154
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx:164
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:99
 msgid "No tags found"
@@ -6358,7 +6449,8 @@ msgstr "סיכום הזמנות"
 msgid "Search stock locations..."
 msgstr "חיפוש מיקומי מלאי..."
 
-#: src/lib/components/shared/asset/asset-gallery.tsx:349
+#: src/lib/components/shared/asset/asset-gallery.tsx:440
+#: src/lib/components/shared/asset/asset-gallery.tsx:1124
 msgid "Search assets..."
 msgstr "חיפוש קבצים..."
 
@@ -6421,7 +6513,7 @@ msgstr "הסרת המאפיין מהערוץ נכשלה: {message}"
 #~ msgid "Set link"
 #~ msgstr "הגדר קישור"
 
-#: src/lib/components/data-table/data-table.tsx:716
+#: src/lib/components/data-table/data-table.tsx:775
 msgid "Pagination"
 msgstr "עימוד"
 
@@ -6472,7 +6564,7 @@ msgid "View result"
 msgstr "צפה בתוצאה"
 
 #: src/lib/components/data-table/data-table-pagination.tsx:20
-#: src/lib/components/data-table/data-table.tsx:719
+#: src/lib/components/data-table/data-table.tsx:778
 msgid "Rows per page"
 msgstr "שורות בעמוד"
 
@@ -6569,7 +6661,7 @@ msgid "Failed to create product variant"
 msgstr "יצירת גרסת המוצר נכשלה"
 
 #: src/lib/components/data-input/relation-selector.tsx:418
-#: src/lib/components/data-table/data-table.tsx:501
+#: src/lib/components/data-table/data-table.tsx:559
 msgid "Search..."
 msgstr "חיפוש..."
 
@@ -6653,9 +6745,8 @@ msgstr "תנאים זמינים"
 msgid "Active filters"
 msgstr "מסננים פעילים"
 
-#: src/app/routes/_authenticated/_assets/components/asset-tag-filter.tsx:176
 #: src/lib/components/data-table/data-table-active-filters-popover.tsx:54
-#: src/lib/components/data-table/data-table.tsx:577
+#: src/lib/components/data-table/data-table.tsx:635
 msgid "Clear all"
 msgstr "נקה הכל"
 
@@ -6705,7 +6796,7 @@ msgstr "הטוקן משמש לציון הערוץ בעת ביצוע בקשות A
 msgid "No addresses found"
 msgstr "לא נמצאו כתובות"
 
-#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:133
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:136
 msgid "Fulfillment ID"
 msgstr "מזהה משלוח"
 
@@ -6751,6 +6842,10 @@ msgstr "אמצעי תשלום נדרש"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:134
 msgid "Failed to add customer to group"
 msgstr "הוספת הלקוח לקבוצה נכשלה"
+
+#: src/lib/components/shared/asset/asset-gallery.tsx:630
+msgid "{totalItems, plural, one {{totalItems} asset found} other {{totalItems} assets found}}"
+msgstr ""
 
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:338
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:291
