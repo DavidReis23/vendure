@@ -112,7 +112,12 @@ describe('experimental.roleAssignments flag enabled', () => {
 
     it('has a unique constraint on (userId, roleId, channelId)', async () => {
         const table = await getRoleAssignmentTable(queryRunner);
-        const uniqueColumnSets = table.uniques.map(u => [...u.columnNames].sort());
+        // MySQL/MariaDB report unique constraints as unique indices rather than
+        // in `table.uniques`, so both sources are checked.
+        const uniqueColumnSets = [
+            ...table.uniques.map(u => [...u.columnNames].sort()),
+            ...table.indices.filter(i => i.isUnique).map(i => [...i.columnNames].sort()),
+        ];
         expect(uniqueColumnSets).toContainEqual(['channelId', 'roleId', 'userId']);
     });
 
@@ -240,13 +245,16 @@ async function getRoleAssignmentTable(queryRunner: QueryRunner) {
 async function getAssignments(
     queryRunner: QueryRunner,
 ): Promise<Array<{ identifier: string; roleCode: string; channelCode: string }>> {
-    // Raw sqlite query — fine here since e2e tests always run against sql.js
+    // All identifiers are escaped via the driver so the raw query works across the
+    // DBs the e2e suite runs on: sqlite/postgres ("user") and mysql/mariadb (`user`),
+    // and camelCase columns survive postgres' lowercase folding.
+    const esc = (name: string) => queryRunner.connection.driver.escape(name);
     return queryRunner.query(
-        `SELECT u.identifier AS identifier, r.code AS roleCode, c.code AS channelCode
-         FROM role_assignment ra
-         JOIN "user" u ON u.id = ra.userId
-         JOIN role r ON r.id = ra.roleId
-         JOIN channel c ON c.id = ra.channelId
-         ORDER BY ra.id`,
+        `SELECT u.${esc('identifier')} AS ${esc('identifier')}, r.${esc('code')} AS ${esc('roleCode')}, c.${esc('code')} AS ${esc('channelCode')}
+         FROM ${esc('role_assignment')} ra
+         JOIN ${esc('user')} u ON u.${esc('id')} = ra.${esc('userId')}
+         JOIN ${esc('role')} r ON r.${esc('id')} = ra.${esc('roleId')}
+         JOIN ${esc('channel')} c ON c.${esc('id')} = ra.${esc('channelId')}
+         ORDER BY ra.${esc('id')}`,
     );
 }
