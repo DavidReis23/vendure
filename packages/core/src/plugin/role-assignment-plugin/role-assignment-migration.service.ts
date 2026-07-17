@@ -4,6 +4,7 @@ import { Brackets } from 'typeorm';
 
 import { Logger } from '../../config/logger/vendure-logger';
 import { TransactionalConnection } from '../../connection/transactional-connection';
+import { Customer } from '../../entity/customer/customer.entity';
 import { User } from '../../entity/user/user.entity';
 
 import { loggerCtx } from './constants';
@@ -19,12 +20,13 @@ export interface MigrateLegacyRolesResult {
  * rows: for each (user, role) pair in `user_roles_role`, the role's channels are joined in
  * from `role_channels_channel`, yielding one RoleAssignment per (user, role, channel).
  *
- * All users are treated alike — there is no differentiation between customer and
- * administrator users. This mirrors the legacy permission resolution exactly: a customer
- * user holds the Customer role, which is assigned to every channel, so they receive an
- * assignment on every channel, just as `getUserChannelsPermissions()` grants them
- * `Authenticated` on every channel today. Note that this means the row count scales with
- * `users x channels-per-role`, and that once permission resolution switches to this table,
+ * Customer users are additionally restricted to the channels they actually belong to
+ * (via `customer_channels_channel`): without this check every customer would receive an
+ * assignment on every channel, because the Customer role itself is auto-assigned to all
+ * channels. Administrator users have no channel membership of their own, so their
+ * assignments follow the role's channels directly. A user which is both an administrator
+ * and a customer is treated as a customer user, i.e. all of its assignments are restricted
+ * to the customer's channels. Note that once permission resolution switches to this table,
  * operations which today extend the legacy relations (channel creation auto-assigning the
  * SuperAdmin/Customer roles, customer registration) must create the corresponding
  * RoleAssignment rows to stay consistent.
@@ -95,6 +97,29 @@ export class RoleAssignmentMigrationService {
                             .andWhere('assignment.channelId = channel.id')
                             .getQuery();
                         return `NOT EXISTS ${sub}`;
+                    })
+                    // Customer users only receive assignments for channels they belong to;
+                    // users without a customer record (administrators) are not restricted.
+                    .andWhere(outerQb => {
+                        const hasCustomerRecord = outerQb
+                            .subQuery()
+                            .select('1')
+                            .from(Customer, 'customer')
+                            .innerJoin('customer.user', 'customerUser')
+                            .where('customerUser.id = user.id')
+                            .andWhere('customer.deletedAt IS NULL')
+                            .getQuery();
+                        const isMemberOfChannel = outerQb
+                            .subQuery()
+                            .select('1')
+                            .from(Customer, 'member')
+                            .innerJoin('member.user', 'memberUser')
+                            .innerJoin('member.channels', 'memberChannel')
+                            .where('memberUser.id = user.id')
+                            .andWhere('member.deletedAt IS NULL')
+                            .andWhere('memberChannel.id = channel.id')
+                            .getQuery();
+                        return `(NOT EXISTS ${hasCustomerRecord} OR EXISTS ${isMemberOfChannel})`;
                     })
                     .orderBy('user.id', 'ASC')
                     .addOrderBy('role.id', 'ASC')
