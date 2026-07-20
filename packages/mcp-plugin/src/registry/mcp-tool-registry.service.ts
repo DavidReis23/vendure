@@ -15,6 +15,8 @@ import { loggerCtx, MCP_PLUGIN_OPTIONS, MCP_TOOL_TOGGLES_STORE_KEY } from '../co
 import { McpOperationsService, McpRateLimitExceededError } from '../services/mcp-operations.service';
 import { McpExecutionContext, McpPluginOptions, McpPluginToolHandler, McpRegisteredTool } from '../types';
 
+import { Bm25Index } from './bm25';
+
 /** Discovery meta-tool names — reserved so user tools cannot collide with them. */
 const SEARCH_TOOLS = 'search_tools';
 const EXECUTE_TOOL = 'execute_tool';
@@ -35,6 +37,7 @@ const NO_ARGS_SCHEMA: McpJsonSchema = { type: 'object', properties: {}, addition
 export class McpToolRegistryService implements OnApplicationBootstrap {
     private readonly tools = new Map<string, McpRegisteredTool>();
     private discoveryMetaTools: McpRegisteredTool[] = [];
+    private bm25 = new Map<McpToolset, Bm25Index>();
 
     constructor(
         private discoveryService: DiscoveryService,
@@ -46,6 +49,7 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
     onApplicationBootstrap(): void {
         this.discoverTools();
         this.discoveryMetaTools = this.buildDiscoveryMetaTools();
+        this.bm25 = this.buildSearchIndexes();
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -352,8 +356,12 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
         const limit = Math.min(Math.max(typeof params.limit === 'number' ? params.limit : 10, 1), 50);
         const toggles = await this.getToolToggles(executionContext.ctx);
         const tools = this.visibleTools(executionContext, toolset, toggles);
+        const index = this.bm25.get(toolset);
         const matches = tools
-            .map(tool => ({ tool, score: this.searchScore(tool, query) }))
+            .map(tool => ({
+                tool,
+                score: query.length === 0 ? 1 : (index?.score(tool.name, query) ?? 0),
+            }))
             .filter(item => query.length === 0 || item.score > 0)
             .sort((a, b) => b.score - a.score || a.tool.name.localeCompare(b.tool.name))
             .slice(0, limit)
@@ -383,33 +391,19 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
         };
     }
 
-    private searchScore(tool: McpRegisteredTool, query: string): number {
-        if (query.length === 0) {
-            return 1;
+    private buildSearchIndexes(): Map<McpToolset, Bm25Index> {
+        const indexes = new Map<McpToolset, Bm25Index>();
+        for (const toolset of ['shop', 'admin'] as McpToolset[]) {
+            const entries = [...this.tools.values()]
+                .filter(tool => tool.toolset === toolset)
+                .map(tool => ({ id: tool.name, text: this.searchDocText(tool) }));
+            indexes.set(toolset, new Bm25Index(entries));
         }
-        const tokens = query.split(/\s+/).filter(Boolean);
-        let score = 0;
-        for (const token of tokens) {
-            if (tool.name === token) {
-                score += 20;
-            } else if (tool.name.toLowerCase().includes(token)) {
-                score += 10;
-            }
-            if (tool.title?.toLowerCase().includes(token)) {
-                score += 5;
-            }
-            if (tool.description.toLowerCase().includes(token)) {
-                score += 3;
-            }
-            if (
-                `${tool.name} ${tool.title ?? ''} ${tool.description} ${tool.pluginSource}`
-                    .toLowerCase()
-                    .includes(token)
-            ) {
-                score += 1;
-            }
-        }
-        return score;
+        return indexes;
+    }
+
+    private searchDocText(tool: McpRegisteredTool): string {
+        return [tool.name, tool.title ?? '', tool.description, ...(tool.keywords ?? [])].join(' ');
     }
 
     private buildDiscoveryMetaTools(): McpRegisteredTool[] {

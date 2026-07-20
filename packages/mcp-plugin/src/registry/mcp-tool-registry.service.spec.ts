@@ -467,6 +467,95 @@ describe('McpToolRegistryService', () => {
             expect(tools[0].name).toBe('get_thing');
             expect(tools[0].inputSchema.properties.confirm).toBeUndefined();
         });
+
+        it('matches author keywords in the search query', async () => {
+            const { service } = build(
+                [
+                    wrapper(
+                        shopTool({
+                            name: 'refund_order',
+                            description: 'Refund the first refundable payment for an order.',
+                            keywords: ['money back', 'reimburse'],
+                        }),
+                    ),
+                ],
+                { toolExposure: 'discovery' },
+            );
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: 'money back',
+            });
+            const tools = (result.structuredContent as any).tools;
+            expect(tools.map((t: any) => t.name)).toContain('refund_order');
+        });
+
+        it('never serializes keywords into search_tools results (search-only metadata)', async () => {
+            const { service } = build([wrapper(shopTool({ keywords: ['hidden phrase'] }))], {
+                toolExposure: 'discovery',
+            });
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: 'hidden',
+            });
+            const tools = (result.structuredContent as any).tools;
+            expect(tools).toHaveLength(1);
+            expect(tools[0].keywords).toBeUndefined();
+        });
+
+        it('does not match tokens that only appear in the provider module name', async () => {
+            // wrapper() sets pluginSource to 'TestModule'; the tool's own text contains no such token.
+            const { service } = build([wrapper(shopTool())], { toolExposure: 'discovery' });
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: 'testmodule',
+            });
+            expect((result.structuredContent as any).tools).toEqual([]);
+            expect((result.structuredContent as any).hint).toContain('No shop tools matched');
+        });
+
+        it('ranks a tool matching a rare query word above one matching only common words', async () => {
+            const { service } = build(
+                [
+                    wrapper(
+                        shopTool({ name: 'refund_order', description: 'Refund a payment for an order.' }),
+                    ),
+                    wrapper(
+                        shopTool({ name: 'list_orders', description: 'List orders placed in the store.' }),
+                    ),
+                ],
+                { toolExposure: 'discovery' },
+            );
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: 'refund an order',
+            });
+            const names = (result.structuredContent as any).tools.map((t: any) => t.name);
+            expect(names[0]).toBe('refund_order');
+        });
+
+        it('returns the fallback hint for a stopword-only query instead of matching everything', async () => {
+            // 'in' is a substring of 'shipping' — the old substring scorer matched it (+3+1); BM25's
+            // whole-word tokenizer drops stopwords entirely, so this query must yield the hint.
+            const { service } = build(
+                [wrapper(shopTool({ description: 'Sets the shipping method for the cart.' }))],
+                { toolExposure: 'discovery' },
+            );
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: 'in the',
+            });
+            expect((result.structuredContent as any).tools).toEqual([]);
+            expect((result.structuredContent as any).hint).toContain('No shop tools matched');
+        });
+
+        it('empty query still lists every visible tool', async () => {
+            const { service } = build([wrapper(shopTool()), wrapper(shopTool({ name: 'other_thing' }))], {
+                toolExposure: 'discovery',
+            });
+            service.onApplicationBootstrap();
+            const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', { query: '' });
+            expect((result.structuredContent as any).tools).toHaveLength(2);
+        });
     });
 
     describe('output drift', () => {
