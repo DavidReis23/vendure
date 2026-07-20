@@ -35,6 +35,12 @@ export interface McpToolMetadata {
     title?: string;
     /** What the tool does, written for an AI agent to read. */
     description: string;
+    /**
+     * Optional search keywords: synonyms and phrasings a user would actually say, e.g.
+     * `['money back', 'reimburse']` for a refund tool. Used only to match `search_tools`
+     * queries in discovery mode; never shown to the agent or returned in responses.
+     */
+    keywords?: string[];
     /** Which API the tool uses (shop or admin). */
     toolset: McpToolset;
     /**
