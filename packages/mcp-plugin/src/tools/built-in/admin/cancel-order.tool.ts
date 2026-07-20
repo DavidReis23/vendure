@@ -16,6 +16,14 @@ interface CancelOrderToolInput {
     name: 'cancel_order',
     toolset: 'admin',
     description: 'Cancel an order and restock cancelled lines.',
+    keywords: [
+        'void an order',
+        "cancel a customer's purchase",
+        'call off this order',
+        'scrap the order and restock',
+        'abort an order',
+        'kill this order',
+    ],
     permissions: [Permission.UpdateOrder],
     requiresConfirmation: true,
     inputSchema: objectSchema({

@@ -15,6 +15,14 @@ interface GetCollectionInput {
     name: 'get_collection',
     toolset: 'shop',
     description: 'Get a public collection by ID or slug.',
+    keywords: [
+        'show me this category',
+        'open a product group',
+        'browse this department',
+        'view a category page',
+        'details of a collection',
+        "what's in this category",
+    ],
     permissions: [Permission.Public],
     readOnly: true,
     inputSchema: objectSchema({

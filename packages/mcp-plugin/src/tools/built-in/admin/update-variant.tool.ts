@@ -44,7 +44,15 @@ const updateVariantInputSchema = objectSchema({
 @McpTool({
     name: 'update_variant',
     toolset: 'admin',
-    description: 'Update a product variant.',
+    description: "Update an existing product variant's details, such as its price, SKU or stock on hand.",
+    keywords: [
+        'edit a variant',
+        'change a price or sku',
+        'update a size or color option',
+        'modify variant details',
+        'fix a specific variation',
+        'edit product option info',
+    ],
     permissions: [Permission.UpdateProduct],
     inputSchema: objectSchema({
         id: idProp('Variant ID.'),

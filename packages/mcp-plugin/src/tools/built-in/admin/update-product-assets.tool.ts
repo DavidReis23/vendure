@@ -15,7 +15,15 @@ interface UpdateProductAssetsInput {
 @McpTool({
     name: 'update_product_assets',
     toolset: 'admin',
-    description: 'Update product asset ids.',
+    description: 'Change which images or media assets a product uses, and which one is its featured image.',
+    keywords: [
+        "change a product's images",
+        'set the product photos',
+        'update product pictures',
+        'assign a featured image',
+        'swap out product media',
+        'attach images to a product',
+    ],
     permissions: [Permission.UpdateProduct],
     inputSchema: objectSchema({
         id: idProp('Product ID.'),

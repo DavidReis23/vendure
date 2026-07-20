@@ -17,6 +17,14 @@ interface SearchProductsInput extends Record<string, unknown> {
     name: 'search_products',
     toolset: 'shop',
     description: 'Perform a basic name/slug lookup and return paginated product summaries.',
+    keywords: [
+        'find a product',
+        'search the store',
+        'do you sell',
+        'look for an item by name',
+        'search for something to buy',
+        'hunt for a product',
+    ],
     permissions: [Permission.Public],
     readOnly: true,
     inputSchema: objectSchema({

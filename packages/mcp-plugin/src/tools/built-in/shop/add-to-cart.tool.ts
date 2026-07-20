@@ -15,6 +15,14 @@ interface AddToCartInput {
     name: 'add_to_cart',
     toolset: 'shop',
     description: 'Add a product variant to the active cart.',
+    keywords: [
+        'put in my basket',
+        'I want to buy this',
+        'add this item to my bag',
+        'grab this product',
+        'start an order with this',
+        'put this in my shopping bag',
+    ],
     permissions: [Permission.Public],
     readOnly: false,
     inputSchema: objectSchema({

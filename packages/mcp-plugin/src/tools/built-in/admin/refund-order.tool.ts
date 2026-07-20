@@ -16,6 +16,14 @@ interface RefundOrderToolInput {
     name: 'refund_order',
     toolset: 'admin',
     description: 'Refund the first refundable payment for an order.',
+    keywords: [
+        'give the customer their money back',
+        'issue a refund',
+        'return the payment',
+        'reimburse a buyer',
+        'pay back an order',
+        'process a refund',
+    ],
     permissions: [Permission.UpdateOrder],
     requiresConfirmation: true,
     inputSchema: objectSchema({

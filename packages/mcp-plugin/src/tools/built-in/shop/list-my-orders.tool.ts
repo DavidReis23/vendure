@@ -16,6 +16,14 @@ interface ListMyOrdersInput extends Record<string, unknown> {
     name: 'list_my_orders',
     toolset: 'shop',
     description: 'List orders belonging to the authenticated customer.',
+    keywords: [
+        'my order history',
+        'my past purchases',
+        "everything I've ordered",
+        'show my previous orders',
+        'what have I bought before',
+        'my buying history',
+    ],
     permissions: [Permission.Authenticated],
     readOnly: true,
     inputSchema: objectSchema({

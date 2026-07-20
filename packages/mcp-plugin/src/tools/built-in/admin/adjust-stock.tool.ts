@@ -15,6 +15,14 @@ interface AdjustStockInput {
     name: 'adjust_stock',
     toolset: 'admin',
     description: 'Adjust stock on hand for a variant and stock location.',
+    keywords: [
+        'restock this item',
+        'update the inventory count',
+        'add or remove stock',
+        'correct the stock level',
+        'increase stock on hand',
+        'fix inventory quantity',
+    ],
     // Parity fix: stock is adjusted via the core updateProductVariants mutation, gated by
     // UpdateCatalog/UpdateProduct — UpdateStockLocation governs the StockLocation entity, not quantities.
     permissions: [Permission.UpdateProduct],

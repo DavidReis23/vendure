@@ -14,6 +14,14 @@ interface AddCustomerToGroupInput {
     name: 'add_customer_to_group',
     toolset: 'admin',
     description: 'Add a customer to a customer group.',
+    keywords: [
+        'assign a customer to a segment',
+        'put a buyer in a group',
+        'tag this customer',
+        'add customer to a list',
+        'categorize a client',
+        'give customer group membership',
+    ],
     permissions: [Permission.UpdateCustomerGroup],
     inputSchema: objectSchema({
         customerId: idProp('Customer ID.'),

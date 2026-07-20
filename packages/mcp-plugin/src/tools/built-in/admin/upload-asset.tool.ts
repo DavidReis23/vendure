@@ -14,6 +14,14 @@ interface UploadAssetInput {
     name: 'upload_asset',
     toolset: 'admin',
     description: 'Upload an asset from a publicly reachable HTTP(S) URL.',
+    keywords: [
+        'upload an image',
+        'add a photo from a link',
+        'import media from a url',
+        'upload a picture to the library',
+        'pull in a file from the web',
+        'add an asset from a web address',
+    ],
     permissions: [Permission.CreateAsset],
     inputSchema: objectSchema({
         url: stringProp('Public HTTP(S) URL of the asset to fetch and store.'),

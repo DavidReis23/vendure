@@ -15,6 +15,14 @@ interface GetProductInput {
     name: 'get_product',
     toolset: 'shop',
     description: 'Get an enabled product by ID or slug.',
+    keywords: [
+        'tell me about this item',
+        'show me this product',
+        'product details for shoppers',
+        'view an item page',
+        'info on a specific product',
+        'see this thing you sell',
+    ],
     permissions: [Permission.Public],
     readOnly: true,
     inputSchema: objectSchema({

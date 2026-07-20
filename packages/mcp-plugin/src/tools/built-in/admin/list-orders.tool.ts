@@ -16,6 +16,14 @@ interface ListOrdersInput extends Record<string, unknown> {
     name: 'list_orders',
     toolset: 'admin',
     description: 'List orders for operations users.',
+    keywords: [
+        'show all orders',
+        'recent orders in the store',
+        'browse the order queue',
+        'every order placed',
+        'orders dashboard for staff',
+        'pull the full order list',
+    ],
     permissions: [Permission.ReadOrder],
     readOnly: true,
     inputSchema: objectSchema({

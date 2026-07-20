@@ -42,7 +42,15 @@ const createProductInputSchema = objectSchema({
 @McpTool({
     name: 'create_product',
     toolset: 'admin',
-    description: 'Create a product.',
+    description: 'Create a new product in the catalog, with its name, slug, description and enabled state.',
+    keywords: [
+        'add a new product',
+        'list a new item for sale',
+        'create a catalog entry',
+        'add product to the store',
+        'make a new listing',
+        'put a new item on sale',
+    ],
     permissions: [Permission.CreateProduct],
     inputSchema: objectSchema({ input: createProductInputSchema }),
 })

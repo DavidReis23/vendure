@@ -17,6 +17,14 @@ interface ListCollectionsInput extends Record<string, unknown> {
     name: 'list_collections',
     toolset: 'shop',
     description: 'List public collections with pagination.',
+    keywords: [
+        'browse all categories',
+        'what departments do you have',
+        'show me your product groups',
+        'list of shop categories',
+        'see every collection',
+        'how is the store organized',
+    ],
     permissions: [Permission.Public],
     readOnly: true,
     inputSchema: objectSchema({

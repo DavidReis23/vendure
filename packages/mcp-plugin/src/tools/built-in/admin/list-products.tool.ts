@@ -15,7 +15,15 @@ interface ListProductsInput extends Record<string, unknown> {
 @McpTool({
     name: 'list_products',
     toolset: 'admin',
-    description: 'List products.',
+    description: 'List the products in the catalog, with pagination.',
+    keywords: [
+        'show the whole catalog',
+        'list every product',
+        'browse all items we sell',
+        'full product list',
+        'see the inventory of products',
+        'catalog listing for staff',
+    ],
     permissions: [Permission.ReadProduct],
     readOnly: true,
     inputSchema: objectSchema({

@@ -24,7 +24,15 @@ const customerUpdateSchema = objectSchema({
 @McpTool({
     name: 'update_customer',
     toolset: 'admin',
-    description: 'Update a customer.',
+    description: "Update an existing customer's details, such as their name, email address or phone number.",
+    keywords: [
+        "edit a customer's details",
+        "change a client's info",
+        "fix a buyer's record",
+        'modify customer data',
+        "update someone's account details",
+        'correct a customer profile',
+    ],
     permissions: [Permission.UpdateCustomer],
     inputSchema: objectSchema({
         id: idProp('Customer ID.'),

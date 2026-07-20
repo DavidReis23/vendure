@@ -15,6 +15,14 @@ interface UpdateOrderStateInput {
     name: 'update_order_state',
     toolset: 'admin',
     description: 'Transition an order to a new state.',
+    keywords: [
+        'change the order status',
+        'mark an order as shipped',
+        'move the order to the next stage',
+        "advance an order's fulfillment",
+        'set the order to complete',
+        'transition order status',
+    ],
     permissions: [Permission.UpdateOrder],
     requiresConfirmation: true,
     inputSchema: objectSchema({

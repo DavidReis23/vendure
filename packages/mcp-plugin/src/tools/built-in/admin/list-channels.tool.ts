@@ -15,6 +15,14 @@ interface ListChannelsInput extends Record<string, unknown> {
     name: 'list_channels',
     toolset: 'admin',
     description: 'List channels available to the current administrator.',
+    keywords: [
+        'show sales channels',
+        'list our storefronts',
+        'which channels can I access',
+        'available stores',
+        'see all channels',
+        'multi-store channel list',
+    ],
     permissions: [Permission.Authenticated],
     readOnly: true,
     inputSchema: objectSchema({

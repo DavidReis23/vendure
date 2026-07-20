@@ -44,7 +44,16 @@ const createVariantInputSchema = objectSchema({
 @McpTool({
     name: 'create_variant',
     toolset: 'admin',
-    description: 'Create a product variant.',
+    description:
+        'Create a new variant of an existing product (e.g. a size or color option), with its SKU, price and stock.',
+    keywords: [
+        'add a size or color option',
+        'create a new sku',
+        'add a variant to a product',
+        'make another version of an item',
+        'new product option',
+        'add a variation',
+    ],
     permissions: [Permission.UpdateProduct],
     inputSchema: objectSchema({
         productId: idProp('Parent product ID.'),

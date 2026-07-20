@@ -20,6 +20,14 @@ interface SetActiveChannelInput {
     name: 'set_active_channel',
     toolset: 'admin',
     description: 'Set the active channel for this MCP grant by channel token.',
+    keywords: [
+        'switch to another store',
+        'change the active channel',
+        'select which storefront to work in',
+        'set my current channel',
+        'switch channels',
+        "change the store I'm managing",
+    ],
     permissions: [Permission.Authenticated],
     inputSchema: objectSchema({
         channelToken: stringProp('Channel token of the channel to activate.'),

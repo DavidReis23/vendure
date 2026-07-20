@@ -40,7 +40,16 @@ const updateProductInputSchema = objectSchema({
 @McpTool({
     name: 'update_product',
     toolset: 'admin',
-    description: 'Update a product.',
+    description:
+        "Update an existing product's details, such as its name, slug, description or enabled state.",
+    keywords: [
+        "edit a product's details",
+        'change product info',
+        'update a listing',
+        'modify item description',
+        'fix product data',
+        'edit a catalog entry',
+    ],
     permissions: [Permission.UpdateProduct],
     inputSchema: objectSchema({
         id: idProp('Product ID.'),

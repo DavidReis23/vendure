@@ -16,6 +16,14 @@ interface AddNoteToOrderToolInput {
     name: 'add_note_to_order',
     toolset: 'admin',
     description: 'Add an internal or public note to an order timeline.',
+    keywords: [
+        'leave a comment on an order',
+        'add a remark to the order timeline',
+        'annotate this order',
+        'log an internal message on the order',
+        'write a note customers can see',
+        'record a memo on the order',
+    ],
     permissions: [Permission.UpdateOrder],
     inputSchema: objectSchema({
         id: idProp('Order ID.'),

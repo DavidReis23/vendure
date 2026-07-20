@@ -15,7 +15,15 @@ interface ListCustomersInput extends Record<string, unknown> {
 @McpTool({
     name: 'list_customers',
     toolset: 'admin',
-    description: 'List customers.',
+    description: 'List customer records, with pagination.',
+    keywords: [
+        'show all customers',
+        'browse our clients',
+        'customer directory',
+        'list every buyer',
+        'who are our customers',
+        'pull the customer list',
+    ],
     permissions: [Permission.ReadCustomer],
     readOnly: true,
     inputSchema: objectSchema({
