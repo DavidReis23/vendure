@@ -24,8 +24,7 @@ const customerInputSchema = objectSchema({
 @McpTool({
     name: 'create_customer',
     toolset: 'admin',
-    description:
-        'Create a new customer record with their name, email address and optional phone or address details.',
+    description: 'Create a new customer record with their name, email address and an optional phone number.',
     keywords: [
         'add a new customer',
         'register a buyer',

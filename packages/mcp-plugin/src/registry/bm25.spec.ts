@@ -19,19 +19,21 @@ describe('tokenize', () => {
 });
 
 describe('Bm25Index', () => {
+    // 'order' is a common term (3 of 4 docs); 'refund' is rare (1 doc).
     const index = new Bm25Index([
-        { id: 'refund_order', text: 'refund order Refund a payment for an order.' },
-        { id: 'list_orders', text: 'list orders List orders placed in the store.' },
+        { id: 'issue_refund', text: 'refund payment' },
+        { id: 'get_order', text: 'get order' },
+        { id: 'list_orders', text: 'list order' },
+        { id: 'cancel_order', text: 'cancel order' },
     ]);
 
     it('scores 0 for a document containing no query term', () => {
-        expect(index.score('list_orders', 'refund')).toBe(0);
+        expect(index.score('get_order', 'refund')).toBe(0);
     });
 
     it('weights rare terms above common ones', () => {
-        // 'order(s)' appears in both docs, 'refund' only in one — refund_order must win.
-        expect(index.score('refund_order', 'refund an order')).toBeGreaterThan(
-            index.score('list_orders', 'refund an order'),
+        expect(index.score('issue_refund', 'refund order')).toBeGreaterThan(
+            index.score('get_order', 'refund order'),
         );
     });
 });
