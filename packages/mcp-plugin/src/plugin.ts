@@ -27,10 +27,11 @@ import {
     McpOauthGrant,
     McpToolCallLog,
 } from './entities';
+import { McpToolCallLogService } from './logging/mcp-tool-call-log.service';
 import { McpOauthController } from './oauth/oauth.controller';
 import { McpOauthService } from './oauth/oauth.service';
+import { McpRateLimiterService } from './rate-limit/mcp-rate-limiter.service';
 import { McpToolRegistryService } from './registry/mcp-tool-registry.service';
-import { McpOperationsService } from './services/mcp-operations.service';
 import { mcpToolCallLogRetentionTask } from './tasks/mcp-tool-call-log-retention.task';
 import { mcpBuiltInToolProviders } from './tools/built-in/providers';
 import { McpTransportController } from './transport/mcp-transport.controller';
@@ -64,7 +65,8 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         { provide: MCP_PLUGIN_OPTIONS, useFactory: () => McpPlugin.options },
         McpOauthService,
         McpToolRegistryService,
-        McpOperationsService,
+        McpRateLimiterService,
+        McpToolCallLogService,
         ...mcpBuiltInToolProviders,
     ],
     entities: [McpOauthClient, McpAuthorizationCode, McpAuthorizationRequest, McpOauthGrant, McpToolCallLog],

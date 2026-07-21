@@ -18,8 +18,9 @@ import {
 import { describe, expect, it, vi } from 'vitest';
 
 import { MCP_PLUGIN_OPTIONS } from '../../constants';
+import { McpToolCallLogService } from '../../logging/mcp-tool-call-log.service';
+import { McpRateLimiterService } from '../../rate-limit/mcp-rate-limiter.service';
 import { McpToolRegistryService } from '../../registry/mcp-tool-registry.service';
-import { McpOperationsService } from '../../services/mcp-operations.service';
 
 import { mcpBuiltInToolProviders } from './providers';
 
@@ -91,7 +92,8 @@ describe('built-in registry discovery', () => {
                 { provide: SettingsStoreService, useValue: { get: vi.fn(), set: vi.fn() } },
                 { provide: StockLevelService, useValue: {} },
                 { provide: TransactionalConnection, useValue: {} },
-                { provide: McpOperationsService, useValue: {} },
+                { provide: McpRateLimiterService, useValue: {} },
+                { provide: McpToolCallLogService, useValue: {} },
                 { provide: MCP_PLUGIN_OPTIONS, useValue: {} },
             ],
         }).compile();

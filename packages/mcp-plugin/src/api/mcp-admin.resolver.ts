@@ -16,9 +16,9 @@ import { DateUtils } from 'typeorm/util/DateUtils';
 
 import { mcpServerPermission } from '../constants';
 import { McpOauthGrant, McpToolCallLog } from '../entities';
+import { McpToolCallLogService } from '../logging/mcp-tool-call-log.service';
 import { McpOauthService } from '../oauth/oauth.service';
 import { McpToolRegistryService } from '../registry/mcp-tool-registry.service';
-import { McpOperationsService } from '../services/mcp-operations.service';
 
 /** A registered tool and whether it is currently enabled. */
 interface McpToolInfo {
@@ -72,7 +72,7 @@ const STATS_CACHE_TTL_MS = 60_000;
 
 /**
  * Admin API resolver for the MCP server. It reads tools, grants, the tool-call log and
- * stats, and hands the maintenance mutations off to the registry, OAuth, and operations
+ * stats, and hands the maintenance mutations off to the registry, OAuth, and tool-call-log
  * services.
  *
  * Tool-call input/output are returned exactly as stored — no redaction here. They are
@@ -83,7 +83,7 @@ export class McpAdminResolver {
     constructor(
         private connection: TransactionalConnection,
         private registry: McpToolRegistryService,
-        private operations: McpOperationsService,
+        private toolCallLog: McpToolCallLogService,
         private oauthService: McpOauthService,
         private cacheService: CacheService,
         private listQueryBuilder: ListQueryBuilder,
@@ -205,7 +205,7 @@ export class McpAdminResolver {
     @Mutation()
     @Allow(mcpServerPermission.Update)
     async removeExpiredMcpToolCallLogs(@Ctx() ctx: RequestContext): Promise<number> {
-        return this.operations.deleteExpiredToolCallLogs(ctx, ctx.channelId);
+        return this.toolCallLog.deleteExpiredToolCallLogs(ctx, ctx.channelId);
     }
 
     /**

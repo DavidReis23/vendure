@@ -5,24 +5,7 @@ import { McpToolCallLog } from '../entities/mcp-tool-call-log.entity';
 import { McpToolCallEvent } from '../events/mcp-tool-call.event';
 import { McpPluginOptions } from '../types';
 
-import { McpOperationsService, McpRateLimitExceededError } from './mcp-operations.service';
-
-/** In-memory CacheService stand-in (TTL not enforced — reset is exercised via fake timers). */
-function makeCache() {
-    const store = new Map<string, unknown>();
-    return {
-        store,
-        get: (key: string) => Promise.resolve(store.get(key)),
-        set: (key: string, value: unknown) => {
-            store.set(key, value);
-            return Promise.resolve();
-        },
-        delete: (key: string) => {
-            store.delete(key);
-            return Promise.resolve();
-        },
-    };
-}
+import { McpToolCallLogService } from './mcp-tool-call-log.service';
 
 /** Options to steer the persistence / event-publish / delete mocks. */
 interface LoggingFailures {
@@ -32,7 +15,6 @@ interface LoggingFailures {
 }
 
 function build(options: McpPluginOptions, failures: LoggingFailures = {}) {
-    const cache = makeCache();
     const savedLogs: McpToolCallLog[] = [];
     const publishedEvents: McpToolCallEvent[] = [];
     const selectWhere: Array<{ clause: string; params: Record<string, unknown> }> = [];
@@ -96,18 +78,8 @@ function build(options: McpPluginOptions, failures: LoggingFailures = {}) {
         return Promise.resolve();
     });
     const eventBus = { publish };
-    const service = new McpOperationsService(cache as any, connection as any, eventBus as any, options);
-    return { service, cache, savedLogs, publishedEvents, selectWhere, deleteWhere, save, publish };
-}
-
-/** An execution context with a distinct Vendure session token (per-subject keying). */
-function sessionCtx(token: string) {
-    return { ctx: { session: { token } }, clientIp: undefined } as any;
-}
-
-/** An anonymous shop execution context keyed by client IP (no session, no grant). */
-function anonCtx(ip: string) {
-    return { ctx: { session: undefined }, clientIp: ip } as any;
+    const service = new McpToolCallLogService(connection as any, eventBus as any, options);
+    return { service, savedLogs, publishedEvents, selectWhere, deleteWhere, save, publish };
 }
 
 /** Minimal registered-tool stand-in for the logger (only name/pluginSource are read). */
@@ -115,123 +87,7 @@ function toolStub(name: string, pluginSource: string | null = 'TestPlugin') {
     return { name, pluginSource } as any;
 }
 
-describe('McpOperationsService rate limiting', () => {
-    beforeEach(() => {
-        vi.useFakeTimers();
-        vi.setSystemTime(new Date('2026-01-01T00:00:00Z'));
-    });
-    afterEach(() => {
-        vi.useRealTimers();
-    });
-
-    it('consumes a bucket up to the limit, then reports exceeded with retry metadata', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 2 }, perClient: { rpm: 0 }, anonymousIp: false },
-        });
-        const ctx = sessionCtx('subject-a');
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' });
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' });
-
-        const exceeded = await service.checkRateLimit({
-            executionContext: ctx,
-            endpoint: 'admin',
-            subject: 'ping',
-        });
-        expect(exceeded).toBeDefined();
-        expect(exceeded?.scope).toBe('session');
-        expect(exceeded?.retryAfterSeconds).toBeGreaterThan(0);
-        expect(exceeded?.retryAfterSeconds).toBeLessThanOrEqual(60);
-        expect(exceeded?.message).toMatch(/Retry after \d+ seconds\./);
-    });
-
-    it('enforceRateLimit throws McpRateLimitExceededError once over the limit', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 1 }, perClient: { rpm: 0 }, anonymousIp: false },
-        });
-        const ctx = sessionCtx('subject-a');
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' });
-        await expect(
-            service.enforceRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' }),
-        ).rejects.toBeInstanceOf(McpRateLimitExceededError);
-    });
-
-    it('resets the bucket after the 60s window elapses', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 1 }, perClient: { rpm: 0 }, anonymousIp: false },
-        });
-        const ctx = sessionCtx('subject-a');
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' });
-        expect(
-            await service.checkRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' }),
-        ).toBeDefined();
-
-        vi.setSystemTime(new Date('2026-01-01T00:01:01Z')); // +61s
-        expect(
-            await service.checkRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' }),
-        ).toBeUndefined();
-    });
-
-    it('keys per subject — exhausting subject A does not limit subject B', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 1 }, perClient: { rpm: 0 }, anonymousIp: false },
-        });
-        const a = sessionCtx('subject-a');
-        const b = sessionCtx('subject-b');
-        await service.enforceRateLimit({ executionContext: a, endpoint: 'admin', subject: 'ping' });
-        expect(
-            await service.checkRateLimit({ executionContext: a, endpoint: 'admin', subject: 'ping' }),
-        ).toBeDefined();
-        // B is untouched.
-        expect(
-            await service.checkRateLimit({ executionContext: b, endpoint: 'admin', subject: 'ping' }),
-        ).toBeUndefined();
-    });
-
-    it('applies the anonymous-IP limit on shop and reports the anonymous IP scope', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 2 } },
-        });
-        const ctx = anonCtx('1.2.3.4');
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'shop', subject: 'tools/call' });
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'shop', subject: 'tools/call' });
-        const exceeded = await service.checkRateLimit({
-            executionContext: ctx,
-            endpoint: 'shop',
-            subject: 'tools/call',
-        });
-        expect(exceeded?.scope).toBe('anonymous IP');
-    });
-
-    it('does not apply the anonymous-IP limit when disabled (anonymousIp: false)', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: false },
-        });
-        const ctx = anonCtx('1.2.3.4');
-        for (let i = 0; i < 5; i++) {
-            expect(
-                await service.checkRateLimit({
-                    executionContext: ctx,
-                    endpoint: 'shop',
-                    subject: 'tools/call',
-                }),
-            ).toBeUndefined();
-        }
-    });
-
-    it('does not apply the anonymous-IP limit on the admin endpoint', async () => {
-        const { service } = build({
-            rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 1 } },
-        });
-        const ctx = anonCtx('1.2.3.4');
-        for (let i = 0; i < 3; i++) {
-            expect(
-                await service.checkRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' }),
-            ).toBeUndefined();
-        }
-    });
-});
-
-describe('McpOperationsService tool-call logging', () => {
+describe('McpToolCallLogService tool-call logging', () => {
     let warnSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
@@ -240,14 +96,6 @@ describe('McpOperationsService tool-call logging', () => {
     afterEach(() => {
         warnSpy.mockRestore();
     });
-
-    // NOTE: the grant → row scalar field mapping (grantId/actor/actorType/channelId/status/etc.)
-    // is verified in the e2e, where the production tsc build + TypeORM persist a real row. It is
-    // NOT asserted here: this unit suite is transpiled by SWC with `useDefineForClassFields: true`,
-    // so the entity's declared class fields re-initialise to `undefined` after `super(input)` sets
-    // them — an artifact of the test transpiler, not the production build. Redaction and the
-    // event/never-throws contract below do not depend on that (input/output and the event payload
-    // are assigned after construction), so they are asserted directly.
 
     it('does not store input/output under the default metadata capture', async () => {
         const { service, savedLogs } = build({});

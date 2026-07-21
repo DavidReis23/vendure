@@ -3,7 +3,7 @@ import { Logger } from '@vendure/core';
 import { McpToolMetadata, McpToolset } from '@vendure/mcp-sdk';
 import { describe, expect, it, vi } from 'vitest';
 
-import { McpRateLimitExceededError } from '../services/mcp-operations.service';
+import { McpRateLimitExceededError } from '../rate-limit/mcp-rate-limiter.service';
 import { McpPluginOptions } from '../types';
 
 import { McpToolRegistryService } from './mcp-tool-registry.service';
@@ -50,17 +50,20 @@ function build(
             return Promise.resolve();
         },
     };
-    const operationsService = {
+    const rateLimiter = {
         enforceRateLimit: vi.fn(() => Promise.resolve(undefined)),
+    };
+    const toolCallLog = {
         logToolCall: vi.fn(() => Promise.resolve(undefined)),
     };
     const service = new McpToolRegistryService(
         discoveryService as any,
         settingsStoreService as any,
-        operationsService as any,
+        rateLimiter as any,
+        toolCallLog as any,
         options,
     );
-    return { service, operationsService, store };
+    return { service, rateLimiter, toolCallLog, store };
 }
 
 const shopTool = (over: Partial<McpToolMetadata> = {}): McpToolMetadata => ({
@@ -215,35 +218,35 @@ describe('McpToolRegistryService', () => {
     describe('rate-limit enforcement', () => {
         it('rate-limits before the existence/toggle/permission checks (denied calls still count)', async () => {
             // A permission-denied call must still consume the bucket — otherwise it is a free hammer.
-            const { service, operationsService } = build([
+            const { service, rateLimiter } = build([
                 wrapper(shopTool({ permissions: [Permission.ReadCatalog] })),
             ]);
             service.onApplicationBootstrap();
-            operationsService.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
+            rateLimiter.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
             const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'get_thing', {});
-            expect(operationsService.enforceRateLimit).toHaveBeenCalledOnce();
+            expect(rateLimiter.enforceRateLimit).toHaveBeenCalledOnce();
             // The rate-limit result wins over the permission error because it runs first.
             expect(result.isError).toBe(true);
             expect((result.content as any)[0].text).toMatch(/Rate limit exceeded/);
         });
 
         it('rate-limits an unknown tool name (bucket consumed before the not-found return)', async () => {
-            const { service, operationsService } = build([wrapper(shopTool())]);
+            const { service, rateLimiter } = build([wrapper(shopTool())]);
             service.onApplicationBootstrap();
             await service.callTool({ ctx: makeCtx() }, 'shop', 'no_such_tool', {});
-            expect(operationsService.enforceRateLimit).toHaveBeenCalledWith(
+            expect(rateLimiter.enforceRateLimit).toHaveBeenCalledWith(
                 expect.objectContaining({ endpoint: 'shop', subject: 'no_such_tool' }),
             );
         });
 
         it('rate-limits search_tools in discovery mode', async () => {
-            const { service, operationsService } = build([wrapper(shopTool())], {
+            const { service, rateLimiter } = build([wrapper(shopTool())], {
                 toolExposure: 'discovery',
             });
             service.onApplicationBootstrap();
-            operationsService.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
+            rateLimiter.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
             const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', { query: 'x' });
-            expect(operationsService.enforceRateLimit).toHaveBeenCalledWith(
+            expect(rateLimiter.enforceRateLimit).toHaveBeenCalledWith(
                 expect.objectContaining({ subject: 'search_tools' }),
             );
             expect(result.isError).toBe(true);
@@ -253,16 +256,16 @@ describe('McpToolRegistryService', () => {
         it('rate-limits execute_tool before its unknown-name early return (bucket keyed by the inner tool)', async () => {
             // The discovery funnel must not be a rate-limit-free hammer: an unknown inner tool name
             // still consumes a bucket because the limit runs before the not-found return.
-            const { service, operationsService } = build([wrapper(shopTool())], {
+            const { service, rateLimiter } = build([wrapper(shopTool())], {
                 toolExposure: 'discovery',
             });
             service.onApplicationBootstrap();
-            operationsService.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
+            rateLimiter.enforceRateLimit.mockRejectedValueOnce(rateLimitError());
             const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'execute_tool', {
                 name: 'no_such_tool',
                 arguments: {},
             });
-            expect(operationsService.enforceRateLimit).toHaveBeenCalledWith(
+            expect(rateLimiter.enforceRateLimit).toHaveBeenCalledWith(
                 expect.objectContaining({ endpoint: 'shop', subject: 'no_such_tool' }),
             );
             // Rate-limit result wins over the not-found error because it runs first.
@@ -339,7 +342,7 @@ describe('McpToolRegistryService', () => {
 
         it('rejects execute_tool inner arguments that violate the target schema, before the handler', async () => {
             const execute = vi.fn(() => ({ ok: true }));
-            const { service, operationsService } = build([wrapper(target(), execute)], {
+            const { service, rateLimiter } = build([wrapper(target(), execute)], {
                 toolExposure: 'discovery',
             });
             service.onApplicationBootstrap();
@@ -351,7 +354,7 @@ describe('McpToolRegistryService', () => {
             expect((result.content as any)[0].text).toMatch(/Invalid arguments for tool "echo"/);
             expect(execute).not.toHaveBeenCalled();
             // Even an invalid-args call consumes a bucket (keyed by the inner tool), before it errors.
-            expect(operationsService.enforceRateLimit).toHaveBeenCalledWith(
+            expect(rateLimiter.enforceRateLimit).toHaveBeenCalledWith(
                 expect.objectContaining({ endpoint: 'shop', subject: 'echo' }),
             );
         });
@@ -588,11 +591,11 @@ describe('McpToolRegistryService', () => {
 
     describe('instrumentation (@Instrument())', () => {
         it('constructs and dispatches callTool with instrumentation disabled and no telemetry plugin', async () => {
-            const { service, operationsService } = build([wrapper(shopTool())]);
+            const { service, toolCallLog } = build([wrapper(shopTool())]);
             service.onApplicationBootstrap();
             const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'get_thing', {});
             expect(result.isError).toBeUndefined();
-            expect(operationsService.logToolCall).toHaveBeenCalledOnce();
+            expect(toolCallLog.logToolCall).toHaveBeenCalledOnce();
         });
     });
 });

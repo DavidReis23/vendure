@@ -1,6 +1,6 @@
 import { ScheduledTask } from '@vendure/core';
 
-import { McpOperationsService } from '../services/mcp-operations.service';
+import { McpToolCallLogService } from '../logging/mcp-tool-call-log.service';
 
 /**
  * @description
@@ -17,7 +17,7 @@ export const mcpToolCallLogRetentionTask = new ScheduledTask({
     params: {},
     async execute({ injector, scheduledContext }) {
         const deletedCount = await injector
-            .get(McpOperationsService)
+            .get(McpToolCallLogService)
             .deleteExpiredToolCallLogs(scheduledContext);
         return { deletedCount };
     },

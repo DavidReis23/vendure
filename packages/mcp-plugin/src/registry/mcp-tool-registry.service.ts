@@ -12,7 +12,8 @@ import { Instrument, Logger, Permission, RequestContext, SettingsStoreService } 
 import { McpJsonSchema, McpTool, McpToolBehavior, McpToolMetadata, McpToolset } from '@vendure/mcp-sdk';
 
 import { loggerCtx, MCP_PLUGIN_OPTIONS, MCP_TOOL_TOGGLES_STORE_KEY } from '../constants';
-import { McpOperationsService, McpRateLimitExceededError } from '../services/mcp-operations.service';
+import { McpToolCallLogService } from '../logging/mcp-tool-call-log.service';
+import { McpRateLimiterService, McpRateLimitExceededError } from '../rate-limit/mcp-rate-limiter.service';
 import { McpExecutionContext, McpPluginOptions, McpPluginToolHandler, McpRegisteredTool } from '../types';
 
 import { Bm25Index } from './bm25';
@@ -42,7 +43,8 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
     constructor(
         private discoveryService: DiscoveryService,
         private settingsStoreService: SettingsStoreService,
-        private operationsService: McpOperationsService,
+        private rateLimiter: McpRateLimiterService,
+        private toolCallLog: McpToolCallLogService,
         @Inject(MCP_PLUGIN_OPTIONS) private options: McpPluginOptions,
     ) {}
 
@@ -296,7 +298,7 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
                     );
                 }
             }
-            await this.operationsService.logToolCall({
+            await this.toolCallLog.logToolCall({
                 executionContext,
                 tool,
                 input: toolInput,
@@ -307,7 +309,7 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
             return this.successResult(output);
         } catch (e) {
             const message = e instanceof Error ? e.message : 'MCP tool failed';
-            await this.operationsService.logToolCall({
+            await this.toolCallLog.logToolCall({
                 executionContext,
                 tool,
                 input: toolInput,
@@ -554,7 +556,7 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
         subject: string,
     ): Promise<CallToolResult | undefined> {
         try {
-            await this.operationsService.enforceRateLimit({
+            await this.rateLimiter.enforceRateLimit({
                 executionContext,
                 endpoint: toolset,
                 toolNames: [subject],

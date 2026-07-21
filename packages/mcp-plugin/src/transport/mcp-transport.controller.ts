@@ -17,8 +17,8 @@ import type { Request, Response } from 'express';
 
 import { MCP_PLUGIN_OPTIONS, RATE_LIMIT_ERROR_CODE } from '../constants';
 import { McpOauthService } from '../oauth/oauth.service';
+import { McpRateLimiterService, McpRateLimitExceededError } from '../rate-limit/mcp-rate-limiter.service';
 import { McpToolRegistryService } from '../registry/mcp-tool-registry.service';
-import { McpOperationsService, McpRateLimitExceededError } from '../services/mcp-operations.service';
 import { McpExecutionContext, McpPluginOptions } from '../types';
 
 import { createMcpServerForRequest } from './mcp-server.factory';
@@ -55,7 +55,7 @@ export class McpTransportController {
     constructor(
         private oauthService: McpOauthService,
         private registry: McpToolRegistryService,
-        private operationsService: McpOperationsService,
+        private rateLimiter: McpRateLimiterService,
         private configService: ConfigService,
         @Inject(MCP_PLUGIN_OPTIONS) private options: McpPluginOptions,
     ) {
@@ -188,7 +188,7 @@ export class McpTransportController {
                 continue;
             }
             try {
-                await this.operationsService.enforceRateLimit({
+                await this.rateLimiter.enforceRateLimit({
                     executionContext,
                     endpoint: toolset,
                     toolNames: [method],
