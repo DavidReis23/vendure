@@ -117,6 +117,67 @@ test.describe('Channels CRUD', () => {
         await dp.expectSuccessToast(/Successfully updated channel/);
     });
 
+    // #4995 — the Appearance PageBlock must be a direct PageLayout child or it is silently omitted.
+    test('should update the channel color from the appearance card', async ({ page }) => {
+        let channelColors: Record<string, string> = {};
+
+        await page.route('**/admin-api**', async route => {
+            const body = route.request().postData() ?? '';
+            if (body.includes('GetSettingsStoreValue')) {
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({ data: { getSettingsStoreValue: channelColors } }),
+                });
+            } else if (body.includes('SetSettingsStoreValue')) {
+                const request = route.request().postDataJSON();
+                channelColors = request.variables.input.value;
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({
+                        data: {
+                            setSettingsStoreValue: {
+                                key: request.variables.input.key,
+                                result: true,
+                                error: null,
+                            },
+                        },
+                    }),
+                });
+            } else {
+                await route.fallback();
+            }
+        });
+
+        const lp = listPage(page);
+        await lp.goto();
+        await lp.expectLoaded();
+        await lp.clickEntity('Default channel');
+
+        const appearanceCard = page
+            .getByText('Appearance', { exact: true })
+            .locator('xpath=ancestor::*[@data-slot="card"]');
+        await expect(appearanceCard).toBeVisible();
+        const colorSelect = appearanceCard.getByRole('combobox');
+        await colorSelect.click();
+        await page.getByRole('option', { name: 'Color 2' }).click();
+        await expect(colorSelect).toContainText('Color 2');
+        await expect.poll(() => Object.values(channelColors)).toContain('viz-2');
+    });
+
+    test('should hide channel color controls without DashboardPlugin', async ({ page }) => {
+        const lp = listPage(page);
+        await lp.goto();
+        await lp.expectLoaded();
+        await lp.clickEntity('Default channel');
+
+        await expect(page.getByText('Appearance')).toHaveCount(0);
+
+        await page.locator('[data-slot="sidebar"] [data-sidebar="menu-button"]').first().click();
+        await expect(page.getByRole('menuitem', { name: 'Customize channel colors' })).toHaveCount(0);
+    });
+
     test('should show updated channel in the list', async ({ page }) => {
         const lp = listPage(page);
         await lp.goto();

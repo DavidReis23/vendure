@@ -143,7 +143,7 @@ msgstr "के तपाईं निश्चित हुनुहुन्छ
 msgid "Global out of stock threshold"
 msgstr "ग्लोबल स्टक बाहिर थ्रेसहोल्ड"
 
-#: src/lib/components/layout/channel-switcher.tsx:194
+#: src/lib/components/layout/channel-switcher.tsx:164
 #: src/lib/components/layout/manage-languages-dialog.tsx:241
 msgid "Manage Languages"
 msgstr "भाषाहरू व्यवस्थापन गर्नुहोस्"
@@ -178,7 +178,7 @@ msgstr "अनुकूलित कारण लेख्नुहोस्..."
 msgid "Type"
 msgstr "प्रकार"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:266
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:269
 msgid "The default currency is chosen from this list."
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr "पङ्क्ति मेट्नुहोस्"
 msgid "Conditions"
 msgstr "शर्तहरू"
 
-#: src/lib/components/layout/channel-switcher.tsx:99
+#: src/lib/components/layout/channel-switcher.tsx:73
 msgctxt "current channel"
 msgid "Current"
 msgstr "हालको"
@@ -218,7 +218,7 @@ msgstr "हालको"
 msgid "No fulfillments"
 msgstr "कुनै पूर्तिहरू छैनन्"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "यो सक्षम पारिएको बेला, उत्पादन सूचीमा प्रविष्ट गरिएका मूल्यहरू पूर्वनिर्धारित कर क्षेत्रको लागि करमा समावेश हुनेछन्।"
 
@@ -286,7 +286,7 @@ msgstr "ड्यासबोर्डमा जानुहोस्"
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
 msgstr "{fulfilled, plural, one {{fulfilled} कार्य सफलतापूर्वक रद्द गरियो} other {{fulfilled} कार्यहरू सफलतापूर्वक रद्द गरियो}}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:244
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:247
 msgid "Seller"
 msgstr "विक्रेता"
 
@@ -392,7 +392,7 @@ msgstr "खोज्न कम्तिमा २ वर्णहरू टा�
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
-#: src/app/routes/_authenticated/_profile/profile.tsx:109
+#: src/app/routes/_authenticated/_profile/profile.tsx:151
 msgid "Last name"
 msgstr "थर"
 
@@ -429,6 +429,7 @@ msgstr "थप्नका लागि कुनै विजेटहरू �
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/app/routes/_authenticated/_profile/profile.tsx:78
 #: src/lib/components/shared/asset/asset-gallery.tsx:334
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
@@ -469,13 +470,13 @@ msgctxt "date-range"
 msgid "Last 7 days"
 msgstr "पछिल्लो 7 दिन"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to create channel"
 msgstr "च्यानल सिर्जना गर्न असफल"
 
 #: src/lib/components/layout/dev-mode-indicator.tsx:14
-#: src/lib/components/layout/nav-user.tsx:144
+#: src/lib/components/layout/nav-user.tsx:138
 msgid "Dev Mode"
 msgstr "विकास मोड"
 
@@ -637,7 +638,7 @@ msgstr "विकल्पहरू खोज्नुहोस्..."
 msgid "Order Count"
 msgstr "अर्डर संख्या"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:162
 msgid "You must first select an available currency to set a default currency"
 msgstr ""
 
@@ -686,6 +687,10 @@ msgstr "भुक्तानी #{0} {1} मा संक्रमण भयो
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx:46
 msgid "Error loading customer history: {0}"
 msgstr "ग्राहक इतिहास लोड गर्न त्रुटि: {0}"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:168
+msgid "Profile picture"
+msgstr ""
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:53
 msgid "Successfully removed {selectionLength} {entityType} from channel"
@@ -808,7 +813,7 @@ msgstr "ठेगाना चयन गर्नुहोस्"
 msgid "Payment eligibility checker"
 msgstr "भुक्तानी योग्यता जाँचकर्ता"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:321
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:324
 msgid "Default tax zone"
 msgstr "पूर्वनिर्धारित कर क्षेत्र"
 
@@ -839,7 +844,11 @@ msgstr "फिल्टर..."
 msgid "New facet value"
 msgstr "नयाँ विशेषता मान"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:356
+msgid "Choose the shared marker color used for this channel."
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully updated channel"
 msgstr "च्यानल सफलतापूर्वक अपडेट गरियो"
 
@@ -851,7 +860,7 @@ msgstr "कम देखाउनुहोस्"
 msgid "Short date"
 msgstr "छोटो मिति"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:265
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:268
 msgid "Available currencies"
 msgstr "उपलब्ध मुद्राहरू"
 
@@ -996,7 +1005,7 @@ msgstr "रिफन्ड टिप्पणी प्रविष्ट गर
 msgid "Order line removed"
 msgstr "अर्डर लाइन हटाइयो"
 
-#: src/lib/components/layout/channel-switcher.tsx:158
+#: src/lib/components/layout/channel-switcher.tsx:128
 msgid "Content:"
 msgstr "सामग्री:"
 
@@ -1114,8 +1123,8 @@ msgid "Failed to update zone"
 msgstr "क्षेत्र अपडेट गर्न असफल"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:134
-#: src/app/routes/_authenticated/_profile/profile.tsx:121
-#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/app/routes/_authenticated/_profile/profile.tsx:163
+#: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
 msgid "Password"
 msgstr "पासवर्ड"
@@ -1204,7 +1213,7 @@ msgstr "अर्डरका लागि कुपन कोड सेट ग�
 msgid "Table settings"
 msgstr "तालिका सेटिङहरू"
 
-#: src/lib/components/layout/nav-user.tsx:102
+#: src/lib/components/layout/nav-user.tsx:93
 msgid "Explore Platform & Cloud"
 msgstr "Platform & Cloud अन्वेषण गर्नुहोस्"
 
@@ -1235,6 +1244,10 @@ msgstr "मस्यौदा अर्डर"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "तपाईंको इमेल ठेगाना प्रविष्ट गर्नुहोस्, हामी तपाईंलाई पासवर्ड रिसेट गर्ने लिङ्क पठाउनेछौं"
 
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:354
+msgid "Appearance"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/settings-store.tsx:362
 #: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
@@ -1249,7 +1262,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "यो ढुवानी विधि यो अर्डरको लागि योग्य छ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:198
+#: src/lib/framework/defaults.ts:204
 msgid "Administrators"
 msgstr "प्रशासकहरू"
 
@@ -1297,7 +1310,7 @@ msgid "Images"
 msgstr "छविहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:161
+#: src/lib/framework/defaults.ts:167
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1319,7 +1332,7 @@ msgid "Job Queue"
 msgstr "कार्य पंक्ति"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:69
+#: src/lib/framework/defaults.ts:71
 msgid "Assets"
 msgstr "सम्पत्तिहरू"
 
@@ -1397,14 +1410,14 @@ msgstr "बाँकी:"
 msgid "No duplicator found with code \"{duplicatorCode}\" for {entityName}s"
 msgstr "{entityName} को लागि कोड \"{duplicatorCode}\" सँग कुनै डुप्लिकेटर फेला परेन"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:337
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:340
 msgid "Prices include tax for default tax zone"
 msgstr "मूल्यहरूमा पूर्वनिर्धारित कर क्षेत्रको लागि कर समावेश छ"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:130
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:131
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:133
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:134
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:135
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:137
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:138
 msgid "This field is required"
 msgstr ""
 
@@ -1527,8 +1540,8 @@ msgstr "{productCount, plural, one {यो विकल्प समूह अ�
 msgid "My Saved Views"
 msgstr "मेरो सुरक्षित दृश्यहरू"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:66
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:201
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:68
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:204
 msgid "New channel"
 msgstr "नयाँ च्यानल"
 
@@ -1602,7 +1615,7 @@ msgid "Delete draft order"
 msgstr "मस्यौदा अर्डर मेट्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:27
+#: src/lib/framework/defaults.ts:28
 msgid "Catalog"
 msgstr "सूची"
 
@@ -1632,6 +1645,10 @@ msgstr "च्यानल चयन गर्नुहोस्"
 msgid "Display language"
 msgstr "प्रदर्शन भाषा"
 
+#: src/lib/components/shared/channel-color-picker.tsx:16
+msgid "Color 2"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:194
 msgid "The source file remains unchanged. Keep the original extension or omit it."
 msgstr ""
@@ -1645,7 +1662,7 @@ msgstr "पूर्ति विवरणहरू"
 #~ msgstr "अहिले"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:184
+#: src/lib/framework/defaults.ts:190
 msgid "Channels"
 msgstr "च्यानलहरू"
 
@@ -1710,7 +1727,7 @@ msgid "Disable"
 msgstr "असक्षम पार्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:62
+#: src/lib/framework/defaults.ts:64
 msgid "Collections"
 msgstr "संग्रहहरू"
 
@@ -1723,7 +1740,7 @@ msgid "Failed to create country"
 msgstr "देश सिर्जना गर्न असफल"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:240
+#: src/lib/framework/defaults.ts:246
 msgid "Countries"
 msgstr "देशहरू"
 
@@ -1753,13 +1770,13 @@ msgid "Filters"
 msgstr "फिल्टरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:108
+#: src/lib/framework/defaults.ts:113
 msgid "Customer Groups"
 msgstr "ग्राहक समूहहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:94
-#: src/lib/framework/defaults.ts:101
+#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:105
 msgid "Customers"
 msgstr "ग्राहकहरू"
 
@@ -1934,7 +1951,7 @@ msgstr "भेरियन्ट मेटाउनुहोस्"
 msgid "No modifications made"
 msgstr "कुनै परिमार्जन गरिएको छैन"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:329
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:332
 msgid "Default shipping zone"
 msgstr "पूर्वनिर्धारित ढुवानी क्षेत्र"
 
@@ -1987,7 +2004,7 @@ msgstr "ग्राहक समूहहरू"
 #: src/lib/components/data-input/default-relation-input.tsx:214
 #: src/lib/components/data-input/default-relation-input.tsx:445
 #: src/lib/components/data-input/default-relation-input.tsx:536
-#: src/lib/components/layout/nav-user.tsx:155
+#: src/lib/components/layout/nav-user.tsx:149
 msgid "Disabled"
 msgstr "असक्षम"
 
@@ -2054,7 +2071,7 @@ msgstr "रिफन्ड सफलतापूर्वक सम्पन्�
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -2069,7 +2086,7 @@ msgstr "रिफन्ड सफलतापूर्वक सम्पन्�
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:513
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
-#: src/app/routes/_authenticated/_profile/profile.tsx:93
+#: src/app/routes/_authenticated/_profile/profile.tsx:135
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2090,7 +2107,7 @@ msgstr "शीर्षक २"
 msgid "Order placed"
 msgstr "अर्डर राखियो"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:72
+#: src/app/routes/_authenticated/_profile/profile.tsx:114
 msgid "Successfully updated profile"
 msgstr "प्रोफाइल सफलतापूर्वक अपडेट गरियो"
 
@@ -2152,7 +2169,7 @@ msgstr "कुनै परिणामहरू छैनन्"
 msgid "Column settings"
 msgstr "स्तम्भ सेटिङहरू"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2207,7 +2224,7 @@ msgid "Successfully updated country"
 msgstr "देश सफलतापूर्वक अपडेट गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:55
+#: src/lib/framework/defaults.ts:57
 msgid "Facets"
 msgstr "विशेषताहरू"
 
@@ -2265,11 +2282,11 @@ msgstr "विशेषता मानहरू"
 msgid "Successfully updated asset"
 msgstr "सम्पत्ति सफलतापूर्वक अपडेट गरियो"
 
-#: src/lib/components/layout/nav-user.tsx:118
+#: src/lib/components/layout/nav-user.tsx:112
 msgid "Theme"
 msgstr "थीम"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:156
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
 msgid "You must select at least one available currency"
 msgstr ""
 
@@ -2288,7 +2305,7 @@ msgstr "API Keys"
 msgid "Select a language"
 msgstr "भाषा चयन गर्नुहोस्"
 
-#: src/lib/components/layout/nav-user.tsx:164
+#: src/lib/components/layout/nav-user.tsx:158
 msgid "Log out"
 msgstr "लग आउट"
 
@@ -2686,6 +2703,10 @@ msgstr "पृष्ठ {0} को {1}"
 msgid "Rate"
 msgstr "दर"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
+msgid "Replace"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:119
 msgid "Size, colour, etc."
 msgstr "आकार, रङ, आदि"
@@ -2862,7 +2883,7 @@ msgid "Customer verified"
 msgstr "ग्राहक प्रमाणित गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:254
+#: src/lib/framework/defaults.ts:260
 msgid "Global Settings"
 msgstr "ग्लोबल सेटिङहरू"
 
@@ -2886,7 +2907,7 @@ msgstr "नयाँ कर वर्ग"
 #~ msgid "No stock locations available on current channel"
 #~ msgstr "हालको च्यानलमा कुनै स्टक स्थानहरू उपलब्ध छैनन्"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully created channel"
 msgstr "च्यानल सफलतापूर्वक सिर्जना गरियो"
 
@@ -3102,7 +3123,7 @@ msgstr "के तपाईं निश्चित हुनुहुन्छ
 msgid "Force remove option group"
 msgstr "विकल्प समूह बलपूर्वक हटाउनुहोस्"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:141
+#: src/app/routes/_authenticated/_profile/profile.tsx:223
 msgid "Added"
 msgstr "थपियो"
 
@@ -3119,7 +3140,7 @@ msgstr "{entityIdsLength} {entityType} को लागि विशेषता
 msgid "Failed to remove customer from group"
 msgstr "समूहबाट ग्राहक हटाउन असफल"
 
-#: src/lib/components/layout/nav-user.tsx:135
+#: src/lib/components/layout/nav-user.tsx:129
 msgctxt "theme"
 msgid "System"
 msgstr "प्रणाली"
@@ -3162,7 +3183,7 @@ msgstr "ग्लोबल दृश्य मेट्नुहोस्"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -3333,7 +3354,7 @@ msgstr "तेर्सो रेखा"
 msgid "Testing shipping method..."
 msgstr "ढुवानी विधि परीक्षण गर्दै..."
 
-#: src/lib/components/layout/nav-user.tsx:131
+#: src/lib/components/layout/nav-user.tsx:125
 msgctxt "theme"
 msgid "Dark"
 msgstr "अँध्यारो"
@@ -3448,6 +3469,10 @@ msgstr "दृश्य मेट्न असफल"
 msgid "Are you sure you want to navigate away from this page? Any unsaved changes will be lost."
 msgstr "के तपाईं निश्चित हुनुहुन्छ कि तपाईं यो पृष्ठबाट बाहिर जान चाहनुहुन्छ? कुनै पनि असुरक्षित परिवर्तनहरू हराउनेछन्।"
 
+#: src/lib/components/shared/channel-color-picker.tsx:15
+msgid "Color 1"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:156
 msgid "Toggle header column"
 msgstr "हेडर स्तम्भ टगल गर्नुहोस्"
@@ -3505,7 +3530,7 @@ msgstr "राज्य/प्रान्त"
 msgid "Failed to update option group"
 msgstr "विकल्प समूह अपडेट गर्न असफल भयो"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:277
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:280
 msgid "Channel defaults"
 msgstr "च्यानल पूर्वनिर्धारित"
 
@@ -3528,7 +3553,7 @@ msgid "Simple product"
 msgstr "साधारण उत्पादन"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:140
+#: src/lib/framework/defaults.ts:146
 msgid "Job Queue"
 msgstr "कार्य पंक्ति"
 
@@ -3568,7 +3593,7 @@ msgstr "भुक्तानी ह्यान्डलर चयन गर्
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
 msgstr "पासवर्ड रिसेट लिङ्कहरू सीमित समयका लागि मात्र मान्य हुन्छन्। पासवर्ड रिसेट गर्न नयाँ लिङ्क अनुरोध गर्नुहोस्।"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:129
+#: src/app/routes/_authenticated/_profile/profile.tsx:212
 msgid "Authentication methods"
 msgstr "प्रमाणीकरण विधिहरू"
 
@@ -3652,6 +3677,10 @@ msgstr "असाइन गर्नुहोस्"
 msgid "Successfully created seller"
 msgstr "विक्रेता सफलतापूर्वक सिर्जना गरियो"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:77
+msgid "Failed to update profile picture"
+msgstr ""
+
 #: src/lib/components/shared/asset/asset-gallery.tsx:906
 msgid "We couldn't load assets"
 msgstr ""
@@ -3696,10 +3725,14 @@ msgstr "नोट"
 msgid "Bold"
 msgstr "बोल्ड"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:252
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:255
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "उपलब्ध भाषाहरू"
+
+#: src/lib/components/shared/channel-color-picker.tsx:17
+msgid "Color 3"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:100
 msgid "{saleable} in stock"
@@ -3823,12 +3856,12 @@ msgid "Update the note content or visibility"
 msgstr "टिप्पणी सामग्री वा दृश्यता अपडेट गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:315
+#: src/lib/framework/defaults.ts:322
 msgid "Latest Customers Widget"
 msgstr "पछिल्ला ग्राहकहरू विजेट"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:277
+#: src/lib/framework/defaults.ts:284
 msgid "Latest Orders Widget"
 msgstr "पछिल्लो अर्डरहरू विजेट"
 
@@ -3874,13 +3907,13 @@ msgstr "कुनै जाँचकर्ताहरू फेला परे
 msgid "Settle payment"
 msgstr "भुक्तानी सम्पन्न गर्नुहोस्"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:65
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:67
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
-#: src/lib/components/layout/channel-switcher.tsx:146
+#: src/lib/components/layout/channel-switcher.tsx:116
 msgid "Channels"
 msgstr "च्यानलहरू"
 
@@ -3940,7 +3973,7 @@ msgid "Remove from group"
 msgstr "समूहबाट हटाउनुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:304
+#: src/lib/framework/defaults.ts:311
 msgid "Low Stock Widget"
 msgstr "न्यून स्टक विजेट"
 
@@ -4027,7 +4060,7 @@ msgid "Successfully created facet value"
 msgstr "विशेषता मान सफलतापूर्वक सिर्जना गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:117
+#: src/lib/framework/defaults.ts:122
 msgid "Marketing"
 msgstr "मार्केटिङ"
 
@@ -4040,7 +4073,7 @@ msgid "greater than"
 msgstr "भन्दा ठूलो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:266
+#: src/lib/framework/defaults.ts:273
 msgid "Metrics Widget"
 msgstr "मेट्रिक्स विजेट"
 
@@ -4073,6 +4106,10 @@ msgstr "देश सफलतापूर्वक सिर्जना गर
 #: src/lib/components/shared/seller-selector.tsx:39
 msgid "Select seller"
 msgstr "विक्रेता चयन गर्नुहोस्"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:209
+msgid "Your image is cropped to fit wherever it appears."
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:91
 msgid "Loading tags..."
@@ -4238,7 +4275,7 @@ msgid "Add a price in another currency"
 msgstr "अर्को मुद्रामा मूल्य थप्नुहोस्"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
-#: src/app/routes/_authenticated/_profile/profile.tsx:115
+#: src/app/routes/_authenticated/_profile/profile.tsx:157
 msgid "Email Address or identifier"
 msgstr "इमेल ठेगाना वा पहिचानकर्ता"
 
@@ -4459,7 +4496,7 @@ msgstr "गलत"
 msgid "Asset name extension does not match the source file"
 msgstr ""
 
-#: src/lib/components/layout/nav-user.tsx:127
+#: src/lib/components/layout/nav-user.tsx:121
 msgctxt "theme"
 msgid "Light"
 msgstr "उज्यालो"
@@ -4524,6 +4561,7 @@ msgstr "भुक्तानी स्थिति अपडेट गर्न
 msgid "Your orders summary"
 msgstr "तपाईंको अर्डर सारांश"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
 #: src/lib/components/shared/asset/asset-gallery.tsx:589
 msgid "Upload"
 msgstr "अपलोड गर्नुहोस्"
@@ -4549,7 +4587,7 @@ msgid "+ {0} more"
 msgstr "+ {0} थप"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:48
+#: src/lib/framework/defaults.ts:50
 msgid "Option Groups"
 msgstr "विकल्प समूहहरू"
 
@@ -4567,12 +4605,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "सबै सम्भावित अर्डर अवस्थाहरू र तिनीहरूको संक्रमणहरू। हालको अवस्था हाइलाइट गरिएको छ।"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:85
+#: src/lib/framework/defaults.ts:88
 msgid "Orders"
 msgstr "अर्डरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:285
+#: src/lib/framework/defaults.ts:292
 msgid "Orders Summary Widget"
 msgstr "अर्डर सारांश विजेट"
 
@@ -4742,7 +4780,7 @@ msgid "Enable"
 msgstr "सक्षम पार्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:219
+#: src/lib/framework/defaults.ts:225
 msgid "Payment Methods"
 msgstr "भुक्तानी विधिहरू"
 
@@ -4856,7 +4894,7 @@ msgstr "तालिका ढाँचा"
 msgid "Payment failed"
 msgstr "भुक्तानी असफल भयो"
 
-#: src/lib/components/layout/channel-switcher.tsx:212
+#: src/lib/components/layout/channel-switcher.tsx:197
 msgid "Add channel"
 msgstr "च्यानल थप्नुहोस्"
 
@@ -4915,19 +4953,23 @@ msgid "Select operator"
 msgstr "अपरेटर चयन गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:41
+#: src/lib/framework/defaults.ts:43
 msgid "Product Variants"
 msgstr "उत्पादन भेरियन्टहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:34
+#: src/lib/framework/defaults.ts:35
 msgid "Products"
 msgstr "उत्पादनहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:124
+#: src/lib/framework/defaults.ts:129
 msgid "Promotions"
 msgstr "प्रमोशनहरू"
+
+#: src/lib/components/shared/channel-color-picker.tsx:14
+msgid "Neutral"
+msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:150
 msgid "Failed to create product option"
@@ -4988,7 +5030,7 @@ msgstr "लोड हुँदै…"
 msgid "e.g., Red, Large, Cotton"
 msgstr "जस्तै रातो, ठूलो, कपास"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:76
+#: src/app/routes/_authenticated/_profile/profile.tsx:118
 msgid "Failed to update profile"
 msgstr "प्रोफाइल अपडेट गर्न असफल"
 
@@ -5020,6 +5062,10 @@ msgstr "भुक्तानी मेटाडेटा हेर्नुह�
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:182
 msgid "Toggle all visible variants"
 msgstr "सबै देखिने भेरियन्टहरू टगल गर्नुहोस्"
+
+#: src/lib/components/shared/channel-color-picker.tsx:18
+msgid "Color 4"
+msgstr ""
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Verified"
@@ -5073,7 +5119,7 @@ msgstr "दृश्य सफलतापूर्वक मेटियो"
 msgid "OR"
 msgstr "वा"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:166
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:169
 msgid "You must select a default currency from the list of available currencies"
 msgstr ""
 
@@ -5292,7 +5338,7 @@ msgid "Link URL"
 msgstr "लिङ्क URL"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:205
+#: src/lib/framework/defaults.ts:211
 msgid "Roles"
 msgstr "भूमिकाहरू"
 
@@ -5376,7 +5422,7 @@ msgstr "राज्य / प्रान्त"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:58
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:59
 #: src/lib/components/data-display/boolean.tsx:22
-#: src/lib/components/layout/nav-user.tsx:152
+#: src/lib/components/layout/nav-user.tsx:146
 msgid "Enabled"
 msgstr "सक्षम"
 
@@ -5430,7 +5476,7 @@ msgstr "भेरियन्ट सफलतापूर्वक मेटि�
 #~ msgstr "चयन गरिएको लिंकको गुणहरू सम्पादन गर्नुहोस्"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:78
+#: src/lib/framework/defaults.ts:81
 msgid "Sales"
 msgstr "बिक्री"
 
@@ -5443,7 +5489,7 @@ msgid "Your latest orders"
 msgstr "तपाईंको नवीनतम अर्डरहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:147
+#: src/lib/framework/defaults.ts:153
 msgid "Scheduled Tasks"
 msgstr "अनुसूचित कार्यहरू"
 
@@ -5460,17 +5506,17 @@ msgid "Variants"
 msgstr "भेरियन्टहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:177
+#: src/lib/framework/defaults.ts:183
 msgid "Sellers"
 msgstr "विक्रेताहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:170
+#: src/lib/framework/defaults.ts:176
 msgid "Settings"
 msgstr "सेटिङहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:154
+#: src/lib/framework/defaults.ts:160
 msgid "Settings Store"
 msgstr "सेटिङ स्टोर"
 
@@ -5483,7 +5529,7 @@ msgid "Welcome to Vendure"
 msgstr "Vendure मा स्वागत छ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:212
+#: src/lib/framework/defaults.ts:218
 msgid "Shipping Methods"
 msgstr "ढुवानी विधिहरू"
 
@@ -5571,7 +5617,7 @@ msgid "Search languages..."
 msgstr "भाषाहरू खोज्नुहोस्..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:191
+#: src/lib/framework/defaults.ts:197
 msgid "Stock Locations"
 msgstr "स्टक स्थानहरू"
 
@@ -5619,7 +5665,7 @@ msgid "Add payment ({0})"
 msgstr "भुक्तानी थप्नुहोस् ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:133
+#: src/lib/framework/defaults.ts:139
 msgid "System"
 msgstr "प्रणाली"
 
@@ -5629,6 +5675,7 @@ msgid "Variant name"
 msgstr "भिन्नता नाम"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:580
+#: src/app/routes/_authenticated/_profile/profile.tsx:203
 #: src/lib/components/shared/configurable-operation-input.tsx:117
 msgid "Remove"
 msgstr "हटाउनुहोस्"
@@ -5651,12 +5698,12 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {समूहबाट {count} ग्राहक हटाइयो} other {समूहबाट {count} ग्राहकहरू हटाइयो}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:226
+#: src/lib/framework/defaults.ts:232
 msgid "Tax Categories"
 msgstr "कर वर्गहरू"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:233
+#: src/lib/framework/defaults.ts:239
 msgid "Tax Rates"
 msgstr "कर दरहरू"
 
@@ -5767,11 +5814,11 @@ msgid "Default Language"
 msgstr "पूर्वनिर्धारित भाषा"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:293
+#: src/lib/framework/defaults.ts:300
 msgid "Top Products Widget"
 msgstr "शीर्ष उत्पादनहरू विजेट"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:233
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:236
 msgid "Token"
 msgstr "टोकन"
 
@@ -5882,7 +5929,7 @@ msgstr "{1} बाट {2} सम्म पूर्ति #{0}"
 msgid "Failed to delete global view"
 msgstr "ग्लोबल दृश्य मेट्न असफल"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:282
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:285
 msgid "Default language"
 msgstr "पूर्वनिर्धारित भाषा"
 
@@ -6015,7 +6062,7 @@ msgstr "फिर्ता प्रक्रिया गर्न असफल
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
-#: src/app/routes/_authenticated/_profile/profile.tsx:103
+#: src/app/routes/_authenticated/_profile/profile.tsx:145
 msgid "First name"
 msgstr "पहिलो नाम"
 
@@ -6085,9 +6132,9 @@ msgstr "मात्रा"
 msgid "Tax category"
 msgstr "कर वर्ग"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:39
-#: src/app/routes/_authenticated/_profile/profile.tsx:85
-#: src/lib/components/layout/nav-user.tsx:108
+#: src/app/routes/_authenticated/_profile/profile.tsx:51
+#: src/app/routes/_authenticated/_profile/profile.tsx:127
+#: src/lib/components/layout/nav-user.tsx:99
 msgid "Profile"
 msgstr "प्रोफाइल"
 
@@ -6114,6 +6161,10 @@ msgstr "नक्कल मान \"{trimmed}\" पहिले नै अवस
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
 msgstr "आफ्नो पहिलो ग्राहक सिर्जना गर्नुहोस्"
+
+#: src/lib/components/shared/channel-colors-dialog.tsx:35
+msgid "Use a shared color marker to make channels easier to recognize."
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:267
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -6168,7 +6219,7 @@ msgstr "देश थप्नुहोस्"
 msgid "Create your first promotion"
 msgstr "आफ्नो पहिलो प्रमोशन सिर्जना गर्नुहोस्"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:253
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:256
 msgid "Defaults to the default language."
 msgstr ""
 
@@ -6198,7 +6249,7 @@ msgstr "भेरियन्ट थप्न सकिएन। सुनिश
 msgid "Metrics"
 msgstr "मेट्रिक्स"
 
-#: src/lib/components/layout/nav-user.tsx:112
+#: src/lib/components/layout/nav-user.tsx:106
 msgid "Language"
 msgstr "भाषा"
 
@@ -6264,8 +6315,13 @@ msgstr "स्रोत"
 msgid "No actions available"
 msgstr "कुनै कार्यहरू उपलब्ध छैनन्"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/lib/components/layout/channel-switcher.tsx:183
+#: src/lib/components/shared/channel-colors-dialog.tsx:32
+msgid "Customize channel colors"
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to update channel"
 msgstr "च्यानल अपडेट गर्न असफल"
 
@@ -6327,6 +6383,10 @@ msgstr "विक्रेता अर्डर"
 msgid "New facet"
 msgstr "नयाँ विशेषता"
 
+#: src/lib/components/shared/channel-color-picker.tsx:19
+msgid "Color 5"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:63
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:380
 msgid "Are you sure you want to remove this option group from the product?"
@@ -6342,7 +6402,7 @@ msgstr "विवरण (वैकल्पिक पाठ)"
 msgid "No tags found"
 msgstr "कुनै ट्यागहरू फेला परेन"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:304
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:307
 msgid "Default currency"
 msgstr "पूर्वनिर्धारित मुद्रा"
 
@@ -6693,7 +6753,7 @@ msgid "Search..."
 msgstr "खोज्नुहोस्..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
-#: src/lib/components/layout/channel-switcher.tsx:130
+#: src/lib/components/layout/channel-switcher.tsx:100
 msgid "Language: {0}"
 msgstr "भाषा: {0}"
 
@@ -6721,7 +6781,7 @@ msgstr "शीर्षक ६"
 msgid "Added coupon codes"
 msgstr "कुपन कोडहरू थपियो"
 
-#: src/lib/components/layout/channel-switcher.tsx:180
+#: src/lib/components/layout/channel-switcher.tsx:150
 msgctxt "active language"
 msgid "Active"
 msgstr "सक्रिय"
@@ -6815,7 +6875,7 @@ msgstr "अर्डरमा भुक्तानी थप्नुहोस�
 msgid "Create variants for the option combinations that don't exist yet. Combinations that already exist are shown for context and can't be edited."
 msgstr "अझै अवस्थित नभएका विकल्प संयोजनहरूका लागि भेरियन्टहरू सिर्जना गर्नुहोस्। पहिले नै अवस्थित संयोजनहरू सन्दर्भका लागि देखाइएका छन् र तिनलाई सम्पादन गर्न सकिँदैन।"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:235
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:238
 msgid "The token is used to specify the channel when making API requests."
 msgstr "API अनुरोधहरू गर्दा च्यानल निर्दिष्ट गर्न टोकन प्रयोग गरिन्छ।"
 
@@ -6888,7 +6948,7 @@ msgid "Customer registered"
 msgstr "ग्राहक दर्ता गरियो"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:247
+#: src/lib/framework/defaults.ts:253
 msgid "Zones"
 msgstr "क्षेत्रहरू"
 

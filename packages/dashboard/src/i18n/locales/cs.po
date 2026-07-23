@@ -143,7 +143,7 @@ msgstr "Opravdu chcete smazat {0} {entityName}?"
 msgid "Global out of stock threshold"
 msgstr "Globální práh vyprodání"
 
-#: src/lib/components/layout/channel-switcher.tsx:194
+#: src/lib/components/layout/channel-switcher.tsx:164
 #: src/lib/components/layout/manage-languages-dialog.tsx:241
 msgid "Manage Languages"
 msgstr "Spravovat jazyky"
@@ -178,7 +178,7 @@ msgstr "Zadejte vlastní důvod..."
 msgid "Type"
 msgstr "Typ"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:266
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:269
 msgid "The default currency is chosen from this list."
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr "Smazat řádek"
 msgid "Conditions"
 msgstr "Podmínky"
 
-#: src/lib/components/layout/channel-switcher.tsx:99
+#: src/lib/components/layout/channel-switcher.tsx:73
 msgctxt "current channel"
 msgid "Current"
 msgstr "Aktuální"
@@ -218,7 +218,7 @@ msgstr "Aktuální"
 msgid "No fulfillments"
 msgstr "Žádné expedice"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "Když je toto povoleno, ceny zadané v katalogu produktů budou zahrnovat DPH pro výchozí daňovou zónu."
 
@@ -286,7 +286,7 @@ msgstr "Přejít na nástěnku"
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
 msgstr "{fulfilled, plural, one {Úspěšně zrušena {fulfilled} úloha} few {Úspěšně zrušeny {fulfilled} úlohy} other {Úspěšně zrušeno {fulfilled} úloh}}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:244
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:247
 msgid "Seller"
 msgstr "Prodejce"
 
@@ -392,7 +392,7 @@ msgstr "Zadejte alespoň 2 znaky pro vyhledávání..."
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
-#: src/app/routes/_authenticated/_profile/profile.tsx:109
+#: src/app/routes/_authenticated/_profile/profile.tsx:151
 msgid "Last name"
 msgstr "Příjmení"
 
@@ -429,6 +429,7 @@ msgstr "Žádné widgety k přidání"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/app/routes/_authenticated/_profile/profile.tsx:78
 #: src/lib/components/shared/asset/asset-gallery.tsx:334
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
@@ -469,13 +470,13 @@ msgctxt "date-range"
 msgid "Last 7 days"
 msgstr "Posledních 7 dní"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to create channel"
 msgstr "Nepodařilo se vytvořit kanál"
 
 #: src/lib/components/layout/dev-mode-indicator.tsx:14
-#: src/lib/components/layout/nav-user.tsx:144
+#: src/lib/components/layout/nav-user.tsx:138
 msgid "Dev Mode"
 msgstr "Vývojový režim"
 
@@ -637,7 +638,7 @@ msgstr "Hledat možnosti..."
 msgid "Order Count"
 msgstr "Počet objednávek"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:162
 msgid "You must first select an available currency to set a default currency"
 msgstr ""
 
@@ -686,6 +687,10 @@ msgstr "Platba #{0} převedena na {1}"
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx:46
 msgid "Error loading customer history: {0}"
 msgstr "Chyba při načítání historie zákazníka: {0}"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:168
+msgid "Profile picture"
+msgstr ""
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:53
 msgid "Successfully removed {selectionLength} {entityType} from channel"
@@ -808,7 +813,7 @@ msgstr "Vybrat adresu"
 msgid "Payment eligibility checker"
 msgstr "Kontrola způsobilosti platby"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:321
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:324
 msgid "Default tax zone"
 msgstr "Výchozí daňová zóna"
 
@@ -839,7 +844,11 @@ msgstr "Filtrovat..."
 msgid "New facet value"
 msgstr "Nová hodnota vlastnosti"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:356
+msgid "Choose the shared marker color used for this channel."
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully updated channel"
 msgstr "Kanál úspěšně aktualizován"
 
@@ -851,7 +860,7 @@ msgstr "Zobrazit méně"
 msgid "Short date"
 msgstr "Krátké datum"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:265
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:268
 msgid "Available currencies"
 msgstr "Dostupné měny"
 
@@ -996,7 +1005,7 @@ msgstr "Zadejte poznámku k refundu"
 msgid "Order line removed"
 msgstr "Řádek objednávky odebrán"
 
-#: src/lib/components/layout/channel-switcher.tsx:158
+#: src/lib/components/layout/channel-switcher.tsx:128
 msgid "Content:"
 msgstr "Obsah:"
 
@@ -1114,8 +1123,8 @@ msgid "Failed to update zone"
 msgstr "Nepodařilo se aktualizovat zónu"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:134
-#: src/app/routes/_authenticated/_profile/profile.tsx:121
-#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/app/routes/_authenticated/_profile/profile.tsx:163
+#: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
 msgid "Password"
 msgstr "Heslo"
@@ -1204,7 +1213,7 @@ msgstr "Nepodařilo se nastavit kupónový kód pro objednávku: {0}"
 msgid "Table settings"
 msgstr "Nastavení tabulky"
 
-#: src/lib/components/layout/nav-user.tsx:102
+#: src/lib/components/layout/nav-user.tsx:93
 msgid "Explore Platform & Cloud"
 msgstr "Prozkoumat Platform & Cloud"
 
@@ -1235,6 +1244,10 @@ msgstr "Koncept objednávky"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Zadejte svou e-mailovou adresu a my vám zašleme odkaz pro obnovení hesla"
 
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:354
+msgid "Appearance"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/settings-store.tsx:362
 #: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
@@ -1249,7 +1262,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "Způsob dopravy je vhodný pro tuto objednávku"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:198
+#: src/lib/framework/defaults.ts:204
 msgid "Administrators"
 msgstr "Správci"
 
@@ -1297,7 +1310,7 @@ msgid "Images"
 msgstr "Obrázky"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:161
+#: src/lib/framework/defaults.ts:167
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1319,7 +1332,7 @@ msgid "Job Queue"
 msgstr "Fronta úloh"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:69
+#: src/lib/framework/defaults.ts:71
 msgid "Assets"
 msgstr "Soubory"
 
@@ -1397,14 +1410,14 @@ msgstr "Zbývá:"
 msgid "No duplicator found with code \"{duplicatorCode}\" for {entityName}s"
 msgstr "Nenalezen žádný duplikátor s kódem \"{duplicatorCode}\" pro {entityName}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:337
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:340
 msgid "Prices include tax for default tax zone"
 msgstr "Ceny zahrnují DPH pro výchozí daňovou zónu"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:130
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:131
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:133
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:134
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:135
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:137
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:138
 msgid "This field is required"
 msgstr ""
 
@@ -1527,8 +1540,8 @@ msgstr "{productCount, plural, one {Tato skupina voleb je používána jedním d
 msgid "My Saved Views"
 msgstr "Moje uložené pohledy"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:66
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:201
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:68
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:204
 msgid "New channel"
 msgstr "Nový kanál"
 
@@ -1602,7 +1615,7 @@ msgid "Delete draft order"
 msgstr "Smazat koncept objednávky"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:27
+#: src/lib/framework/defaults.ts:28
 msgid "Catalog"
 msgstr "Katalog"
 
@@ -1632,6 +1645,10 @@ msgstr "Vyberte kanál"
 msgid "Display language"
 msgstr "Jazyk rozhraní"
 
+#: src/lib/components/shared/channel-color-picker.tsx:16
+msgid "Color 2"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:194
 msgid "The source file remains unchanged. Keep the original extension or omit it."
 msgstr ""
@@ -1645,7 +1662,7 @@ msgstr "Detaily expedice"
 #~ msgstr "Nyní"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:184
+#: src/lib/framework/defaults.ts:190
 msgid "Channels"
 msgstr "Kanály"
 
@@ -1710,7 +1727,7 @@ msgid "Disable"
 msgstr "Zakázat"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:62
+#: src/lib/framework/defaults.ts:64
 msgid "Collections"
 msgstr "Kolekce"
 
@@ -1723,7 +1740,7 @@ msgid "Failed to create country"
 msgstr "Nepodařilo se vytvořit zemi"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:240
+#: src/lib/framework/defaults.ts:246
 msgid "Countries"
 msgstr "Země"
 
@@ -1753,13 +1770,13 @@ msgid "Filters"
 msgstr "Filtry"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:108
+#: src/lib/framework/defaults.ts:113
 msgid "Customer Groups"
 msgstr "Skupiny zákazníků"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:94
-#: src/lib/framework/defaults.ts:101
+#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:105
 msgid "Customers"
 msgstr "Zákazníci"
 
@@ -1934,7 +1951,7 @@ msgstr "Smazat variantu"
 msgid "No modifications made"
 msgstr "Nebyly provedeny žádné úpravy"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:329
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:332
 msgid "Default shipping zone"
 msgstr "Výchozí dopravní zóna"
 
@@ -1987,7 +2004,7 @@ msgstr "Skupiny zákazníků"
 #: src/lib/components/data-input/default-relation-input.tsx:214
 #: src/lib/components/data-input/default-relation-input.tsx:445
 #: src/lib/components/data-input/default-relation-input.tsx:536
-#: src/lib/components/layout/nav-user.tsx:155
+#: src/lib/components/layout/nav-user.tsx:149
 msgid "Disabled"
 msgstr "Zakázáno"
 
@@ -2054,7 +2071,7 @@ msgstr "Refund úspěšně vypořádán"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -2069,7 +2086,7 @@ msgstr "Refund úspěšně vypořádán"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:513
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
-#: src/app/routes/_authenticated/_profile/profile.tsx:93
+#: src/app/routes/_authenticated/_profile/profile.tsx:135
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2090,7 +2107,7 @@ msgstr "Nadpis 2"
 msgid "Order placed"
 msgstr "Objednávka vytvořena"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:72
+#: src/app/routes/_authenticated/_profile/profile.tsx:114
 msgid "Successfully updated profile"
 msgstr "Profil úspěšně aktualizován"
 
@@ -2152,7 +2169,7 @@ msgstr "Žádné výsledky"
 msgid "Column settings"
 msgstr "Nastavení sloupců"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2207,7 +2224,7 @@ msgid "Successfully updated country"
 msgstr "Země úspěšně aktualizována"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:55
+#: src/lib/framework/defaults.ts:57
 msgid "Facets"
 msgstr "Vlastnosti"
 
@@ -2265,11 +2282,11 @@ msgstr "Hodnoty vlastností"
 msgid "Successfully updated asset"
 msgstr "Soubor úspěšně aktualizován"
 
-#: src/lib/components/layout/nav-user.tsx:118
+#: src/lib/components/layout/nav-user.tsx:112
 msgid "Theme"
 msgstr "Téma"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:156
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
 msgid "You must select at least one available currency"
 msgstr ""
 
@@ -2288,7 +2305,7 @@ msgstr "API Keys"
 msgid "Select a language"
 msgstr "Vyberte jazyk"
 
-#: src/lib/components/layout/nav-user.tsx:164
+#: src/lib/components/layout/nav-user.tsx:158
 msgid "Log out"
 msgstr "Odhlásit se"
 
@@ -2686,6 +2703,10 @@ msgstr "Stránka {0} z {1}"
 msgid "Rate"
 msgstr "Sazba"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
+msgid "Replace"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:119
 msgid "Size, colour, etc."
 msgstr "Velikost, barva atd."
@@ -2862,7 +2883,7 @@ msgid "Customer verified"
 msgstr "Zákazník ověřen"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:254
+#: src/lib/framework/defaults.ts:260
 msgid "Global Settings"
 msgstr "Globální nastavení"
 
@@ -2886,7 +2907,7 @@ msgstr "Nová daňová kategorie"
 #~ msgid "No stock locations available on current channel"
 #~ msgstr "Na aktuálním kanále nejsou k dispozici žádné sklady"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully created channel"
 msgstr "Kanál úspěšně vytvořen"
 
@@ -3102,7 +3123,7 @@ msgstr "Opravdu chcete smazat tento globální pohled? Tuto akci nelze vrátit z
 msgid "Force remove option group"
 msgstr "Vynutit odebrání skupiny možností"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:141
+#: src/app/routes/_authenticated/_profile/profile.tsx:223
 msgid "Added"
 msgstr "Přidáno"
 
@@ -3119,7 +3140,7 @@ msgstr "Úspěšně aktualizovány hodnoty vlastností pro {entityIdsLength} {en
 msgid "Failed to remove customer from group"
 msgstr "Nepodařilo se odebrat zákazníka ze skupiny"
 
-#: src/lib/components/layout/nav-user.tsx:135
+#: src/lib/components/layout/nav-user.tsx:129
 msgctxt "theme"
 msgid "System"
 msgstr "Systém"
@@ -3162,7 +3183,7 @@ msgstr "Smazat globální pohled"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -3333,7 +3354,7 @@ msgstr "Vodorovná čára"
 msgid "Testing shipping method..."
 msgstr "Testování způsobu dopravy..."
 
-#: src/lib/components/layout/nav-user.tsx:131
+#: src/lib/components/layout/nav-user.tsx:125
 msgctxt "theme"
 msgid "Dark"
 msgstr "Tmavý"
@@ -3448,6 +3469,10 @@ msgstr "Nepodařilo se smazat pohled"
 msgid "Are you sure you want to navigate away from this page? Any unsaved changes will be lost."
 msgstr "Opravdu chcete opustit tuto stránku? Všechny neuložené změny budou ztraceny."
 
+#: src/lib/components/shared/channel-color-picker.tsx:15
+msgid "Color 1"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:156
 msgid "Toggle header column"
 msgstr "Přepnout sloupec hlavičky"
@@ -3505,7 +3530,7 @@ msgstr "Stát/Kraj"
 msgid "Failed to update option group"
 msgstr "Nepodařilo se aktualizovat skupinu voleb"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:277
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:280
 msgid "Channel defaults"
 msgstr "Výchozí nastavení kanálu"
 
@@ -3528,7 +3553,7 @@ msgid "Simple product"
 msgstr "Jednoduchý produkt"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:140
+#: src/lib/framework/defaults.ts:146
 msgid "Job Queue"
 msgstr "Fronta úloh"
 
@@ -3568,7 +3593,7 @@ msgstr "Vyberte zpracovatele platby"
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
 msgstr "Odkazy pro obnovení hesla platí jen omezenou dobu. Pro obnovení hesla si vyžádejte nový."
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:129
+#: src/app/routes/_authenticated/_profile/profile.tsx:212
 msgid "Authentication methods"
 msgstr "Metody ověření"
 
@@ -3652,6 +3677,10 @@ msgstr "Přiřadit"
 msgid "Successfully created seller"
 msgstr "Prodejce úspěšně vytvořen"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:77
+msgid "Failed to update profile picture"
+msgstr ""
+
 #: src/lib/components/shared/asset/asset-gallery.tsx:906
 msgid "We couldn't load assets"
 msgstr ""
@@ -3696,10 +3725,14 @@ msgstr "Poznámka"
 msgid "Bold"
 msgstr "Tučné"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:252
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:255
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "Dostupné jazyky"
+
+#: src/lib/components/shared/channel-color-picker.tsx:17
+msgid "Color 3"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:100
 msgid "{saleable} in stock"
@@ -3823,12 +3856,12 @@ msgid "Update the note content or visibility"
 msgstr "Aktualizujte obsah nebo viditelnost poznámky"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:315
+#: src/lib/framework/defaults.ts:322
 msgid "Latest Customers Widget"
 msgstr "Widget nejnovějších zákazníků"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:277
+#: src/lib/framework/defaults.ts:284
 msgid "Latest Orders Widget"
 msgstr "Widget posledních objednávek"
 
@@ -3874,13 +3907,13 @@ msgstr "Nebyly nalezeny žádné kontroly"
 msgid "Settle payment"
 msgstr "Vypořádat platbu"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:65
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:67
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
-#: src/lib/components/layout/channel-switcher.tsx:146
+#: src/lib/components/layout/channel-switcher.tsx:116
 msgid "Channels"
 msgstr "Kanály"
 
@@ -3940,7 +3973,7 @@ msgid "Remove from group"
 msgstr "Odebrat ze skupiny"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:304
+#: src/lib/framework/defaults.ts:311
 msgid "Low Stock Widget"
 msgstr "Widget nízkých zásob"
 
@@ -4027,7 +4060,7 @@ msgid "Successfully created facet value"
 msgstr "Hodnota vlastnosti úspěšně vytvořena"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:117
+#: src/lib/framework/defaults.ts:122
 msgid "Marketing"
 msgstr "Marketing"
 
@@ -4040,7 +4073,7 @@ msgid "greater than"
 msgstr "větší než"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:266
+#: src/lib/framework/defaults.ts:273
 msgid "Metrics Widget"
 msgstr "Widget metrik"
 
@@ -4073,6 +4106,10 @@ msgstr "Země úspěšně vytvořena"
 #: src/lib/components/shared/seller-selector.tsx:39
 msgid "Select seller"
 msgstr "Vybrat prodejce"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:209
+msgid "Your image is cropped to fit wherever it appears."
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:91
 msgid "Loading tags..."
@@ -4238,7 +4275,7 @@ msgid "Add a price in another currency"
 msgstr "Přidat cenu v jiné měně"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
-#: src/app/routes/_authenticated/_profile/profile.tsx:115
+#: src/app/routes/_authenticated/_profile/profile.tsx:157
 msgid "Email Address or identifier"
 msgstr "E-mailová adresa nebo identifikátor"
 
@@ -4459,7 +4496,7 @@ msgstr "Nepravda"
 msgid "Asset name extension does not match the source file"
 msgstr ""
 
-#: src/lib/components/layout/nav-user.tsx:127
+#: src/lib/components/layout/nav-user.tsx:121
 msgctxt "theme"
 msgid "Light"
 msgstr "Světlý"
@@ -4524,6 +4561,7 @@ msgstr "Nepodařilo se aktualizovat stav platby"
 msgid "Your orders summary"
 msgstr "Přehled vašich objednávek"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
 #: src/lib/components/shared/asset/asset-gallery.tsx:589
 msgid "Upload"
 msgstr "Nahrát"
@@ -4549,7 +4587,7 @@ msgid "+ {0} more"
 msgstr "+ {0} dalších"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:48
+#: src/lib/framework/defaults.ts:50
 msgid "Option Groups"
 msgstr "Skupiny voleb"
 
@@ -4567,12 +4605,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Všechny možné stavy objednávky a jejich přechody. Aktuální stav je zvýrazněn."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:85
+#: src/lib/framework/defaults.ts:88
 msgid "Orders"
 msgstr "Objednávky"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:285
+#: src/lib/framework/defaults.ts:292
 msgid "Orders Summary Widget"
 msgstr "Widget souhrnu objednávek"
 
@@ -4742,7 +4780,7 @@ msgid "Enable"
 msgstr "Povolit"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:219
+#: src/lib/framework/defaults.ts:225
 msgid "Payment Methods"
 msgstr "Způsoby platby"
 
@@ -4856,7 +4894,7 @@ msgstr "Vzor plánu"
 msgid "Payment failed"
 msgstr "Platba selhala"
 
-#: src/lib/components/layout/channel-switcher.tsx:212
+#: src/lib/components/layout/channel-switcher.tsx:197
 msgid "Add channel"
 msgstr "Přidat kanál"
 
@@ -4915,19 +4953,23 @@ msgid "Select operator"
 msgstr "Vyberte operátor"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:41
+#: src/lib/framework/defaults.ts:43
 msgid "Product Variants"
 msgstr "Varianty produktů"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:34
+#: src/lib/framework/defaults.ts:35
 msgid "Products"
 msgstr "Produkty"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:124
+#: src/lib/framework/defaults.ts:129
 msgid "Promotions"
 msgstr "Akce"
+
+#: src/lib/components/shared/channel-color-picker.tsx:14
+msgid "Neutral"
+msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:150
 msgid "Failed to create product option"
@@ -4988,7 +5030,7 @@ msgstr "Načítání…"
 msgid "e.g., Red, Large, Cotton"
 msgstr "např. Červená, Velká, Bavlna"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:76
+#: src/app/routes/_authenticated/_profile/profile.tsx:118
 msgid "Failed to update profile"
 msgstr "Nepodařilo se aktualizovat profil"
 
@@ -5020,6 +5062,10 @@ msgstr "Zobrazit metadata platby"
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:182
 msgid "Toggle all visible variants"
 msgstr "Přepnout všechny viditelné varianty"
+
+#: src/lib/components/shared/channel-color-picker.tsx:18
+msgid "Color 4"
+msgstr ""
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Verified"
@@ -5073,7 +5119,7 @@ msgstr "Pohled úspěšně smazán"
 msgid "OR"
 msgstr "NEBO"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:166
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:169
 msgid "You must select a default currency from the list of available currencies"
 msgstr ""
 
@@ -5292,7 +5338,7 @@ msgid "Link URL"
 msgstr "URL odkazu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:205
+#: src/lib/framework/defaults.ts:211
 msgid "Roles"
 msgstr "Role"
 
@@ -5376,7 +5422,7 @@ msgstr "Stát / Kraj"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:58
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:59
 #: src/lib/components/data-display/boolean.tsx:22
-#: src/lib/components/layout/nav-user.tsx:152
+#: src/lib/components/layout/nav-user.tsx:146
 msgid "Enabled"
 msgstr "Povoleno"
 
@@ -5430,7 +5476,7 @@ msgstr "Varianta úspěšně smazána"
 #~ msgstr "Upravit vlastnosti vybraného odkazu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:78
+#: src/lib/framework/defaults.ts:81
 msgid "Sales"
 msgstr "Prodej"
 
@@ -5443,7 +5489,7 @@ msgid "Your latest orders"
 msgstr "Vaše poslední objednávky"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:147
+#: src/lib/framework/defaults.ts:153
 msgid "Scheduled Tasks"
 msgstr "Plánované úlohy"
 
@@ -5460,17 +5506,17 @@ msgid "Variants"
 msgstr "Varianty"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:177
+#: src/lib/framework/defaults.ts:183
 msgid "Sellers"
 msgstr "Prodejci"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:170
+#: src/lib/framework/defaults.ts:176
 msgid "Settings"
 msgstr "Nastavení"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:154
+#: src/lib/framework/defaults.ts:160
 msgid "Settings Store"
 msgstr "Nastavení obchodu"
 
@@ -5483,7 +5529,7 @@ msgid "Welcome to Vendure"
 msgstr "Vítejte ve Vendure"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:212
+#: src/lib/framework/defaults.ts:218
 msgid "Shipping Methods"
 msgstr "Způsoby dopravy"
 
@@ -5571,7 +5617,7 @@ msgid "Search languages..."
 msgstr "Hledat jazyky..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:191
+#: src/lib/framework/defaults.ts:197
 msgid "Stock Locations"
 msgstr "Sklady"
 
@@ -5619,7 +5665,7 @@ msgid "Add payment ({0})"
 msgstr "Přidat platbu ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:133
+#: src/lib/framework/defaults.ts:139
 msgid "System"
 msgstr "Systém"
 
@@ -5629,6 +5675,7 @@ msgid "Variant name"
 msgstr "Název varianty"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:580
+#: src/app/routes/_authenticated/_profile/profile.tsx:203
 #: src/lib/components/shared/configurable-operation-input.tsx:117
 msgid "Remove"
 msgstr "Odebrat"
@@ -5651,12 +5698,12 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {Odebrán {count} zákazník ze skupiny} few {Odebráni {count} zákazníci ze skupiny} other {Odebráno {count} zákazníků ze skupiny}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:226
+#: src/lib/framework/defaults.ts:232
 msgid "Tax Categories"
 msgstr "Daňové kategorie"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:233
+#: src/lib/framework/defaults.ts:239
 msgid "Tax Rates"
 msgstr "Daňové sazby"
 
@@ -5767,11 +5814,11 @@ msgid "Default Language"
 msgstr "Výchozí jazyk"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:293
+#: src/lib/framework/defaults.ts:300
 msgid "Top Products Widget"
 msgstr "Widget nejprodávanějších produktů"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:233
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:236
 msgid "Token"
 msgstr "Token"
 
@@ -5882,7 +5929,7 @@ msgstr "Expedice #{0} z {1} na {2}"
 msgid "Failed to delete global view"
 msgstr "Nepodařilo se smazat globální pohled"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:282
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:285
 msgid "Default language"
 msgstr "Výchozí jazyk"
 
@@ -6015,7 +6062,7 @@ msgstr "Nepodařilo se zpracovat vrácení"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
-#: src/app/routes/_authenticated/_profile/profile.tsx:103
+#: src/app/routes/_authenticated/_profile/profile.tsx:145
 msgid "First name"
 msgstr "Jméno"
 
@@ -6085,9 +6132,9 @@ msgstr "Množství"
 msgid "Tax category"
 msgstr "Daňová kategorie"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:39
-#: src/app/routes/_authenticated/_profile/profile.tsx:85
-#: src/lib/components/layout/nav-user.tsx:108
+#: src/app/routes/_authenticated/_profile/profile.tsx:51
+#: src/app/routes/_authenticated/_profile/profile.tsx:127
+#: src/lib/components/layout/nav-user.tsx:99
 msgid "Profile"
 msgstr "Profil"
 
@@ -6114,6 +6161,10 @@ msgstr "Duplicitní hodnota \"{trimmed}\" již existuje"
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
 msgstr "Vytvořte svého prvního zákazníka"
+
+#: src/lib/components/shared/channel-colors-dialog.tsx:35
+msgid "Use a shared color marker to make channels easier to recognize."
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:267
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -6168,7 +6219,7 @@ msgstr "Přidat zemi"
 msgid "Create your first promotion"
 msgstr "Vytvořte svou první akci"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:253
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:256
 msgid "Defaults to the default language."
 msgstr ""
 
@@ -6198,7 +6249,7 @@ msgstr "Variantu nelze přidat. Ujistěte se, že nadřazený produkt je povolen
 msgid "Metrics"
 msgstr "Metriky"
 
-#: src/lib/components/layout/nav-user.tsx:112
+#: src/lib/components/layout/nav-user.tsx:106
 msgid "Language"
 msgstr "Jazyk"
 
@@ -6264,8 +6315,13 @@ msgstr "Zdroj"
 msgid "No actions available"
 msgstr "Žádné akce k dispozici"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/lib/components/layout/channel-switcher.tsx:183
+#: src/lib/components/shared/channel-colors-dialog.tsx:32
+msgid "Customize channel colors"
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to update channel"
 msgstr "Nepodařilo se aktualizovat kanál"
 
@@ -6327,6 +6383,10 @@ msgstr "Objednávka prodejce"
 msgid "New facet"
 msgstr "Nová vlastnost"
 
+#: src/lib/components/shared/channel-color-picker.tsx:19
+msgid "Color 5"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:63
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:380
 msgid "Are you sure you want to remove this option group from the product?"
@@ -6342,7 +6402,7 @@ msgstr "Popis (alt)"
 msgid "No tags found"
 msgstr "Nenalezeny žádné štítky"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:304
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:307
 msgid "Default currency"
 msgstr "Výchozí měna"
 
@@ -6693,7 +6753,7 @@ msgid "Search..."
 msgstr "Hledat..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
-#: src/lib/components/layout/channel-switcher.tsx:130
+#: src/lib/components/layout/channel-switcher.tsx:100
 msgid "Language: {0}"
 msgstr "Jazyk: {0}"
 
@@ -6721,7 +6781,7 @@ msgstr "Nadpis 6"
 msgid "Added coupon codes"
 msgstr "Přidané kódy kupónů"
 
-#: src/lib/components/layout/channel-switcher.tsx:180
+#: src/lib/components/layout/channel-switcher.tsx:150
 msgctxt "active language"
 msgid "Active"
 msgstr "Aktivní"
@@ -6815,7 +6875,7 @@ msgstr "Přidat platbu k objednávce"
 msgid "Create variants for the option combinations that don't exist yet. Combinations that already exist are shown for context and can't be edited."
 msgstr "Vytvořte varianty pro kombinace možností, které ještě neexistují. Již existující kombinace jsou zobrazeny pro kontext a nelze je upravovat."
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:235
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:238
 msgid "The token is used to specify the channel when making API requests."
 msgstr "Token se používá k určení kanálu při provádění API požadavků."
 
@@ -6888,7 +6948,7 @@ msgid "Customer registered"
 msgstr "Zákazník registrován"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:247
+#: src/lib/framework/defaults.ts:253
 msgid "Zones"
 msgstr "Zóny"
 

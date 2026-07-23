@@ -86,6 +86,7 @@ export enum AdjustmentType {
 
 export type Administrator = Node & {
   __typename?: 'Administrator';
+  avatar?: Maybe<Asset>;
   createdAt: Scalars['DateTime']['output'];
   customFields?: Maybe<Scalars['JSON']['output']>;
   emailAddress: Scalars['String']['output'];
@@ -3164,6 +3165,8 @@ export type Mutation = {
   rotateApiKey: RotateApiKeyResult;
   runPendingSearchIndexUpdates: Success;
   runScheduledTask: Success;
+  /** Upload, replace or remove the active Administrator's profile picture */
+  setActiveAdministratorAvatar: Administrator;
   setCustomerForDraftOrder: SetCustomerForDraftOrderResult;
   /** Sets the billing address for a draft Order */
   setDraftOrderBillingAddress: Order;
@@ -3913,6 +3916,11 @@ export type MutationRotateApiKeyArgs = {
 
 export type MutationRunScheduledTaskArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type MutationSetActiveAdministratorAvatarArgs = {
+  file?: InputMaybe<Scalars['Upload']['input']>;
 };
 
 

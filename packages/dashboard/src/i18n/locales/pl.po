@@ -143,7 +143,7 @@ msgstr "Czy na pewno chcesz usunąć {0} {entityName}?"
 msgid "Global out of stock threshold"
 msgstr "Globalny próg braku w magazynie"
 
-#: src/lib/components/layout/channel-switcher.tsx:194
+#: src/lib/components/layout/channel-switcher.tsx:164
 #: src/lib/components/layout/manage-languages-dialog.tsx:241
 msgid "Manage Languages"
 msgstr "Zarządzaj językami"
@@ -178,7 +178,7 @@ msgstr "Wprowadź własny powód..."
 msgid "Type"
 msgstr "Typ"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:266
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:269
 msgid "The default currency is chosen from this list."
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr "Usuń wiersz"
 msgid "Conditions"
 msgstr "Warunki"
 
-#: src/lib/components/layout/channel-switcher.tsx:99
+#: src/lib/components/layout/channel-switcher.tsx:73
 msgctxt "current channel"
 msgid "Current"
 msgstr "Bieżący"
@@ -218,7 +218,7 @@ msgstr "Bieżący"
 msgid "No fulfillments"
 msgstr "Brak realizacji"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "Gdy to jest włączone, ceny wprowadzone w katalogu produktów będą zawierać podatek dla domyślnej strefy podatkowej."
 
@@ -286,7 +286,7 @@ msgstr "Przejdź do panelu"
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
 msgstr "{fulfilled, plural, one {Pomyślnie anulowano {fulfilled} zadanie} few {Pomyślnie anulowano {fulfilled} zadania} many {Pomyślnie anulowano {fulfilled} zadań} other {Pomyślnie anulowano {fulfilled} zadania}}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:244
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:247
 msgid "Seller"
 msgstr "Sprzedawca"
 
@@ -392,7 +392,7 @@ msgstr "Wpisz co najmniej 2 znaki, aby wyszukać..."
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
-#: src/app/routes/_authenticated/_profile/profile.tsx:109
+#: src/app/routes/_authenticated/_profile/profile.tsx:151
 msgid "Last name"
 msgstr "Nazwisko"
 
@@ -429,6 +429,7 @@ msgstr "Brak widgetów do dodania"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/app/routes/_authenticated/_profile/profile.tsx:78
 #: src/lib/components/shared/asset/asset-gallery.tsx:334
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
@@ -469,13 +470,13 @@ msgctxt "date-range"
 msgid "Last 7 days"
 msgstr "Ostatnie 7 dni"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to create channel"
 msgstr "Nie udało się utworzyć kanału"
 
 #: src/lib/components/layout/dev-mode-indicator.tsx:14
-#: src/lib/components/layout/nav-user.tsx:144
+#: src/lib/components/layout/nav-user.tsx:138
 msgid "Dev Mode"
 msgstr "Tryb programisty"
 
@@ -637,7 +638,7 @@ msgstr "Szukaj opcji..."
 msgid "Order Count"
 msgstr "Liczba zamówień"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:162
 msgid "You must first select an available currency to set a default currency"
 msgstr ""
 
@@ -686,6 +687,10 @@ msgstr "Płatność #{0} przeniesiono do {1}"
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx:46
 msgid "Error loading customer history: {0}"
 msgstr "Błąd ładowania historii klienta: {0}"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:168
+msgid "Profile picture"
+msgstr ""
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:53
 msgid "Successfully removed {selectionLength} {entityType} from channel"
@@ -808,7 +813,7 @@ msgstr "Wybierz adres"
 msgid "Payment eligibility checker"
 msgstr "Sprawdzanie kwalifikowalności płatności"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:321
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:324
 msgid "Default tax zone"
 msgstr "Domyślna strefa podatkowa"
 
@@ -839,7 +844,11 @@ msgstr "Filtruj..."
 msgid "New facet value"
 msgstr "Nowa wartość aspektu"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:356
+msgid "Choose the shared marker color used for this channel."
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully updated channel"
 msgstr "Pomyślnie zaktualizowano kanał"
 
@@ -851,7 +860,7 @@ msgstr "Pokaż mniej"
 msgid "Short date"
 msgstr "Data krótka"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:265
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:268
 msgid "Available currencies"
 msgstr "Dostępne waluty"
 
@@ -996,7 +1005,7 @@ msgstr "Wprowadź notatkę zwrotu"
 msgid "Order line removed"
 msgstr "Usunięto wiersz zamówienia"
 
-#: src/lib/components/layout/channel-switcher.tsx:158
+#: src/lib/components/layout/channel-switcher.tsx:128
 msgid "Content:"
 msgstr "Zawartość:"
 
@@ -1114,8 +1123,8 @@ msgid "Failed to update zone"
 msgstr "Nie udało się zaktualizować strefy"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:134
-#: src/app/routes/_authenticated/_profile/profile.tsx:121
-#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/app/routes/_authenticated/_profile/profile.tsx:163
+#: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
 msgid "Password"
 msgstr "Hasło"
@@ -1204,7 +1213,7 @@ msgstr "Nie udało się ustawić kodu kuponu dla zamówienia: {0}"
 msgid "Table settings"
 msgstr "Ustawienia tabeli"
 
-#: src/lib/components/layout/nav-user.tsx:102
+#: src/lib/components/layout/nav-user.tsx:93
 msgid "Explore Platform & Cloud"
 msgstr "Odkryj Platform & Cloud"
 
@@ -1235,6 +1244,10 @@ msgstr "Zamówienie robocze"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "Wpisz swój adres e-mail, a wyślemy Ci link do zresetowania hasła"
 
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:354
+msgid "Appearance"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/settings-store.tsx:362
 #: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
@@ -1249,7 +1262,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "Metoda wysyłki kwalifikuje się do tego zamówienia"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:198
+#: src/lib/framework/defaults.ts:204
 msgid "Administrators"
 msgstr "Administratorzy"
 
@@ -1297,7 +1310,7 @@ msgid "Images"
 msgstr "Obrazy"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:161
+#: src/lib/framework/defaults.ts:167
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1319,7 +1332,7 @@ msgid "Job Queue"
 msgstr "Kolejka zadań"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:69
+#: src/lib/framework/defaults.ts:71
 msgid "Assets"
 msgstr "Zasoby"
 
@@ -1397,14 +1410,14 @@ msgstr "Pozostało:"
 msgid "No duplicator found with code \"{duplicatorCode}\" for {entityName}s"
 msgstr "Nie znaleziono duplikatora z kodem „{duplicatorCode}\" dla {entityName}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:337
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:340
 msgid "Prices include tax for default tax zone"
 msgstr "Ceny zawierają podatek dla domyślnej strefy podatkowej"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:130
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:131
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:133
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:134
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:135
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:137
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:138
 msgid "This field is required"
 msgstr ""
 
@@ -1527,8 +1540,8 @@ msgstr "{productCount, plural, one {Ta grupa opcji jest używana przez jeden inn
 msgid "My Saved Views"
 msgstr "Moje zapisane widoki"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:66
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:201
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:68
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:204
 msgid "New channel"
 msgstr "Nowy kanał"
 
@@ -1602,7 +1615,7 @@ msgid "Delete draft order"
 msgstr "Usuń zamówienie robocze"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:27
+#: src/lib/framework/defaults.ts:28
 msgid "Catalog"
 msgstr "Katalog"
 
@@ -1632,6 +1645,10 @@ msgstr "Wybierz kanał"
 msgid "Display language"
 msgstr "Język wyświetlania"
 
+#: src/lib/components/shared/channel-color-picker.tsx:16
+msgid "Color 2"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:194
 msgid "The source file remains unchanged. Keep the original extension or omit it."
 msgstr ""
@@ -1645,7 +1662,7 @@ msgstr "Szczegóły realizacji"
 #~ msgstr "Teraz"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:184
+#: src/lib/framework/defaults.ts:190
 msgid "Channels"
 msgstr "Kanały"
 
@@ -1710,7 +1727,7 @@ msgid "Disable"
 msgstr "Wyłącz"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:62
+#: src/lib/framework/defaults.ts:64
 msgid "Collections"
 msgstr "Kolekcje"
 
@@ -1723,7 +1740,7 @@ msgid "Failed to create country"
 msgstr "Nie udało się utworzyć kraju"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:240
+#: src/lib/framework/defaults.ts:246
 msgid "Countries"
 msgstr "Kraje"
 
@@ -1753,13 +1770,13 @@ msgid "Filters"
 msgstr "Filtry"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:108
+#: src/lib/framework/defaults.ts:113
 msgid "Customer Groups"
 msgstr "Grupy klientów"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:94
-#: src/lib/framework/defaults.ts:101
+#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:105
 msgid "Customers"
 msgstr "Klienci"
 
@@ -1934,7 +1951,7 @@ msgstr "Usuń wariant"
 msgid "No modifications made"
 msgstr "Nie wprowadzono modyfikacji"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:329
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:332
 msgid "Default shipping zone"
 msgstr "Domyślna strefa wysyłki"
 
@@ -1987,7 +2004,7 @@ msgstr "Grupy klientów"
 #: src/lib/components/data-input/default-relation-input.tsx:214
 #: src/lib/components/data-input/default-relation-input.tsx:445
 #: src/lib/components/data-input/default-relation-input.tsx:536
-#: src/lib/components/layout/nav-user.tsx:155
+#: src/lib/components/layout/nav-user.tsx:149
 msgid "Disabled"
 msgstr "Wyłączono"
 
@@ -2054,7 +2071,7 @@ msgstr "Pomyślnie rozliczono zwrot"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -2069,7 +2086,7 @@ msgstr "Pomyślnie rozliczono zwrot"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:513
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
-#: src/app/routes/_authenticated/_profile/profile.tsx:93
+#: src/app/routes/_authenticated/_profile/profile.tsx:135
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2090,7 +2107,7 @@ msgstr "Nagłówek 2"
 msgid "Order placed"
 msgstr "Złożono zamówienie"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:72
+#: src/app/routes/_authenticated/_profile/profile.tsx:114
 msgid "Successfully updated profile"
 msgstr "Pomyślnie zaktualizowano profil"
 
@@ -2152,7 +2169,7 @@ msgstr "Brak wyników"
 msgid "Column settings"
 msgstr "Ustawienia kolumn"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2207,7 +2224,7 @@ msgid "Successfully updated country"
 msgstr "Pomyślnie zaktualizowano kraj"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:55
+#: src/lib/framework/defaults.ts:57
 msgid "Facets"
 msgstr "Aspekty"
 
@@ -2265,11 +2282,11 @@ msgstr "Wartości aspektów"
 msgid "Successfully updated asset"
 msgstr "Pomyślnie zaktualizowano zasób"
 
-#: src/lib/components/layout/nav-user.tsx:118
+#: src/lib/components/layout/nav-user.tsx:112
 msgid "Theme"
 msgstr "Motyw"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:156
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
 msgid "You must select at least one available currency"
 msgstr ""
 
@@ -2288,7 +2305,7 @@ msgstr "API Keys"
 msgid "Select a language"
 msgstr "Wybierz język"
 
-#: src/lib/components/layout/nav-user.tsx:164
+#: src/lib/components/layout/nav-user.tsx:158
 msgid "Log out"
 msgstr "Wyloguj się"
 
@@ -2686,6 +2703,10 @@ msgstr "Strona {0} z {1}"
 msgid "Rate"
 msgstr "Stawka"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
+msgid "Replace"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:119
 msgid "Size, colour, etc."
 msgstr "Rozmiar, kolor itp."
@@ -2862,7 +2883,7 @@ msgid "Customer verified"
 msgstr "Zweryfikowano klienta"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:254
+#: src/lib/framework/defaults.ts:260
 msgid "Global Settings"
 msgstr "Ustawienia globalne"
 
@@ -2886,7 +2907,7 @@ msgstr "Nowa kategoria podatkowa"
 #~ msgid "No stock locations available on current channel"
 #~ msgstr "Brak dostępnych lokalizacji magazynowych w bieżącym kanale"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully created channel"
 msgstr "Pomyślnie utworzono kanał"
 
@@ -3102,7 +3123,7 @@ msgstr "Czy na pewno chcesz usunąć ten widok globalny? Ta akcja nie może być
 msgid "Force remove option group"
 msgstr "Wymuś usunięcie grupy opcji"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:141
+#: src/app/routes/_authenticated/_profile/profile.tsx:223
 msgid "Added"
 msgstr "Dodano"
 
@@ -3119,7 +3140,7 @@ msgstr "Pomyślnie zaktualizowano wartości aspektów dla {entityIdsLength} {ent
 msgid "Failed to remove customer from group"
 msgstr "Nie udało się usunąć klienta z grupy"
 
-#: src/lib/components/layout/nav-user.tsx:135
+#: src/lib/components/layout/nav-user.tsx:129
 msgctxt "theme"
 msgid "System"
 msgstr "System"
@@ -3162,7 +3183,7 @@ msgstr "Usuń widok globalny"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -3333,7 +3354,7 @@ msgstr "Linia pozioma"
 msgid "Testing shipping method..."
 msgstr "Testowanie metody wysyłki..."
 
-#: src/lib/components/layout/nav-user.tsx:131
+#: src/lib/components/layout/nav-user.tsx:125
 msgctxt "theme"
 msgid "Dark"
 msgstr "Ciemny"
@@ -3448,6 +3469,10 @@ msgstr "Nie udało się usunąć widoku"
 msgid "Are you sure you want to navigate away from this page? Any unsaved changes will be lost."
 msgstr "Czy na pewno chcesz opuścić tę stronę? Wszystkie niezapisane zmiany zostaną utracone."
 
+#: src/lib/components/shared/channel-color-picker.tsx:15
+msgid "Color 1"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:156
 msgid "Toggle header column"
 msgstr "Przełącz kolumnę nagłówka"
@@ -3505,7 +3530,7 @@ msgstr "Stan/Województwo"
 msgid "Failed to update option group"
 msgstr "Nie udało się zaktualizować grupy opcji"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:277
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:280
 msgid "Channel defaults"
 msgstr "Domyślne ustawienia kanału"
 
@@ -3528,7 +3553,7 @@ msgid "Simple product"
 msgstr "Produkt prosty"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:140
+#: src/lib/framework/defaults.ts:146
 msgid "Job Queue"
 msgstr "Kolejka zadań"
 
@@ -3568,7 +3593,7 @@ msgstr "Wybierz moduł obsługi płatności"
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
 msgstr "Linki do resetowania hasła są ważne tylko przez ograniczony czas. Poproś o nowy, aby zresetować hasło."
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:129
+#: src/app/routes/_authenticated/_profile/profile.tsx:212
 msgid "Authentication methods"
 msgstr "Metody uwierzytelniania"
 
@@ -3652,6 +3677,10 @@ msgstr "Przypisz"
 msgid "Successfully created seller"
 msgstr "Pomyślnie utworzono sprzedawcę"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:77
+msgid "Failed to update profile picture"
+msgstr ""
+
 #: src/lib/components/shared/asset/asset-gallery.tsx:906
 msgid "We couldn't load assets"
 msgstr ""
@@ -3696,10 +3725,14 @@ msgstr "Notatka"
 msgid "Bold"
 msgstr "Pogrubienie"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:252
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:255
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "Dostępne języki"
+
+#: src/lib/components/shared/channel-color-picker.tsx:17
+msgid "Color 3"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:100
 msgid "{saleable} in stock"
@@ -3823,12 +3856,12 @@ msgid "Update the note content or visibility"
 msgstr "Zaktualizuj zawartość lub widoczność notatki"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:315
+#: src/lib/framework/defaults.ts:322
 msgid "Latest Customers Widget"
 msgstr "Widget najnowszych klientów"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:277
+#: src/lib/framework/defaults.ts:284
 msgid "Latest Orders Widget"
 msgstr "Widget najnowszych zamówień"
 
@@ -3874,13 +3907,13 @@ msgstr "Nie znaleziono modułów sprawdzających"
 msgid "Settle payment"
 msgstr "Rozlicz płatność"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:65
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:67
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
-#: src/lib/components/layout/channel-switcher.tsx:146
+#: src/lib/components/layout/channel-switcher.tsx:116
 msgid "Channels"
 msgstr "Kanały"
 
@@ -3940,7 +3973,7 @@ msgid "Remove from group"
 msgstr "Usuń z grupy"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:304
+#: src/lib/framework/defaults.ts:311
 msgid "Low Stock Widget"
 msgstr "Widget niskiego stanu magazynowego"
 
@@ -4027,7 +4060,7 @@ msgid "Successfully created facet value"
 msgstr "Pomyślnie utworzono wartość aspektu"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:117
+#: src/lib/framework/defaults.ts:122
 msgid "Marketing"
 msgstr "Marketing"
 
@@ -4040,7 +4073,7 @@ msgid "greater than"
 msgstr "większe niż"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:266
+#: src/lib/framework/defaults.ts:273
 msgid "Metrics Widget"
 msgstr "Widget metryk"
 
@@ -4073,6 +4106,10 @@ msgstr "Pomyślnie utworzono kraj"
 #: src/lib/components/shared/seller-selector.tsx:39
 msgid "Select seller"
 msgstr "Wybierz sprzedawcę"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:209
+msgid "Your image is cropped to fit wherever it appears."
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:91
 msgid "Loading tags..."
@@ -4238,7 +4275,7 @@ msgid "Add a price in another currency"
 msgstr "Dodaj cenę w innej walucie"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
-#: src/app/routes/_authenticated/_profile/profile.tsx:115
+#: src/app/routes/_authenticated/_profile/profile.tsx:157
 msgid "Email Address or identifier"
 msgstr "Adres e-mail lub identyfikator"
 
@@ -4459,7 +4496,7 @@ msgstr "Fałsz"
 msgid "Asset name extension does not match the source file"
 msgstr ""
 
-#: src/lib/components/layout/nav-user.tsx:127
+#: src/lib/components/layout/nav-user.tsx:121
 msgctxt "theme"
 msgid "Light"
 msgstr "Jasny"
@@ -4524,6 +4561,7 @@ msgstr "Nie udało się zaktualizować stanu płatności"
 msgid "Your orders summary"
 msgstr "Podsumowanie Twoich zamówień"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
 #: src/lib/components/shared/asset/asset-gallery.tsx:589
 msgid "Upload"
 msgstr "Prześlij"
@@ -4549,7 +4587,7 @@ msgid "+ {0} more"
 msgstr "+ {0} więcej"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:48
+#: src/lib/framework/defaults.ts:50
 msgid "Option Groups"
 msgstr "Grupy opcji"
 
@@ -4567,12 +4605,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "Wszystkie możliwe stany zamówienia i ich przejścia. Bieżący stan jest wyróżniony."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:85
+#: src/lib/framework/defaults.ts:88
 msgid "Orders"
 msgstr "Zamówienia"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:285
+#: src/lib/framework/defaults.ts:292
 msgid "Orders Summary Widget"
 msgstr "Widget podsumowania zamówień"
 
@@ -4742,7 +4780,7 @@ msgid "Enable"
 msgstr "Włącz"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:219
+#: src/lib/framework/defaults.ts:225
 msgid "Payment Methods"
 msgstr "Metody płatności"
 
@@ -4856,7 +4894,7 @@ msgstr "Wzorzec harmonogramu"
 msgid "Payment failed"
 msgstr "Płatność nie powiodła się"
 
-#: src/lib/components/layout/channel-switcher.tsx:212
+#: src/lib/components/layout/channel-switcher.tsx:197
 msgid "Add channel"
 msgstr "Dodaj kanał"
 
@@ -4915,19 +4953,23 @@ msgid "Select operator"
 msgstr "Wybierz operator"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:41
+#: src/lib/framework/defaults.ts:43
 msgid "Product Variants"
 msgstr "Warianty produktów"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:34
+#: src/lib/framework/defaults.ts:35
 msgid "Products"
 msgstr "Produkty"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:124
+#: src/lib/framework/defaults.ts:129
 msgid "Promotions"
 msgstr "Promocje"
+
+#: src/lib/components/shared/channel-color-picker.tsx:14
+msgid "Neutral"
+msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:150
 msgid "Failed to create product option"
@@ -4988,7 +5030,7 @@ msgstr "Ładowanie…"
 msgid "e.g., Red, Large, Cotton"
 msgstr "np. Czerwony, Duży, Bawełna"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:76
+#: src/app/routes/_authenticated/_profile/profile.tsx:118
 msgid "Failed to update profile"
 msgstr "Nie udało się zaktualizować profilu"
 
@@ -5020,6 +5062,10 @@ msgstr "Wyświetl metadane płatności"
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:182
 msgid "Toggle all visible variants"
 msgstr "Przełącz wszystkie widoczne warianty"
+
+#: src/lib/components/shared/channel-color-picker.tsx:18
+msgid "Color 4"
+msgstr ""
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Verified"
@@ -5073,7 +5119,7 @@ msgstr "Pomyślnie usunięto widok"
 msgid "OR"
 msgstr "LUB"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:166
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:169
 msgid "You must select a default currency from the list of available currencies"
 msgstr ""
 
@@ -5292,7 +5338,7 @@ msgid "Link URL"
 msgstr "Adres URL linku"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:205
+#: src/lib/framework/defaults.ts:211
 msgid "Roles"
 msgstr "Role"
 
@@ -5376,7 +5422,7 @@ msgstr "Stan / Województwo"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:58
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:59
 #: src/lib/components/data-display/boolean.tsx:22
-#: src/lib/components/layout/nav-user.tsx:152
+#: src/lib/components/layout/nav-user.tsx:146
 msgid "Enabled"
 msgstr "Włączono"
 
@@ -5430,7 +5476,7 @@ msgstr "Pomyślnie usunięto wariant"
 #~ msgstr "Edytuj właściwości wybranego łącza"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:78
+#: src/lib/framework/defaults.ts:81
 msgid "Sales"
 msgstr "Sprzedaż"
 
@@ -5443,7 +5489,7 @@ msgid "Your latest orders"
 msgstr "Twoje ostatnie zamówienia"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:147
+#: src/lib/framework/defaults.ts:153
 msgid "Scheduled Tasks"
 msgstr "Zadania zaplanowane"
 
@@ -5460,17 +5506,17 @@ msgid "Variants"
 msgstr "Warianty"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:177
+#: src/lib/framework/defaults.ts:183
 msgid "Sellers"
 msgstr "Sprzedawcy"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:170
+#: src/lib/framework/defaults.ts:176
 msgid "Settings"
 msgstr "Ustawienia"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:154
+#: src/lib/framework/defaults.ts:160
 msgid "Settings Store"
 msgstr "Ustawienia sklepu"
 
@@ -5483,7 +5529,7 @@ msgid "Welcome to Vendure"
 msgstr "Witamy w Vendure"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:212
+#: src/lib/framework/defaults.ts:218
 msgid "Shipping Methods"
 msgstr "Metody wysyłki"
 
@@ -5571,7 +5617,7 @@ msgid "Search languages..."
 msgstr "Szukaj języków..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:191
+#: src/lib/framework/defaults.ts:197
 msgid "Stock Locations"
 msgstr "Lokalizacje magazynowe"
 
@@ -5619,7 +5665,7 @@ msgid "Add payment ({0})"
 msgstr "Dodaj płatność ({0})"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:133
+#: src/lib/framework/defaults.ts:139
 msgid "System"
 msgstr "System"
 
@@ -5629,6 +5675,7 @@ msgid "Variant name"
 msgstr "Nazwa wariantu"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:580
+#: src/app/routes/_authenticated/_profile/profile.tsx:203
 #: src/lib/components/shared/configurable-operation-input.tsx:117
 msgid "Remove"
 msgstr "Usuń"
@@ -5651,12 +5698,12 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, one {Usunięto {count} klienta z grupy} few {Usunięto {count} klientów z grupy} many {Usunięto {count} klientów z grupy} other {Usunięto {count} klientów z grupy}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:226
+#: src/lib/framework/defaults.ts:232
 msgid "Tax Categories"
 msgstr "Kategorie podatkowe"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:233
+#: src/lib/framework/defaults.ts:239
 msgid "Tax Rates"
 msgstr "Stawki podatkowe"
 
@@ -5767,11 +5814,11 @@ msgid "Default Language"
 msgstr "Domyślny język"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:293
+#: src/lib/framework/defaults.ts:300
 msgid "Top Products Widget"
 msgstr "Widget najlepszych produktów"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:233
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:236
 msgid "Token"
 msgstr "Token"
 
@@ -5882,7 +5929,7 @@ msgstr "Realizacja #{0} z {1} do {2}"
 msgid "Failed to delete global view"
 msgstr "Nie udało się usunąć widoku globalnego"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:282
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:285
 msgid "Default language"
 msgstr "Domyślny język"
 
@@ -6015,7 +6062,7 @@ msgstr "Nie udało się przetworzyć zwrotu"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
-#: src/app/routes/_authenticated/_profile/profile.tsx:103
+#: src/app/routes/_authenticated/_profile/profile.tsx:145
 msgid "First name"
 msgstr "Imię"
 
@@ -6085,9 +6132,9 @@ msgstr "Ilość"
 msgid "Tax category"
 msgstr "Kategoria podatkowa"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:39
-#: src/app/routes/_authenticated/_profile/profile.tsx:85
-#: src/lib/components/layout/nav-user.tsx:108
+#: src/app/routes/_authenticated/_profile/profile.tsx:51
+#: src/app/routes/_authenticated/_profile/profile.tsx:127
+#: src/lib/components/layout/nav-user.tsx:99
 msgid "Profile"
 msgstr "Profil"
 
@@ -6114,6 +6161,10 @@ msgstr "Zduplikowana wartość \"{trimmed}\" już istnieje"
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
 msgstr "Utwórz swojego pierwszego klienta"
+
+#: src/lib/components/shared/channel-colors-dialog.tsx:35
+msgid "Use a shared color marker to make channels easier to recognize."
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:267
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -6168,7 +6219,7 @@ msgstr "Dodaj kraj"
 msgid "Create your first promotion"
 msgstr "Utwórz swoją pierwszą promocję"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:253
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:256
 msgid "Defaults to the default language."
 msgstr ""
 
@@ -6198,7 +6249,7 @@ msgstr "Nie można dodać wariantu. Upewnij się, że produkt nadrzędny jest w�
 msgid "Metrics"
 msgstr "Metryki"
 
-#: src/lib/components/layout/nav-user.tsx:112
+#: src/lib/components/layout/nav-user.tsx:106
 msgid "Language"
 msgstr "Język"
 
@@ -6264,8 +6315,13 @@ msgstr "Źródło"
 msgid "No actions available"
 msgstr "Brak dostępnych akcji"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/lib/components/layout/channel-switcher.tsx:183
+#: src/lib/components/shared/channel-colors-dialog.tsx:32
+msgid "Customize channel colors"
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to update channel"
 msgstr "Nie udało się zaktualizować kanału"
 
@@ -6327,6 +6383,10 @@ msgstr "Zamówienie sprzedawcy"
 msgid "New facet"
 msgstr "Nowy aspekt"
 
+#: src/lib/components/shared/channel-color-picker.tsx:19
+msgid "Color 5"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:63
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:380
 msgid "Are you sure you want to remove this option group from the product?"
@@ -6342,7 +6402,7 @@ msgstr "Opis (tekst alternatywny)"
 msgid "No tags found"
 msgstr "Nie znaleziono tagów"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:304
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:307
 msgid "Default currency"
 msgstr "Domyślna waluta"
 
@@ -6693,7 +6753,7 @@ msgid "Search..."
 msgstr "Szukaj..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
-#: src/lib/components/layout/channel-switcher.tsx:130
+#: src/lib/components/layout/channel-switcher.tsx:100
 msgid "Language: {0}"
 msgstr "Język: {0}"
 
@@ -6721,7 +6781,7 @@ msgstr "Nagłówek 6"
 msgid "Added coupon codes"
 msgstr "Dodano kody kuponów"
 
-#: src/lib/components/layout/channel-switcher.tsx:180
+#: src/lib/components/layout/channel-switcher.tsx:150
 msgctxt "active language"
 msgid "Active"
 msgstr "Aktywny"
@@ -6815,7 +6875,7 @@ msgstr "Dodaj płatność do zamówienia"
 msgid "Create variants for the option combinations that don't exist yet. Combinations that already exist are shown for context and can't be edited."
 msgstr "Utwórz warianty dla kombinacji opcji, które jeszcze nie istnieją. Kombinacje, które już istnieją, są wyświetlane dla kontekstu i nie można ich edytować."
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:235
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:238
 msgid "The token is used to specify the channel when making API requests."
 msgstr "Token służy do określenia kanału podczas wykonywania żądań API."
 
@@ -6888,7 +6948,7 @@ msgid "Customer registered"
 msgstr "Zarejestrowano klienta"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:247
+#: src/lib/framework/defaults.ts:253
 msgid "Zones"
 msgstr "Strefy"
 

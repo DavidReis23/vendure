@@ -339,8 +339,11 @@ test.describe('Issue #3548: Collection facet filter boolean args', () => {
         await page.getByRole('button', { name: /Add collection filter/i }).click();
         await page.getByRole('menuitem', { name: /Filter by facet values/i }).click();
 
-        // Open the "Facet values" chip popover and select a facet value
-        await page.getByRole('button', { name: 'Facet values' }).click();
+        // The first empty argument opens automatically when the filter is added.
+        await expect(page.getByRole('button', { name: 'Facet values', exact: true })).toHaveAttribute(
+            'aria-expanded',
+            'true',
+        );
         await page.getByRole('button', { name: /Add facet values/i }).click();
         await page.getByPlaceholder('Search facet values...').fill(facetValueName);
         await page.getByRole('option', { name: facetValueName, exact: true }).click();
@@ -482,7 +485,9 @@ test.describe('Collection tree toggles, search subtitles & detail breadcrumb', (
             .toContain(parentId);
 
         // The leaf child row has no expand/collapse toggle.
-        const childRow = page.locator('tbody tr').filter({ has: page.getByText(CHILD_NAME, { exact: true }) });
+        const childRow = page
+            .locator('tbody tr')
+            .filter({ has: page.getByText(CHILD_NAME, { exact: true }) });
         const childNameCell = childRow.locator('td').filter({ hasText: CHILD_NAME });
         await expect(childNameCell.getByLabel(/Expand|Collapse/)).toHaveCount(0);
 
@@ -505,7 +510,9 @@ test.describe('Collection tree toggles, search subtitles & detail breadcrumb', (
         });
         await lp.search(CHILD_NAME);
 
-        const childRow = page.locator('tbody tr').filter({ has: page.getByText(CHILD_NAME, { exact: true }) });
+        const childRow = page
+            .locator('tbody tr')
+            .filter({ has: page.getByText(CHILD_NAME, { exact: true }) });
         await expect(childRow).toBeVisible({ timeout: 10_000 });
         // Ancestor path rendered as a subtitle under the name.
         await expect(childRow.getByText(PARENT_NAME, { exact: true })).toBeVisible();
@@ -670,6 +677,7 @@ test.describe('Issue #4987: String list filter args preserve numeric values', ()
 
         // Both values survive a reload.
         await page.reload();
+        await page.getByRole('button', { name: 'externalIds', exact: true }).click();
         await expect(page.getByLabel('Remove 3249')).toBeVisible({ timeout: 10_000 });
         await expect(page.getByLabel('Remove 5')).toBeVisible();
 

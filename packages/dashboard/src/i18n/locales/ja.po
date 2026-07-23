@@ -143,7 +143,7 @@ msgstr "{0}{entityName}を削除してもよろしいですか？"
 msgid "Global out of stock threshold"
 msgstr "グローバル在庫切れしきい値"
 
-#: src/lib/components/layout/channel-switcher.tsx:194
+#: src/lib/components/layout/channel-switcher.tsx:164
 #: src/lib/components/layout/manage-languages-dialog.tsx:241
 msgid "Manage Languages"
 msgstr "言語を管理"
@@ -178,7 +178,7 @@ msgstr "カスタム理由を入力..."
 msgid "Type"
 msgstr "タイプ"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:266
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:269
 msgid "The default currency is chosen from this list."
 msgstr ""
 
@@ -209,7 +209,7 @@ msgstr "行を削除"
 msgid "Conditions"
 msgstr "条件"
 
-#: src/lib/components/layout/channel-switcher.tsx:99
+#: src/lib/components/layout/channel-switcher.tsx:73
 msgctxt "current channel"
 msgid "Current"
 msgstr "現在"
@@ -218,7 +218,7 @@ msgstr "現在"
 msgid "No fulfillments"
 msgstr "フルフィルメントなし"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "これを有効にすると、商品カタログに入力された価格には、デフォルト税ゾーンの税が含まれます。"
 
@@ -286,7 +286,7 @@ msgstr "ダッシュボードへ移動"
 msgid "{fulfilled, plural, one {Successfully cancelled {fulfilled} job} other {Successfully cancelled {fulfilled} jobs}}"
 msgstr "{fulfilled, plural, other {{fulfilled} 件のジョブをキャンセルしました}}"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:244
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:247
 msgid "Seller"
 msgstr "販売者"
 
@@ -392,7 +392,7 @@ msgstr "検索するには少なくとも2文字を入力してください..."
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
-#: src/app/routes/_authenticated/_profile/profile.tsx:109
+#: src/app/routes/_authenticated/_profile/profile.tsx:151
 msgid "Last name"
 msgstr "姓"
 
@@ -429,6 +429,7 @@ msgstr "追加できるウィジェットがありません"
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:107
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:290
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:203
+#: src/app/routes/_authenticated/_profile/profile.tsx:78
 #: src/lib/components/shared/asset/asset-gallery.tsx:334
 #: src/lib/components/shared/asset/asset-preview.tsx:127
 msgid "Unknown error"
@@ -469,13 +470,13 @@ msgctxt "date-range"
 msgid "Last 7 days"
 msgstr "過去7日間"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to create channel"
 msgstr "チャネルの作成に失敗しました"
 
 #: src/lib/components/layout/dev-mode-indicator.tsx:14
-#: src/lib/components/layout/nav-user.tsx:144
+#: src/lib/components/layout/nav-user.tsx:138
 msgid "Dev Mode"
 msgstr "開発モード"
 
@@ -637,7 +638,7 @@ msgstr "オプションを検索..."
 msgid "Order Count"
 msgstr "注文数"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:162
 msgid "You must first select an available currency to set a default currency"
 msgstr ""
 
@@ -686,6 +687,10 @@ msgstr "支払い#{0}を{1}に遷移しました"
 #: src/app/routes/_authenticated/_customers/components/customer-history/customer-history-container.tsx:46
 msgid "Error loading customer history: {0}"
 msgstr "顧客履歴の読み込みエラー：{0}"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:168
+msgid "Profile picture"
+msgstr ""
 
 #: src/lib/components/shared/remove-from-channel-bulk-action.tsx:53
 msgid "Successfully removed {selectionLength} {entityType} from channel"
@@ -808,7 +813,7 @@ msgstr "住所を選択"
 msgid "Payment eligibility checker"
 msgstr "支払い適格性チェッカー"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:321
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:324
 msgid "Default tax zone"
 msgstr "デフォルト税ゾーン"
 
@@ -839,7 +844,11 @@ msgstr "フィルター..."
 msgid "New facet value"
 msgstr "新しいファセット値"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:356
+msgid "Choose the shared marker color used for this channel."
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully updated channel"
 msgstr "チャネルを更新しました"
 
@@ -851,7 +860,7 @@ msgstr "表示を減らす"
 msgid "Short date"
 msgstr "短い日付"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:265
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:268
 msgid "Available currencies"
 msgstr "利用可能な通貨"
 
@@ -996,7 +1005,7 @@ msgstr "返金メモを入力"
 msgid "Order line removed"
 msgstr "注文ラインを削除しました"
 
-#: src/lib/components/layout/channel-switcher.tsx:158
+#: src/lib/components/layout/channel-switcher.tsx:128
 msgid "Content:"
 msgstr "内容:"
 
@@ -1114,8 +1123,8 @@ msgid "Failed to update zone"
 msgstr "ゾーンの更新に失敗しました"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:134
-#: src/app/routes/_authenticated/_profile/profile.tsx:121
-#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/app/routes/_authenticated/_profile/profile.tsx:163
+#: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
 msgid "Password"
 msgstr "パスワード"
@@ -1204,7 +1213,7 @@ msgstr "注文へのクーポンコードの設定に失敗しました: {0}"
 msgid "Table settings"
 msgstr "テーブル設定"
 
-#: src/lib/components/layout/nav-user.tsx:102
+#: src/lib/components/layout/nav-user.tsx:93
 msgid "Explore Platform & Cloud"
 msgstr "Platform & Cloud を探索"
 
@@ -1235,6 +1244,10 @@ msgstr "下書き注文"
 msgid "Enter your email address and we will send you a link to reset your password"
 msgstr "メールアドレスを入力すると、パスワードリセット用のリンクをお送りします"
 
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:354
+msgid "Appearance"
+msgstr ""
+
 #: src/app/routes/_authenticated/_system/settings-store.tsx:362
 #: src/app/routes/_authenticated/_system/settings-store.tsx:389
 msgid "Scope"
@@ -1249,7 +1262,7 @@ msgid "Shipping method is eligible for this order"
 msgstr "この配送方法はこの注文に適格です"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:198
+#: src/lib/framework/defaults.ts:204
 msgid "Administrators"
 msgstr "管理者"
 
@@ -1297,7 +1310,7 @@ msgid "Images"
 msgstr "画像"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:161
+#: src/lib/framework/defaults.ts:167
 msgid "API Keys"
 msgstr "API Keys"
 
@@ -1319,7 +1332,7 @@ msgid "Job Queue"
 msgstr "ジョブキュー"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:69
+#: src/lib/framework/defaults.ts:71
 msgid "Assets"
 msgstr "アセット"
 
@@ -1397,14 +1410,14 @@ msgstr "残り："
 msgid "No duplicator found with code \"{duplicatorCode}\" for {entityName}s"
 msgstr "{entityName}用のコード「{duplicatorCode}」を持つ複製ツールが見つかりません"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:337
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:340
 msgid "Prices include tax for default tax zone"
 msgstr "価格はデフォルト税ゾーンの税を含みます"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:130
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:131
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:133
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:134
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:135
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:137
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:138
 msgid "This field is required"
 msgstr ""
 
@@ -1527,8 +1540,8 @@ msgstr "{productCount, plural, one {このオプショングループは他の1�
 msgid "My Saved Views"
 msgstr "保存したビュー"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:66
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:201
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:68
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:204
 msgid "New channel"
 msgstr "新しいチャネル"
 
@@ -1602,7 +1615,7 @@ msgid "Delete draft order"
 msgstr "下書き注文を削除"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:27
+#: src/lib/framework/defaults.ts:28
 msgid "Catalog"
 msgstr "カタログ"
 
@@ -1632,6 +1645,10 @@ msgstr "チャネルを選択"
 msgid "Display language"
 msgstr "表示言語"
 
+#: src/lib/components/shared/channel-color-picker.tsx:16
+msgid "Color 2"
+msgstr ""
+
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:194
 msgid "The source file remains unchanged. Keep the original extension or omit it."
 msgstr ""
@@ -1645,7 +1662,7 @@ msgstr "フルフィルメント詳細"
 #~ msgstr "現在"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:184
+#: src/lib/framework/defaults.ts:190
 msgid "Channels"
 msgstr "チャネル"
 
@@ -1710,7 +1727,7 @@ msgid "Disable"
 msgstr "無効化"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:62
+#: src/lib/framework/defaults.ts:64
 msgid "Collections"
 msgstr "コレクション"
 
@@ -1723,7 +1740,7 @@ msgid "Failed to create country"
 msgstr "国の作成に失敗しました"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:240
+#: src/lib/framework/defaults.ts:246
 msgid "Countries"
 msgstr "国"
 
@@ -1753,13 +1770,13 @@ msgid "Filters"
 msgstr "フィルター"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:108
+#: src/lib/framework/defaults.ts:113
 msgid "Customer Groups"
 msgstr "顧客グループ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:94
-#: src/lib/framework/defaults.ts:101
+#: src/lib/framework/defaults.ts:98
+#: src/lib/framework/defaults.ts:105
 msgid "Customers"
 msgstr "顧客"
 
@@ -1934,7 +1951,7 @@ msgstr "バリエーションを削除"
 msgid "No modifications made"
 msgstr "変更は行われませんでした"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:329
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:332
 msgid "Default shipping zone"
 msgstr "デフォルト配送ゾーン"
 
@@ -1987,7 +2004,7 @@ msgstr "顧客グループ"
 #: src/lib/components/data-input/default-relation-input.tsx:214
 #: src/lib/components/data-input/default-relation-input.tsx:445
 #: src/lib/components/data-input/default-relation-input.tsx:536
-#: src/lib/components/layout/nav-user.tsx:155
+#: src/lib/components/layout/nav-user.tsx:149
 msgid "Disabled"
 msgstr "無効"
 
@@ -2054,7 +2071,7 @@ msgstr "返金を決済しました"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
 #: src/app/routes/_authenticated/_assets/assets_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -2069,7 +2086,7 @@ msgstr "返金を決済しました"
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:513
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
-#: src/app/routes/_authenticated/_profile/profile.tsx:93
+#: src/app/routes/_authenticated/_profile/profile.tsx:135
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2090,7 +2107,7 @@ msgstr "見出し2"
 msgid "Order placed"
 msgstr "注文を確定しました"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:72
+#: src/app/routes/_authenticated/_profile/profile.tsx:114
 msgid "Successfully updated profile"
 msgstr "プロフィールを更新しました"
 
@@ -2152,7 +2169,7 @@ msgstr "結果なし"
 msgid "Column settings"
 msgstr "列の設定"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2207,7 +2224,7 @@ msgid "Successfully updated country"
 msgstr "国を更新しました"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:55
+#: src/lib/framework/defaults.ts:57
 msgid "Facets"
 msgstr "ファセット"
 
@@ -2265,11 +2282,11 @@ msgstr "ファセット値"
 msgid "Successfully updated asset"
 msgstr "アセットを更新しました"
 
-#: src/lib/components/layout/nav-user.tsx:118
+#: src/lib/components/layout/nav-user.tsx:112
 msgid "Theme"
 msgstr "テーマ"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:156
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:159
 msgid "You must select at least one available currency"
 msgstr ""
 
@@ -2288,7 +2305,7 @@ msgstr "API Keys"
 msgid "Select a language"
 msgstr "言語を選択"
 
-#: src/lib/components/layout/nav-user.tsx:164
+#: src/lib/components/layout/nav-user.tsx:158
 msgid "Log out"
 msgstr "ログアウト"
 
@@ -2686,6 +2703,10 @@ msgstr "ページ {0} / {1}"
 msgid "Rate"
 msgstr "率"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
+msgid "Replace"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:119
 msgid "Size, colour, etc."
 msgstr "サイズ、カラーなど"
@@ -2862,7 +2883,7 @@ msgid "Customer verified"
 msgstr "顧客を確認しました"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:254
+#: src/lib/framework/defaults.ts:260
 msgid "Global Settings"
 msgstr "グローバル設定"
 
@@ -2886,7 +2907,7 @@ msgstr "新しい税カテゴリ"
 #~ msgid "No stock locations available on current channel"
 #~ msgstr "現在のチャネルで利用可能な在庫ロケーションがありません"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:173
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:176
 msgid "Successfully created channel"
 msgstr "チャネルを作成しました"
 
@@ -3102,7 +3123,7 @@ msgstr "このグローバルビューを削除してもよろしいですか？
 msgid "Force remove option group"
 msgstr "オプショングループを強制削除"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:141
+#: src/app/routes/_authenticated/_profile/profile.tsx:223
 msgid "Added"
 msgstr "追加済み"
 
@@ -3119,7 +3140,7 @@ msgstr "{entityIdsLength}個の{entityType}のファセット値を更新しま�
 msgid "Failed to remove customer from group"
 msgstr "グループからの顧客の削除に失敗しました"
 
-#: src/lib/components/layout/nav-user.tsx:135
+#: src/lib/components/layout/nav-user.tsx:129
 msgctxt "theme"
 msgid "System"
 msgstr "システム"
@@ -3162,7 +3183,7 @@ msgstr "グローバルビューを削除"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:106
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:155
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:214
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:217
 #: src/app/routes/_authenticated/_collections/collections_.$id.tsx:171
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:84
 #: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:94
@@ -3333,7 +3354,7 @@ msgstr "水平線"
 msgid "Testing shipping method..."
 msgstr "配送方法をテスト中..."
 
-#: src/lib/components/layout/nav-user.tsx:131
+#: src/lib/components/layout/nav-user.tsx:125
 msgctxt "theme"
 msgid "Dark"
 msgstr "ダーク"
@@ -3448,6 +3469,10 @@ msgstr "ビューの削除に失敗しました"
 msgid "Are you sure you want to navigate away from this page? Any unsaved changes will be lost."
 msgstr "このページから移動してもよろしいですか？保存されていない変更は失われます。"
 
+#: src/lib/components/shared/channel-color-picker.tsx:15
+msgid "Color 1"
+msgstr ""
+
 #: src/lib/components/shared/rich-text-editor/table-edit-icons.tsx:156
 msgid "Toggle header column"
 msgstr "ヘッダー列を切り替え"
@@ -3505,7 +3530,7 @@ msgstr "都道府県"
 msgid "Failed to update option group"
 msgstr "オプショングループの更新に失敗しました"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:277
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:280
 msgid "Channel defaults"
 msgstr "チャネルのデフォルト設定"
 
@@ -3528,7 +3553,7 @@ msgid "Simple product"
 msgstr "シンプル商品"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:140
+#: src/lib/framework/defaults.ts:146
 msgid "Job Queue"
 msgstr "ジョブキュー"
 
@@ -3568,7 +3593,7 @@ msgstr "支払いハンドラーを選択"
 msgid "Password reset links are only valid for a limited time. Request a new one to reset your password."
 msgstr "パスワードリセットリンクの有効期限は限られています。パスワードをリセットするには新しいリンクをリクエストしてください。"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:129
+#: src/app/routes/_authenticated/_profile/profile.tsx:212
 msgid "Authentication methods"
 msgstr "認証方法"
 
@@ -3652,6 +3677,10 @@ msgstr "割り当て"
 msgid "Successfully created seller"
 msgstr "販売者を作成しました"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:77
+msgid "Failed to update profile picture"
+msgstr ""
+
 #: src/lib/components/shared/asset/asset-gallery.tsx:906
 msgid "We couldn't load assets"
 msgstr ""
@@ -3696,10 +3725,14 @@ msgstr "メモ"
 msgid "Bold"
 msgstr "太字"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:252
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:255
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:112
 msgid "Available languages"
 msgstr "利用可能な言語"
+
+#: src/lib/components/shared/channel-color-picker.tsx:17
+msgid "Color 3"
+msgstr ""
 
 #: src/lib/framework/dashboard-widget/low-stock-widget/index.tsx:100
 msgid "{saleable} in stock"
@@ -3823,12 +3856,12 @@ msgid "Update the note content or visibility"
 msgstr "メモの内容または公開設定を更新"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:315
+#: src/lib/framework/defaults.ts:322
 msgid "Latest Customers Widget"
 msgstr "最新の顧客ウィジェット"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:277
+#: src/lib/framework/defaults.ts:284
 msgid "Latest Orders Widget"
 msgstr "最新注文ウィジェット"
 
@@ -3874,13 +3907,13 @@ msgstr "チェッカーが見つかりません"
 msgid "Settle payment"
 msgstr "支払いを決済"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:65
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:67
 #: src/app/routes/_authenticated/_channels/channels.tsx:15
 #: src/app/routes/_authenticated/_channels/channels.tsx:24
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:210
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:357
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:111
-#: src/lib/components/layout/channel-switcher.tsx:146
+#: src/lib/components/layout/channel-switcher.tsx:116
 msgid "Channels"
 msgstr "チャネル"
 
@@ -3940,7 +3973,7 @@ msgid "Remove from group"
 msgstr "グループから削除"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:304
+#: src/lib/framework/defaults.ts:311
 msgid "Low Stock Widget"
 msgstr "低在庫ウィジェット"
 
@@ -4027,7 +4060,7 @@ msgid "Successfully created facet value"
 msgstr "ファセット値を作成しました"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:117
+#: src/lib/framework/defaults.ts:122
 msgid "Marketing"
 msgstr "マーケティング"
 
@@ -4040,7 +4073,7 @@ msgid "greater than"
 msgstr "より大きい"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:266
+#: src/lib/framework/defaults.ts:273
 msgid "Metrics Widget"
 msgstr "メトリクスウィジェット"
 
@@ -4073,6 +4106,10 @@ msgstr "国を作成しました"
 #: src/lib/components/shared/seller-selector.tsx:39
 msgid "Select seller"
 msgstr "販売者を選択"
+
+#: src/app/routes/_authenticated/_profile/profile.tsx:209
+msgid "Your image is cropped to fit wherever it appears."
+msgstr ""
 
 #: src/app/routes/_authenticated/_assets/components/manage-tags-dialog.tsx:91
 msgid "Loading tags..."
@@ -4238,7 +4275,7 @@ msgid "Add a price in another currency"
 msgstr "別の通貨で価格を追加"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
-#: src/app/routes/_authenticated/_profile/profile.tsx:115
+#: src/app/routes/_authenticated/_profile/profile.tsx:157
 msgid "Email Address or identifier"
 msgstr "メールアドレスまたは識別子"
 
@@ -4459,7 +4496,7 @@ msgstr "偽"
 msgid "Asset name extension does not match the source file"
 msgstr ""
 
-#: src/lib/components/layout/nav-user.tsx:127
+#: src/lib/components/layout/nav-user.tsx:121
 msgctxt "theme"
 msgid "Light"
 msgstr "ライト"
@@ -4524,6 +4561,7 @@ msgstr "支払い状態の更新に失敗しました"
 msgid "Your orders summary"
 msgstr "注文サマリー"
 
+#: src/app/routes/_authenticated/_profile/profile.tsx:184
 #: src/lib/components/shared/asset/asset-gallery.tsx:589
 msgid "Upload"
 msgstr "アップロード"
@@ -4549,7 +4587,7 @@ msgid "+ {0} more"
 msgstr "+ {0} 件"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:48
+#: src/lib/framework/defaults.ts:50
 msgid "Option Groups"
 msgstr "オプショングループ"
 
@@ -4567,12 +4605,12 @@ msgid "All possible order states and their transitions. The current state is hig
 msgstr "すべての注文ステータスとその遷移。現在のステータスがハイライトされています。"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:85
+#: src/lib/framework/defaults.ts:88
 msgid "Orders"
 msgstr "注文"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:285
+#: src/lib/framework/defaults.ts:292
 msgid "Orders Summary Widget"
 msgstr "注文サマリーウィジェット"
 
@@ -4742,7 +4780,7 @@ msgid "Enable"
 msgstr "有効化"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:219
+#: src/lib/framework/defaults.ts:225
 msgid "Payment Methods"
 msgstr "支払い方法"
 
@@ -4856,7 +4894,7 @@ msgstr "スケジュールパターン"
 msgid "Payment failed"
 msgstr "支払いに失敗しました"
 
-#: src/lib/components/layout/channel-switcher.tsx:212
+#: src/lib/components/layout/channel-switcher.tsx:197
 msgid "Add channel"
 msgstr "チャネルを追加"
 
@@ -4915,19 +4953,23 @@ msgid "Select operator"
 msgstr "演算子を選択"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:41
+#: src/lib/framework/defaults.ts:43
 msgid "Product Variants"
 msgstr "商品バリエーション"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:34
+#: src/lib/framework/defaults.ts:35
 msgid "Products"
 msgstr "商品"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:124
+#: src/lib/framework/defaults.ts:129
 msgid "Promotions"
 msgstr "プロモーション"
+
+#: src/lib/components/shared/channel-color-picker.tsx:14
+msgid "Neutral"
+msgstr ""
 
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:150
 msgid "Failed to create product option"
@@ -4988,7 +5030,7 @@ msgstr "読み込み中…"
 msgid "e.g., Red, Large, Cotton"
 msgstr "例：赤、L、コットン"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:76
+#: src/app/routes/_authenticated/_profile/profile.tsx:118
 msgid "Failed to update profile"
 msgstr "プロフィールの更新に失敗しました"
 
@@ -5020,6 +5062,10 @@ msgstr "支払いメタデータを表示"
 #: src/app/routes/_authenticated/_products/components/generate-variants-panel.tsx:182
 msgid "Toggle all visible variants"
 msgstr "表示中のすべてのバリアントを切り替え"
+
+#: src/lib/components/shared/channel-color-picker.tsx:18
+msgid "Color 4"
+msgstr ""
 
 #: src/app/routes/_authenticated/_customers/components/customer-status-badge.tsx:28
 msgid "Verified"
@@ -5073,7 +5119,7 @@ msgstr "ビューを削除しました"
 msgid "OR"
 msgstr "OR"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:166
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:169
 msgid "You must select a default currency from the list of available currencies"
 msgstr ""
 
@@ -5292,7 +5338,7 @@ msgid "Link URL"
 msgstr "リンクURL"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:205
+#: src/lib/framework/defaults.ts:211
 msgid "Roles"
 msgstr "ロール"
 
@@ -5376,7 +5422,7 @@ msgstr "都道府県"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates.tsx:58
 #: src/app/routes/_authenticated/_zones/components/zone-countries-table.tsx:59
 #: src/lib/components/data-display/boolean.tsx:22
-#: src/lib/components/layout/nav-user.tsx:152
+#: src/lib/components/layout/nav-user.tsx:146
 msgid "Enabled"
 msgstr "有効"
 
@@ -5430,7 +5476,7 @@ msgstr "バリエーションを削除しました"
 #~ msgstr "選択したリンクのプロパティを編集"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:78
+#: src/lib/framework/defaults.ts:81
 msgid "Sales"
 msgstr "販売"
 
@@ -5443,7 +5489,7 @@ msgid "Your latest orders"
 msgstr "最新の注文"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:147
+#: src/lib/framework/defaults.ts:153
 msgid "Scheduled Tasks"
 msgstr "スケジュールされたタスク"
 
@@ -5460,17 +5506,17 @@ msgid "Variants"
 msgstr "バリエーション"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:177
+#: src/lib/framework/defaults.ts:183
 msgid "Sellers"
 msgstr "販売者"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:170
+#: src/lib/framework/defaults.ts:176
 msgid "Settings"
 msgstr "設定"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:154
+#: src/lib/framework/defaults.ts:160
 msgid "Settings Store"
 msgstr "設定ストア"
 
@@ -5483,7 +5529,7 @@ msgid "Welcome to Vendure"
 msgstr "Vendureへようこそ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:212
+#: src/lib/framework/defaults.ts:218
 msgid "Shipping Methods"
 msgstr "配送方法"
 
@@ -5571,7 +5617,7 @@ msgid "Search languages..."
 msgstr "言語を検索..."
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:191
+#: src/lib/framework/defaults.ts:197
 msgid "Stock Locations"
 msgstr "在庫ロケーション"
 
@@ -5619,7 +5665,7 @@ msgid "Add payment ({0})"
 msgstr "支払いを追加（{0}）"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:133
+#: src/lib/framework/defaults.ts:139
 msgid "System"
 msgstr "システム"
 
@@ -5629,6 +5675,7 @@ msgid "Variant name"
 msgstr "バリエーション名"
 
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx:580
+#: src/app/routes/_authenticated/_profile/profile.tsx:203
 #: src/lib/components/shared/configurable-operation-input.tsx:117
 msgid "Remove"
 msgstr "削除"
@@ -5651,12 +5698,12 @@ msgid "{count, plural, one {Removed {count} customer from group} other {Removed 
 msgstr "{count, plural, other {{count}人の顧客をグループから削除しました}}"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:226
+#: src/lib/framework/defaults.ts:232
 msgid "Tax Categories"
 msgstr "税カテゴリ"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:233
+#: src/lib/framework/defaults.ts:239
 msgid "Tax Rates"
 msgstr "税率"
 
@@ -5767,11 +5814,11 @@ msgid "Default Language"
 msgstr "デフォルト言語"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:293
+#: src/lib/framework/defaults.ts:300
 msgid "Top Products Widget"
 msgstr "人気商品ウィジェット"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:233
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:236
 msgid "Token"
 msgstr "トークン"
 
@@ -5882,7 +5929,7 @@ msgstr "{1}から{2}へのフルフィルメント#{0}"
 msgid "Failed to delete global view"
 msgstr "グローバルビューの削除に失敗しました"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:282
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:285
 msgid "Default language"
 msgstr "デフォルト言語"
 
@@ -6015,7 +6062,7 @@ msgstr "返金の処理に失敗しました"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
-#: src/app/routes/_authenticated/_profile/profile.tsx:103
+#: src/app/routes/_authenticated/_profile/profile.tsx:145
 msgid "First name"
 msgstr "名"
 
@@ -6085,9 +6132,9 @@ msgstr "数量"
 msgid "Tax category"
 msgstr "税カテゴリ"
 
-#: src/app/routes/_authenticated/_profile/profile.tsx:39
-#: src/app/routes/_authenticated/_profile/profile.tsx:85
-#: src/lib/components/layout/nav-user.tsx:108
+#: src/app/routes/_authenticated/_profile/profile.tsx:51
+#: src/app/routes/_authenticated/_profile/profile.tsx:127
+#: src/lib/components/layout/nav-user.tsx:99
 msgid "Profile"
 msgstr "プロフィール"
 
@@ -6114,6 +6161,10 @@ msgstr "重複する値「{trimmed}」はすでに存在します"
 #: src/app/routes/_authenticated/_customers/customers.tsx:95
 msgid "Create your first customer"
 msgstr "最初の顧客を作成しましょう"
+
+#: src/lib/components/shared/channel-colors-dialog.tsx:35
+msgid "Use a shared color marker to make channels easier to recognize."
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/payment-details.tsx:267
 #: src/app/routes/_authenticated/_orders/components/refund-order-dialog.tsx:222
@@ -6168,7 +6219,7 @@ msgstr "国を追加"
 msgid "Create your first promotion"
 msgstr "最初のプロモーションを作成しましょう"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:253
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:256
 msgid "Defaults to the default language."
 msgstr ""
 
@@ -6198,7 +6249,7 @@ msgstr "バリアントを追加できませんでした。親製品が有効に
 msgid "Metrics"
 msgstr "指標"
 
-#: src/lib/components/layout/nav-user.tsx:112
+#: src/lib/components/layout/nav-user.tsx:106
 msgid "Language"
 msgstr "言語"
 
@@ -6264,8 +6315,13 @@ msgstr "ソース"
 msgid "No actions available"
 msgstr "利用可能なアクションがありません"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:180
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:186
+#: src/lib/components/layout/channel-switcher.tsx:183
+#: src/lib/components/shared/channel-colors-dialog.tsx:32
+msgid "Customize channel colors"
+msgstr ""
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:183
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:189
 msgid "Failed to update channel"
 msgstr "チャネルの更新に失敗しました"
 
@@ -6327,6 +6383,10 @@ msgstr "販売者注文"
 msgid "New facet"
 msgstr "新しいファセット"
 
+#: src/lib/components/shared/channel-color-picker.tsx:19
+msgid "Color 5"
+msgstr ""
+
 #: src/app/routes/_authenticated/_products/components/product-option-group-badge.tsx:63
 #: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:380
 msgid "Are you sure you want to remove this option group from the product?"
@@ -6342,7 +6402,7 @@ msgstr "説明（代替テキスト）"
 msgid "No tags found"
 msgstr "タグが見つかりません"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:304
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:307
 msgid "Default currency"
 msgstr "デフォルト通貨"
 
@@ -6693,7 +6753,7 @@ msgid "Search..."
 msgstr "検索..."
 
 #. placeholder {0}: formatLanguageName(contentLanguage)
-#: src/lib/components/layout/channel-switcher.tsx:130
+#: src/lib/components/layout/channel-switcher.tsx:100
 msgid "Language: {0}"
 msgstr "言語: {0}"
 
@@ -6721,7 +6781,7 @@ msgstr "見出し6"
 msgid "Added coupon codes"
 msgstr "クーポンコードを追加しました"
 
-#: src/lib/components/layout/channel-switcher.tsx:180
+#: src/lib/components/layout/channel-switcher.tsx:150
 msgctxt "active language"
 msgid "Active"
 msgstr "アクティブ"
@@ -6815,7 +6875,7 @@ msgstr "注文に支払いを追加"
 msgid "Create variants for the option combinations that don't exist yet. Combinations that already exist are shown for context and can't be edited."
 msgstr "まだ存在しないオプションの組み合わせのバリアントを作成します。既に存在する組み合わせは参考として表示され、編集できません。"
 
-#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:235
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:238
 msgid "The token is used to specify the channel when making API requests."
 msgstr "トークンは、APIリクエストを行う際にチャネルを指定するために使用されます。"
 
@@ -6888,7 +6948,7 @@ msgid "Customer registered"
 msgstr "顧客を登録しました"
 
 #. js-lingui-explicit-id
-#: src/lib/framework/defaults.ts:247
+#: src/lib/framework/defaults.ts:253
 msgid "Zones"
 msgstr "ゾーン"
 

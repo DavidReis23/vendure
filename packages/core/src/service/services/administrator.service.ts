@@ -35,10 +35,12 @@ import { CustomFieldRelationService } from '../helpers/custom-field-relation/cus
 import { ListQueryBuilder } from '../helpers/list-query-builder/list-query-builder';
 import { PasswordCipher } from '../helpers/password-cipher/password-cipher';
 import { RequestContextService } from '../helpers/request-context/request-context.service';
+import { StoredMediaUpload } from '../helpers/stored-media/stored-media.service';
 import { checkSuperadminCredentials } from '../helpers/utils/check-superadmin-credentials';
 import { getChannelPermissions } from '../helpers/utils/get-user-channels-permissions';
 import { patchEntity } from '../helpers/utils/patch-entity';
 
+import { AssetService } from './asset.service';
 import { RoleService } from './role.service';
 import { UserService } from './user.service';
 
@@ -59,9 +61,55 @@ export class AdministratorService {
         private userService: UserService,
         private roleService: RoleService,
         private customFieldRelationService: CustomFieldRelationService,
+        private assetService: AssetService,
         private eventBus: EventBus,
         private requestContextService: RequestContextService,
     ) {}
+
+    /**
+     * Replaces or removes profile-owned media for an Administrator. The new files are
+     * persisted before the old files are deleted so a failed upload never destroys the
+     * currently-visible avatar.
+     */
+    async setAvatar(
+        ctx: RequestContext,
+        administratorId: ID,
+        upload: Promise<StoredMediaUpload> | StoredMediaUpload | null,
+    ): Promise<Administrator> {
+        const administrator = await this.findOne(ctx, administratorId);
+        if (!administrator) {
+            throw new EntityNotFoundError('Administrator', administratorId);
+        }
+        const previousAvatar = administrator.avatar;
+
+        if (upload == null) {
+            administrator.avatar = null;
+            await this.connection.getRepository(ctx, Administrator).save(administrator, { reload: false });
+            if (previousAvatar) {
+                await this.assetService.deleteSystemAsset(ctx, previousAvatar);
+            }
+            return administrator;
+        }
+
+        const avatar = await this.assetService.createSystemAsset(ctx, upload, { imageOnly: true });
+        if (isGraphQlErrorResult(avatar)) {
+            throw new UserInputError('error.mime-type-not-permitted', {
+                fileName: avatar.fileName,
+                mimeType: avatar.mimeType,
+            });
+        }
+        administrator.avatar = avatar;
+        try {
+            await this.connection.getRepository(ctx, Administrator).save(administrator, { reload: false });
+        } catch (error) {
+            await this.assetService.deleteSystemAsset(ctx, avatar);
+            throw error;
+        }
+        if (previousAvatar) {
+            await this.assetService.deleteSystemAsset(ctx, previousAvatar);
+        }
+        return administrator;
+    }
 
     /** @internal */
     async initAdministrators() {
@@ -79,7 +127,7 @@ export class AdministratorService {
     ): Promise<PaginatedList<Administrator>> {
         return this.listQueryBuilder
             .build(Administrator, options, {
-                relations: relations ?? ['user', 'user.roles'],
+                relations: relations ?? ['avatar', 'user', 'user.roles'],
                 where: { deletedAt: IsNull() },
                 ctx,
             })
@@ -102,7 +150,7 @@ export class AdministratorService {
         return this.connection
             .getRepository(ctx, Administrator)
             .findOne({
-                relations: relations ?? ['user', 'user.roles'],
+                relations: relations ?? ['avatar', 'user', 'user.roles'],
                 where: {
                     id: administratorId,
                     deletedAt: IsNull(),
@@ -123,7 +171,7 @@ export class AdministratorService {
         return this.connection
             .getRepository(ctx, Administrator)
             .findOne({
-                relations,
+                relations: relations ?? ['avatar'],
                 where: {
                     user: { id: userId },
                     deletedAt: IsNull(),

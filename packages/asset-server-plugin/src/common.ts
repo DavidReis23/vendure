@@ -7,10 +7,12 @@ export function getAssetUrlPrefixFn(options: AssetServerOptions) {
     const { assetUrlPrefix, route } = options;
     if (assetUrlPrefix == null) {
         return (request: Request, identifier: string) => {
-            const protocol = request.headers['x-forwarded-proto'] ?? request.protocol;
-            return `${Array.isArray(protocol) ? protocol[0] : protocol}://${
-                request.get('host') ?? 'could-not-determine-host'
-            }/${route}/`;
+            const protocol = getFirstHeaderValue(request.headers['x-forwarded-proto']) ?? request.protocol;
+            const host =
+                getFirstHeaderValue(request.headers['x-forwarded-host']) ??
+                request.get('host') ??
+                'could-not-determine-host';
+            return `${protocol}://${host}/${route}/`;
         };
     }
     if (typeof assetUrlPrefix === 'string') {
@@ -23,6 +25,11 @@ export function getAssetUrlPrefixFn(options: AssetServerOptions) {
         };
     }
     throw new Error(`The assetUrlPrefix option was of an unexpected type: ${JSON.stringify(assetUrlPrefix)}`);
+}
+
+function getFirstHeaderValue(value: string | string[] | undefined): string | undefined {
+    const firstValue = Array.isArray(value) ? value[0] : value;
+    return firstValue?.split(',')[0]?.trim();
 }
 
 export function getValidFormat(format?: unknown): ImageTransformFormat | undefined {
