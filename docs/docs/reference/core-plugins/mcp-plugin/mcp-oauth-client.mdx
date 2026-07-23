@@ -1,0 +1,79 @@
+---
+title: "McpOauthClient"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/entities/mcp-oauth-client.entity.ts" sourceLine="11" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Metadata for an MCP client registered via OAuth Dynamic Client Registration.
+
+```ts title="Signature"
+class McpOauthClient extends VendureEntity {
+    constructor(input?: DeepPartial<McpOauthClient>)
+    @Index({ unique: true })
+    @Column()
+    clientId: string;
+    @Column()
+    clientName: string;
+    @Column({ type: 'varchar', nullable: true })
+    clientUri: string | null;
+    @Column({ type: 'varchar', nullable: true })
+    logoUri: string | null;
+    @Column({ type: 'simple-json' })
+    redirectUris: string[];
+    @Column({ type: 'simple-json' })
+    grantTypes: string[];
+    @Column({ default: 'none' })
+    tokenEndpointAuthMethod: string;
+    @Column({ type: Date, nullable: true })
+    lastUsedAt: Date | null;
+}
+```
+* Extends: [`VendureEntity`](/reference/typescript-api/entities/vendure-entity#vendureentity)
+
+
+
+<div className="members-wrapper">
+
+### clientId
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### clientName
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### clientUri
+
+<MemberInfo kind="property" type={`string | null`}   />
+
+
+### logoUri
+
+<MemberInfo kind="property" type={`string | null`}   />
+
+
+### redirectUris
+
+<MemberInfo kind="property" type={`string[]`}   />
+
+
+### grantTypes
+
+<MemberInfo kind="property" type={`string[]`}   />
+
+
+### tokenEndpointAuthMethod
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### lastUsedAt
+
+<MemberInfo kind="property" type={`Date | null`}   />
+
+
+
+
+</div>

@@ -29,9 +29,6 @@ const NO_ARGS_SCHEMA: McpJsonSchema = { type: 'object', properties: {}, addition
  * Single source of truth for discovered `@McpTool` providers. It discovers tools at bootstrap,
  * compiles their schemas once, and owns visibility, toggles, behavior,
  * permissions, and execution.
- *
- * @docsCategory core plugins/McpPlugin
- * @since 3.8.0
  */
 @Injectable()
 @Instrument()

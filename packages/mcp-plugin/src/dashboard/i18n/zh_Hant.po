@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: zh_Hant\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "動作"
+
+msgid "Actor"
+msgstr "操作者"
+
+msgid "Actor type"
+msgstr "操作者類型"
+
+msgid "Admin endpoint"
+msgstr "管理端點"
+
+msgid "After approving, you will be redirected to"
+msgstr "核准後，您將被重新導向至"
+
+msgid "All toolsets"
+msgstr "所有工具集"
+
+msgid "Approve"
+msgstr "核准"
+
+msgid "Authorization request could not be loaded"
+msgstr "無法載入授權請求"
+
+msgid "Calls per hour"
+msgstr "每小時呼叫次數"
+
+msgid "Client"
+msgstr "用戶端"
+
+msgid "Client configuration"
+msgstr "用戶端設定"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "使用下方的端點將 MCP 用戶端連接到您的 Vendure 伺服器。"
+
+msgid "Connection"
+msgstr "連線"
+
+msgid "Could not revoke grant"
+msgstr "無法撤銷授權"
+
+msgid "Could not update tool"
+msgstr "無法更新工具"
+
+msgid "Deny"
+msgstr "拒絕"
+
+msgid "Description"
+msgstr "描述"
+
+msgid "Destructive"
+msgstr "破壞性"
+
+msgid "Duration"
+msgstr "時長"
+
+msgid "Enabled"
+msgstr "已啟用"
+
+msgid "Error rate"
+msgstr "錯誤率"
+
+msgid "Expires"
+msgstr "到期時間"
+
+msgid "Grant revoked"
+msgstr "授權已撤銷"
+
+msgid "Health & usage"
+msgstr "運作狀況與使用情況"
+
+msgid "Last activity"
+msgstr "最近活動"
+
+msgid "Last hour"
+msgstr "過去1小時"
+
+msgid "Last 24 hours"
+msgstr "過去24小時"
+
+msgid "Last 7 days"
+msgstr "過去7天"
+
+msgid "Last 30 days"
+msgstr "過去30天"
+
+msgid "Loading authorization request…"
+msgstr "正在載入授權請求…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "修改性"
+
+msgid "Name"
+msgstr "名稱"
+
+msgid "No calls recorded in this period."
+msgstr "此期間沒有記錄到呼叫。"
+
+msgid "OAuth grants"
+msgstr "OAuth 授權"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "僅在您辨識並信任此目標時才核准。"
+
+msgid "Read-only"
+msgstr "唯讀"
+
+msgid "Recent activity"
+msgstr "近期活動"
+
+msgid "Recommended"
+msgstr "建議"
+
+msgid "Requested access"
+msgstr "請求的存取權限"
+
+msgid "Revoke"
+msgstr "撤銷"
+
+msgid "Revoke grant"
+msgstr "撤銷授權"
+
+msgid "Safety"
+msgstr "安全性"
+
+msgid "Search tools..."
+msgstr "搜尋工具..."
+
+msgid "Shop endpoint"
+msgstr "商店端點"
+
+msgid "Status"
+msgstr "狀態"
+
+msgid "Success rate"
+msgstr "成功率"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "使用 MCP Inspector 互動式測試與偵錯您的 MCP 伺服器："
+
+msgid "The authorization session is invalid or expired."
+msgstr "授權工作階段無效或已過期。"
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "此應用程式請求代表您存取您的 Vendure MCP 伺服器的權限。"
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "這將立即撤銷該用戶端的存取權限。用戶端需要重新授權才能重新連線。"
+
+msgid "Time"
+msgstr "時間"
+
+msgid "Tool"
+msgstr "工具"
+
+msgid "Tool updated"
+msgstr "工具已更新"
+
+msgid "Tools"
+msgstr "工具"
+
+msgid "Toolset"
+msgstr "工具集"
+
+msgid "Top tools"
+msgstr "熱門工具"
+
+msgid "Total calls"
+msgstr "呼叫總數"
+
+msgid "Usage over the selected period"
+msgstr "所選期間的使用情況"
+
+msgid "p50 latency"
+msgstr "p50 延遲"
+
+msgid "p95 latency"
+msgstr "p95 延遲"

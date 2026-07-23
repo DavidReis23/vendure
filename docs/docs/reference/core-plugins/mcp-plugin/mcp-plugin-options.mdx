@@ -1,0 +1,50 @@
+---
+title: "McpPluginOptions"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/types.ts" sourceLine="222" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Options passed to `McpPlugin.init`.
+
+```ts title="Signature"
+interface McpPluginOptions {
+    toolExposure?: McpToolExposureMode;
+    oauth?: McpOauthOptions;
+    rateLimits?: McpRateLimitOptions;
+    dnsRebinding?: McpDnsRebindingOptions;
+    logging?: McpLoggingOptions;
+}
+```
+
+<div className="members-wrapper">
+
+### toolExposure
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-tool-exposure-mode#mcptoolexposuremode'>McpToolExposureMode</a>`} default={`'direct'`}   />
+
+
+### oauth
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-oauth-options#mcpoauthoptions'>McpOauthOptions</a>`}   />
+
+OAuth options. When omitted, the OAuth surface is disabled.
+### rateLimits
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-rate-limit-options#mcpratelimitoptions'>McpRateLimitOptions</a>`}   />
+
+Per-scope request-rate limits. Sensible defaults apply when omitted; see
+[McpRateLimitOptions](/reference/core-plugins/mcp-plugin/mcp-rate-limit-options#mcpratelimitoptions).
+### dnsRebinding
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-dns-rebinding-options#mcpdnsrebindingoptions'>McpDnsRebindingOptions</a>`}   />
+
+DNS-rebinding protection for the MCP transport. See [McpDnsRebindingOptions](/reference/core-plugins/mcp-plugin/mcp-dns-rebinding-options#mcpdnsrebindingoptions).
+### logging
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-logging-options#mcploggingoptions'>McpLoggingOptions</a>`}   />
+
+Tool-call logging and retention. Sensible defaults apply when omitted; see
+[McpLoggingOptions](/reference/core-plugins/mcp-plugin/mcp-logging-options#mcploggingoptions).
+
+
+</div>

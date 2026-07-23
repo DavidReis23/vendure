@@ -1,0 +1,52 @@
+---
+title: "McpLoggingOptions"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/types.ts" sourceLine="172" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Controls how MCP tool calls are logged and retained. Every call is recorded as an
+[McpToolCallLog](/reference/core-plugins/mcp-plugin/mcp-tool-call-log#mcptoolcalllog) row and published as an `McpToolCallEvent`.
+
+```ts title="Signature"
+interface McpLoggingOptions {
+    ttlDays?: number;
+    capture?: McpLogCapture;
+    redact?: McpLogRedactFn;
+    retentionSchedule?: McpRetentionSchedule;
+}
+```
+
+<div className="members-wrapper">
+
+### ttlDays
+
+<MemberInfo kind="property" type={`number`} default={`30 (days)`}   />
+
+
+### capture
+
+<MemberInfo kind="property" type={`McpLogCapture`} default={`'metadata'`}   />
+
+
+### redact
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-log-redact-fn#mcplogredactfn'>McpLogRedactFn</a>`}   />
+
+
+
+*Example*
+
+```ts
+redact: ({ input, output }) => ({
+  input,
+  output: { ...output, customer: undefined }
+})
+```
+### retentionSchedule
+
+<MemberInfo kind="property" type={`McpRetentionSchedule`} default={`cron => cron.everyDayAt(2, 30)`}   />
+
+
+
+
+</div>

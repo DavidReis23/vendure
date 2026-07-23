@@ -5,5 +5,8 @@
   },
   "files": [
     "./index.ts"
+  ],
+  "exclude": [
+    "src/dashboard/**/*"
   ]
 }

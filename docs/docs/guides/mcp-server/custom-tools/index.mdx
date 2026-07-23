@@ -1,0 +1,196 @@
+---
+title: 'Registering Custom MCP Tools'
+metaTitle: 'Registering Custom MCP Tools | Vendure'
+metaDescription: 'Expose your own Vendure operations to AI agents with the @McpTool decorator from @vendure/mcp-sdk — input/output schemas, permissions, destructive confirmation, and discovery keywords.'
+order: 3
+---
+
+Any Vendure plugin can add its own MCP tools. You write a normal injectable service class, decorate it with
+[`@McpTool`](/reference/core-plugins/mcp-plugin/mcp-tool/), and register it as a provider. The MCP plugin's
+registry discovers it at bootstrap, compiles its schema, and exposes it on the shop or admin endpoint alongside
+the built-in tools.
+
+## The contract package
+
+The tool-authoring contract — the `@McpTool` decorator and its types — lives in its own tiny package,
+**`@vendure/mcp-sdk`**. Author tools against that package, not `@vendure/core` and not `@vendure/mcp-plugin`:
+
+```sh
+npm install @vendure/mcp-sdk
+```
+
+`@vendure/mcp-sdk` is inert: it has no runtime dependency on the MCP server, the SDK, or Zod. It exists so a
+plugin can *declare* tools without pulling in the whole server. The server (`@vendure/mcp-plugin`) must be
+installed and `McpPlugin` added to your config for the tools to actually be served.
+
+:::warning Keep a single copy of `@vendure/mcp-sdk`
+The `@McpTool` decorator is created with NestJS's `DiscoveryService.createDecorator()`, which mints its metadata
+key once, at module load. If two different versions of `@vendure/mcp-sdk` resolve in your `node_modules`, they
+mint two different keys, and tools decorated via one copy are **invisible** to a registry scanning with the other
+— they silently never appear. Vendure's fixed versioning and your package manager's deduplication normally
+prevent this; the rule for plugin authors is simply: **do not pin a divergent `@vendure/mcp-sdk` version**.
+:::
+
+## A minimal tool
+
+A tool is an `@Injectable()` class with the `@McpTool` decorator and an `execute(ctx, input)` method. Implement
+[`McpToolHandler`](/reference/core-plugins/mcp-plugin/mcp-tool-handler/) from `@vendure/mcp-sdk` for type-safety:
+
+```ts title="src/tools/low-stock.tool.ts"
+import { Injectable } from '@nestjs/common';
+import { Permission, ProductVariantService, RequestContext } from '@vendure/core';
+import { McpTool, McpToolHandler } from '@vendure/mcp-sdk';
+
+interface LowStockInput {
+    threshold: number;
+}
+
+@McpTool({
+    name: 'find_low_stock_variants',
+    toolset: 'admin',
+    description: 'List product variants whose stock on hand is at or below a threshold.',
+    permissions: [Permission.ReadCatalog],
+    readOnly: true,
+    inputSchema: {
+        type: 'object',
+        properties: {
+            threshold: { type: 'number', description: 'Stock-on-hand level to report at or below.' },
+        },
+        required: ['threshold'],
+        additionalProperties: false,
+    },
+})
+@Injectable()
+export class FindLowStockVariantsTool implements McpToolHandler<LowStockInput> {
+    constructor(private productVariantService: ProductVariantService) {}
+
+    async execute(ctx: RequestContext, input: LowStockInput) {
+        // ...query variants, return a plain serializable summary
+        return { variants: [] };
+    }
+}
+```
+
+Register the class as a provider in the plugin that owns it:
+
+```ts title="src/my-plugin.ts"
+@VendurePlugin({
+    imports: [PluginCommonModule],
+    providers: [FindLowStockVariantsTool],
+})
+export class MyPlugin {}
+```
+
+That is all — the MCP registry discovers every `@McpTool` provider across the running app at bootstrap.
+
+## Input and output schemas are JSON Schema
+
+`inputSchema` and `outputSchema` are plain JSON Schema objects
+([`McpJsonSchema`](/reference/core-plugins/mcp-plugin/mcp-json-schema/)). This is the only supported form — a
+Zod-style `{ parse() }` schema is a TypeScript error at the decorator, and if one reaches the registry it aborts
+boot with an error naming the offending tool. There is no per-request validation to wire up: the server validates
+every call's arguments against the schema before your `execute` runs.
+
+- **Omitting `inputSchema` means "this tool takes no arguments."** The registry registers the strict no-args
+  schema `{ type: 'object', properties: {}, additionalProperties: false }` — it does **not** mean "accepts
+  anything". Set `additionalProperties: false` on your own object schemas too, unless a field is a genuine
+  free-form bag (e.g. `customFields`).
+- **`outputSchema` is a diagnostic, not a client contract.** If you declare one, the registry validates your
+  handler's result against it *after* execution and logs a drift warning when they disagree. The call never fails
+  on drift, and the schema is never enforced on the client. It exists to catch your own serialization regressions
+  during development. None of the built-in tools declare one.
+
+## Permissions use OR semantics
+
+`permissions` is a list of [`Permission`](/reference/typescript-api/common/permission/) values, evaluated with
+**OR**: the caller needs *any one* of them. Use `Permission.Public` for anonymous shop tools and
+`Permission.Authenticated` for tools that only need a signed-in user. When you list fine-grained permissions,
+match the permissions the equivalent Admin GraphQL operation requires, so a tool is never more permissive than
+the API it wraps.
+
+## Destructive tools and confirmation
+
+Mark a tool that deletes, cancels, refunds, or otherwise makes a hard-to-reverse change with
+`requiresConfirmation: true`. The registry then does the confirmation handshake for you:
+
+- It advertises an optional `confirm: boolean` parameter on the tool's schema.
+- On a call without `confirm: true`, it returns a non-error response describing the action and asking the agent
+  to re-call with confirmation — your `execute` is not run.
+- On `confirm: true`, it strips `confirm` and runs your `execute`.
+
+**You never add `confirm` to your `inputSchema` or read it in `execute` — the registry owns it.** In fact, a
+destructive tool that declares its own `confirm` property fails at bootstrap, to stop the two mechanisms
+colliding.
+
+```ts title="src/tools/archive-product.tool.ts"
+@McpTool({
+    name: 'archive_product',
+    toolset: 'admin',
+    description: 'Permanently archive a product so it can no longer be sold.',
+    permissions: [Permission.DeleteCatalog],
+    requiresConfirmation: true, // → resolved behavior: destructive; the registry gates confirmation
+    inputSchema: {
+        type: 'object',
+        properties: { id: { type: 'string', description: 'Product ID to archive.' } },
+        required: ['id'],
+        additionalProperties: false,
+        // Note: no `confirm` here — the registry adds and gates it.
+    },
+})
+@Injectable()
+export class ArchiveProductTool implements McpToolHandler<{ id: string }> {
+    // ...
+}
+```
+
+See [How tool safety is derived](/guides/mcp-server/built-in-tools/#how-tool-safety-is-derived) for how
+`behavior`, `readOnly`, and `requiresConfirmation` combine.
+
+## Discovery keywords
+
+The optional `keywords` field is **author-time, search-only metadata**. In discovery mode the server ranks tools
+against a user's `search_tools` query, and your keywords join the tool's name, title, and description in the
+searchable text. Use them for the synonyms and phrasings a user would actually say that don't appear in the
+description:
+
+```ts
+keywords: ['money back', 'reimburse', 'return payment'],
+```
+
+Keywords are **never serialized** into a tool listing or sent to the agent — they only tune search. They have no
+effect in the default `direct` exposure mode. See
+[Tool exposure](/guides/mcp-server/built-in-tools/#tool-exposure-direct-vs-discovery) for how discovery works.
+
+## Metadata reference
+
+The full field list, types, and defaults are on
+[`McpToolMetadata`](/reference/core-plugins/mcp-plugin/mcp-tool-metadata/). In brief:
+
+| Field | Purpose |
+|---|---|
+| `name` | Unique snake_case tool name |
+| `title` | Optional human-friendly title |
+| `description` | Agent-facing description — write it for the model |
+| `toolset` | `'shop'` or `'admin'` — which endpoint serves it |
+| `permissions` | `Permission[]`, OR semantics |
+| `readOnly` / `requiresConfirmation` / `behavior` | Safety classification |
+| `inputSchema` / `outputSchema` | JSON Schema; input validated pre-call, output drift-checked post-call |
+| `keywords` | Search-only synonyms for discovery mode |
+
+## Accessing the execution context
+
+`execute(ctx, input)` is enough for almost every tool. If you need the MCP-specific execution context — the OAuth
+grant or the client IP — implement
+[`McpPluginToolHandler`](/reference/core-plugins/mcp-plugin/mcp-plugin-tool-handler/) from `@vendure/mcp-plugin`
+instead, which adds an optional third argument:
+
+```ts
+import { McpExecutionContext, McpPluginToolHandler } from '@vendure/mcp-plugin';
+
+async execute(ctx: RequestContext, input: MyInput, executionContext?: McpExecutionContext) {
+    const grant = executionContext?.grant; // the OAuth grant, when present
+    // ...
+}
+```
+
+This is the one case where a tool depends on `@vendure/mcp-plugin` rather than only `@vendure/mcp-sdk`.

@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: bg\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "Actor"
+msgstr "Извършител"
+
+msgid "Actor type"
+msgstr "Тип извършител"
+
+msgid "Admin endpoint"
+msgstr "Административна крайна точка"
+
+msgid "After approving, you will be redirected to"
+msgstr "След одобрение ще бъдете пренасочени към"
+
+msgid "All toolsets"
+msgstr "Всички набори от инструменти"
+
+msgid "Approve"
+msgstr "Одобряване"
+
+msgid "Authorization request could not be loaded"
+msgstr "Заявката за оторизация не можа да бъде заредена"
+
+msgid "Calls per hour"
+msgstr "Извиквания на час"
+
+msgid "Client"
+msgstr "Клиент"
+
+msgid "Client configuration"
+msgstr "Конфигурация на клиента"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Свържете MCP клиент към вашия Vendure сървър, като използвате крайните точки по-долу."
+
+msgid "Connection"
+msgstr "Връзка"
+
+msgid "Could not revoke grant"
+msgstr "Разрешението не можа да бъде отменено"
+
+msgid "Could not update tool"
+msgstr "Инструментът не можа да бъде актуализиран"
+
+msgid "Deny"
+msgstr "Отказване"
+
+msgid "Description"
+msgstr "Описание"
+
+msgid "Destructive"
+msgstr "Разрушително"
+
+msgid "Duration"
+msgstr "Продължителност"
+
+msgid "Enabled"
+msgstr "Активирано"
+
+msgid "Error rate"
+msgstr "Процент грешки"
+
+msgid "Expires"
+msgstr "Изтича"
+
+msgid "Grant revoked"
+msgstr "Разрешението е отменено"
+
+msgid "Health & usage"
+msgstr "Състояние и използване"
+
+msgid "Last activity"
+msgstr "Последна активност"
+
+msgid "Last hour"
+msgstr "Последният час"
+
+msgid "Last 24 hours"
+msgstr "Последните 24 часа"
+
+msgid "Last 7 days"
+msgstr "Последните 7 дни"
+
+msgid "Last 30 days"
+msgstr "Последните 30 дни"
+
+msgid "Loading authorization request…"
+msgstr "Зареждане на заявката за оторизация…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Променящо"
+
+msgid "Name"
+msgstr "Име"
+
+msgid "No calls recorded in this period."
+msgstr "Няма регистрирани извиквания за този период."
+
+msgid "OAuth grants"
+msgstr "OAuth разрешения"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Одобрете само ако разпознавате и се доверявате на тази дестинация."
+
+msgid "Read-only"
+msgstr "Само за четене"
+
+msgid "Recent activity"
+msgstr "Скорошна активност"
+
+msgid "Recommended"
+msgstr "Препоръчано"
+
+msgid "Requested access"
+msgstr "Заявен достъп"
+
+msgid "Revoke"
+msgstr "Отмяна"
+
+msgid "Revoke grant"
+msgstr "Отмяна на разрешението"
+
+msgid "Safety"
+msgstr "Безопасност"
+
+msgid "Search tools..."
+msgstr "Търсене на инструменти..."
+
+msgid "Shop endpoint"
+msgstr "Крайна точка на магазина"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Success rate"
+msgstr "Процент успех"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Тествайте и дебъгвайте вашия MCP сървър интерактивно с MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Сесията за оторизация е невалидна или изтекла."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Това приложение иска разрешение да осъществи достъп до вашия Vendure MCP сървър от ваше име."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Това незабавно отменя достъпа на клиента. Клиентът ще трябва да оторизира отново, за да се свърже."
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Tool"
+msgstr "Инструмент"
+
+msgid "Tool updated"
+msgstr "Инструментът е актуализиран"
+
+msgid "Tools"
+msgstr "Инструменти"
+
+msgid "Toolset"
+msgstr "Набор от инструменти"
+
+msgid "Top tools"
+msgstr "Топ инструменти"
+
+msgid "Total calls"
+msgstr "Общо извиквания"
+
+msgid "Usage over the selected period"
+msgstr "Използване за избрания период"
+
+msgid "p50 latency"
+msgstr "p50 латентност"
+
+msgid "p95 latency"
+msgstr "p95 латентност"

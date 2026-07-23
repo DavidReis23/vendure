@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: sv\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "Actor"
+msgstr "Aktör"
+
+msgid "Actor type"
+msgstr "Aktörstyp"
+
+msgid "Admin endpoint"
+msgstr "Admin-slutpunkt"
+
+msgid "After approving, you will be redirected to"
+msgstr "Efter godkännande omdirigeras du till"
+
+msgid "All toolsets"
+msgstr "Alla verktygsuppsättningar"
+
+msgid "Approve"
+msgstr "Godkänn"
+
+msgid "Authorization request could not be loaded"
+msgstr "Auktoriseringsbegäran kunde inte laddas"
+
+msgid "Calls per hour"
+msgstr "Anrop per timme"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client configuration"
+msgstr "Klientkonfiguration"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Anslut en MCP-klient till din Vendure-server med hjälp av slutpunkterna nedan."
+
+msgid "Connection"
+msgstr "Anslutning"
+
+msgid "Could not revoke grant"
+msgstr "Det gick inte att återkalla behörigheten"
+
+msgid "Could not update tool"
+msgstr "Det gick inte att uppdatera verktyget"
+
+msgid "Deny"
+msgstr "Neka"
+
+msgid "Description"
+msgstr "Beskrivning"
+
+msgid "Destructive"
+msgstr "Destruktiv"
+
+msgid "Duration"
+msgstr "Varaktighet"
+
+msgid "Enabled"
+msgstr "Aktiverad"
+
+msgid "Error rate"
+msgstr "Felfrekvens"
+
+msgid "Expires"
+msgstr "Går ut"
+
+msgid "Grant revoked"
+msgstr "Behörighet återkallad"
+
+msgid "Health & usage"
+msgstr "Hälsa och användning"
+
+msgid "Last activity"
+msgstr "Senaste aktivitet"
+
+msgid "Last hour"
+msgstr "Senaste timmen"
+
+msgid "Last 24 hours"
+msgstr "Senaste 24 timmarna"
+
+msgid "Last 7 days"
+msgstr "Senaste 7 dagarna"
+
+msgid "Last 30 days"
+msgstr "Senaste 30 dagarna"
+
+msgid "Loading authorization request…"
+msgstr "Läser in auktoriseringsbegäran…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Muterande"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "No calls recorded in this period."
+msgstr "Inga anrop registrerade under den här perioden."
+
+msgid "OAuth grants"
+msgstr "OAuth-behörigheter"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Godkänn endast om du känner igen och litar på den här destinationen."
+
+msgid "Read-only"
+msgstr "Skrivskyddad"
+
+msgid "Recent activity"
+msgstr "Senaste aktiviteten"
+
+msgid "Recommended"
+msgstr "Rekommenderas"
+
+msgid "Requested access"
+msgstr "Begärd åtkomst"
+
+msgid "Revoke"
+msgstr "Återkalla"
+
+msgid "Revoke grant"
+msgstr "Återkalla behörighet"
+
+msgid "Safety"
+msgstr "Säkerhet"
+
+msgid "Search tools..."
+msgstr "Sök verktyg..."
+
+msgid "Shop endpoint"
+msgstr "Butiks-slutpunkt"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Success rate"
+msgstr "Framgångsfrekvens"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Testa och felsök din MCP-server interaktivt med MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Auktoriseringssessionen är ogiltig eller har gått ut."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Den här applikationen begär behörighet att komma åt din Vendure MCP-server å dina vägnar."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Detta återkallar omedelbart klientens åtkomst. Klienten måste auktorisera igen för att återansluta."
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Tool"
+msgstr "Verktyg"
+
+msgid "Tool updated"
+msgstr "Verktyg uppdaterat"
+
+msgid "Tools"
+msgstr "Verktyg"
+
+msgid "Toolset"
+msgstr "Verktygsuppsättning"
+
+msgid "Top tools"
+msgstr "Toppverktyg"
+
+msgid "Total calls"
+msgstr "Totalt antal anrop"
+
+msgid "Usage over the selected period"
+msgstr "Användning under vald period"
+
+msgid "p50 latency"
+msgstr "p50-latens"
+
+msgid "p95 latency"
+msgstr "p95-latens"

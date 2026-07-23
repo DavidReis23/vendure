@@ -20,6 +20,7 @@ import {
 import { DashboardPlugin } from '@vendure/dashboard/plugin';
 import { defaultEmailHandlers, EmailPlugin, FileBasedTemplateLoader } from '@vendure/email-plugin';
 import { GraphiqlPlugin } from '@vendure/graphiql-plugin';
+import { McpPlugin } from '@vendure/mcp-plugin';
 import { TelemetryPlugin } from '@vendure/telemetry-plugin';
 import 'dotenv/config';
 import path from 'path';
@@ -127,6 +128,7 @@ export const devConfig: VendureConfig = {
         ReviewsPlugin,
         // FieldTestPlugin,
         NavModifierPlugin,
+        McpPlugin.init({ oauth: { tokenSecret: 'dev-secret' } }),
         GraphiqlPlugin.init(),
         AssetServerPlugin.init({
             route: 'assets',

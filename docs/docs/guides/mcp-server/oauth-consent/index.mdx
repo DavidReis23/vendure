@@ -1,0 +1,148 @@
+---
+title: 'OAuth & Consent Integration'
+metaTitle: 'MCP OAuth & Consent Integration | Vendure'
+metaDescription: 'How AI agents authenticate to the Vendure MCP server via OAuth 2.1 — admin consent through the dashboard, and the storefront consent page a merchant builds for shop access.'
+order: 2
+---
+
+MCP agents authenticate to the Vendure server using **OAuth 2.1** with PKCE and Dynamic Client Registration.
+An MCP client runs almost the entire flow for you — it discovers the endpoints, registers itself, and exchanges
+tokens. The one part that needs a human is **consent**: a person has to approve the agent's access.
+
+## What works out of the box, and what you build
+
+- **Admin OAuth works out of the box.** The plugin ships a consent page inside the dashboard. An administrator
+  approves an agent using their existing dashboard session — no extra build, no separate login.
+- **Shop OAuth requires a storefront consent page you build.** Because your storefront owns customer login,
+  the plugin cannot render the customer-facing consent screen. You build one page against the
+  [storefront callback contract](#storefront-consent-contract) below; it also handles customer sign-in (the
+  headless cold-start handoff).
+- **The richer MCP management dashboard is a fast-follow.** v1 ships an enriched consent page plus a single
+  Overview. Multi-page management, a config panel, and OAuth-client inventory are deferred; until then, use the
+  Admin GraphQL API and the [MCP Inspector](/guides/mcp-server/quick-start/#test--debug-with-the-mcp-inspector).
+
+## The OAuth 2.1 flow
+
+The client drives these steps; you only configure `oauth` (see [`McpOauthOptions`](/reference/core-plugins/mcp-plugin/mcp-oauth-options/))
+and, for shop access, build the consent page.
+
+1. **Discover.** A call to a protected endpoint returns `401` with a
+   `WWW-Authenticate: Bearer resource_metadata="…"` header. The client fetches that protected-resource metadata,
+   then the authorization-server metadata, to learn every endpoint URL.
+2. **Register (DCR).** The client `POST`s to `/mcp/oauth/register` with its `client_name` and `redirect_uris`
+   and receives a `client_id`. Clients are public (PKCE, no secret).
+3. **Authorize.** The client sends the user to `GET /mcp/oauth/authorize` with `response_type=code`, its
+   `client_id`, `redirect_uri`, a PKCE `code_challenge` (`S256`), and the `resource` it wants access to. The
+   server records a pending request and **redirects to the consent page** carrying only `?session=<requestToken>`.
+4. **Consent.** A human approves (admin via the dashboard; customer via your storefront page). On approval the
+   server issues a short-lived authorization `code` and redirects back to the client's `redirect_uri`.
+5. **Token exchange.** The client `POST`s to `/mcp/oauth/token` with `grant_type=authorization_code`, the `code`,
+   its `code_verifier`, and the `resource`, and receives an `access_token` + `refresh_token`.
+6. **Call tools.** The client sends `Authorization: Bearer <access_token>` on every MCP request.
+7. **Refresh.** When the access token expires, the client exchanges the refresh token for a new pair.
+
+### Endpoints
+
+All URLs are built from your configured `issuer`, so the `issuer` **must** be the public base URL the client can
+reach.
+
+| Endpoint | Method | Purpose |
+|---|---|---|
+| `/.well-known/oauth-authorization-server` | GET | Authorization-server metadata (RFC 8414) |
+| `/.well-known/oauth-protected-resource/mcp/{shop\|admin}` | GET | Protected-resource metadata (RFC 9728) |
+| `/mcp/oauth/register` | POST | Dynamic Client Registration |
+| `/mcp/oauth/authorize` | GET | Start the authorization request (redirects to consent) |
+| `/mcp/oauth/token` | POST | Authorization-code exchange and refresh-token rotation |
+| `/mcp/oauth/revoke` | POST | Revoke a grant (RFC 7009) |
+| `/mcp/oauth/authorization-request` | GET | Consent-page lookup of pending-request details |
+| `/mcp/oauth/admin-consent` | POST | Admin approval (used by the dashboard page) |
+| `/mcp/oauth/storefront-callback` | POST | Customer approval (used by your storefront page) |
+
+The token endpoint accepts an `application/x-www-form-urlencoded` body as required by OAuth 2.1 (RFC 6749); the
+`/register` and `/revoke` endpoints accept form-encoded bodies too. Standard MCP clients send form-encoded token
+requests, and they work as-is.
+
+The authorization-server metadata advertises `S256` PKCE, the `authorization_code` and `refresh_token` grants, and
+`token_endpoint_auth_methods_supported: ["none"]` (public clients).
+
+### Resource → toolset mapping
+
+Every authorization request names a `resource`, and the resource decides which toolset the grant is for:
+
+- `{issuer}/mcp/shop` → the **shop** toolset
+- `{issuer}/mcp/admin` → the **admin** toolset
+
+A resource that matches neither (or carries a query string or fragment) is rejected. The token the client
+receives is scoped to that one toolset.
+
+### Token lifetimes and rotation
+
+Access tokens are short-lived (default 15 minutes) and refresh tokens long-lived (default 30 days); both are tuned
+via [`McpOauthOptions`](/reference/core-plugins/mcp-plugin/mcp-oauth-options/). Refresh is **rotating**: each
+refresh issues a new refresh token and invalidates the previous one. Re-using an already-rotated refresh token is
+treated as a compromise signal (OAuth 2.1 reuse detection) and **revokes the whole grant**. Revocation is a
+soft-revoke — the grant row is kept (with `revokedAt` set) so the audit trail survives, but the token stops
+working immediately.
+
+## Admin consent (ships with the dashboard)
+
+When an agent requests the **admin** toolset, the authorize step redirects to the dashboard consent page at the
+`adminConsentPath` (default `/dashboard/mcp/authorize`). The page reads the pending request, shows the client
+name, its redirect URI, and the requested toolset, and lets the signed-in administrator **Approve** or **Deny**.
+Approval uses the administrator's existing dashboard session — there is no second login. Under the hood the page
+`POST`s `{ session, approved }` to `/mcp/oauth/admin-consent`; the server verifies the admin session, mints the
+authorization code, and returns the client redirect URL.
+
+Nothing to build here — it works as soon as the plugin is installed and the dashboard extension is active.
+
+## Storefront consent contract
+
+When an agent requests the **shop** toolset, the authorize step redirects to your `storefrontConsentUrl` with
+`?session=<requestToken>`. Your storefront page implements three steps:
+
+1. **Look up the request.** `GET /mcp/oauth/authorization-request?session=<requestToken>` returns the details to
+   show the customer:
+
+   ```json
+   {
+       "client_id": "…",
+       "client_name": "Acme Assistant",
+       "client_uri": "https://acme.example.com",
+       "logo_uri": "https://acme.example.com/logo.png",
+       "redirect_uri": "https://acme.example.com/callback",
+       "resource": "https://my-store.example.com/mcp/shop",
+       "toolset": "shop"
+   }
+   ```
+
+   Show at least the **client name** and its **redirect URI** so the customer can judge what they are approving.
+
+2. **Sign the customer in.** The customer must be authenticated in your storefront (via the normal Shop API
+   login), because approval attaches the grant to their account. This is the cold-start handoff: an agent that
+   has no browser session relies on your storefront to establish the customer identity.
+
+3. **Submit the decision.** `POST /mcp/oauth/storefront-callback` with:
+
+   ```json
+   {
+       "session": "<requestToken>",
+       "vendureAuthToken": "<the customer's Vendure session token>",
+       "channelToken": "<optional channel token>",
+       "approved": true
+   }
+   ```
+
+   The response is `{ "redirectUrl": "…" }` — redirect the customer's browser there to hand the authorization
+   `code` back to the agent. Send `approved: false` to deny; the same redirect carries the denial back to the
+   client.
+
+:::warning
+The `session` value is a one-time request token — it is consumed on the first decision. If a customer reloads the
+consent page after approving, re-fetching the request will fail; treat a missing or consumed request as an
+expired flow and ask the agent to start again.
+:::
+
+## Next steps
+
+- [Production & Observability](/guides/mcp-server/production/) — the issuer guard, token secret rotation, and rate limits that protect these endpoints.
+- [Built-in Tool Reference](/guides/mcp-server/built-in-tools/) — what the shop and admin toolsets expose once a grant is in place.

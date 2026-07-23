@@ -42,9 +42,6 @@ interface JsonRpcError {
  * rate-limit pre-check (kept at controller altitude so the `-32029` `error.data` survives), and the
  * DNS-rebinding front guard. It then delegates JSON-RPC handling to the v2 SDK handler via
  * `toNodeHandler`, passing the resolved Vendure context through the SDK's pass-through `authInfo`.
- *
- * @docsCategory core plugins/McpPlugin
- * @since 3.8.0
  */
 @Controller('mcp')
 export class McpTransportController {

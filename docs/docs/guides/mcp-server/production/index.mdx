@@ -1,0 +1,192 @@
+---
+title: 'Production & Observability'
+metaTitle: 'MCP Server Production & Observability | Vendure'
+metaDescription: 'Harden the Vendure MCP server for production: token secrets, the issuer guard, rate limiting, DNS-rebinding protection, tool-call logging with tiered capture, and the three observability tiers.'
+order: 4
+---
+
+This guide covers running the MCP server in production: the hardening you must configure, how rate limiting
+behaves, what the plugin logs, and the three ways to observe it. Every option below is documented in full on
+[`McpPluginOptions`](/reference/core-plugins/mcp-plugin/mcp-plugin-options/) and its sub-types; this guide explains
+the operational choices, not the field lists.
+
+## Hardening
+
+### Token secret
+
+`oauth.tokenSecret` is the server secret used to HMAC-hash every OAuth token at rest — no token is ever stored in
+plaintext. Generate it once and keep it stable:
+
+```sh
+openssl rand -base64 32
+```
+
+Provide it via an environment variable, not source. **Rotating the secret invalidates every stored MCP OAuth
+token**, so all agents must re-authorize — rotate deliberately, not on a schedule.
+
+### The issuer guard
+
+To stop a misconfigured server from issuing tokens against a localhost URL, the plugin refuses to boot in
+production (`NODE_ENV=production` or a production `ProcessContext`) unless both `oauth.issuer` and
+`oauth.storefrontConsentUrl` are set to real, non-loopback URLs. The defaults (`http://localhost:3500` and a
+`localhost` storefront URL) are development-only. For an admin-only deployment that never uses shop OAuth, either
+set a real `storefrontConsentUrl` anyway or explicitly disable the shop toolset.
+
+### DNS-rebinding protection
+
+Set [`dnsRebinding`](/reference/core-plugins/mcp-plugin/mcp-dns-rebinding-options/) to reject requests whose
+`Host` or `Origin` header is not in an allow-list, before they reach the MCP handler:
+
+```ts
+McpPlugin.init({
+    dnsRebinding: {
+        allowedHosts: ['my-store.example.com'],
+        allowedOrigins: ['https://my-store.example.com'],
+    },
+});
+```
+
+The guard is off when `dnsRebinding` is omitted. Turn it on for any internet-facing deployment.
+
+### CORS and body size
+
+The MCP endpoints are ordinary Vendure routes, so they inherit the app-wide settings — the plugin adds no
+bespoke CORS or body parser. CORS follows `apiOptions.cors`; the request body follows the framework's default
+limit (100 KB). If you need to raise the body limit for a tool that accepts large input, do it with a
+route-scoped middleware on `apiOptions.middleware` for `/mcp`, exactly as you would for any other route.
+
+## Rate limiting
+
+[`rateLimits`](/reference/core-plugins/mcp-plugin/mcp-rate-limit-options/) applies per-minute request caps across
+four scopes. The defaults are sensible; override only what you need:
+
+| Scope | Default | Notes |
+|---|---|---|
+| `perSession` | 60 rpm | Per authenticated OAuth grant |
+| `perClient` | 120 rpm | Per registered OAuth client |
+| `anonymousIp` | 60 rpm | Per client IP for anonymous `/mcp/shop` calls. Set `false` to disable |
+| `perTool` | `place_order: 5`, `create_product: 10` | Opt-in, keyed by tool name |
+
+Things to know before you tune these:
+
+- **The anonymous-IP limit is the safety backstop** — it is on by default at 60 rpm and protects the
+  unauthenticated shop endpoint. Only disable it (`anonymousIp: false`) if something upstream already rate-limits.
+- **Per-tool limits are opt-in.** A tool with no `perTool` entry (or an entry of `0`) is unlimited. Add entries
+  for expensive or sensitive tools.
+- **Limits are per instance.** The buckets live in Vendure's `CacheService`, which is in-memory by default — so
+  with N app instances the effective limit is roughly N × the configured value. Back `CacheService` with a shared
+  store (e.g. Redis) if you need a cluster-wide limit.
+- **Buckets are best-effort under concurrency.** The consume step is not atomic, so simultaneous requests can
+  occasionally slip a few over the limit. This is acceptable for abuse-prevention; it is not a hard quota.
+- **Behind a reverse proxy, enable Vendure's `trustProxy`** so `req.ip` reports the real client address rather
+  than the proxy's. There is no plugin-level proxy-header option — this is a core Vendure setting.
+
+When a request is rate-limited during the MCP handshake, the client receives JSON-RPC error `-32029` with a
+retry hint. In-tool rate-limit rejections arrive as a normal error result on the tool call.
+
+## Logging
+
+Every tool call can be recorded to the [`McpToolCallLog`](/reference/core-plugins/mcp-plugin/mcp-tool-call-log/)
+table. What gets stored is controlled by [`logging.capture`](/reference/core-plugins/mcp-plugin/mcp-logging-options/):
+
+- **`'metadata'` (default) stores no request or response bodies.** The `input` and `output` columns are left
+  `null`; only metadata — tool name, actor, channel, status, duration — is recorded. The audit table therefore
+  holds **zero request/response PII** by default. This matches the recommended audit-log posture (OWASP, GDPR
+  data-minimisation, NIST SP 800-92).
+- **`'full'` stores the bodies verbatim.** The plugin ships **no** redactor — if you enable `full`, you are
+  responsible for sanitising the data. Supply a `redact` function to apply your own policy:
+
+  ```ts
+  McpPlugin.init({
+      logging: {
+          capture: 'full',
+          redact: ({ toolName, input, output }) => ({
+              input: stripPii(input),
+              output: stripPii(output),
+          }),
+      },
+  });
+  ```
+
+  If you enable `full` without a `redact` function, the plugin logs a one-time warning at bootstrap that you may
+  be storing sensitive data. There is no `verbose` option and no built-in PII redactor — capture level plus your
+  own `redact` is the whole model.
+
+Logs are pruned automatically. `logging.ttlDays` (default 30) sets the retention window, and a scheduled task
+deletes expired rows daily at 02:30. Override the schedule with `logging.retentionSchedule`.
+
+## Observability: three tiers
+
+The plugin exposes tool-call activity three ways. Use whichever fits your stack — they are independent.
+
+### 1. The database log and admin API
+
+The `McpToolCallLog` table is the durable record. The Admin GraphQL API reads it back —
+`mcpToolCallLogs` (paginated), `mcpStats` (counts, success/error rate, p50/p95, calls-per-hour, top tools) — and
+the dashboard **MCP Server** overview surfaces the same data with charts and filters. These reads are gated by
+the `ReadMcpServer` permission (see below).
+
+### 2. The `McpToolCallEvent` on the EventBus
+
+Every call — success or error, shop or admin — publishes an
+[`McpToolCallEvent`](/reference/core-plugins/mcp-plugin/mcp-tool-call-event/) carrying the persisted log entry.
+Subscribe for real-time reactions (alerting, forwarding to an external audit sink, metrics):
+
+```ts
+eventBus.ofType(McpToolCallEvent).subscribe(event => {
+    // event.entry is the McpToolCallLog row (bodies null under 'metadata')
+});
+```
+
+### 3. OpenTelemetry spans
+
+The registry is instrumented with `@Instrument()`, so each tool call emits a `callTool` span nested under the
+`/mcp` HTTP trace whenever the [`@vendure/telemetry-plugin`](/reference/core-plugins/telemetry-plugin/) is active.
+Follow that plugin's [Telemetry guide](/guides/developer-guide/telemetry/) for the collector, Jaeger/Loki/Grafana
+setup — it is not repeated here. Two MCP-specific notes:
+
+- **Enrich the span with safe attributes only.** Use `registerMethodHooks` to add tool metadata to the span —
+  never the input or output, which may contain PII:
+
+  ```ts
+  import { registerMethodHooks } from '@vendure/telemetry-plugin';
+  import { McpToolRegistryService } from '@vendure/mcp-plugin';
+
+  const mcpHooks = registerMethodHooks(McpToolRegistryService, {
+      callTool: {
+          pre: ({ args: [, toolset, name], span }) => {
+              span.setAttribute('mcp.tool.name', name);
+              span.setAttribute('mcp.tool.toolset', toolset);
+          },
+          post: ({ result, span }) => {
+              span.setAttribute('mcp.tool.status', result.isError ? 'error' : 'success');
+          },
+      },
+  });
+  ```
+
+  Pass `mcpHooks` to `TelemetryPlugin` via its options. Do **not** read `args[3]` (the tool input) or the raw
+  result payload into an attribute.
+- **Metrics dashboards are export-only.** Vendure's telemetry exports spans but has no metrics read-back API, so
+  there is no built-in `mcpStats`-grade Grafana feed from OTel. The documented path is the OpenTelemetry Collector
+  `spanmetrics` connector, which derives metrics from the spans above — a Collector configuration, not a plugin
+  feature.
+
+## Admin permissions
+
+The MCP admin surface — the GraphQL API and the dashboard overview — runs under a dedicated `McpServer`
+permission, not the general Settings permission:
+
+- **`ReadMcpServer`** grants read access: the tool registry, active grants, call logs, and stats.
+- **`UpdateMcpServer`** grants mutations: toggling tools on/off, revoking grants, and pruning logs.
+
+Grant `ReadMcpServer`/`UpdateMcpServer` to operators who manage the AI integration without giving them full
+store-settings access. Two behaviours are intentional and worth knowing: the tool-registry query returns the full
+registry (it is not filtered per-caller — any holder of `ReadMcpServer` sees every tool), and the admin API
+surfaces the raw `readOnly`/`requiresConfirmation` flags rather than the single computed `behavior` the transport
+advertises to agents.
+
+## Related
+
+- [OAuth & Consent](/guides/mcp-server/oauth-consent/) — the endpoints these limits and guards protect.
+- [Quick Start](/guides/mcp-server/quick-start/#database-migration) — the 5-entity migration note for `synchronize: false` deployments.

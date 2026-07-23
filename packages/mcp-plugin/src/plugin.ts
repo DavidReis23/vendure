@@ -74,6 +74,7 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         schema: adminApiExtensions,
         resolvers: [McpAdminResolver],
     },
+    dashboard: './dashboard/index.tsx',
     configuration: config => {
         config.authOptions.customPermissions.push(mcpServerPermission);
         config.settingsStoreFields = {
@@ -97,7 +98,7 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         );
         return config;
     },
-    compatibility: '^3.8.0',
+    compatibility: '^3.7.0',
 })
 export class McpPlugin implements OnApplicationBootstrap {
     static options: McpPluginOptions;

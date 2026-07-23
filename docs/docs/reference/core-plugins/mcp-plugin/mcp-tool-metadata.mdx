@@ -1,0 +1,85 @@
+---
+title: "McpToolMetadata"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-sdk/src/mcp-tool.decorator.ts" sourceLine="31" packageName="@vendure/mcp-sdk" since="3.8.0" />
+
+Describes a single MCP tool. You attach this to a class with the [McpTool](/reference/core-plugins/mcp-plugin/mcp-tool#mcptool)decorator. The MCP server finds those classes on startup and exposes each one as a
+callable tool.
+
+```ts title="Signature"
+interface McpToolMetadata {
+    name: string;
+    title?: string;
+    description: string;
+    keywords?: string[];
+    toolset: McpToolset;
+    permissions?: Permission[];
+    behavior?: McpToolBehavior;
+    readOnly?: boolean;
+    requiresConfirmation?: boolean;
+    inputSchema?: McpJsonSchema;
+    outputSchema?: McpJsonSchema;
+}
+```
+
+<div className="members-wrapper">
+
+### name
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### title
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### description
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### keywords
+
+<MemberInfo kind="property" type={`string[]`}   />
+
+
+### toolset
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-toolset#mcptoolset'>McpToolset</a>`}   />
+
+
+### permissions
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/permission#permission'>Permission</a>[]`}   />
+
+
+### behavior
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-tool-behavior#mcptoolbehavior'>McpToolBehavior</a>`}   />
+
+
+### readOnly
+
+<MemberInfo kind="property" type={`boolean`}   />
+
+
+### requiresConfirmation
+
+<MemberInfo kind="property" type={`boolean`}   />
+
+
+### inputSchema
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-json-schema#mcpjsonschema'>McpJsonSchema</a>`}   />
+
+
+### outputSchema
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-json-schema#mcpjsonschema'>McpJsonSchema</a>`}   />
+
+
+
+
+</div>

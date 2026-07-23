@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "Actor"
+msgstr "Суб'єкт"
+
+msgid "Actor type"
+msgstr "Тип суб'єкта"
+
+msgid "Admin endpoint"
+msgstr "Адміністративна кінцева точка"
+
+msgid "After approving, you will be redirected to"
+msgstr "Після схвалення вас буде перенаправлено на"
+
+msgid "All toolsets"
+msgstr "Усі набори інструментів"
+
+msgid "Approve"
+msgstr "Схвалити"
+
+msgid "Authorization request could not be loaded"
+msgstr "Не вдалося завантажити запит авторизації"
+
+msgid "Calls per hour"
+msgstr "Викликів за годину"
+
+msgid "Client"
+msgstr "Клієнт"
+
+msgid "Client configuration"
+msgstr "Конфігурація клієнта"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Підключіть MCP-клієнт до вашого сервера Vendure за допомогою кінцевих точок нижче."
+
+msgid "Connection"
+msgstr "Підключення"
+
+msgid "Could not revoke grant"
+msgstr "Не вдалося відкликати дозвіл"
+
+msgid "Could not update tool"
+msgstr "Не вдалося оновити інструмент"
+
+msgid "Deny"
+msgstr "Відхилити"
+
+msgid "Description"
+msgstr "Опис"
+
+msgid "Destructive"
+msgstr "Руйнівне"
+
+msgid "Duration"
+msgstr "Тривалість"
+
+msgid "Enabled"
+msgstr "Увімкнено"
+
+msgid "Error rate"
+msgstr "Частота помилок"
+
+msgid "Expires"
+msgstr "Термін дії"
+
+msgid "Grant revoked"
+msgstr "Дозвіл відкликано"
+
+msgid "Health & usage"
+msgstr "Стан і використання"
+
+msgid "Last activity"
+msgstr "Остання активність"
+
+msgid "Last hour"
+msgstr "Остання година"
+
+msgid "Last 24 hours"
+msgstr "Останні 24 години"
+
+msgid "Last 7 days"
+msgstr "Останні 7 днів"
+
+msgid "Last 30 days"
+msgstr "Останні 30 днів"
+
+msgid "Loading authorization request…"
+msgstr "Завантаження запиту авторизації…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Змінює"
+
+msgid "Name"
+msgstr "Назва"
+
+msgid "No calls recorded in this period."
+msgstr "За цей період викликів не зафіксовано."
+
+msgid "OAuth grants"
+msgstr "Дозволи OAuth"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Схвалюйте, лише якщо ви впізнаєте цей пункт призначення та довіряєте йому."
+
+msgid "Read-only"
+msgstr "Лише читання"
+
+msgid "Recent activity"
+msgstr "Нещодавня активність"
+
+msgid "Recommended"
+msgstr "Рекомендовано"
+
+msgid "Requested access"
+msgstr "Запитаний доступ"
+
+msgid "Revoke"
+msgstr "Відкликати"
+
+msgid "Revoke grant"
+msgstr "Відкликати дозвіл"
+
+msgid "Safety"
+msgstr "Безпека"
+
+msgid "Search tools..."
+msgstr "Пошук інструментів..."
+
+msgid "Shop endpoint"
+msgstr "Кінцева точка магазину"
+
+msgid "Status"
+msgstr "Статус"
+
+msgid "Success rate"
+msgstr "Частота успіху"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Тестуйте та налагоджуйте ваш MCP-сервер інтерактивно за допомогою MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Сесія авторизації недійсна або її термін дії минув."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Цей застосунок запитує дозвіл на доступ до вашого сервера Vendure MCP від вашого імені."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Це негайно відкликає доступ клієнта. Клієнту потрібно буде авторизуватися знову, щоб повторно підключитися."
+
+msgid "Time"
+msgstr "Час"
+
+msgid "Tool"
+msgstr "Інструмент"
+
+msgid "Tool updated"
+msgstr "Інструмент оновлено"
+
+msgid "Tools"
+msgstr "Інструменти"
+
+msgid "Toolset"
+msgstr "Набір інструментів"
+
+msgid "Top tools"
+msgstr "Топ інструментів"
+
+msgid "Total calls"
+msgstr "Усього викликів"
+
+msgid "Usage over the selected period"
+msgstr "Використання за вибраний період"
+
+msgid "p50 latency"
+msgstr "Затримка p50"
+
+msgid "p95 latency"
+msgstr "Затримка p95"

@@ -299,9 +299,6 @@ export type McpToolCallStatus = 'success' | 'error';
  * @description
  * A discovered `@McpTool` provider, enriched by the registry at bootstrap. This is the registry's
  * single source of truth, consumed by the transport factory and the admin API.
- *
- * @docsCategory core plugins/McpPlugin
- * @since 3.8.0
  */
 export interface McpRegisteredTool extends McpToolMetadata {
     /** The discovered provider instance (implements `execute`). */

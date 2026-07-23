@@ -1,0 +1,23 @@
+---
+title: "McpToolCallEvent"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/events/mcp-tool-call.event.ts" sourceLine="13" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Fires after every MCP tool call (success/error, shop/admin). Receives the
+redacted `McpToolCallLog` entry. Use to build audit trails, metrics, or alerts.
+
+```ts title="Signature"
+class McpToolCallEvent extends VendureEvent {
+    constructor(ctx: RequestContext, entry: McpToolCallLog)
+}
+```
+* Extends: [`VendureEvent`](/reference/typescript-api/events/vendure-event#vendureevent)
+
+
+
+<div className="members-wrapper">
+
+
+
+</div>

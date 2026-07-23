@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: cs\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Akce"
+
+msgid "Actor"
+msgstr "Aktér"
+
+msgid "Actor type"
+msgstr "Typ aktéra"
+
+msgid "Admin endpoint"
+msgstr "Koncový bod administrace"
+
+msgid "After approving, you will be redirected to"
+msgstr "Po schválení budete přesměrováni na"
+
+msgid "All toolsets"
+msgstr "Všechny sady nástrojů"
+
+msgid "Approve"
+msgstr "Schválit"
+
+msgid "Authorization request could not be loaded"
+msgstr "Žádost o autorizaci se nepodařilo načíst"
+
+msgid "Calls per hour"
+msgstr "Volání za hodinu"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client configuration"
+msgstr "Konfigurace klienta"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Připojte klienta MCP k serveru Vendure pomocí níže uvedených koncových bodů."
+
+msgid "Connection"
+msgstr "Připojení"
+
+msgid "Could not revoke grant"
+msgstr "Nepodařilo se odvolat oprávnění"
+
+msgid "Could not update tool"
+msgstr "Nástroj se nepodařilo aktualizovat"
+
+msgid "Deny"
+msgstr "Zamítnout"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "Destructive"
+msgstr "Destruktivní"
+
+msgid "Duration"
+msgstr "Doba trvání"
+
+msgid "Enabled"
+msgstr "Povoleno"
+
+msgid "Error rate"
+msgstr "Míra chyb"
+
+msgid "Expires"
+msgstr "Vyprší"
+
+msgid "Grant revoked"
+msgstr "Oprávnění odvoláno"
+
+msgid "Health & usage"
+msgstr "Stav a využití"
+
+msgid "Last activity"
+msgstr "Poslední aktivita"
+
+msgid "Last hour"
+msgstr "Poslední hodina"
+
+msgid "Last 24 hours"
+msgstr "Posledních 24 hodin"
+
+msgid "Last 7 days"
+msgstr "Posledních 7 dní"
+
+msgid "Last 30 days"
+msgstr "Posledních 30 dní"
+
+msgid "Loading authorization request…"
+msgstr "Načítání žádosti o autorizaci…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Měnící"
+
+msgid "Name"
+msgstr "Název"
+
+msgid "No calls recorded in this period."
+msgstr "V tomto období nebyla zaznamenána žádná volání."
+
+msgid "OAuth grants"
+msgstr "Oprávnění OAuth"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Schvalte pouze v případě, že tento cíl znáte a důvěřujete mu."
+
+msgid "Read-only"
+msgstr "Pouze pro čtení"
+
+msgid "Recent activity"
+msgstr "Nedávná aktivita"
+
+msgid "Recommended"
+msgstr "Doporučeno"
+
+msgid "Requested access"
+msgstr "Požadovaný přístup"
+
+msgid "Revoke"
+msgstr "Odvolat"
+
+msgid "Revoke grant"
+msgstr "Odvolat oprávnění"
+
+msgid "Safety"
+msgstr "Bezpečnost"
+
+msgid "Search tools..."
+msgstr "Hledat nástroje..."
+
+msgid "Shop endpoint"
+msgstr "Koncový bod obchodu"
+
+msgid "Status"
+msgstr "Stav"
+
+msgid "Success rate"
+msgstr "Míra úspěšnosti"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Testujte a laďte svůj MCP server interaktivně pomocí MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Autorizační relace je neplatná nebo vypršela."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Tato aplikace žádá o oprávnění přistupovat k vašemu serveru Vendure MCP vaším jménem."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Tím se okamžitě odvolá přístup klienta. Klient se bude muset znovu autorizovat, aby se mohl znovu připojit."
+
+msgid "Time"
+msgstr "Čas"
+
+msgid "Tool"
+msgstr "Nástroj"
+
+msgid "Tool updated"
+msgstr "Nástroj aktualizován"
+
+msgid "Tools"
+msgstr "Nástroje"
+
+msgid "Toolset"
+msgstr "Sada nástrojů"
+
+msgid "Top tools"
+msgstr "Nejpoužívanější nástroje"
+
+msgid "Total calls"
+msgstr "Celkem volání"
+
+msgid "Usage over the selected period"
+msgstr "Využití za vybrané období"
+
+msgid "p50 latency"
+msgstr "Latence p50"
+
+msgid "p95 latency"
+msgstr "Latence p95"

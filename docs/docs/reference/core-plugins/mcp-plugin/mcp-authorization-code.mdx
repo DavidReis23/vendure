@@ -1,0 +1,115 @@
+---
+title: "McpAuthorizationCode"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/entities/mcp-authorization-code.entity.ts" sourceLine="17" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+A short-lived authorization code from the OAuth flow, exchanged for tokens. The
+`code` is stored as a hash. `userId` and `userType` record who
+approved, so a Vendure session can be created for them when the code is exchanged.
+
+```ts title="Signature"
+class McpAuthorizationCode extends VendureEntity {
+    constructor(input?: DeepPartial<McpAuthorizationCode>)
+    @Index({ unique: true })
+    @Column()
+    code: string;
+    @Index()
+    @ManyToOne(() => McpOauthClient, { onDelete: 'CASCADE' })
+    oauthClient: McpOauthClient;
+    @EntityId()
+    oauthClientId: ID;
+    @Index()
+    @EntityId()
+    userId: ID;
+    @Column({ type: 'varchar' })
+    userType: McpActorType;
+    @Column()
+    redirectUri: string;
+    @Index()
+    @Column()
+    resource: string;
+    @Index()
+    @EntityId({ nullable: true })
+    channelId: ID | null;
+    @Column()
+    codeChallenge: string;
+    @Column({ default: 'S256' })
+    codeChallengeMethod: string;
+    @Index()
+    @Column({ type: Date })
+    expiresAt: Date;
+    @Index()
+    @Column({ type: Date, nullable: true })
+    consumedAt: Date | null;
+}
+```
+* Extends: [`VendureEntity`](/reference/typescript-api/entities/vendure-entity#vendureentity)
+
+
+
+<div className="members-wrapper">
+
+### code
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### oauthClient
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-oauth-client#mcpoauthclient'>McpOauthClient</a>`}   />
+
+
+### oauthClientId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a>`}   />
+
+
+### userId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a>`}   />
+
+
+### userType
+
+<MemberInfo kind="property" type={`McpActorType`}   />
+
+
+### redirectUri
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### resource
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### channelId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a> | null`}   />
+
+
+### codeChallenge
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### codeChallengeMethod
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### expiresAt
+
+<MemberInfo kind="property" type={`Date`}   />
+
+
+### consumedAt
+
+<MemberInfo kind="property" type={`Date | null`}   />
+
+
+
+
+</div>

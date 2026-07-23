@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ne\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "कार्यहरू"
+
+msgid "Actor"
+msgstr "कर्ता"
+
+msgid "Actor type"
+msgstr "कर्ताको प्रकार"
+
+msgid "Admin endpoint"
+msgstr "एडमिन एन्डपोइन्ट"
+
+msgid "After approving, you will be redirected to"
+msgstr "स्वीकृत गरेपछि, तपाईंलाई यहाँ रिडिरेक्ट गरिनेछ"
+
+msgid "All toolsets"
+msgstr "सबै उपकरण सेटहरू"
+
+msgid "Approve"
+msgstr "स्वीकृत गर्नुहोस्"
+
+msgid "Authorization request could not be loaded"
+msgstr "प्राधिकरण अनुरोध लोड गर्न सकिएन"
+
+msgid "Calls per hour"
+msgstr "प्रति घण्टा कलहरू"
+
+msgid "Client"
+msgstr "क्लाइन्ट"
+
+msgid "Client configuration"
+msgstr "क्लाइन्ट कन्फिगरेसन"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "तलका एन्डपोइन्टहरू प्रयोग गरेर MCP क्लाइन्टलाई आफ्नो Vendure सर्भरमा जडान गर्नुहोस्।"
+
+msgid "Connection"
+msgstr "जडान"
+
+msgid "Could not revoke grant"
+msgstr "अनुदान रद्द गर्न सकिएन"
+
+msgid "Could not update tool"
+msgstr "उपकरण अद्यावधिक गर्न सकिएन"
+
+msgid "Deny"
+msgstr "अस्वीकार गर्नुहोस्"
+
+msgid "Description"
+msgstr "विवरण"
+
+msgid "Destructive"
+msgstr "विनाशकारी"
+
+msgid "Duration"
+msgstr "अवधि"
+
+msgid "Enabled"
+msgstr "सक्षम"
+
+msgid "Error rate"
+msgstr "त्रुटि दर"
+
+msgid "Expires"
+msgstr "म्याद सकिन्छ"
+
+msgid "Grant revoked"
+msgstr "अनुदान रद्द गरियो"
+
+msgid "Health & usage"
+msgstr "स्वास्थ्य र प्रयोग"
+
+msgid "Last activity"
+msgstr "पछिल्लो गतिविधि"
+
+msgid "Last hour"
+msgstr "पछिल्लो घण्टा"
+
+msgid "Last 24 hours"
+msgstr "पछिल्लो 24 घण्टा"
+
+msgid "Last 7 days"
+msgstr "पछिल्लो 7 दिन"
+
+msgid "Last 30 days"
+msgstr "पछिल्लो 30 दिन"
+
+msgid "Loading authorization request…"
+msgstr "प्राधिकरण अनुरोध लोड हुँदैछ…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "परिवर्तनकारी"
+
+msgid "Name"
+msgstr "नाम"
+
+msgid "No calls recorded in this period."
+msgstr "यस अवधिमा कुनै कल रेकर्ड गरिएको छैन।"
+
+msgid "OAuth grants"
+msgstr "OAuth अनुदानहरू"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "यो गन्तव्यलाई चिन्नुहुन्छ र विश्वास गर्नुहुन्छ भने मात्र स्वीकृत गर्नुहोस्।"
+
+msgid "Read-only"
+msgstr "पढ्ने-मात्र"
+
+msgid "Recent activity"
+msgstr "भर्खरको गतिविधि"
+
+msgid "Recommended"
+msgstr "सिफारिस गरिएको"
+
+msgid "Requested access"
+msgstr "अनुरोध गरिएको पहुँच"
+
+msgid "Revoke"
+msgstr "रद्द गर्नुहोस्"
+
+msgid "Revoke grant"
+msgstr "अनुदान रद्द गर्नुहोस्"
+
+msgid "Safety"
+msgstr "सुरक्षा"
+
+msgid "Search tools..."
+msgstr "उपकरणहरू खोज्नुहोस्..."
+
+msgid "Shop endpoint"
+msgstr "पसल एन्डपोइन्ट"
+
+msgid "Status"
+msgstr "स्थिति"
+
+msgid "Success rate"
+msgstr "सफलता दर"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "MCP Inspector प्रयोग गरेर आफ्नो MCP सर्भरलाई अन्तरक्रियात्मक रूपमा परीक्षण र डिबग गर्नुहोस्:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "प्राधिकरण सत्र अमान्य वा म्याद सकिएको छ।"
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "यो एप्लिकेसनले तपाईंको तर्फबाट तपाईंको Vendure MCP सर्भरमा पहुँच गर्ने अनुमति अनुरोध गर्दैछ।"
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "यसले तुरुन्तै क्लाइन्टको पहुँच रद्द गर्छ। पुनः जडान गर्न क्लाइन्टले फेरि प्राधिकरण गर्नुपर्नेछ।"
+
+msgid "Time"
+msgstr "समय"
+
+msgid "Tool"
+msgstr "उपकरण"
+
+msgid "Tool updated"
+msgstr "उपकरण अद्यावधिक गरियो"
+
+msgid "Tools"
+msgstr "उपकरणहरू"
+
+msgid "Toolset"
+msgstr "उपकरण सेट"
+
+msgid "Top tools"
+msgstr "शीर्ष उपकरणहरू"
+
+msgid "Total calls"
+msgstr "कुल कलहरू"
+
+msgid "Usage over the selected period"
+msgstr "चयन गरिएको अवधिमा प्रयोग"
+
+msgid "p50 latency"
+msgstr "p50 विलम्ब"
+
+msgid "p95 latency"
+msgstr "p95 विलम्ब"

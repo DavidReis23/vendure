@@ -1,0 +1,174 @@
+---
+title: 'Built-in Tool Reference'
+metaTitle: 'MCP Built-in Tool Reference | Vendure'
+metaDescription: 'The 42 tools the Vendure MCP plugin ships — 19 shop and 23 admin — grouped by area, with their safety classification, permissions, and how tool exposure and confirmation work.'
+order: 5
+---
+
+The plugin ships **42 built-in tools**: **19 on the shop toolset** and **23 on the admin toolset**. This page
+groups them by area and explains the model they follow. It is not exhaustive on every input field — the live
+`tools/list` response for your configuration is the authoritative set, because it already accounts for
+permissions, tool toggles, and exposure mode.
+
+## The model
+
+**Toolsets.** Every tool belongs to `shop` or `admin`, which decides the endpoint that serves it
+(`/mcp/shop` or `/mcp/admin`) and the permissions it is checked against.
+
+**Permissions (OR).** A tool declares one or more [`Permission`](/reference/typescript-api/common/permission/)
+values and the caller needs *any one* of them. Shop tools use `Public` (anonymous) or `Authenticated`
+(signed-in customer); admin tools use fine-grained permissions such as `ReadOrder` or `UpdateProduct`.
+
+### How tool safety is derived
+
+Each tool resolves to one of three behaviors, in this precedence:
+
+1. an explicit `behavior` if set (no built-in uses this);
+2. else `requiresConfirmation: true` → **destructive**;
+3. else `readOnly: true` → **readonly**;
+4. else → **mutating**.
+
+The resolved behavior drives the MCP annotations an agent sees (`readOnlyHint`, `destructiveHint`).
+
+### Destructive confirmation
+
+A **destructive** tool is gated: the registry advertises an optional `confirm` parameter, and a call without
+`confirm: true` returns a non-error prompt describing the action instead of running it. The agent must re-call
+with confirmation. Five built-in tools are destructive:
+
+| Tool | Toolset |
+|---|---|
+| `place_order` | **shop** |
+| `adjust_stock` | admin |
+| `cancel_order` | admin |
+| `refund_order` | admin |
+| `update_order_state` | admin |
+
+Note that `place_order` is on the **shop** toolset — the shop tools are *not* confirmation-free. Placing an order
+is a real-money action, so it is gated like the destructive admin tools.
+
+### Tool toggles
+
+Administrators can enable or disable any individual tool (via the dashboard MCP Server overview, or the
+`setMcpToolEnabled` mutation, gated by `UpdateMcpServer`). A disabled tool disappears from `tools/list` and
+cannot be called. This is the primary lever for scoping what an agent can do.
+
+## Shop tools
+
+### Cart & Checkout
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `add_to_cart` | mutating | Public | Add a product variant to the active cart |
+| `update_cart_line` | mutating | Public | Update the quantity of a cart line |
+| `remove_from_cart` | mutating | Public | Remove a line from the active cart |
+| `get_cart` | readonly | Public | Get the active cart |
+| `apply_coupon_code` | mutating | Public | Apply a coupon code to the cart |
+| `remove_coupon_code` | mutating | Public | Remove a coupon code from the cart |
+| `set_shipping_address` | mutating | Public | Set the cart shipping address |
+| `set_billing_address` | mutating | Public | Set the cart billing address |
+| `set_shipping_method` | mutating | Public | Set the cart shipping method |
+| `get_eligible_shipping_methods` | readonly | Public | List shipping methods eligible for the cart |
+| `get_eligible_payment_methods` | readonly | Public | List payment methods eligible for the cart |
+| `place_order` | **destructive** | Public | Add payment and place the order |
+
+### Catalog (browse)
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_product` | readonly | Public | Get an enabled product by ID or slug |
+| `search_products` | readonly | Public | Name/slug lookup returning product summaries |
+| `get_collection` | readonly | Public | Get a public collection by ID or slug |
+| `list_collections` | readonly | Public | List public collections (paginated) |
+
+### Orders & account
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_order` | readonly | Public | Get an accessible order by code |
+| `list_my_orders` | readonly | Authenticated | List the signed-in customer's orders |
+| `get_my_account` | readonly | Authenticated | Get the signed-in customer account |
+
+## Admin tools
+
+### Catalog (manage)
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_product` | readonly | ReadProduct | Get a product by ID |
+| `list_products` | readonly | ReadProduct | List products (paginated) |
+| `create_product` | mutating | CreateProduct | Create a product |
+| `update_product` | mutating | UpdateProduct | Update a product's details |
+| `create_variant` | mutating | UpdateProduct | Create a product variant |
+| `update_variant` | mutating | UpdateProduct | Update a variant's price, SKU or stock |
+
+### Orders
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_order` | readonly | ReadOrder | Get an order by ID |
+| `list_orders` | readonly | ReadOrder | List orders (paginated) |
+| `add_note_to_order` | mutating | UpdateOrder | Add a note to an order timeline |
+| `update_order_state` | **destructive** | UpdateOrder | Transition an order to a new state |
+| `cancel_order` | **destructive** | UpdateOrder | Cancel an order and restock lines |
+| `refund_order` | **destructive** | UpdateOrder | Refund the first refundable payment |
+
+### Customers
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_customer` | readonly | ReadCustomer | Get a customer by ID |
+| `list_customers` | readonly | ReadCustomer | List customers (paginated) |
+| `create_customer` | mutating | CreateCustomer | Create a customer record |
+| `update_customer` | mutating | UpdateCustomer | Update a customer's details |
+| `add_customer_to_group` | mutating | UpdateCustomerGroup | Add a customer to a group |
+
+### Stock & inventory
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `get_stock_levels` | readonly | ReadProduct | Get stock levels for a variant |
+| `adjust_stock` | **destructive** | UpdateProduct | Adjust stock on hand for a variant |
+
+### Channels
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `list_channels` | readonly | Authenticated | List channels available to the administrator |
+| `set_active_channel` | mutating | Authenticated | Set the active channel for this MCP grant |
+
+### Assets & media
+
+| Tool | Safety | Permission | Description |
+|---|---|---|---|
+| `upload_asset` | mutating | CreateAsset | Upload an asset from a public HTTP(S) URL |
+| `update_product_assets` | mutating | UpdateProduct | Change a product's images and featured image |
+
+## Tool exposure: direct vs discovery
+
+`toolExposure` controls what `tools/list` returns.
+
+**`direct` (default)** lists every permitted, enabled tool. Prefer it: modern agents and hosts do their own
+tool-search, and listing tools normally is what lets that work. Scope an agent by disabling tools, not by hiding
+the list.
+
+**`discovery` (opt-in)** replaces the full list with exactly two meta-tools:
+
+- `search_tools({ query, limit? })` — returns the tools whose name, title, description, or author-supplied
+  keywords best match the query (ranked with BM25), each with its input schema. An empty query lists everything.
+- `execute_tool({ name, arguments })` — runs a tool found via `search_tools`, validating `arguments` against that
+  tool's schema exactly as a direct call would.
+
+Reach for discovery only when the full list is a problem — a host with a low tool cap (42 tools exceeds some
+clients' limits), or a model with no built-in tool search (older Claude/GPT, Gemini, Grok, GLM, and most
+open-source models). It is a compatibility escape hatch, not the recommended default.
+
+:::note
+Discovery keeps the same permission and confirmation rules as direct mode; it only changes how tools are listed
+and invoked, never what a caller is allowed to do.
+:::
+
+## See also
+
+- [Registering Custom MCP Tools](/guides/mcp-server/custom-tools/) — add your own tools to these toolsets.
+- [`@McpTool` reference](/reference/core-plugins/mcp-plugin/mcp-tool/) — the decorator and metadata types.

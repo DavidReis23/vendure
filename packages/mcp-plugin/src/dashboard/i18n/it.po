@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: it\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Azioni"
+
+msgid "Actor"
+msgstr "Attore"
+
+msgid "Actor type"
+msgstr "Tipo di attore"
+
+msgid "Admin endpoint"
+msgstr "Endpoint di amministrazione"
+
+msgid "After approving, you will be redirected to"
+msgstr "Dopo l'approvazione, verrai reindirizzato a"
+
+msgid "All toolsets"
+msgstr "Tutti i set di strumenti"
+
+msgid "Approve"
+msgstr "Approva"
+
+msgid "Authorization request could not be loaded"
+msgstr "Impossibile caricare la richiesta di autorizzazione"
+
+msgid "Calls per hour"
+msgstr "Chiamate all'ora"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client configuration"
+msgstr "Configurazione del client"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Connetti un client MCP al tuo server Vendure utilizzando gli endpoint qui sotto."
+
+msgid "Connection"
+msgstr "Connessione"
+
+msgid "Could not revoke grant"
+msgstr "Impossibile revocare la concessione"
+
+msgid "Could not update tool"
+msgstr "Impossibile aggiornare lo strumento"
+
+msgid "Deny"
+msgstr "Nega"
+
+msgid "Description"
+msgstr "Descrizione"
+
+msgid "Destructive"
+msgstr "Distruttivo"
+
+msgid "Duration"
+msgstr "Durata"
+
+msgid "Enabled"
+msgstr "Abilitato"
+
+msgid "Error rate"
+msgstr "Tasso di errore"
+
+msgid "Expires"
+msgstr "Scade"
+
+msgid "Grant revoked"
+msgstr "Concessione revocata"
+
+msgid "Health & usage"
+msgstr "Stato e utilizzo"
+
+msgid "Last activity"
+msgstr "Ultima attività"
+
+msgid "Last hour"
+msgstr "Ultima ora"
+
+msgid "Last 24 hours"
+msgstr "Ultime 24 ore"
+
+msgid "Last 7 days"
+msgstr "Ultimi 7 giorni"
+
+msgid "Last 30 days"
+msgstr "Ultimi 30 giorni"
+
+msgid "Loading authorization request…"
+msgstr "Caricamento della richiesta di autorizzazione…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Modificante"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "No calls recorded in this period."
+msgstr "Nessuna chiamata registrata in questo periodo."
+
+msgid "OAuth grants"
+msgstr "Concessioni OAuth"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Approva solo se riconosci questa destinazione e ti fidi di essa."
+
+msgid "Read-only"
+msgstr "Sola lettura"
+
+msgid "Recent activity"
+msgstr "Attività recente"
+
+msgid "Recommended"
+msgstr "Consigliato"
+
+msgid "Requested access"
+msgstr "Accesso richiesto"
+
+msgid "Revoke"
+msgstr "Revoca"
+
+msgid "Revoke grant"
+msgstr "Revoca concessione"
+
+msgid "Safety"
+msgstr "Sicurezza"
+
+msgid "Search tools..."
+msgstr "Cerca strumenti..."
+
+msgid "Shop endpoint"
+msgstr "Endpoint del negozio"
+
+msgid "Status"
+msgstr "Stato"
+
+msgid "Success rate"
+msgstr "Tasso di successo"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Testa ed esegui il debug del tuo server MCP in modo interattivo con MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "La sessione di autorizzazione non è valida o è scaduta."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Questa applicazione richiede l'autorizzazione ad accedere al tuo server MCP Vendure per tuo conto."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Questa operazione revoca immediatamente l'accesso del client. Il client dovrà autorizzare di nuovo per riconnettersi."
+
+msgid "Time"
+msgstr "Ora"
+
+msgid "Tool"
+msgstr "Strumento"
+
+msgid "Tool updated"
+msgstr "Strumento aggiornato"
+
+msgid "Tools"
+msgstr "Strumenti"
+
+msgid "Toolset"
+msgstr "Set di strumenti"
+
+msgid "Top tools"
+msgstr "Strumenti principali"
+
+msgid "Total calls"
+msgstr "Chiamate totali"
+
+msgid "Usage over the selected period"
+msgstr "Utilizzo nel periodo selezionato"
+
+msgid "p50 latency"
+msgstr "Latenza p50"
+
+msgid "p95 latency"
+msgstr "Latenza p95"

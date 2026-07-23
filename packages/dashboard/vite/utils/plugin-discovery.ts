@@ -13,6 +13,13 @@ import { PackageScannerConfig } from './compiler.js';
 import { resolvePathAliasImports, resolveSourceFile } from './import-resolution.js';
 import { findTsConfigPaths } from './tsconfig-utils.js';
 
+/**
+ * Where a locally-discovered plugin's source lives, plus the dashboard entry
+ * path declared on its `@VendurePlugin` decorator (if any). Populated by the
+ * source walk in {@link analyzeSourceFiles}.
+ */
+type LocalPluginLocation = { sourceFile: string; dashboardPath?: string };
+
 export async function discoverPlugins({
     vendureConfigPath,
     transformTsConfigPathMappings,
@@ -133,7 +140,7 @@ export async function discoverPlugins({
                     : './' + path.relative(path.dirname(filePath), dashboardPath); // Make absolute path relative
 
                 // Check if this is a local plugin we found earlier
-                const sourcePluginPath = localPluginLocations.get(pluginName);
+                const sourcePluginPath = localPluginLocations.get(pluginName)?.sourceFile;
 
                 plugins.push({
                     name: pluginName,
@@ -145,6 +152,27 @@ export async function discoverPlugins({
         } catch (e) {
             logger.error(`Failed to parse ${filePath}: ${e instanceof Error ? e.message : String(e)}`);
         }
+    }
+
+    // Register dashboards for plugins linked in as workspace packages (a
+    // monorepo package symlinked into node_modules). The loop above only finds
+    // plugins by their compiled `.js`, which we never scan for these — so we
+    // register them here from the source we already walked, pointing at the
+    // editable `src/dashboard/...` instead of a possibly-stale compiled build.
+    const registeredNames = new Set(plugins.map(p => p.name));
+    for (const [name, { sourceFile, dashboardPath }] of localPluginLocations) {
+        if (!dashboardPath || registeredNames.has(name)) {
+            continue;
+        }
+        logger.debug(
+            `[discoverPlugins] Registering dashboard for workspace-symlinked plugin "${name}" from source: ${sourceFile}`,
+        );
+        plugins.push({
+            name,
+            pluginPath: sourceFile,
+            dashboardEntryPath: dashboardPath,
+            sourcePluginPath: sourceFile,
+        });
     }
 
     return plugins;
@@ -260,10 +288,10 @@ export async function analyzeSourceFiles(
     logger: Logger,
     transformTsConfigPathMappings: TransformTsConfigPathMappingsFn,
 ): Promise<{
-    localPluginLocations: Map<string, string>;
+    localPluginLocations: Map<string, LocalPluginLocation>;
     packageImports: string[];
 }> {
-    const localPluginLocations = new Map<string, string>();
+    const localPluginLocations = new Map<string, LocalPluginLocation>();
     const visitedFiles = new Set<string>();
     const packageImportsSet = new Set<string>();
 
@@ -301,10 +329,13 @@ export async function analyzeSourceFiles(
 
             async function visit(node: ts.Node) {
                 // Look for VendurePlugin decorator
-                const vendurePluginClassName = getVendurePluginClassName(node);
-                if (vendurePluginClassName) {
-                    localPluginLocations.set(vendurePluginClassName, filePath);
-                    logger.debug(`Found plugin "${vendurePluginClassName}" at ${filePath}`);
+                const vendurePlugin = getVendurePluginClassName(node);
+                if (vendurePlugin) {
+                    localPluginLocations.set(vendurePlugin.name, {
+                        sourceFile: filePath,
+                        dashboardPath: vendurePlugin.dashboardPath,
+                    });
+                    logger.debug(`Found plugin "${vendurePlugin.name}" at ${filePath}`);
                 }
 
                 // Handle both imports and exports
@@ -377,9 +408,10 @@ export async function analyzeSourceFiles(
 
 /**
  * If this is a class declaration that is decorated with the `VendurePlugin` decorator,
- * we want to return that class name, as we have found a local Vendure plugin.
+ * we want to return that class name (and its declared dashboard entry path, if any),
+ * as we have found a local Vendure plugin.
  */
-function getVendurePluginClassName(node: ts.Node): string | undefined {
+function getVendurePluginClassName(node: ts.Node): { name: string; dashboardPath?: string } | undefined {
     if (ts.isClassDeclaration(node)) {
         const decorators = ts.canHaveDecorators(node) ? ts.getDecorators(node) : undefined;
         if (decorators?.length) {
@@ -388,12 +420,54 @@ function getVendurePluginClassName(node: ts.Node): string | undefined {
                 if (decoratorName === 'VendurePlugin') {
                     const className = node.name?.text;
                     if (className) {
-                        return className;
+                        return {
+                            name: className,
+                            dashboardPath: getDashboardPathFromVendurePluginDecorator(decorator),
+                        };
                     }
                 }
             }
         }
     }
+}
+
+/**
+ * Reads the `dashboard` property off a `@VendurePlugin({ ... })` decorator in
+ * TypeScript source. Handles both the string form (`dashboard: './x.tsx'`) and
+ * the object form (`dashboard: { location: './x.tsx' }`), mirroring the
+ * equivalent extraction from compiled `__decorate` calls in `discoverPlugins`.
+ */
+function getDashboardPathFromVendurePluginDecorator(decorator: ts.Decorator): string | undefined {
+    if (!ts.isCallExpression(decorator.expression)) {
+        return undefined;
+    }
+    const configArg = decorator.expression.arguments[0];
+    if (!configArg || !ts.isObjectLiteralExpression(configArg)) {
+        return undefined;
+    }
+    for (const prop of configArg.properties) {
+        if (!ts.isPropertyAssignment(prop) || !ts.isIdentifier(prop.name) || prop.name.text !== 'dashboard') {
+            continue;
+        }
+        // String form: dashboard: './path/to/dashboard'
+        if (ts.isStringLiteralLike(prop.initializer)) {
+            return prop.initializer.text;
+        }
+        // Object form: dashboard: { location: './path/to/dashboard' }
+        if (ts.isObjectLiteralExpression(prop.initializer)) {
+            for (const inner of prop.initializer.properties) {
+                if (
+                    ts.isPropertyAssignment(inner) &&
+                    ts.isIdentifier(inner.name) &&
+                    inner.name.text === 'location' &&
+                    ts.isStringLiteralLike(inner.initializer)
+                ) {
+                    return inner.initializer.text;
+                }
+            }
+        }
+    }
+    return undefined;
 }
 
 function getNpmPackageNameFromImport(importPath: string): string | undefined {

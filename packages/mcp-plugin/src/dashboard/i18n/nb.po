@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: nb\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Handlinger"
+
+msgid "Actor"
+msgstr "Aktør"
+
+msgid "Actor type"
+msgstr "Aktørtype"
+
+msgid "Admin endpoint"
+msgstr "Admin-endepunkt"
+
+msgid "After approving, you will be redirected to"
+msgstr "Etter godkjenning blir du omdirigert til"
+
+msgid "All toolsets"
+msgstr "Alle verktøysett"
+
+msgid "Approve"
+msgstr "Godkjenn"
+
+msgid "Authorization request could not be loaded"
+msgstr "Autorisasjonsforespørselen kunne ikke lastes"
+
+msgid "Calls per hour"
+msgstr "Kall per time"
+
+msgid "Client"
+msgstr "Klient"
+
+msgid "Client configuration"
+msgstr "Klientkonfigurasjon"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Koble en MCP-klient til Vendure-serveren din ved hjelp av endepunktene nedenfor."
+
+msgid "Connection"
+msgstr "Tilkobling"
+
+msgid "Could not revoke grant"
+msgstr "Kunne ikke tilbakekalle tilgangen"
+
+msgid "Could not update tool"
+msgstr "Kunne ikke oppdatere verktøyet"
+
+msgid "Deny"
+msgstr "Avslå"
+
+msgid "Description"
+msgstr "Beskrivelse"
+
+msgid "Destructive"
+msgstr "Destruktiv"
+
+msgid "Duration"
+msgstr "Varighet"
+
+msgid "Enabled"
+msgstr "Aktivert"
+
+msgid "Error rate"
+msgstr "Feilrate"
+
+msgid "Expires"
+msgstr "Utløper"
+
+msgid "Grant revoked"
+msgstr "Tilgang tilbakekalt"
+
+msgid "Health & usage"
+msgstr "Tilstand og bruk"
+
+msgid "Last activity"
+msgstr "Siste aktivitet"
+
+msgid "Last hour"
+msgstr "Siste time"
+
+msgid "Last 24 hours"
+msgstr "Siste 24 timer"
+
+msgid "Last 7 days"
+msgstr "Siste 7 dager"
+
+msgid "Last 30 days"
+msgstr "Siste 30 dager"
+
+msgid "Loading authorization request…"
+msgstr "Laster autorisasjonsforespørsel…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Endrende"
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "No calls recorded in this period."
+msgstr "Ingen kall registrert i denne perioden."
+
+msgid "OAuth grants"
+msgstr "OAuth-tilganger"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Godkjenn bare hvis du gjenkjenner og stoler på dette målet."
+
+msgid "Read-only"
+msgstr "Skrivebeskyttet"
+
+msgid "Recent activity"
+msgstr "Nylig aktivitet"
+
+msgid "Recommended"
+msgstr "Anbefalt"
+
+msgid "Requested access"
+msgstr "Forespurt tilgang"
+
+msgid "Revoke"
+msgstr "Tilbakekall"
+
+msgid "Revoke grant"
+msgstr "Tilbakekall tilgang"
+
+msgid "Safety"
+msgstr "Sikkerhet"
+
+msgid "Search tools..."
+msgstr "Søk etter verktøy..."
+
+msgid "Shop endpoint"
+msgstr "Butikk-endepunkt"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Success rate"
+msgstr "Suksessrate"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Test og feilsøk MCP-serveren din interaktivt med MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Autorisasjonsøkten er ugyldig eller utløpt."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Denne applikasjonen ber om tillatelse til å få tilgang til Vendure MCP-serveren din på dine vegne."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Dette tilbakekaller klientens tilgang umiddelbart. Klienten må autorisere på nytt for å koble til igjen."
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Tool"
+msgstr "Verktøy"
+
+msgid "Tool updated"
+msgstr "Verktøy oppdatert"
+
+msgid "Tools"
+msgstr "Verktøy"
+
+msgid "Toolset"
+msgstr "Verktøysett"
+
+msgid "Top tools"
+msgstr "Toppverktøy"
+
+msgid "Total calls"
+msgstr "Totalt antall kall"
+
+msgid "Usage over the selected period"
+msgstr "Bruk i valgt periode"
+
+msgid "p50 latency"
+msgstr "p50-latens"
+
+msgid "p95 latency"
+msgstr "p95-latens"

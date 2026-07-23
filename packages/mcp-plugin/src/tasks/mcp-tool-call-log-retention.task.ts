@@ -6,9 +6,6 @@ import { McpToolCallLogService } from '../logging/mcp-tool-call-log.service';
  * @description
  * A {@link ScheduledTask} that deletes expired MCP tool-call logs — rows older than the configured
  * `logging.ttlDays` retention window. The schedule defaults to daily at 02:30AM.
- *
- * @docsCategory core plugins/McpPlugin
- * @since 3.8.0
  */
 export const mcpToolCallLogRetentionTask = new ScheduledTask({
     id: 'mcp-tool-call-log-retention',

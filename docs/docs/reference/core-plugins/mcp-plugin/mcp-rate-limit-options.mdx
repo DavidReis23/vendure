@@ -1,0 +1,43 @@
+---
+title: "McpRateLimitOptions"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/types.ts" sourceLine="103" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Per-scope request-rate limits for MCP calls, expressed in requests per minute (`rpm`).
+A value of `0` means unlimited.
+
+```ts title="Signature"
+interface McpRateLimitOptions {
+    perSession?: { rpm: number };
+    perClient?: { rpm: number };
+    perTool?: Record<string, { rpm: number }>;
+    anonymousIp?: { rpm: number } | false;
+}
+```
+
+<div className="members-wrapper">
+
+### perSession
+
+<MemberInfo kind="property" type={`{ rpm: number }`} default={`{ rpm: 60 }`}   />
+
+
+### perClient
+
+<MemberInfo kind="property" type={`{ rpm: number }`} default={`{ rpm: 120 }`}   />
+
+
+### perTool
+
+<MemberInfo kind="property" type={`Record<string, { rpm: number }>`} default={`{ place_order: { rpm: 5 }, create_product: { rpm: 10 } }`}   />
+
+
+### anonymousIp
+
+<MemberInfo kind="property" type={`{ rpm: number } | false`} default={`{ rpm: 60 }`}   />
+
+
+
+
+</div>

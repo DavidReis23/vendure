@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ja\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "アクション"
+
+msgid "Actor"
+msgstr "アクター"
+
+msgid "Actor type"
+msgstr "アクタータイプ"
+
+msgid "Admin endpoint"
+msgstr "管理エンドポイント"
+
+msgid "After approving, you will be redirected to"
+msgstr "承認後、次の場所にリダイレクトされます："
+
+msgid "All toolsets"
+msgstr "すべてのツールセット"
+
+msgid "Approve"
+msgstr "承認"
+
+msgid "Authorization request could not be loaded"
+msgstr "認可リクエストを読み込めませんでした"
+
+msgid "Calls per hour"
+msgstr "1時間あたりの呼び出し"
+
+msgid "Client"
+msgstr "クライアント"
+
+msgid "Client configuration"
+msgstr "クライアント設定"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "以下のエンドポイントを使用して、MCPクライアントをVendureサーバーに接続します。"
+
+msgid "Connection"
+msgstr "接続"
+
+msgid "Could not revoke grant"
+msgstr "権限付与を取り消せませんでした"
+
+msgid "Could not update tool"
+msgstr "ツールを更新できませんでした"
+
+msgid "Deny"
+msgstr "拒否"
+
+msgid "Description"
+msgstr "説明"
+
+msgid "Destructive"
+msgstr "破壊的"
+
+msgid "Duration"
+msgstr "所要時間"
+
+msgid "Enabled"
+msgstr "有効"
+
+msgid "Error rate"
+msgstr "エラー率"
+
+msgid "Expires"
+msgstr "有効期限"
+
+msgid "Grant revoked"
+msgstr "権限付与を取り消しました"
+
+msgid "Health & usage"
+msgstr "稼働状況と使用状況"
+
+msgid "Last activity"
+msgstr "最終アクティビティ"
+
+msgid "Last hour"
+msgstr "過去1時間"
+
+msgid "Last 24 hours"
+msgstr "過去24時間"
+
+msgid "Last 7 days"
+msgstr "過去7日間"
+
+msgid "Last 30 days"
+msgstr "過去30日間"
+
+msgid "Loading authorization request…"
+msgstr "認可リクエストを読み込んでいます…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "変更あり"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "No calls recorded in this period."
+msgstr "この期間に記録された呼び出しはありません。"
+
+msgid "OAuth grants"
+msgstr "OAuth 権限付与"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "この宛先を認識し、信頼できる場合にのみ承認してください。"
+
+msgid "Read-only"
+msgstr "読み取り専用"
+
+msgid "Recent activity"
+msgstr "最近のアクティビティ"
+
+msgid "Recommended"
+msgstr "推奨"
+
+msgid "Requested access"
+msgstr "要求されたアクセス"
+
+msgid "Revoke"
+msgstr "取り消す"
+
+msgid "Revoke grant"
+msgstr "権限付与を取り消す"
+
+msgid "Safety"
+msgstr "安全性"
+
+msgid "Search tools..."
+msgstr "ツールを検索..."
+
+msgid "Shop endpoint"
+msgstr "ショップエンドポイント"
+
+msgid "Status"
+msgstr "ステータス"
+
+msgid "Success rate"
+msgstr "成功率"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "MCP Inspector を使って MCP サーバーをインタラクティブにテスト・デバッグします："
+
+msgid "The authorization session is invalid or expired."
+msgstr "認可セッションが無効または期限切れです。"
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "このアプリケーションは、あなたに代わって Vendure MCP サーバーにアクセスする許可を要求しています。"
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "これにより、クライアントのアクセスが直ちに取り消されます。再接続するには、クライアントは再度認可する必要があります。"
+
+msgid "Time"
+msgstr "時刻"
+
+msgid "Tool"
+msgstr "ツール"
+
+msgid "Tool updated"
+msgstr "ツールを更新しました"
+
+msgid "Tools"
+msgstr "ツール"
+
+msgid "Toolset"
+msgstr "ツールセット"
+
+msgid "Top tools"
+msgstr "トップツール"
+
+msgid "Total calls"
+msgstr "合計呼び出し"
+
+msgid "Usage over the selected period"
+msgstr "選択した期間の使用状況"
+
+msgid "p50 latency"
+msgstr "p50 レイテンシ"
+
+msgid "p95 latency"
+msgstr "p95 レイテンシ"

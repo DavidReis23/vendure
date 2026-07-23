@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: tr\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "İşlemler"
+
+msgid "Actor"
+msgstr "Aktör"
+
+msgid "Actor type"
+msgstr "Aktör türü"
+
+msgid "Admin endpoint"
+msgstr "Yönetici uç noktası"
+
+msgid "After approving, you will be redirected to"
+msgstr "Onayladıktan sonra şuraya yönlendirileceksiniz:"
+
+msgid "All toolsets"
+msgstr "Tüm araç setleri"
+
+msgid "Approve"
+msgstr "Onayla"
+
+msgid "Authorization request could not be loaded"
+msgstr "Yetkilendirme isteği yüklenemedi"
+
+msgid "Calls per hour"
+msgstr "Saatlik çağrı"
+
+msgid "Client"
+msgstr "İstemci"
+
+msgid "Client configuration"
+msgstr "İstemci yapılandırması"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Aşağıdaki uç noktaları kullanarak bir MCP istemcisini Vendure sunucunuza bağlayın."
+
+msgid "Connection"
+msgstr "Bağlantı"
+
+msgid "Could not revoke grant"
+msgstr "Yetki iptal edilemedi"
+
+msgid "Could not update tool"
+msgstr "Araç güncellenemedi"
+
+msgid "Deny"
+msgstr "Reddet"
+
+msgid "Description"
+msgstr "Açıklama"
+
+msgid "Destructive"
+msgstr "Yıkıcı"
+
+msgid "Duration"
+msgstr "Süre"
+
+msgid "Enabled"
+msgstr "Etkin"
+
+msgid "Error rate"
+msgstr "Hata oranı"
+
+msgid "Expires"
+msgstr "Sona eriyor"
+
+msgid "Grant revoked"
+msgstr "Yetki iptal edildi"
+
+msgid "Health & usage"
+msgstr "Durum ve kullanım"
+
+msgid "Last activity"
+msgstr "Son etkinlik"
+
+msgid "Last hour"
+msgstr "Son 1 saat"
+
+msgid "Last 24 hours"
+msgstr "Son 24 saat"
+
+msgid "Last 7 days"
+msgstr "Son 7 gün"
+
+msgid "Last 30 days"
+msgstr "Son 30 gün"
+
+msgid "Loading authorization request…"
+msgstr "Yetkilendirme isteği yükleniyor…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Değiştiren"
+
+msgid "Name"
+msgstr "Ad"
+
+msgid "No calls recorded in this period."
+msgstr "Bu dönemde kaydedilen çağrı yok."
+
+msgid "OAuth grants"
+msgstr "OAuth yetkileri"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Yalnızca bu hedefi tanıyor ve güveniyorsanız onaylayın."
+
+msgid "Read-only"
+msgstr "Salt okunur"
+
+msgid "Recent activity"
+msgstr "Son etkinlikler"
+
+msgid "Recommended"
+msgstr "Önerilen"
+
+msgid "Requested access"
+msgstr "İstenen erişim"
+
+msgid "Revoke"
+msgstr "İptal et"
+
+msgid "Revoke grant"
+msgstr "Yetkiyi iptal et"
+
+msgid "Safety"
+msgstr "Güvenlik"
+
+msgid "Search tools..."
+msgstr "Araç ara..."
+
+msgid "Shop endpoint"
+msgstr "Mağaza uç noktası"
+
+msgid "Status"
+msgstr "Durum"
+
+msgid "Success rate"
+msgstr "Başarı oranı"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "MCP sunucunuzu MCP Inspector ile etkileşimli olarak test edin ve hata ayıklayın:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Yetkilendirme oturumu geçersiz veya süresi dolmuş."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Bu uygulama, sizin adınıza Vendure MCP sunucunuza erişmek için izin istiyor."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Bu, istemcinin erişimini hemen iptal eder. İstemcinin yeniden bağlanmak için tekrar yetkilendirme yapması gerekir."
+
+msgid "Time"
+msgstr "Zaman"
+
+msgid "Tool"
+msgstr "Araç"
+
+msgid "Tool updated"
+msgstr "Araç güncellendi"
+
+msgid "Tools"
+msgstr "Araçlar"
+
+msgid "Toolset"
+msgstr "Araç seti"
+
+msgid "Top tools"
+msgstr "En çok kullanılan araçlar"
+
+msgid "Total calls"
+msgstr "Toplam çağrı"
+
+msgid "Usage over the selected period"
+msgstr "Seçilen dönemdeki kullanım"
+
+msgid "p50 latency"
+msgstr "p50 gecikme"
+
+msgid "p95 latency"
+msgstr "p95 gecikme"

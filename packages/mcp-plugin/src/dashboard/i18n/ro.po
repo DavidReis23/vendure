@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ro\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Acțiuni"
+
+msgid "Actor"
+msgstr "Actor"
+
+msgid "Actor type"
+msgstr "Tip de actor"
+
+msgid "Admin endpoint"
+msgstr "Endpoint admin"
+
+msgid "After approving, you will be redirected to"
+msgstr "După aprobare, veți fi redirecționat către"
+
+msgid "All toolsets"
+msgstr "Toate seturile de instrumente"
+
+msgid "Approve"
+msgstr "Aprobă"
+
+msgid "Authorization request could not be loaded"
+msgstr "Cererea de autorizare nu a putut fi încărcată"
+
+msgid "Calls per hour"
+msgstr "Apeluri pe oră"
+
+msgid "Client"
+msgstr "Client"
+
+msgid "Client configuration"
+msgstr "Configurație client"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Conectați un client MCP la serverul dvs. Vendure folosind endpoint-urile de mai jos."
+
+msgid "Connection"
+msgstr "Conexiune"
+
+msgid "Could not revoke grant"
+msgstr "Nu s-a putut revoca autorizarea"
+
+msgid "Could not update tool"
+msgstr "Instrumentul nu a putut fi actualizat"
+
+msgid "Deny"
+msgstr "Respinge"
+
+msgid "Description"
+msgstr "Descriere"
+
+msgid "Destructive"
+msgstr "Distructiv"
+
+msgid "Duration"
+msgstr "Durată"
+
+msgid "Enabled"
+msgstr "Activat"
+
+msgid "Error rate"
+msgstr "Rata erorilor"
+
+msgid "Expires"
+msgstr "Expiră"
+
+msgid "Grant revoked"
+msgstr "Autorizare revocată"
+
+msgid "Health & usage"
+msgstr "Stare și utilizare"
+
+msgid "Last activity"
+msgstr "Ultima activitate"
+
+msgid "Last hour"
+msgstr "Ultima oră"
+
+msgid "Last 24 hours"
+msgstr "Ultimele 24 de ore"
+
+msgid "Last 7 days"
+msgstr "Ultimele 7 zile"
+
+msgid "Last 30 days"
+msgstr "Ultimele 30 de zile"
+
+msgid "Loading authorization request…"
+msgstr "Se încarcă cererea de autorizare…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "Modificator"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "No calls recorded in this period."
+msgstr "Niciun apel înregistrat în această perioadă."
+
+msgid "OAuth grants"
+msgstr "Autorizări OAuth"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Aprobați numai dacă recunoașteți și aveți încredere în această destinație."
+
+msgid "Read-only"
+msgstr "Doar citire"
+
+msgid "Recent activity"
+msgstr "Activitate recentă"
+
+msgid "Recommended"
+msgstr "Recomandat"
+
+msgid "Requested access"
+msgstr "Acces solicitat"
+
+msgid "Revoke"
+msgstr "Revocă"
+
+msgid "Revoke grant"
+msgstr "Revocă autorizarea"
+
+msgid "Safety"
+msgstr "Siguranță"
+
+msgid "Search tools..."
+msgstr "Caută instrumente..."
+
+msgid "Shop endpoint"
+msgstr "Endpoint magazin"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Success rate"
+msgstr "Rata de succes"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "Testați și depanați serverul MCP în mod interactiv cu MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Sesiunea de autorizare este invalidă sau a expirat."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Această aplicație solicită permisiunea de a accesa serverul dvs. Vendure MCP în numele dvs."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Aceasta revocă imediat accesul clientului. Clientul va trebui să autorizeze din nou pentru a se reconecta."
+
+msgid "Time"
+msgstr "Oră"
+
+msgid "Tool"
+msgstr "Instrument"
+
+msgid "Tool updated"
+msgstr "Instrument actualizat"
+
+msgid "Tools"
+msgstr "Instrumente"
+
+msgid "Toolset"
+msgstr "Set de instrumente"
+
+msgid "Top tools"
+msgstr "Cele mai utilizate instrumente"
+
+msgid "Total calls"
+msgstr "Total apeluri"
+
+msgid "Usage over the selected period"
+msgstr "Utilizare în perioada selectată"
+
+msgid "p50 latency"
+msgstr "Latență p50"
+
+msgid "p95 latency"
+msgstr "Latență p95"

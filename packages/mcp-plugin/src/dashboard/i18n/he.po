@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: he\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "פעולות"
+
+msgid "Actor"
+msgstr "מבצע"
+
+msgid "Actor type"
+msgstr "סוג מבצע"
+
+msgid "Admin endpoint"
+msgstr "נקודת קצה של הניהול"
+
+msgid "After approving, you will be redirected to"
+msgstr "לאחר האישור, תופנה אל"
+
+msgid "All toolsets"
+msgstr "כל ערכות הכלים"
+
+msgid "Approve"
+msgstr "אישור"
+
+msgid "Authorization request could not be loaded"
+msgstr "לא ניתן היה לטעון את בקשת ההרשאה"
+
+msgid "Calls per hour"
+msgstr "קריאות לשעה"
+
+msgid "Client"
+msgstr "לקוח"
+
+msgid "Client configuration"
+msgstr "תצורת הלקוח"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "חבר לקוח MCP לשרת ה-Vendure שלך באמצעות נקודות הקצה שלמטה."
+
+msgid "Connection"
+msgstr "חיבור"
+
+msgid "Could not revoke grant"
+msgstr "לא ניתן היה לבטל את ההרשאה"
+
+msgid "Could not update tool"
+msgstr "לא ניתן היה לעדכן את הכלי"
+
+msgid "Deny"
+msgstr "דחייה"
+
+msgid "Description"
+msgstr "תיאור"
+
+msgid "Destructive"
+msgstr "הרסני"
+
+msgid "Duration"
+msgstr "משך"
+
+msgid "Enabled"
+msgstr "מופעל"
+
+msgid "Error rate"
+msgstr "שיעור שגיאות"
+
+msgid "Expires"
+msgstr "פג בתאריך"
+
+msgid "Grant revoked"
+msgstr "ההרשאה בוטלה"
+
+msgid "Health & usage"
+msgstr "תקינות ושימוש"
+
+msgid "Last activity"
+msgstr "פעילות אחרונה"
+
+msgid "Last hour"
+msgstr "השעה האחרונה"
+
+msgid "Last 24 hours"
+msgstr "24 השעות האחרונות"
+
+msgid "Last 7 days"
+msgstr "7 הימים האחרונים"
+
+msgid "Last 30 days"
+msgstr "30 הימים האחרונים"
+
+msgid "Loading authorization request…"
+msgstr "טוען את בקשת ההרשאה…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "משנה"
+
+msgid "Name"
+msgstr "שם"
+
+msgid "No calls recorded in this period."
+msgstr "לא נרשמו קריאות בתקופה זו."
+
+msgid "OAuth grants"
+msgstr "הרשאות OAuth"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "אשר רק אם אתה מזהה את היעד הזה ובוטח בו."
+
+msgid "Read-only"
+msgstr "לקריאה בלבד"
+
+msgid "Recent activity"
+msgstr "פעילות אחרונה"
+
+msgid "Recommended"
+msgstr "מומלץ"
+
+msgid "Requested access"
+msgstr "גישה מבוקשת"
+
+msgid "Revoke"
+msgstr "בטל"
+
+msgid "Revoke grant"
+msgstr "בטל הרשאה"
+
+msgid "Safety"
+msgstr "בטיחות"
+
+msgid "Search tools..."
+msgstr "חיפוש כלים..."
+
+msgid "Shop endpoint"
+msgstr "נקודת קצה של החנות"
+
+msgid "Status"
+msgstr "סטטוס"
+
+msgid "Success rate"
+msgstr "שיעור הצלחה"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "בדוק ואבחן את שרת ה-MCP שלך באופן אינטראקטיבי באמצעות MCP Inspector:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "הפעלת ההרשאה אינה תקפה או שפג תוקפה."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "אפליקציה זו מבקשת הרשאה לגשת לשרת ה-Vendure MCP שלך בשמך."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "פעולה זו מבטלת מיד את גישת הלקוח. הלקוח יצטרך לאשר שוב כדי להתחבר מחדש."
+
+msgid "Time"
+msgstr "שעה"
+
+msgid "Tool"
+msgstr "כלי"
+
+msgid "Tool updated"
+msgstr "הכלי עודכן"
+
+msgid "Tools"
+msgstr "כלים"
+
+msgid "Toolset"
+msgstr "ערכת כלים"
+
+msgid "Top tools"
+msgstr "הכלים המובילים"
+
+msgid "Total calls"
+msgstr "סך הקריאות"
+
+msgid "Usage over the selected period"
+msgstr "שימוש בתקופה שנבחרה"
+
+msgid "p50 latency"
+msgstr "השהיית p50"
+
+msgid "p95 latency"
+msgstr "השהיית p95"

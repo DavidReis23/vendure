@@ -1,0 +1,119 @@
+---
+title: "McpToolCallLog"
+generated: true
+---
+<GenerationInfo sourceFile="packages/mcp-plugin/src/entities/mcp-tool-call-log.entity.ts" sourceLine="16" packageName="@vendure/mcp-plugin" since="3.8.0" />
+
+Audit record of a single MCP tool call.
+
+```ts title="Signature"
+class McpToolCallLog extends VendureEntity {
+    constructor(input?: DeepPartial<McpToolCallLog>)
+    @Index()
+    @ManyToOne(() => McpOauthGrant, { nullable: true, onDelete: 'SET NULL' })
+    grant: McpOauthGrant | null;
+    @EntityId({ nullable: true })
+    grantId: ID | null;
+    @Column({ type: 'varchar', nullable: true })
+    actor: string | null;
+    @Column({ type: 'varchar' })
+    actorType: McpActorType;
+    @Index()
+    @EntityId({ nullable: true })
+    channelId: ID | null;
+    @Index()
+    @Column()
+    toolName: string;
+    @Column({ type: 'varchar', nullable: true })
+    pluginSource: string | null;
+    @Column({ type: 'simple-json', nullable: true })
+    input: unknown | null;
+    @Column({ type: 'simple-json', nullable: true })
+    output: unknown | null;
+    @Index()
+    @Column({ type: 'int', nullable: true })
+    durationMs: number | null;
+    @Index()
+    @Column({ type: 'varchar' })
+    status: McpToolCallStatus;
+    @Index()
+    @ManyToOne(() => McpOauthClient, { nullable: true, onDelete: 'SET NULL' })
+    oauthClient: McpOauthClient | null;
+    @EntityId({ nullable: true })
+    oauthClientId: ID | null;
+}
+```
+* Extends: [`VendureEntity`](/reference/typescript-api/entities/vendure-entity#vendureentity)
+
+
+
+<div className="members-wrapper">
+
+### grant
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-oauth-grant#mcpoauthgrant'>McpOauthGrant</a> | null`}   />
+
+
+### grantId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a> | null`}   />
+
+
+### actor
+
+<MemberInfo kind="property" type={`string | null`}   />
+
+
+### actorType
+
+<MemberInfo kind="property" type={`McpActorType`}   />
+
+
+### channelId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a> | null`}   />
+
+
+### toolName
+
+<MemberInfo kind="property" type={`string`}   />
+
+
+### pluginSource
+
+<MemberInfo kind="property" type={`string | null`}   />
+
+
+### input
+
+<MemberInfo kind="property" type={`unknown | null`}   />
+
+
+### output
+
+<MemberInfo kind="property" type={`unknown | null`}   />
+
+
+### durationMs
+
+<MemberInfo kind="property" type={`number | null`}   />
+
+
+### status
+
+<MemberInfo kind="property" type={`McpToolCallStatus`}   />
+
+
+### oauthClient
+
+<MemberInfo kind="property" type={`<a href='/reference/core-plugins/mcp-plugin/mcp-oauth-client#mcpoauthclient'>McpOauthClient</a> | null`}   />
+
+
+### oauthClientId
+
+<MemberInfo kind="property" type={`<a href='/reference/typescript-api/common/id#id'>ID</a> | null`}   />
+
+
+
+
+</div>

@@ -1,0 +1,201 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2025-02-20 14:18+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uz\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Plural-Forms: \n"
+
+
+msgid "Actions"
+msgstr "Amallar"
+
+msgid "Actor"
+msgstr "Amaldor"
+
+msgid "Actor type"
+msgstr "Amaldor turi"
+
+msgid "Admin endpoint"
+msgstr "Admin so'nggi nuqtasi"
+
+msgid "After approving, you will be redirected to"
+msgstr "Tasdiqlaganingizdan so'ng quyidagiga yo'naltirilasiz"
+
+msgid "All toolsets"
+msgstr "Barcha asboblar to'plami"
+
+msgid "Approve"
+msgstr "Tasdiqlash"
+
+msgid "Authorization request could not be loaded"
+msgstr "Avtorizatsiya so'rovini yuklab bo'lmadi"
+
+msgid "Calls per hour"
+msgstr "Soatiga chaqiruvlar"
+
+msgid "Client"
+msgstr "Mijoz"
+
+msgid "Client configuration"
+msgstr "Mijoz konfiguratsiyasi"
+
+msgid "Connect an MCP client to your Vendure server using the endpoints below."
+msgstr "Quyidagi so'nggi nuqtalardan foydalanib, MCP mijozini Vendure serveringizga ulang."
+
+msgid "Connection"
+msgstr "Ulanish"
+
+msgid "Could not revoke grant"
+msgstr "Ruxsatni bekor qilib bo'lmadi"
+
+msgid "Could not update tool"
+msgstr "Asbobni yangilab bo'lmadi"
+
+msgid "Deny"
+msgstr "Rad etish"
+
+msgid "Description"
+msgstr "Tavsif"
+
+msgid "Destructive"
+msgstr "Buzuvchi"
+
+msgid "Duration"
+msgstr "Davomiyligi"
+
+msgid "Enabled"
+msgstr "Yoqilgan"
+
+msgid "Error rate"
+msgstr "Xatolik darajasi"
+
+msgid "Expires"
+msgstr "Muddati tugaydi"
+
+msgid "Grant revoked"
+msgstr "Ruxsat bekor qilindi"
+
+msgid "Health & usage"
+msgstr "Holat va foydalanish"
+
+msgid "Last activity"
+msgstr "Oxirgi faoliyat"
+
+msgid "Last hour"
+msgstr "So'nggi soat"
+
+msgid "Last 24 hours"
+msgstr "So'nggi 24 soat"
+
+msgid "Last 7 days"
+msgstr "So'nggi 7 kun"
+
+msgid "Last 30 days"
+msgstr "So'nggi 30 kun"
+
+msgid "Loading authorization request…"
+msgstr "Avtorizatsiya so'rovi yuklanmoqda…"
+
+msgid "MCP Inspector"
+msgstr "MCP Inspector"
+
+msgid "MCP Server"
+msgstr "MCP Server"
+
+msgid "Mutating"
+msgstr "O'zgartiruvchi"
+
+msgid "Name"
+msgstr "Nomi"
+
+msgid "No calls recorded in this period."
+msgstr "Bu davrda hech qanday chaqiruv qayd etilmagan."
+
+msgid "OAuth grants"
+msgstr "OAuth ruxsatlari"
+
+msgid "Only approve if you recognise and trust this destination."
+msgstr "Faqat ushbu manzilni tanisangiz va unga ishonsangiz tasdiqlang."
+
+msgid "Read-only"
+msgstr "Faqat o'qish"
+
+msgid "Recent activity"
+msgstr "So'nggi faoliyat"
+
+msgid "Recommended"
+msgstr "Tavsiya etiladi"
+
+msgid "Requested access"
+msgstr "So'ralgan kirish"
+
+msgid "Revoke"
+msgstr "Bekor qilish"
+
+msgid "Revoke grant"
+msgstr "Ruxsatni bekor qilish"
+
+msgid "Safety"
+msgstr "Xavfsizlik"
+
+msgid "Search tools..."
+msgstr "Asboblarni qidirish..."
+
+msgid "Shop endpoint"
+msgstr "Do'kon so'nggi nuqtasi"
+
+msgid "Status"
+msgstr "Holat"
+
+msgid "Success rate"
+msgstr "Muvaffaqiyat darajasi"
+
+msgid "Test and debug your MCP server interactively with the MCP Inspector:"
+msgstr "MCP serveringizni MCP Inspector yordamida interaktiv sinovdan o'tkazing va nosozliklarni tuzating:"
+
+msgid "The authorization session is invalid or expired."
+msgstr "Avtorizatsiya seansi yaroqsiz yoki muddati tugagan."
+
+msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
+msgstr "Ushbu ilova sizning nomingizdan Vendure MCP serveringizga kirish uchun ruxsat so'ramoqda."
+
+msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
+msgstr "Bu mijozning kirish huquqini darhol bekor qiladi. Qayta ulanish uchun mijoz qaytadan avtorizatsiyadan o'tishi kerak bo'ladi."
+
+msgid "Time"
+msgstr "Vaqt"
+
+msgid "Tool"
+msgstr "Asbob"
+
+msgid "Tool updated"
+msgstr "Asbob yangilandi"
+
+msgid "Tools"
+msgstr "Asboblar"
+
+msgid "Toolset"
+msgstr "Asboblar to'plami"
+
+msgid "Top tools"
+msgstr "Eng ko'p ishlatilgan asboblar"
+
+msgid "Total calls"
+msgstr "Jami chaqiruvlar"
+
+msgid "Usage over the selected period"
+msgstr "Tanlangan davrdagi foydalanish"
+
+msgid "p50 latency"
+msgstr "p50 kechikish"
+
+msgid "p95 latency"
+msgstr "p95 kechikish"

@@ -854,6 +854,37 @@ const manifestInput: DocsPackageManifestInput = {
                 },
             ],
         },
+        {
+            title: 'MCP Server',
+            slug: 'mcp-server',
+            children: [
+                {
+                    title: 'Quick Start',
+                    slug: 'quick-start',
+                    file: file('docs/guides/mcp-server/quick-start/index.mdx'),
+                },
+                {
+                    title: 'OAuth & Consent',
+                    slug: 'oauth-consent',
+                    file: file('docs/guides/mcp-server/oauth-consent/index.mdx'),
+                },
+                {
+                    title: 'Registering Custom Tools',
+                    slug: 'custom-tools',
+                    file: file('docs/guides/mcp-server/custom-tools/index.mdx'),
+                },
+                {
+                    title: 'Production & Observability',
+                    slug: 'production',
+                    file: file('docs/guides/mcp-server/production/index.mdx'),
+                },
+                {
+                    title: 'Built-in Tool Reference',
+                    slug: 'built-in-tools',
+                    file: file('docs/guides/mcp-server/built-in-tools/index.mdx'),
+                },
+            ],
+        },
         // Reference Sidebar
         {
             title: 'Reference',
@@ -945,6 +976,17 @@ const manifestInput: DocsPackageManifestInput = {
                             file: file('docs/reference/core-plugins/job-queue-plugin/index.mdx'),
                             children: createNestedNavigationFromFolder(
                                 folder('docs/reference/core-plugins/job-queue-plugin'),
+                                {
+                                    filter: (info: FileInfo) => info.filename !== 'index.mdx',
+                                },
+                            ),
+                        },
+                        {
+                            title: 'McpPlugin',
+                            slug: 'mcp-plugin',
+                            file: file('docs/reference/core-plugins/mcp-plugin/index.mdx'),
+                            children: createNestedNavigationFromFolder(
+                                folder('docs/reference/core-plugins/mcp-plugin'),
                                 {
                                     filter: (info: FileInfo) => info.filename !== 'index.mdx',
                                 },
