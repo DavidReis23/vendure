@@ -7,6 +7,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { Input } from '@/vdb/components/ui/input.js';
 import { PageContext } from '@/vdb/framework/layout-engine/page-provider.js';
+import { useTranslatableForm } from '@/vdb/hooks/use-translatable-form.js';
 import {
     ChannelContext,
     type ChannelContext as ChannelContextValue,
@@ -182,6 +183,23 @@ function SetGermanNameErrorButton() {
     );
 }
 
+function TranslatableFormStateProbe() {
+    const translatableForm = useTranslatableForm();
+    return (
+        <div>
+            <span data-testid="selected-form-language">
+                {translatableForm?.languageCode ?? 'no-local-language'}
+            </span>
+            <button type="button" onClick={() => translatableForm?.setLanguageCode('de')}>
+                Select German programmatically
+            </button>
+            <button type="button" onClick={() => translatableForm?.setLanguageCode('fr')}>
+                Select unavailable language
+            </button>
+        </div>
+    );
+}
+
 describe('TranslatableFormGroup', () => {
     it('renders a static code for one language and an inline dropdown for multiple languages', () => {
         act(() => {
@@ -255,6 +273,57 @@ describe('TranslatableFormGroup', () => {
             'DE',
             'EN',
         ]);
+    });
+
+    it('exposes the selected language to custom form elements', () => {
+        act(() => {
+            root.render(
+                <TestProviders>
+                    <TranslatableFormGroup>
+                        <TranslatableFormFieldWrapper
+                            name="name"
+                            label="Name"
+                            render={({ field }) => <Input {...field} />}
+                        />
+                        <TranslatableFormStateProbe />
+                    </TranslatableFormGroup>
+                </TestProviders>,
+            );
+        });
+
+        const language = container.querySelector('[data-testid="selected-form-language"]');
+        expect(language?.textContent).toBe('en');
+
+        const selectGermanButton = Array.from(container.querySelectorAll('button')).find(
+            button => button.textContent === 'Select German programmatically',
+        ) as HTMLButtonElement;
+        act(() => selectGermanButton.click());
+
+        expect(language?.textContent).toBe('de');
+        expect((container.querySelector('input[id^="field-"]') as HTMLInputElement).value).toBe(
+            'Deutscher Name',
+        );
+
+        const selectUnavailableButton = Array.from(container.querySelectorAll('button')).find(
+            button => button.textContent === 'Select unavailable language',
+        ) as HTMLButtonElement;
+        act(() => selectUnavailableButton.click());
+
+        expect(language?.textContent).toBe('de');
+    });
+
+    it('returns undefined outside a translatable form group', () => {
+        act(() => {
+            root.render(
+                <TestProviders>
+                    <TranslatableFormStateProbe />
+                </TestProviders>,
+            );
+        });
+
+        expect(container.querySelector('[data-testid="selected-form-language"]')?.textContent).toBe(
+            'no-local-language',
+        );
     });
 
     it('falls back to the channel default when the global language is unavailable', () => {

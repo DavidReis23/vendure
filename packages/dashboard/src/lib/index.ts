@@ -343,6 +343,7 @@ export * from './hooks/use-saved-views.js';
 export * from './hooks/use-server-config.js';
 export * from './hooks/use-sorted-languages.js';
 export * from './hooks/use-theme.js';
+export * from './hooks/use-translatable-form.js';
 export * from './hooks/use-ui-language-loader.js';
 export * from './hooks/use-user-settings.js';
 export * from './hooks/use-view-option-defaults.js';
