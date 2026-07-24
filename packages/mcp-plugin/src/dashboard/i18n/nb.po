@@ -199,3 +199,12 @@ msgstr "p50-latens"
 
 msgid "p95 latency"
 msgstr "p95-latens"
+
+msgid "Authorize MCP Client"
+msgstr "Autoriser MCP-klient"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "Kunne ikke tilbakekalle tilgangen; den kan allerede være fjernet"
+
+msgid "Request failed ({0})"
+msgstr "Forespørselen mislyktes ({0})"

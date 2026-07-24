@@ -199,3 +199,12 @@ msgstr "Затримка p50"
 
 msgid "p95 latency"
 msgstr "Затримка p95"
+
+msgid "Authorize MCP Client"
+msgstr "Авторизувати клієнт MCP"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "Не вдалося відкликати дозвіл; можливо, його вже було видалено"
+
+msgid "Request failed ({0})"
+msgstr "Не вдалося виконати запит ({0})"

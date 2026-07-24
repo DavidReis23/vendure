@@ -199,3 +199,12 @@ msgstr "تأخیر p50"
 
 msgid "p95 latency"
 msgstr "تأخیر p95"
+
+msgid "Authorize MCP Client"
+msgstr "اعطای مجوز به کلاینت MCP"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "لغو مجوز ممکن نشد؛ ممکن است قبلاً حذف شده باشد"
+
+msgid "Request failed ({0})"
+msgstr "درخواست ناموفق بود ({0})"

@@ -199,3 +199,12 @@ msgstr "p50 kechikish"
 
 msgid "p95 latency"
 msgstr "p95 kechikish"
+
+msgid "Authorize MCP Client"
+msgstr "MCP mijozini avtorizatsiya qilish"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "Ruxsatni bekor qilib bo'lmadi; u allaqachon o'chirilgan bo'lishi mumkin"
+
+msgid "Request failed ({0})"
+msgstr "So'rov bajarilmadi ({0})"

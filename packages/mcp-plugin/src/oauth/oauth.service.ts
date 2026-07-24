@@ -20,7 +20,7 @@ import {
 } from '@vendure/core';
 import { McpToolset } from '@vendure/mcp-sdk';
 
-import { MCP_PLUGIN_OPTIONS } from '../constants';
+import { MCP_PLUGIN_OPTIONS, mcpServerPermission } from '../constants';
 import { McpAuthorizationCode } from '../entities/mcp-authorization-code.entity';
 import { McpAuthorizationRequest } from '../entities/mcp-authorization-request.entity';
 import { McpOauthClient } from '../entities/mcp-oauth-client.entity';
@@ -198,6 +198,12 @@ export class McpOauthService {
     ): Promise<{ redirectUrl: string }> {
         if (!ctx.activeUserId || !ctx.session?.token) {
             throw new UnauthorizedException('Admin consent requires an authenticated administrator session');
+        }
+
+        if (!ctx.userHasPermissions([mcpServerPermission.Update])) {
+            throw new ForbiddenException(
+                'Admin consent requires an administrator with the UpdateMcpServer permission',
+            );
         }
         this.assertConsentRequestOrigin(ctx);
         return this.completeAuthorizationRequest(requestToken, approved, ctx.activeUserId, 'admin');

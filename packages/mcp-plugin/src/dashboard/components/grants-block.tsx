@@ -19,9 +19,14 @@ export function GrantsBlock() {
     });
 
     const revoke = useMutation({
-        mutationFn: (vars: { id: string }) => api.mutate(REVOKE_MCP_OAUTH_GRANT, vars),
-        onSuccess: () => {
-            toast.success(t`Grant revoked`);
+        mutationFn: (vars: { id: string }) =>
+            api.mutate(REVOKE_MCP_OAUTH_GRANT, vars) as Promise<{ revokeMcpOauthGrant: boolean }>,
+        onSuccess: result => {
+            if (result.revokeMcpOauthGrant) {
+                toast.success(t`Grant revoked`);
+            } else {
+                toast.error(t`The grant could not be revoked; it may have already been removed`);
+            }
             void qc.invalidateQueries({ queryKey: ['mcp-oauth-grants'] });
         },
         onError: () => {

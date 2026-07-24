@@ -199,3 +199,12 @@ msgstr "زمن الاستجابة p50"
 
 msgid "p95 latency"
 msgstr "زمن الاستجابة p95"
+
+msgid "Authorize MCP Client"
+msgstr "تفويض عميل MCP"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "تعذّر إلغاء المنح؛ ربما تمت إزالتها بالفعل"
+
+msgid "Request failed ({0})"
+msgstr "فشل الطلب ({0})"

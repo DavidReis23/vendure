@@ -199,3 +199,12 @@ msgstr "p50 지연 시간"
 
 msgid "p95 latency"
 msgstr "p95 지연 시간"
+
+msgid "Authorize MCP Client"
+msgstr "MCP 클라이언트 승인"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "권한 부여를 취소할 수 없습니다. 이미 제거되었을 수 있습니다"
+
+msgid "Request failed ({0})"
+msgstr "요청 실패 ({0})"

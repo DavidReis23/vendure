@@ -199,3 +199,12 @@ msgstr "p50 レイテンシ"
 
 msgid "p95 latency"
 msgstr "p95 レイテンシ"
+
+msgid "Authorize MCP Client"
+msgstr "MCP クライアントを認可"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "権限付与を取り消せませんでした。すでに削除されている可能性があります"
+
+msgid "Request failed ({0})"
+msgstr "リクエストに失敗しました ({0})"

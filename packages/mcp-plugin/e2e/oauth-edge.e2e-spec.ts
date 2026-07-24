@@ -1,6 +1,7 @@
 import {
     Channel,
     mergeConfig,
+    Permission,
     RequestContext,
     RequestContextService,
     TransactionalConnection,
@@ -13,6 +14,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
+import { mcpServerPermission } from '../src/constants';
 import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
 import { McpOauthGrant } from '../src/entities/mcp-oauth-grant.entity';
 import { McpOauthService } from '../src/oauth/oauth.service';
@@ -399,11 +401,20 @@ describe('McpPlugin OAuth edge & security cases', () => {
     // Builds an admin RequestContext authenticated as if by a session cookie: a
     // session with a user, and NO Authorization header on the request, with a
     // caller-supplied Origin. This is exactly the shape the CSRF gate inspects.
-    const buildCookieAuthedAdminCtx = ({ origin }: { origin: string }) =>
+    const buildCookieAuthedAdminCtx = ({
+        origin,
+        permissions = [mcpServerPermission.Update],
+    }: {
+        origin: string;
+        permissions?: Permission[];
+    }) =>
         new RequestContext({
             apiType: 'admin',
-            channel: new Channel(),
-            session: { token: 'mcp-test-session', user: { id: 1 } } as any,
+            channel: new Channel({ id: 1 }),
+            session: {
+                token: 'mcp-test-session',
+                user: { id: 1, channelPermissions: [{ id: 1, permissions }] },
+            } as any,
             req: { headers: { origin } } as any,
             isAuthorized: true,
             authorizedAsOwnerOnly: false,
@@ -428,6 +439,17 @@ describe('McpPlugin OAuth edge & security cases', () => {
 
         const { redirectUrl } = await oauth.approveAdminRequest(ctx, flow.request_token, true);
         expect(new URL(redirectUrl).searchParams.get('code')).toBeTruthy();
+    });
+
+    // Relates to OSS-575 — "admin consent" must require an actual admin permission, not
+    // merely an authenticated session. A signed-in principal without UpdateMcpServer (e.g.
+    // a shop customer on the same origin) is rejected even from the correct consent origin.
+    it('rejects cookie-authenticated consent from a caller lacking the McpServer permission', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const flow = await authorizeAdminToCodePreConsent();
+        const ctx = buildCookieAuthedAdminCtx({ origin: ISSUER, permissions: [] });
+
+        await expect(oauth.approveAdminRequest(ctx, flow.request_token, true)).rejects.toThrow(/permission/i);
     });
 
     // Relates to OSS-575 — admin consent with a falsey `approved` returns an access_denied

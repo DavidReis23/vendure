@@ -199,3 +199,12 @@ msgstr "p50 विलम्ब"
 
 msgid "p95 latency"
 msgstr "p95 विलम्ब"
+
+msgid "Authorize MCP Client"
+msgstr "MCP क्लाइन्टलाई अधिकृत गर्नुहोस्"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "अनुदान रद्द गर्न सकिएन; यो पहिले नै हटाइएको हुन सक्छ"
+
+msgid "Request failed ({0})"
+msgstr "अनुरोध असफल भयो ({0})"

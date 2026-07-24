@@ -199,3 +199,12 @@ msgstr "p50 gecikme"
 
 msgid "p95 latency"
 msgstr "p95 gecikme"
+
+msgid "Authorize MCP Client"
+msgstr "MCP istemcisini yetkilendir"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "Yetki iptal edilemedi; zaten kaldırılmış olabilir"
+
+msgid "Request failed ({0})"
+msgstr "İstek başarısız oldu ({0})"

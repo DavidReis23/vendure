@@ -199,3 +199,12 @@ msgstr "השהיית p50"
 
 msgid "p95 latency"
 msgstr "השהיית p95"
+
+msgid "Authorize MCP Client"
+msgstr "אישור לקוח MCP"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "לא ניתן היה לבטל את ההרשאה; ייתכן שהיא כבר הוסרה"
+
+msgid "Request failed ({0})"
+msgstr "הבקשה נכשלה ({0})"

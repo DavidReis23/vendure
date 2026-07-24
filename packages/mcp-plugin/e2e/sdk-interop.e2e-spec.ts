@@ -157,7 +157,9 @@ describe('MCP SDK interop (official @modelcontextprotocol/client 2.x)', () => {
             body: JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'ping' }),
         });
         expect(res.status).toBe(401);
-        expect(res.headers.get('www-authenticate') ?? '').toMatch(/^Bearer/);
+        // Must carry the `resource_metadata` parameter (RFC 9728) — dropping it breaks the
+        // client's automatic discovery of the protected-resource metadata document.
+        expect(res.headers.get('www-authenticate') ?? '').toMatch(/^Bearer .*resource_metadata=/);
     });
 
     it('the official client completes the OAuth flow (DCR + PKCE + finishAuth) and calls a tool', async () => {
@@ -225,9 +227,9 @@ describe('MCP SDK interop (official @modelcontextprotocol/client 2.x)', () => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             body: form.toString(),
         });
-        // NestJS returns 201 Created by default for @Post handlers (matches the repo's other
-        // token/consent endpoint assertions); the body carries the rotated grant.
-        expect(refreshResponse.status).toBe(201);
+        // The token endpoint returns 200 per RFC 6749 §5.1 (the handler overrides the NestJS
+        // @Post default of 201 with @HttpCode(200)); the body carries the rotated grant.
+        expect(refreshResponse.status).toBe(200);
         const rotated = (await refreshResponse.json()) as { access_token: string; refresh_token: string };
         expect(rotated.access_token).toBeTruthy();
         expect(rotated.refresh_token).toBeTruthy();

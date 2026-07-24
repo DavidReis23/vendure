@@ -42,7 +42,7 @@ export const mcpOverviewRoute: DashboardRouteDefinition = {
         requiresPermission: 'ReadMcpServer',
     },
     path: '/mcp-server',
-    loader: () => ({ breadcrumb: 'MCP Server' }),
+    loader: () => ({ breadcrumb: () => <Trans>MCP Server</Trans> }),
     component: () => (
         <Page pageId="mcp-server-overview">
             <PageTitle>

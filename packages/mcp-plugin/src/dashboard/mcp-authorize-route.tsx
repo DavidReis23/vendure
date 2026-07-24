@@ -10,6 +10,7 @@ import {
     CardTitle,
     CopyableText,
     DashboardRouteDefinition,
+    PermissionGuard,
 } from '@vendure/dashboard';
 import { AlertTriangleIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -55,7 +56,7 @@ function ConsentCard({ session }: { session: string }) {
         })
             .then(async res => {
                 if (!res.ok) {
-                    throw new Error(`Request failed (${res.status})`);
+                    throw new Error(t`Request failed (${res.status})`);
                 }
                 return res.json();
             })
@@ -193,14 +194,16 @@ function ConsentCard({ session }: { session: string }) {
 
 export const mcpAuthorizeRoute: DashboardRouteDefinition = {
     path: '/mcp/authorize',
-    loader: () => ({ breadcrumb: 'Authorize MCP Client' }),
+    loader: () => ({ breadcrumb: () => <Trans>Authorize MCP Client</Trans> }),
     validateSearch: search => z.object({ session: z.string() }).parse(search),
     component: route => {
         const { session } = route.useSearch();
         return (
-            <div className="flex justify-center p-8">
-                <ConsentCard session={session} />
-            </div>
+            <PermissionGuard requires={['UpdateMcpServer']}>
+                <div className="flex justify-center p-8">
+                    <ConsentCard session={session} />
+                </div>
+            </PermissionGuard>
         );
     },
 };

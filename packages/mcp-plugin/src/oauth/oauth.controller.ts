@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Post, Query, Res } from '@nestjs/common';
 import { Ctx, RequestContext } from '@vendure/core';
 import { McpToolset } from '@vendure/mcp-sdk';
 import type { Response } from 'express';
@@ -36,7 +36,10 @@ export class McpOauthController {
         return this.oauthService.getAuthorizationRequestInfo(session);
     }
 
+    // RFC 6749 §5.1 requires the token endpoint to respond with 200; override the NestJS
+    // @Post default of 201.
     @Post('mcp/oauth/token')
+    @HttpCode(200)
     token(@Body() input: TokenInput) {
         return this.oauthService.exchangeToken(input);
     }

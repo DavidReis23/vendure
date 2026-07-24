@@ -199,3 +199,12 @@ msgstr "p50-latentie"
 
 msgid "p95 latency"
 msgstr "p95-latentie"
+
+msgid "Authorize MCP Client"
+msgstr "MCP-client autoriseren"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "Kan de toekenning niet intrekken; deze is mogelijk al verwijderd"
+
+msgid "Request failed ({0})"
+msgstr "Verzoek mislukt ({0})"

@@ -199,3 +199,12 @@ msgstr "p50 késleltetés"
 
 msgid "p95 latency"
 msgstr "p95 késleltetés"
+
+msgid "Authorize MCP Client"
+msgstr "MCP-kliens engedélyezése"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "A hozzáférést nem sikerült visszavonni; lehet, hogy már el lett távolítva"
+
+msgid "Request failed ({0})"
+msgstr "A kérés sikertelen ({0})"

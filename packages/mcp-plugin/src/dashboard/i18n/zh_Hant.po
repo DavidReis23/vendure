@@ -199,3 +199,12 @@ msgstr "p50 延遲"
 
 msgid "p95 latency"
 msgstr "p95 延遲"
+
+msgid "Authorize MCP Client"
+msgstr "授權 MCP 用戶端"
+
+msgid "The grant could not be revoked; it may have already been removed"
+msgstr "無法撤銷此授權；可能已被移除"
+
+msgid "Request failed ({0})"
+msgstr "請求失敗 ({0})"

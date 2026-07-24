@@ -7,8 +7,9 @@ import type { McpOauthGrant } from './entities/mcp-oauth-grant.entity';
  * @description
  * Controls which tools are returned by the MCP `tools/list` call.
  *
- * - `discovery` exposes a small, stable set of meta-tools that let an agent
- *   search, describe, and execute registered Vendure tools by behavior.
+ * - `discovery` exposes a small, stable set of meta-tools (`search_tools` and
+ *   `execute_tool`) that let an agent search for registered Vendure tools
+ *   (results ranked by keyword relevance) and execute them by name.
  * - `direct` exposes every callable Vendure tool directly to the agent.
  *
  * @docsCategory core plugins/McpPlugin
