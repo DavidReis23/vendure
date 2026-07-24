@@ -8,6 +8,7 @@ import { gql } from 'graphql-tag';
 export const adminApiExtensions = gql`
     "A registered tool and whether it is currently enabled."
     type McpToolInfo {
+        id: ID!
         name: String!
         toolset: String!
         description: String!

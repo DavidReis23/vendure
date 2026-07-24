@@ -86,9 +86,10 @@ class InMemoryOAuthProvider {
 }
 
 /**
- * Approve an authorization request server-side, the way the dashboard consent page would.
- * Follows the captured authorization URL to obtain the pending-request token, then POSTs the
- * admin-consent decision (authenticated as the superadmin) and returns the authorization code.
+ * Approves a consent request from the test, so we get an auth code without opening the browser UI.
+ *
+ * Note: this signs in with a superadmin token in the header, not the login cookie the real consent
+ * page uses — so it doesn't cover the page itself. The cookie path is tested in oauth-edge.e2e-spec.ts.
  */
 async function approveViaAdminConsent(authorizationUrl: URL, superAdminToken: string): Promise<string> {
     const authorizeResponse = await fetch(authorizationUrl, { redirect: 'manual' });
@@ -196,7 +197,7 @@ describe('MCP SDK interop (official @modelcontextprotocol/client 2.x)', () => {
         }
     });
 
-    it('rotates the refresh token via a form-urlencoded token request (and detects reuse)', async () => {
+    it('rotates the refresh token via a form-urlencoded token request (and rejects the old token)', async () => {
         // Obtain a grant with the SDK-driven flow, then drive refresh over the raw token endpoint
         // using an application/x-www-form-urlencoded body — proving the endpoint parses form bodies
         // (RFC 6749), not only JSON.
@@ -232,7 +233,9 @@ describe('MCP SDK interop (official @modelcontextprotocol/client 2.x)', () => {
         expect(rotated.refresh_token).toBeTruthy();
         expect(rotated.refresh_token).not.toBe(firstRefresh); // rotation
 
-        // Replaying the now-rotated refresh token is rejected (OAuth 2.1 reuse detection).
+        // Replaying the old refresh token is rejected — once rotated, it's no longer on record. This
+        // only proves the old token is dead, not that the whole grant is revoked; that's tested in
+        // oauth-single-use.e2e-spec.ts ("revokes the whole grant when a rotated refresh token is reused").
         const replayForm = new URLSearchParams();
         replayForm.set('grant_type', 'refresh_token');
         replayForm.set('refresh_token', firstRefresh);
@@ -243,6 +246,6 @@ describe('MCP SDK interop (official @modelcontextprotocol/client 2.x)', () => {
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             body: replayForm.toString(),
         });
-        expect(replayResponse.status).toBeGreaterThanOrEqual(400);
+        expect(replayResponse.status).toBe(400);
     });
 });

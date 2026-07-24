@@ -22,6 +22,7 @@ import { McpToolRegistryService } from '../registry/mcp-tool-registry.service';
 
 /** A registered tool and whether it is currently enabled. */
 interface McpToolInfo {
+    id: string;
     name: string;
     toolset: string;
     description: string;
@@ -94,6 +95,7 @@ export class McpAdminResolver {
     async mcpTools(@Ctx() ctx: RequestContext): Promise<McpToolInfo[]> {
         const toggles = await this.registry.getToolToggles(ctx);
         return this.registry.getRegistrySnapshot().map(tool => ({
+            id: `${tool.toolset}:${tool.name}`,
             name: tool.name,
             toolset: tool.toolset,
             description: tool.description,
@@ -186,6 +188,7 @@ export class McpAdminResolver {
         await this.registry.setToolEnabled(ctx, args.toolset, args.toolName, args.enabled);
         const toggles = await this.registry.getToolToggles(ctx);
         return {
+            id: `${tool.toolset}:${tool.name}`,
             name: tool.name,
             toolset: tool.toolset,
             description: tool.description,

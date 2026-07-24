@@ -7,6 +7,7 @@
  */
 
 export interface McpToolInfo {
+    id: string;
     name: string;
     toolset: string;
     description: string;
@@ -64,6 +65,7 @@ export interface McpStats {
 export const MCP_TOOLS_QUERY = `
     query McpTools {
         mcpTools {
+            id
             name
             toolset
             description
