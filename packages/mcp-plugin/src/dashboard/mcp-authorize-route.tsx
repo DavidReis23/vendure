@@ -11,7 +11,7 @@ import {
     CopyableText,
     DashboardRouteDefinition,
 } from '@vendure/dashboard';
-import { AlertTriangleIcon, ExternalLinkIcon } from 'lucide-react';
+import { AlertTriangleIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { z } from 'zod';
 
@@ -27,6 +27,18 @@ interface AuthRequestInfo {
     redirect_uri: string;
     resource: string;
     toolset: string;
+}
+
+/**
+ * Extracts the hostname from a redirect URI so it can be shown as the primary
+ * trust anchor on the consent screen.
+ */
+function redirectHostname(uri: string): string | null {
+    try {
+        return new URL(uri).hostname || null;
+    } catch {
+        return null;
+    }
 }
 
 function ConsentCard({ session }: { session: string }) {
@@ -102,63 +114,69 @@ function ConsentCard({ session }: { session: string }) {
                     <CardTitle>
                         <Trans>Authorization request could not be loaded</Trans>
                     </CardTitle>
-                    <CardDescription>{error ?? t`The authorization session is invalid or expired.`}</CardDescription>
+                    <CardDescription>
+                        {error ?? t`The authorization session is invalid or expired.`}
+                    </CardDescription>
                 </CardHeader>
             </Card>
         );
     }
 
+    const redirectHost = redirectHostname(info.redirect_uri);
+
     return (
         <Card className="w-full max-w-lg">
             <CardHeader>
-                <div className="flex items-center gap-3">
-                    {info.logo_uri ? (
-                        <img
-                            src={info.logo_uri}
-                            alt={info.client_name}
-                            className="h-10 w-10 rounded-md object-contain"
-                        />
-                    ) : null}
-                    <div>
-                        <CardTitle>{info.client_name}</CardTitle>
-                        {info.client_uri ? (
-                            <a
-                                href={info.client_uri}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-sm text-muted-foreground inline-flex items-center gap-1 hover:underline"
-                            >
-                                {info.client_uri}
-                                <ExternalLinkIcon className="h-3 w-3" />
-                            </a>
-                        ) : null}
-                    </div>
-                </div>
+                <CardTitle>
+                    <Trans>Authorize MCP access</Trans>
+                </CardTitle>
                 <CardDescription className="pt-2">
                     <Trans>
-                        This application is requesting permission to access your Vendure MCP server on your
-                        behalf.
+                        An application is requesting admin-scoped access to your Vendure MCP server. Vendure
+                        cannot verify the application's identity, so decide based on the destination below —
+                        not the name it reports.
                     </Trans>
                 </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
+                {/*
+                 * Primary trust anchor: the redirect destination is the one field that is
+                 * enforced server-side (bound into the auth request and re-checked at token
+                 * exchange), so it leads the card. Everything the client reports about itself
+                 * is untrusted and shown lower down.
+                 */}
+                <div className="space-y-1 rounded-md border border-amber-500/40 bg-amber-500/5 p-3">
+                    <div className="flex items-center gap-2 text-xs font-medium">
+                        <AlertTriangleIcon className="h-4 w-4 text-amber-600" />
+                        <Trans>The authorization code will be sent to</Trans>
+                    </div>
+                    {redirectHost ? (
+                        <div className="text-sm font-semibold break-all">{redirectHost}</div>
+                    ) : null}
+                    <CopyableText value={info.redirect_uri}>
+                        <code className="font-mono text-xs text-muted-foreground break-all">
+                            {info.redirect_uri}
+                        </code>
+                    </CopyableText>
+                    <p className="text-xs text-muted-foreground">
+                        <Trans>Approve only if you recognise and trust this exact destination.</Trans>
+                    </p>
+                </div>
                 <div className="space-y-1">
                     <div className="text-xs font-medium text-muted-foreground">
                         <Trans>Requested access</Trans>
                     </div>
                     <Badge variant="secondary">{info.toolset}</Badge>
                 </div>
-                <div className="space-y-1 rounded-md border border-amber-500/40 bg-amber-500/5 p-3">
-                    <div className="flex items-center gap-2 text-xs font-medium">
-                        <AlertTriangleIcon className="h-4 w-4 text-amber-600" />
-                        <Trans>After approving, you will be redirected to</Trans>
+                {/* Client-supplied metadata — self-asserted and unverified, so de-emphasised. */}
+                <div className="space-y-1 border-t pt-3">
+                    <div className="text-xs font-medium text-muted-foreground">
+                        <Trans>Reported by the application (unverified)</Trans>
                     </div>
-                    <CopyableText value={info.redirect_uri}>
-                        <code className="font-mono text-sm break-all">{info.redirect_uri}</code>
-                    </CopyableText>
-                    <p className="text-xs text-muted-foreground">
-                        <Trans>Only approve if you recognise and trust this destination.</Trans>
-                    </p>
+                    <div className="text-sm">{info.client_name}</div>
+                    {info.client_uri ? (
+                        <div className="text-xs text-muted-foreground break-all">{info.client_uri}</div>
+                    ) : null}
                 </div>
             </CardContent>
             <CardFooter className="justify-end gap-2">
