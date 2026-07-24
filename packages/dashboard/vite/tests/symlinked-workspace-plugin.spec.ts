@@ -62,4 +62,19 @@ describe('detecting dashboard in workspace-symlinked packages', () => {
         const resolvedEntry = resolve(join(workspacePkg, 'src'), plugin.dashboardEntryPath);
         expect(existsSync(resolvedEntry)).toBe(true);
     });
+
+    it('skips a workspace plugin whose dashboard entry does not exist', async () => {
+        const pluginInfo = await discoverPlugins({
+            vendureConfigPath: join(fixtureDir, 'vendure-config.ts'),
+            outputPath: tempDir,
+            transformTsConfigPathMappings: ({ patterns }) => patterns,
+            logger,
+            pluginPackageScanner: { nodeModulesRoot: fakeNodeModules },
+        });
+
+        // The broken plugin is dropped...
+        expect(pluginInfo.find(p => p.name === 'TestBrokenDashboardPlugin')).toBeUndefined();
+        // ...but its valid sibling is still discovered.
+        expect(pluginInfo.find(p => p.name === 'TestWorkspacePlugin')).toBeDefined();
+    });
 });

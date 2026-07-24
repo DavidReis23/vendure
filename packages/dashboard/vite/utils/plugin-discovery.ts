@@ -164,13 +164,26 @@ export async function discoverPlugins({
         if (!dashboardPath || registeredNames.has(name)) {
             continue;
         }
+        // Normalize like the compiled pass above: keep a relative path as-is,
+        // make an absolute path relative to the plugin source file.
+        const resolvedDashboardPath = dashboardPath.startsWith('.')
+            ? dashboardPath
+            : './' + path.relative(path.dirname(sourceFile), dashboardPath);
+
+        const resolvedEntry = path.resolve(path.dirname(sourceFile), resolvedDashboardPath);
+        if (!(await fs.pathExists(resolvedEntry))) {
+            logger.warn(
+                `[discoverPlugins] Dashboard entry for workspace plugin "${name}" not found at ${resolvedEntry}; skipping dashboard registration.`,
+            );
+            continue;
+        }
         logger.debug(
             `[discoverPlugins] Registering dashboard for workspace-symlinked plugin "${name}" from source: ${sourceFile}`,
         );
         plugins.push({
             name,
             pluginPath: sourceFile,
-            dashboardEntryPath: dashboardPath,
+            dashboardEntryPath: resolvedDashboardPath,
             sourcePluginPath: sourceFile,
         });
     }
