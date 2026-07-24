@@ -74,7 +74,7 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
         schema: adminApiExtensions,
         resolvers: [McpAdminResolver],
     },
-    dashboard: './dashboard/index.tsx',
+    dashboard: '../src/dashboard/index.tsx',
     configuration: config => {
         config.authOptions.customPermissions.push(mcpServerPermission);
         config.settingsStoreFields = {
