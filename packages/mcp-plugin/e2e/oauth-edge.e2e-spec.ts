@@ -1,4 +1,10 @@
-import { mergeConfig, RequestContextService, TransactionalConnection } from '@vendure/core';
+import {
+    Channel,
+    mergeConfig,
+    RequestContext,
+    RequestContextService,
+    TransactionalConnection,
+} from '@vendure/core';
 import { createTestEnvironment } from '@vendure/testing';
 import crypto from 'crypto';
 import gql from 'graphql-tag';
@@ -388,6 +394,40 @@ describe('McpPlugin OAuth edge & security cases', () => {
             body: JSON.stringify({ session: flow.request_token, approved: true }),
         });
         expect(res.status).toBe(401);
+    });
+
+    // Builds an admin RequestContext authenticated as if by a session cookie: a
+    // session with a user, and NO Authorization header on the request, with a
+    // caller-supplied Origin. This is exactly the shape the CSRF gate inspects.
+    const buildCookieAuthedAdminCtx = ({ origin }: { origin: string }) =>
+        new RequestContext({
+            apiType: 'admin',
+            channel: new Channel(),
+            session: { token: 'mcp-test-session', user: { id: 1 } } as any,
+            req: { headers: { origin } } as any,
+            isAuthorized: true,
+            authorizedAsOwnerOnly: false,
+        });
+
+    it('rejects cookie-authenticated admin consent from a foreign origin', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const flow = await authorizeAdminToCodePreConsent();
+        const ctx = buildCookieAuthedAdminCtx({ origin: 'https://evil.example' });
+
+        await expect(oauth.approveAdminRequest(ctx, flow.request_token, true)).rejects.toThrow(
+            /consent page/i,
+        );
+    });
+
+    // Relates to OSS-575 — the same cookie-authenticated consent from the issuer's own
+    // origin (the real consent page) is allowed and mints an authorization code.
+    it('allows cookie-authenticated admin consent from the consent page origin', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const flow = await authorizeAdminToCodePreConsent();
+        const ctx = buildCookieAuthedAdminCtx({ origin: ISSUER });
+
+        const { redirectUrl } = await oauth.approveAdminRequest(ctx, flow.request_token, true);
+        expect(new URL(redirectUrl).searchParams.get('code')).toBeTruthy();
     });
 
     // Relates to OSS-575 — admin consent with a falsey `approved` returns an access_denied

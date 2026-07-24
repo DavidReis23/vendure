@@ -1,4 +1,10 @@
-import { BadRequestException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+    BadRequestException,
+    ForbiddenException,
+    Inject,
+    Injectable,
+    UnauthorizedException,
+} from '@nestjs/common';
 import {
     AuthenticatedSession,
     ChannelService,
@@ -193,6 +199,7 @@ export class McpOauthService {
         if (!ctx.activeUserId || !ctx.session?.token) {
             throw new UnauthorizedException('Admin consent requires an authenticated administrator session');
         }
+        this.assertConsentRequestOrigin(ctx);
         return this.completeAuthorizationRequest(requestToken, approved, ctx.activeUserId, 'admin');
     }
 
@@ -679,6 +686,34 @@ export class McpOauthService {
 
     private resourceForToolset(toolset: McpToolset): string {
         return `${this.issuerOrigin()}/mcp/${toolset}`;
+    }
+
+    /**
+     * Blocks CSRF on admin consent: the approval rides the admin's login cookie
+     * (auto-sent by the browser), so we require the request to come from our own
+     * consent page (its Origin, or Referer). A request with an `Authorization` header
+     * can't be forged cross-site, so it skips the check (also covers API clients).
+     */
+    private assertConsentRequestOrigin(ctx: RequestContext): void {
+        const headers = ctx.req?.headers;
+        if (headers?.authorization) {
+            return;
+        }
+        const rawOrigin = headers?.origin;
+        const originHeader = Array.isArray(rawOrigin) ? rawOrigin[0] : rawOrigin;
+        const source = originHeader ?? headers?.referer;
+        let requestOrigin: string | undefined;
+        if (source) {
+            try {
+                requestOrigin = new URL(source).origin;
+            } catch {
+                requestOrigin = undefined;
+            }
+        }
+        const expectedOrigin = new URL(this.resolvedOauth().issuer).origin;
+        if (requestOrigin !== expectedOrigin) {
+            throw new ForbiddenException('Admin consent must be submitted from the Vendure consent page');
+        }
     }
 
     private assertSafeRedirectUri(redirectUri: string): void {
