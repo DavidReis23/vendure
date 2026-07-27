@@ -21,7 +21,13 @@ export async function createMcpServerForRequest(
     toolset: McpToolset,
     registry: McpToolRegistryService,
 ): Promise<McpServer> {
-    const server = new McpServer({ name: `vendure-mcp-${toolset}`, version: MCP_SERVER_VERSION });
+    const server = new McpServer(
+        { name: `vendure-mcp-${toolset}`, version: MCP_SERVER_VERSION },
+        // The SDK defaults this to `true`, which promises to tell clients whenever the tool list
+        // changes. We can't keep that promise: every request gets its own throwaway server, and we
+        // reject GET requests, so there is never an open connection to send the message on.
+        { capabilities: { tools: { listChanged: false } } },
+    );
     const tools = await registry.getExposedTools(executionContext, toolset);
     for (const tool of tools) {
         server.registerTool(

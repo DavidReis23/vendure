@@ -42,11 +42,12 @@ describe('MCP protocol conformance (direct mode)', () => {
         await server.destroy();
     });
 
-    it('initialize negotiates a supported protocol version and advertises listChanged', async () => {
+    it('initialize negotiates a supported protocol version and does not advertise listChanged', async () => {
         const res = await postMcp(baseUrl(), 'shop', rpc('initialize', initializeParams()));
         expect(res.status).toBe(200);
         expect(SUPPORTED_PROTOCOL_VERSIONS).toContain(res.body.result.protocolVersion);
-        expect(res.body.result.capabilities.tools.listChanged).toBe(true);
+        // The transport is stateless and has no GET stream, so tools/list_changed can never fire.
+        expect(res.body.result.capabilities.tools.listChanged).toBe(false);
         expect(res.body.result.serverInfo.name).toBe('vendure-mcp-shop');
     });
 
