@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Channel, ChannelService, Permission, RequestContext } from '@vendure/core';
+import { ChannelService, idsAreEqual, Permission, RequestContext } from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
-import { listOptions, page } from '../order-helpers';
+import { page } from '../order-helpers';
 import { numberProp, objectSchema, optional } from '../schema-helpers';
 
 interface ListChannelsInput extends Record<string, unknown> {
@@ -23,7 +23,7 @@ interface ListChannelsInput extends Record<string, unknown> {
         'see all channels',
         'multi-store channel list',
     ],
-    permissions: [Permission.Authenticated],
+    permissions: [Permission.ReadSettings, Permission.ReadChannel],
     readOnly: true,
     inputSchema: objectSchema({
         limit: optional(numberProp('Maximum number of channels to return.')),
@@ -35,11 +35,16 @@ export class ListChannelsTool implements McpPluginToolHandler<ListChannelsInput>
     constructor(private channelService: ChannelService) {}
 
     async execute(ctx: RequestContext, input: ListChannelsInput) {
-        const result = await this.channelService.findAll(ctx, listOptions<Channel>(input));
-        return page(
-            result.items.map(channel => ({ id: channel.id, code: channel.code, token: channel.token })),
-            result.totalItems,
-            input,
+        const accessibleIds = ctx.session?.user?.channelPermissions.map(entry => entry.id) ?? [];
+        const result = await this.channelService.findAll(ctx);
+        const accessible = result.items.filter(channel =>
+            accessibleIds.some(id => idsAreEqual(id, channel.id)),
         );
+        const offset = input.offset ?? 0;
+        const limit = input.limit ?? 25;
+        const items = accessible
+            .slice(offset, offset + limit)
+            .map(channel => ({ id: channel.id, code: channel.code, token: channel.token }));
+        return page(items, accessible.length, input);
     }
 }

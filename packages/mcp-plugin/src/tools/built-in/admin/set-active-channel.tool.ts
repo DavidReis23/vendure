@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import {
     ChannelService,
+    ForbiddenError,
+    idsAreEqual,
     InternalServerError,
     Permission,
     RequestContext,
@@ -42,6 +44,10 @@ export class SetActiveChannelTool implements McpPluginToolHandler<SetActiveChann
 
     async execute(ctx: RequestContext, input: SetActiveChannelInput, executionContext?: McpExecutionContext) {
         const channel = await this.channelService.getChannelFromToken(ctx, input.channelToken);
+        const accessibleIds = ctx.session?.user?.channelPermissions.map(entry => entry.id) ?? [];
+        if (!accessibleIds.some(id => idsAreEqual(id, channel.id))) {
+            throw new ForbiddenError();
+        }
         // Persist the choice on the one merged grant row. Subsequent requests re-authenticate against
         // this grant, so its channelId becomes the active channel for later calls.
         const grant = executionContext?.grant;

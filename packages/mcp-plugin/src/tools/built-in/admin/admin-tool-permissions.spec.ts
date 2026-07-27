@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 // Core admin resolvers are not exported from the @vendure/core barrel, so we import them directly to
 // reflect their live @Allow metadata. If a resolver's permissions drift, this test breaks loudly.
 import { AssetResolver } from '../../../../../core/src/api/resolvers/admin/asset.resolver';
+import { ChannelResolver } from '../../../../../core/src/api/resolvers/admin/channel.resolver';
 import { CustomerGroupResolver } from '../../../../../core/src/api/resolvers/admin/customer-group.resolver';
 import { CustomerResolver } from '../../../../../core/src/api/resolvers/admin/customer.resolver';
 import { OrderResolver } from '../../../../../core/src/api/resolvers/admin/order.resolver';
@@ -45,10 +46,13 @@ const TOOL_OPERATION_MAP: Record<string, ResolverOperation> = {
     // resolver itself carries no @Allow).
     get_stock_levels: { resolver: ProductResolver, method: 'productVariant' },
     adjust_stock: { resolver: ProductResolver, method: 'updateProductVariants' },
+    list_channels: { resolver: ChannelResolver, method: 'channels' },
 };
 
 // Tools with no 1:1 core resolver operation, gated only by [Authenticated] by design.
-const AUTHENTICATED_EXCEPTIONS = ['list_channels', 'set_active_channel'];
+// set_active_channel only rewrites the caller's own grant row — core has no equivalent operation,
+// and the channel it switches to is checked against the caller's own accessible channels.
+const AUTHENTICATED_EXCEPTIONS = ['set_active_channel'];
 
 const reflector = new Reflector();
 

@@ -56,17 +56,31 @@ const destructiveToolNames = ['adjust_stock', 'cancel_order', 'refund_order', 'u
 const callTool = (name: string, args: Record<string, unknown> = {}, id = 1) =>
     rpc('tools/call', { name, arguments: args }, id);
 
-const LIMITED_ADMIN_EMAIL = 'limited-admin@example.test';
+const SECOND_CHANNEL_CODE = 'admin-tools-second-channel';
 const LIMITED_ADMIN_PASSWORD = 'test';
+// Approving the MCP consent screen requires UpdateMcpServer, so every administrator that connects an
+// MCP client holds it on top of whatever the test is actually about.
+const READ_CUSTOMER_ADMIN = {
+    emailAddress: 'limited-admin@example.test',
+    roleCode: 'mcp-limited-role',
+    permissions: ['ReadCustomer', 'UpdateMcpServer'],
+};
+const READ_CHANNEL_ADMIN = {
+    emailAddress: 'channel-admin@example.test',
+    roleCode: 'mcp-channel-role',
+    permissions: ['ReadChannel', 'UpdateMcpServer'],
+};
 
 /**
- * Creates a ReadCustomer-only administrator and returns its admin-API bearer token. Logging in over
- * the admin API directly (rather than via the shared client) avoids rotating the superadmin session.
+ * Creates an administrator holding only the given permissions, and only in the given channel, then
+ * returns its admin-API bearer token. Logging in over the admin API directly (rather than via the
+ * shared client) avoids rotating the superadmin session.
  */
 async function provisionLimitedAdmin(
     adminClient: SimpleGraphQLClient,
-    defaultChannelId: string,
+    channelId: string,
     adminApiUrl: string,
+    admin: { emailAddress: string; roleCode: string; permissions: string[] } = READ_CUSTOMER_ADMIN,
 ): Promise<string> {
     const role = await adminClient.query(
         gql`
@@ -78,10 +92,10 @@ async function provisionLimitedAdmin(
         `,
         {
             input: {
-                code: 'mcp-limited-role',
-                description: 'MCP limited role',
-                permissions: ['ReadCustomer'],
-                channelIds: [defaultChannelId],
+                code: admin.roleCode,
+                description: `MCP ${admin.roleCode}`,
+                permissions: admin.permissions,
+                channelIds: [channelId],
             },
         },
     );
@@ -97,7 +111,7 @@ async function provisionLimitedAdmin(
             input: {
                 firstName: 'Limited',
                 lastName: 'Admin',
-                emailAddress: LIMITED_ADMIN_EMAIL,
+                emailAddress: admin.emailAddress,
                 password: LIMITED_ADMIN_PASSWORD,
                 roleIds: [role.createRole.id],
             },
@@ -107,7 +121,7 @@ async function provisionLimitedAdmin(
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-            query: `mutation { login(username: "${LIMITED_ADMIN_EMAIL}", password: "${LIMITED_ADMIN_PASSWORD}") { __typename } }`,
+            query: `mutation { login(username: "${admin.emailAddress}", password: "${LIMITED_ADMIN_PASSWORD}") { __typename } }`,
         }),
     });
     const token = response.headers.get('vendure-auth-token');
@@ -136,6 +150,7 @@ describe('MCP built-in admin tools (direct mode)', () => {
     let stockLocationId: ID;
     let secondChannelToken: string;
     let secondChannelDbId: ID;
+    let channelAdminToken: string;
 
     beforeAll(async () => {
         McpPlugin.init({ oauth: { tokenSecret: TOKEN_SECRET } });
@@ -217,7 +232,7 @@ describe('MCP built-in admin tools (direct mode)', () => {
             `,
             {
                 input: {
-                    code: 'admin-tools-second-channel',
+                    code: SECOND_CHANNEL_CODE,
                     token: 'admin-tools-second-channel-token',
                     defaultLanguageCode: fixture.activeChannel.defaultLanguageCode,
                     defaultCurrencyCode: fixture.activeChannel.defaultCurrencyCode,
@@ -235,11 +250,16 @@ describe('MCP built-in admin tools (direct mode)', () => {
         secondChannelToken = channelResult.createChannel.token;
         secondChannelDbId = idStrategy.decodeId(channelResult.createChannel.id);
 
+        const adminApiUrl = `${baseUrl()}/${config.apiOptions.adminApiPath ?? 'admin-api'}`;
         // A limited administrator (ReadCustomer only) proves permission filtering + call-time rejection.
-        limitedAdminToken = await provisionLimitedAdmin(
+        limitedAdminToken = await provisionLimitedAdmin(adminClient, defaultChannelId, adminApiUrl);
+        // An administrator who may read channels, but only holds a role in the default channel. It can
+        // call the channel tools, so it proves they are scoped to the caller's own channels.
+        channelAdminToken = await provisionLimitedAdmin(
             adminClient,
             defaultChannelId,
-            `${baseUrl()}/${config.apiOptions.adminApiPath ?? 'admin-api'}`,
+            adminApiUrl,
+            READ_CHANNEL_ADMIN,
         );
     }, TEST_SETUP_TIMEOUT_MS);
 
@@ -368,6 +388,8 @@ describe('MCP built-in admin tools (direct mode)', () => {
         expect(names).toContain('get_customer');
         expect(names).not.toContain('list_orders');
         expect(names).not.toContain('create_product');
+        // Reading the channel list is settings-level, so it is hidden from an admin who only reads customers.
+        expect(names).not.toContain('list_channels');
 
         // list_orders was filtered out of the exposed set, so it is not callable: the SDK rejects the
         // unknown tool at the protocol level. (The registry's in-funnel permission check — which returns
@@ -378,6 +400,51 @@ describe('MCP built-in admin tools (direct mode)', () => {
         // the in-funnel `isError` permission path (which discovery mode + the registry unit spec prove).
         expect(denied.body.error).toBeDefined();
         expect(denied.body.result).toBeUndefined();
+    });
+
+    it('list_channels returns every channel to a superadmin grant', async () => {
+        const token = await adminAccessToken();
+        const response = await postMcp(baseUrl(), 'admin', callTool('list_channels', {}, 1), { token });
+
+        expect(response.body.result.isError).toBeUndefined();
+        const listed = response.body.result.structuredContent as {
+            items: Array<{ code: string }>;
+            total: number;
+        };
+        expect(listed.items.map(channel => channel.code)).toContain(SECOND_CHANNEL_CODE);
+        expect(listed.total).toBe(listed.items.length);
+    });
+
+    it('list_channels returns only the channels the caller holds a role in', async () => {
+        const token = await adminAccessToken(channelAdminToken);
+        const response = await postMcp(baseUrl(), 'admin', callTool('list_channels', {}, 1), { token });
+
+        expect(response.body.result.isError).toBeUndefined();
+        const listed = response.body.result.structuredContent as {
+            items: Array<{ code: string }>;
+            total: number;
+        };
+        // The role was created against the default channel only, so the second channel — and its
+        // token — must not reach this caller.
+        expect(listed.items.map(channel => channel.code)).not.toContain(SECOND_CHANNEL_CODE);
+        expect(listed.total).toBe(1);
+    });
+
+    it('set_active_channel refuses a channel the caller holds no role in', async () => {
+        const token = await adminAccessToken(channelAdminToken);
+        const response = await postMcp(
+            baseUrl(),
+            'admin',
+            callTool('set_active_channel', { channelToken: secondChannelToken }, 1),
+            { token },
+        );
+
+        expect(response.body.result.isError).toBe(true);
+        // The refusal happens before the write, so the grant still points at the channel it was issued for.
+        const grant = await connection.getRepository(adminCtx, McpOauthGrant).findOneOrFail({
+            where: { accessTokenHash: lookupHash(token) },
+        });
+        expect(String(grant.channelId)).not.toBe(String(secondChannelDbId));
     });
 
     it('set_active_channel writes the grant row and changes the active channel for later calls', async () => {
