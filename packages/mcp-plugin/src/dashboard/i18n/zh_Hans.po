@@ -26,9 +26,6 @@ msgstr "操作者类型"
 msgid "Admin endpoint"
 msgstr "管理端点"
 
-msgid "After approving, you will be redirected to"
-msgstr "批准后，您将被重定向到"
-
 msgid "All toolsets"
 msgstr "所有工具集"
 
@@ -122,9 +119,6 @@ msgstr "此期间没有记录到调用。"
 msgid "OAuth grants"
 msgstr "OAuth 授权"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "仅在您识别并信任此目标时才批准。"
-
 msgid "Read-only"
 msgstr "只读"
 
@@ -163,9 +157,6 @@ msgstr "使用 MCP Inspector 交互式测试和调试您的 MCP 服务器："
 
 msgid "The authorization session is invalid or expired."
 msgstr "授权会话无效或已过期。"
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "此应用程序请求代表您访问您的 Vendure MCP 服务器的权限。"
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "这将立即撤销该客户端的访问权限。客户端需要重新授权才能重新连接。"
@@ -208,3 +199,21 @@ msgstr "无法撤销该授权；它可能已被移除"
 
 msgid "Request failed ({0})"
 msgstr "请求失败 ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "某个应用程序正在请求对您的 Vendure MCP 服务器的管理员级访问权限。Vendure 无法验证该应用程序的身份，因此请依据下方的目标地址进行判断，而不是它所声称的名称。"
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "只有在您认得并信任这个确切的目标地址时才批准。"
+
+msgid "Authorize MCP access"
+msgstr "授权 MCP 访问"
+
+msgid "Plugin"
+msgstr "插件"
+
+msgid "Reported by the application (unverified)"
+msgstr "由应用程序自行声称（未经验证）"
+
+msgid "The authorization code will be sent to"
+msgstr "授权码将发送至"

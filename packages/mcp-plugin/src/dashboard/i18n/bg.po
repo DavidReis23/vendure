@@ -26,9 +26,6 @@ msgstr "Тип извършител"
 msgid "Admin endpoint"
 msgstr "Административна крайна точка"
 
-msgid "After approving, you will be redirected to"
-msgstr "След одобрение ще бъдете пренасочени към"
-
 msgid "All toolsets"
 msgstr "Всички набори от инструменти"
 
@@ -122,9 +119,6 @@ msgstr "Няма регистрирани извиквания за този п�
 msgid "OAuth grants"
 msgstr "OAuth разрешения"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Одобрете само ако разпознавате и се доверявате на тази дестинация."
-
 msgid "Read-only"
 msgstr "Само за четене"
 
@@ -163,9 +157,6 @@ msgstr "Тествайте и дебъгвайте вашия MCP сървър �
 
 msgid "The authorization session is invalid or expired."
 msgstr "Сесията за оторизация е невалидна или изтекла."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Това приложение иска разрешение да осъществи достъп до вашия Vendure MCP сървър от ваше име."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Това незабавно отменя достъпа на клиента. Клиентът ще трябва да оторизира отново, за да се свърже."
@@ -208,3 +199,21 @@ msgstr "Разрешението не можа да бъде отменено; �
 
 msgid "Request failed ({0})"
 msgstr "Заявката е неуспешна ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Приложение иска достъп с администраторски права до вашия Vendure MCP сървър. Vendure не може да провери самоличността на приложението, затова решете въз основа на местоназначението по-долу, а не на името, което приложението съобщава."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Одобрете само ако разпознавате точно това местоназначение и му се доверявате."
+
+msgid "Authorize MCP access"
+msgstr "Оторизиране на MCP достъп"
+
+msgid "Plugin"
+msgstr "Плъгин"
+
+msgid "Reported by the application (unverified)"
+msgstr "Съобщено от приложението (непроверено)"
+
+msgid "The authorization code will be sent to"
+msgstr "Кодът за оторизация ще бъде изпратен до"

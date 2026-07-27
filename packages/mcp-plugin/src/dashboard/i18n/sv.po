@@ -26,9 +26,6 @@ msgstr "Aktörstyp"
 msgid "Admin endpoint"
 msgstr "Admin-slutpunkt"
 
-msgid "After approving, you will be redirected to"
-msgstr "Efter godkännande omdirigeras du till"
-
 msgid "All toolsets"
 msgstr "Alla verktygsuppsättningar"
 
@@ -122,9 +119,6 @@ msgstr "Inga anrop registrerade under den här perioden."
 msgid "OAuth grants"
 msgstr "OAuth-behörigheter"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Godkänn endast om du känner igen och litar på den här destinationen."
-
 msgid "Read-only"
 msgstr "Skrivskyddad"
 
@@ -163,9 +157,6 @@ msgstr "Testa och felsök din MCP-server interaktivt med MCP Inspector:"
 
 msgid "The authorization session is invalid or expired."
 msgstr "Auktoriseringssessionen är ogiltig eller har gått ut."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Den här applikationen begär behörighet att komma åt din Vendure MCP-server å dina vägnar."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Detta återkallar omedelbart klientens åtkomst. Klienten måste auktorisera igen för att återansluta."
@@ -208,3 +199,21 @@ msgstr "Det gick inte att återkalla behörigheten; den kan redan ha tagits bort
 
 msgid "Request failed ({0})"
 msgstr "Begäran misslyckades ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "En applikation begär åtkomst med administratörsbehörighet till din Vendure MCP-server. Vendure kan inte verifiera applikationens identitet — utgå därför från destinationen nedan och inte från det namn den uppger."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Godkänn endast om du känner igen och litar på exakt den här destinationen."
+
+msgid "Authorize MCP access"
+msgstr "Auktorisera MCP-åtkomst"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Uppgiven av applikationen (overifierad)"
+
+msgid "The authorization code will be sent to"
+msgstr "Auktoriseringskoden skickas till"

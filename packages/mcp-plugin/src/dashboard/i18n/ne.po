@@ -26,9 +26,6 @@ msgstr "कर्ताको प्रकार"
 msgid "Admin endpoint"
 msgstr "एडमिन एन्डपोइन्ट"
 
-msgid "After approving, you will be redirected to"
-msgstr "स्वीकृत गरेपछि, तपाईंलाई यहाँ रिडिरेक्ट गरिनेछ"
-
 msgid "All toolsets"
 msgstr "सबै उपकरण सेटहरू"
 
@@ -122,9 +119,6 @@ msgstr "यस अवधिमा कुनै कल रेकर्ड गर�
 msgid "OAuth grants"
 msgstr "OAuth अनुदानहरू"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "यो गन्तव्यलाई चिन्नुहुन्छ र विश्वास गर्नुहुन्छ भने मात्र स्वीकृत गर्नुहोस्।"
-
 msgid "Read-only"
 msgstr "पढ्ने-मात्र"
 
@@ -163,9 +157,6 @@ msgstr "MCP Inspector प्रयोग गरेर आफ्नो MCP सर
 
 msgid "The authorization session is invalid or expired."
 msgstr "प्राधिकरण सत्र अमान्य वा म्याद सकिएको छ।"
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "यो एप्लिकेसनले तपाईंको तर्फबाट तपाईंको Vendure MCP सर्भरमा पहुँच गर्ने अनुमति अनुरोध गर्दैछ।"
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "यसले तुरुन्तै क्लाइन्टको पहुँच रद्द गर्छ। पुनः जडान गर्न क्लाइन्टले फेरि प्राधिकरण गर्नुपर्नेछ।"
@@ -208,3 +199,21 @@ msgstr "अनुदान रद्द गर्न सकिएन; यो प
 
 msgid "Request failed ({0})"
 msgstr "अनुरोध असफल भयो ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "एउटा एप्लिकेसनले तपाईंको Vendure MCP सर्भरमा एडमिन-स्तरको पहुँच मागिरहेको छ। Vendure ले एप्लिकेसनको पहिचान प्रमाणित गर्न सक्दैन, त्यसैले एप्लिकेसनले बताएको नामको आधारमा नभई तल देखाइएको गन्तव्यको आधारमा निर्णय गर्नुहोस्।"
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "यही ठ्याक्कै गन्तव्य चिन्नुहुन्छ र भरोसा गर्नुहुन्छ भने मात्र स्वीकृत गर्नुहोस्।"
+
+msgid "Authorize MCP access"
+msgstr "MCP पहुँच अधिकृत गर्नुहोस्"
+
+msgid "Plugin"
+msgstr "प्लगइन"
+
+msgid "Reported by the application (unverified)"
+msgstr "एप्लिकेसनले बताएको (अप्रमाणित)"
+
+msgid "The authorization code will be sent to"
+msgstr "प्राधिकरण कोड यहाँ पठाइनेछ"

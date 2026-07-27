@@ -26,9 +26,6 @@ msgstr "סוג מבצע"
 msgid "Admin endpoint"
 msgstr "נקודת קצה של הניהול"
 
-msgid "After approving, you will be redirected to"
-msgstr "לאחר האישור, תופנה אל"
-
 msgid "All toolsets"
 msgstr "כל ערכות הכלים"
 
@@ -122,9 +119,6 @@ msgstr "לא נרשמו קריאות בתקופה זו."
 msgid "OAuth grants"
 msgstr "הרשאות OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "אשר רק אם אתה מזהה את היעד הזה ובוטח בו."
-
 msgid "Read-only"
 msgstr "לקריאה בלבד"
 
@@ -163,9 +157,6 @@ msgstr "בדוק ואבחן את שרת ה-MCP שלך באופן אינטראק�
 
 msgid "The authorization session is invalid or expired."
 msgstr "הפעלת ההרשאה אינה תקפה או שפג תוקפה."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "אפליקציה זו מבקשת הרשאה לגשת לשרת ה-Vendure MCP שלך בשמך."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "פעולה זו מבטלת מיד את גישת הלקוח. הלקוח יצטרך לאשר שוב כדי להתחבר מחדש."
@@ -208,3 +199,21 @@ msgstr "לא ניתן היה לבטל את ההרשאה; ייתכן שהיא כ�
 
 msgid "Request failed ({0})"
 msgstr "הבקשה נכשלה ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "יישום מבקש גישה בהיקף מנהל לשרת ה-MCP של Vendure שלך. Vendure אינה יכולה לאמת את זהות היישום, ולכן החלט על סמך היעד המוצג למטה, ולא על סמך השם שהיישום מדווח."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "אשר רק אם אתה מזהה את היעד הזה בדיוק ונותן בו אמון."
+
+msgid "Authorize MCP access"
+msgstr "אישור גישת MCP"
+
+msgid "Plugin"
+msgstr "תוסף"
+
+msgid "Reported by the application (unverified)"
+msgstr "מדווח על ידי היישום (לא מאומת)"
+
+msgid "The authorization code will be sent to"
+msgstr "קוד ההרשאה יישלח אל"

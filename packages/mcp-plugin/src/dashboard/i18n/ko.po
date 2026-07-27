@@ -26,9 +26,6 @@ msgstr "행위자 유형"
 msgid "Admin endpoint"
 msgstr "관리자 엔드포인트"
 
-msgid "After approving, you will be redirected to"
-msgstr "승인하면 다음 위치로 리디렉션됩니다:"
-
 msgid "All toolsets"
 msgstr "모든 도구 세트"
 
@@ -122,9 +119,6 @@ msgstr "이 기간에 기록된 호출이 없습니다."
 msgid "OAuth grants"
 msgstr "OAuth 권한 부여"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "이 대상을 인식하고 신뢰하는 경우에만 승인하세요."
-
 msgid "Read-only"
 msgstr "읽기 전용"
 
@@ -163,9 +157,6 @@ msgstr "MCP Inspector로 MCP 서버를 대화형으로 테스트하고 디버깅
 
 msgid "The authorization session is invalid or expired."
 msgstr "인증 세션이 유효하지 않거나 만료되었습니다."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "이 애플리케이션이 사용자를 대신하여 Vendure MCP 서버에 액세스할 권한을 요청하고 있습니다."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "이렇게 하면 클라이언트의 액세스 권한이 즉시 취소됩니다. 다시 연결하려면 클라이언트가 다시 인증해야 합니다."
@@ -208,3 +199,21 @@ msgstr "권한 부여를 취소할 수 없습니다. 이미 제거되었을 수 
 
 msgid "Request failed ({0})"
 msgstr "요청 실패 ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "한 애플리케이션이 Vendure MCP 서버에 대한 관리자 범위 액세스를 요청하고 있습니다. Vendure는 애플리케이션의 신원을 확인할 수 없으므로, 애플리케이션이 알려온 이름이 아니라 아래의 대상 주소를 기준으로 판단하세요."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "정확히 이 대상 주소를 알고 신뢰하는 경우에만 승인하세요."
+
+msgid "Authorize MCP access"
+msgstr "MCP 액세스 승인"
+
+msgid "Plugin"
+msgstr "플러그인"
+
+msgid "Reported by the application (unverified)"
+msgstr "애플리케이션이 알려온 정보 (미확인)"
+
+msgid "The authorization code will be sent to"
+msgstr "인증 코드가 전송될 주소"

@@ -26,9 +26,6 @@ msgstr "Aktørtype"
 msgid "Admin endpoint"
 msgstr "Admin-endepunkt"
 
-msgid "After approving, you will be redirected to"
-msgstr "Etter godkjenning blir du omdirigert til"
-
 msgid "All toolsets"
 msgstr "Alle verktøysett"
 
@@ -122,9 +119,6 @@ msgstr "Ingen kall registrert i denne perioden."
 msgid "OAuth grants"
 msgstr "OAuth-tilganger"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Godkjenn bare hvis du gjenkjenner og stoler på dette målet."
-
 msgid "Read-only"
 msgstr "Skrivebeskyttet"
 
@@ -163,9 +157,6 @@ msgstr "Test og feilsøk MCP-serveren din interaktivt med MCP Inspector:"
 
 msgid "The authorization session is invalid or expired."
 msgstr "Autorisasjonsøkten er ugyldig eller utløpt."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Denne applikasjonen ber om tillatelse til å få tilgang til Vendure MCP-serveren din på dine vegne."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Dette tilbakekaller klientens tilgang umiddelbart. Klienten må autorisere på nytt for å koble til igjen."
@@ -208,3 +199,21 @@ msgstr "Kunne ikke tilbakekalle tilgangen; den kan allerede være fjernet"
 
 msgid "Request failed ({0})"
 msgstr "Forespørselen mislyktes ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "En applikasjon ber om tilgang med administratorrettigheter til Vendure MCP-serveren din. Vendure kan ikke verifisere applikasjonens identitet — vurder derfor ut fra destinasjonen nedenfor, og ikke navnet den oppgir."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Godkjenn bare hvis du gjenkjenner og stoler på nøyaktig denne destinasjonen."
+
+msgid "Authorize MCP access"
+msgstr "Autoriser MCP-tilgang"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Oppgitt av applikasjonen (ikke verifisert)"
+
+msgid "The authorization code will be sent to"
+msgstr "Autorisasjonskoden sendes til"

@@ -26,9 +26,6 @@ msgstr "Actortype"
 msgid "Admin endpoint"
 msgstr "Admin-endpoint"
 
-msgid "After approving, you will be redirected to"
-msgstr "Na goedkeuring wordt u doorgestuurd naar"
-
 msgid "All toolsets"
 msgstr "Alle toolsets"
 
@@ -122,9 +119,6 @@ msgstr "Geen aanroepen geregistreerd in deze periode."
 msgid "OAuth grants"
 msgstr "OAuth-toekenningen"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Keur alleen goed als u deze bestemming herkent en vertrouwt."
-
 msgid "Read-only"
 msgstr "Alleen-lezen"
 
@@ -163,9 +157,6 @@ msgstr "Test en debug uw MCP-server interactief met de MCP Inspector:"
 
 msgid "The authorization session is invalid or expired."
 msgstr "De autorisatiesessie is ongeldig of verlopen."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Deze applicatie vraagt toestemming om namens u toegang te krijgen tot uw Vendure MCP-server."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Hiermee wordt de toegang van de client onmiddellijk ingetrokken. De client moet opnieuw autoriseren om opnieuw verbinding te maken."
@@ -208,3 +199,21 @@ msgstr "Kan de toekenning niet intrekken; deze is mogelijk al verwijderd"
 
 msgid "Request failed ({0})"
 msgstr "Verzoek mislukt ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Een applicatie vraagt toegang met beheerdersrechten tot uw Vendure MCP-server. Vendure kan de identiteit van de applicatie niet verifiëren — beslis daarom op basis van de bestemming hieronder, niet op basis van de naam die de applicatie zelf opgeeft."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Keur alleen goed als u precies deze bestemming herkent en vertrouwt."
+
+msgid "Authorize MCP access"
+msgstr "MCP-toegang autoriseren"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Opgegeven door de applicatie (niet geverifieerd)"
+
+msgid "The authorization code will be sent to"
+msgstr "De autorisatiecode wordt verzonden naar"

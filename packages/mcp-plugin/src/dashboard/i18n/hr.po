@@ -26,9 +26,6 @@ msgstr "Vrsta izvršitelja"
 msgid "Admin endpoint"
 msgstr "Administratorska krajnja točka"
 
-msgid "After approving, you will be redirected to"
-msgstr "Nakon odobrenja bit ćete preusmjereni na"
-
 msgid "All toolsets"
 msgstr "Svi skupovi alata"
 
@@ -122,9 +119,6 @@ msgstr "U ovom razdoblju nema zabilježenih poziva."
 msgid "OAuth grants"
 msgstr "OAuth odobrenja"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Odobrite samo ako prepoznajete i vjerujete ovom odredištu."
-
 msgid "Read-only"
 msgstr "Samo za čitanje"
 
@@ -163,9 +157,6 @@ msgstr "Testirajte i otklanjajte pogreške na svom MCP poslužitelju interaktivn
 
 msgid "The authorization session is invalid or expired."
 msgstr "Sesija autorizacije nije važeća ili je istekla."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Ova aplikacija traži dopuštenje za pristup vašem Vendure MCP poslužitelju u vaše ime."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Time se odmah opoziva pristup klijenta. Klijent će se morati ponovno autorizirati kako bi se ponovno povezao."
@@ -208,3 +199,21 @@ msgstr "Odobrenje nije bilo moguće opozvati; možda je već uklonjeno"
 
 msgid "Request failed ({0})"
 msgstr "Zahtjev nije uspio ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Aplikacija zahtijeva pristup s administratorskim ovlastima vašem Vendure MCP poslužitelju. Vendure ne može provjeriti identitet aplikacije, zato odlučite na temelju odredišta prikazanog u nastavku, a ne na temelju imena koje aplikacija navodi."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Odobrite samo ako prepoznajete i vjerujete točno ovom odredištu."
+
+msgid "Authorize MCP access"
+msgstr "Autoriziraj MCP pristup"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Navela aplikacija (neprovjereno)"
+
+msgid "The authorization code will be sent to"
+msgstr "Autorizacijski kod bit će poslan na"

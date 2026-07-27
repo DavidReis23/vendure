@@ -26,9 +26,6 @@ msgstr "Tipo de actor"
 msgid "Admin endpoint"
 msgstr "Endpoint de administración"
 
-msgid "After approving, you will be redirected to"
-msgstr "Después de aprobar, serás redirigido a"
-
 msgid "All toolsets"
 msgstr "Todos los conjuntos de herramientas"
 
@@ -122,9 +119,6 @@ msgstr "No se registraron llamadas en este período."
 msgid "OAuth grants"
 msgstr "Concesiones de OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Aprueba solo si reconoces y confías en este destino."
-
 msgid "Read-only"
 msgstr "Solo lectura"
 
@@ -163,9 +157,6 @@ msgstr "Prueba y depura tu servidor MCP de forma interactiva con el MCP Inspecto
 
 msgid "The authorization session is invalid or expired."
 msgstr "La sesión de autorización no es válida o ha expirado."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Esta aplicación solicita permiso para acceder a tu servidor MCP de Vendure en tu nombre."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Esto revoca inmediatamente el acceso del cliente. El cliente deberá autorizar de nuevo para volver a conectarse."
@@ -208,3 +199,21 @@ msgstr "No se pudo revocar la concesión; es posible que ya se haya eliminado"
 
 msgid "Request failed ({0})"
 msgstr "La solicitud falló ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Una aplicación está solicitando acceso con permisos de administrador a tu servidor MCP de Vendure. Vendure no puede verificar la identidad de la aplicación, así que decide en función del destino que se muestra abajo, no del nombre que declara."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Apruébalo solo si reconoces este destino exacto y confías en él."
+
+msgid "Authorize MCP access"
+msgstr "Autorizar el acceso MCP"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Declarado por la aplicación (sin verificar)"
+
+msgid "The authorization code will be sent to"
+msgstr "El código de autorización se enviará a"

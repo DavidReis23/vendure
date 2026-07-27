@@ -26,9 +26,6 @@ msgstr "Aktör türü"
 msgid "Admin endpoint"
 msgstr "Yönetici uç noktası"
 
-msgid "After approving, you will be redirected to"
-msgstr "Onayladıktan sonra şuraya yönlendirileceksiniz:"
-
 msgid "All toolsets"
 msgstr "Tüm araç setleri"
 
@@ -122,9 +119,6 @@ msgstr "Bu dönemde kaydedilen çağrı yok."
 msgid "OAuth grants"
 msgstr "OAuth yetkileri"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Yalnızca bu hedefi tanıyor ve güveniyorsanız onaylayın."
-
 msgid "Read-only"
 msgstr "Salt okunur"
 
@@ -163,9 +157,6 @@ msgstr "MCP sunucunuzu MCP Inspector ile etkileşimli olarak test edin ve hata a
 
 msgid "The authorization session is invalid or expired."
 msgstr "Yetkilendirme oturumu geçersiz veya süresi dolmuş."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Bu uygulama, sizin adınıza Vendure MCP sunucunuza erişmek için izin istiyor."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Bu, istemcinin erişimini hemen iptal eder. İstemcinin yeniden bağlanmak için tekrar yetkilendirme yapması gerekir."
@@ -208,3 +199,21 @@ msgstr "Yetki iptal edilemedi; zaten kaldırılmış olabilir"
 
 msgid "Request failed ({0})"
 msgstr "İstek başarısız oldu ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Bir uygulama, Vendure MCP sunucunuza yönetici kapsamında erişim istiyor. Vendure uygulamanın kimliğini doğrulayamaz; bu nedenle kararınızı uygulamanın bildirdiği ada değil, aşağıdaki hedefe göre verin."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Yalnızca tam olarak bu hedefi tanıyor ve ona güveniyorsanız onaylayın."
+
+msgid "Authorize MCP access"
+msgstr "MCP erişimini yetkilendir"
+
+msgid "Plugin"
+msgstr "Eklenti"
+
+msgid "Reported by the application (unverified)"
+msgstr "Uygulama tarafından bildirildi (doğrulanmadı)"
+
+msgid "The authorization code will be sent to"
+msgstr "Yetkilendirme kodu şu adrese gönderilecek"

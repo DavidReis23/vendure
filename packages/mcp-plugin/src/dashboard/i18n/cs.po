@@ -26,9 +26,6 @@ msgstr "Typ aktéra"
 msgid "Admin endpoint"
 msgstr "Koncový bod administrace"
 
-msgid "After approving, you will be redirected to"
-msgstr "Po schválení budete přesměrováni na"
-
 msgid "All toolsets"
 msgstr "Všechny sady nástrojů"
 
@@ -122,9 +119,6 @@ msgstr "V tomto období nebyla zaznamenána žádná volání."
 msgid "OAuth grants"
 msgstr "Oprávnění OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Schvalte pouze v případě, že tento cíl znáte a důvěřujete mu."
-
 msgid "Read-only"
 msgstr "Pouze pro čtení"
 
@@ -163,9 +157,6 @@ msgstr "Testujte a laďte svůj MCP server interaktivně pomocí MCP Inspector:"
 
 msgid "The authorization session is invalid or expired."
 msgstr "Autorizační relace je neplatná nebo vypršela."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Tato aplikace žádá o oprávnění přistupovat k vašemu serveru Vendure MCP vaším jménem."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Tím se okamžitě odvolá přístup klienta. Klient se bude muset znovu autorizovat, aby se mohl znovu připojit."
@@ -208,3 +199,21 @@ msgstr "Oprávnění se nepodařilo odvolat; možná už bylo odstraněno"
 
 msgid "Request failed ({0})"
 msgstr "Požadavek selhal ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Aplikace žádá o přístup s oprávněními administrátora k vašemu serveru MCP Vendure. Vendure nemůže ověřit identitu aplikace, proto se rozhodujte podle cíle uvedeného níže, nikoli podle názvu, který aplikace uvádí."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Schvalte pouze v případě, že tento konkrétní cíl znáte a důvěřujete mu."
+
+msgid "Authorize MCP access"
+msgstr "Autorizovat přístup MCP"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Uvedeno aplikací (neověřeno)"
+
+msgid "The authorization code will be sent to"
+msgstr "Autorizační kód bude odeslán na"

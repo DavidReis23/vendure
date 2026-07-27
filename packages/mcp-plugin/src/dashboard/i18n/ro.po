@@ -26,9 +26,6 @@ msgstr "Tip de actor"
 msgid "Admin endpoint"
 msgstr "Endpoint admin"
 
-msgid "After approving, you will be redirected to"
-msgstr "După aprobare, veți fi redirecționat către"
-
 msgid "All toolsets"
 msgstr "Toate seturile de instrumente"
 
@@ -122,9 +119,6 @@ msgstr "Niciun apel înregistrat în această perioadă."
 msgid "OAuth grants"
 msgstr "Autorizări OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Aprobați numai dacă recunoașteți și aveți încredere în această destinație."
-
 msgid "Read-only"
 msgstr "Doar citire"
 
@@ -163,9 +157,6 @@ msgstr "Testați și depanați serverul MCP în mod interactiv cu MCP Inspector:
 
 msgid "The authorization session is invalid or expired."
 msgstr "Sesiunea de autorizare este invalidă sau a expirat."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Această aplicație solicită permisiunea de a accesa serverul dvs. Vendure MCP în numele dvs."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Aceasta revocă imediat accesul clientului. Clientul va trebui să autorizeze din nou pentru a se reconecta."
@@ -208,3 +199,21 @@ msgstr "Nu s-a putut revoca autorizarea; este posibil să fi fost deja eliminat�
 
 msgid "Request failed ({0})"
 msgstr "Cererea a eșuat ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "O aplicație solicită acces cu drepturi de administrator la serverul MCP Vendure. Vendure nu poate verifica identitatea aplicației, așa că decideți în funcție de destinația de mai jos, nu de numele pe care îl declară."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Aprobați numai dacă recunoașteți și aveți încredere în exact această destinație."
+
+msgid "Authorize MCP access"
+msgstr "Autorizează accesul MCP"
+
+msgid "Plugin"
+msgstr "Plugin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Declarat de aplicație (neverificat)"
+
+msgid "The authorization code will be sent to"
+msgstr "Codul de autorizare va fi trimis către"

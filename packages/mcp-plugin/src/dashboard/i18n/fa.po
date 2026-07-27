@@ -26,9 +26,6 @@ msgstr "نوع عامل"
 msgid "Admin endpoint"
 msgstr "نقطه پایانی مدیریت"
 
-msgid "After approving, you will be redirected to"
-msgstr "پس از تأیید، به این آدرس هدایت خواهید شد"
-
 msgid "All toolsets"
 msgstr "همه مجموعه‌ابزارها"
 
@@ -122,9 +119,6 @@ msgstr "در این بازه هیچ فراخوانی ثبت نشده است."
 msgid "OAuth grants"
 msgstr "مجوزهای OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "فقط در صورتی تأیید کنید که این مقصد را می‌شناسید و به آن اعتماد دارید."
-
 msgid "Read-only"
 msgstr "فقط‌خواندنی"
 
@@ -163,9 +157,6 @@ msgstr "سرور MCP خود را به‌صورت تعاملی با MCP Inspector
 
 msgid "The authorization session is invalid or expired."
 msgstr "نشست مجوز نامعتبر یا منقضی شده است."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "این برنامه اجازه دسترسی به سرور Vendure MCP شما را از طرف شما درخواست می‌کند."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "این کار دسترسی کلاینت را بلافاصله لغو می‌کند. کلاینت باید برای اتصال مجدد دوباره مجوز بگیرد."
@@ -208,3 +199,21 @@ msgstr "لغو مجوز ممکن نشد؛ ممکن است قبلاً حذف شد
 
 msgid "Request failed ({0})"
 msgstr "درخواست ناموفق بود ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "یک برنامه درخواست دسترسی در سطح مدیر به سرور MCP Vendure شما را دارد. Vendure نمی‌تواند هویت این برنامه را تأیید کند، پس بر اساس مقصد زیر تصمیم بگیرید، نه بر اساس نامی که خودش اعلام می‌کند."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "تنها در صورتی تأیید کنید که همین مقصد دقیق را می‌شناسید و به آن اعتماد دارید."
+
+msgid "Authorize MCP access"
+msgstr "اعطای مجوز دسترسی MCP"
+
+msgid "Plugin"
+msgstr "افزونه"
+
+msgid "Reported by the application (unverified)"
+msgstr "اعلام‌شده توسط برنامه (تأییدنشده)"
+
+msgid "The authorization code will be sent to"
+msgstr "کد مجوز به این نشانی ارسال می‌شود"

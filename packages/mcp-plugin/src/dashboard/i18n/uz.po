@@ -26,9 +26,6 @@ msgstr "Amaldor turi"
 msgid "Admin endpoint"
 msgstr "Admin so'nggi nuqtasi"
 
-msgid "After approving, you will be redirected to"
-msgstr "Tasdiqlaganingizdan so'ng quyidagiga yo'naltirilasiz"
-
 msgid "All toolsets"
 msgstr "Barcha asboblar to'plami"
 
@@ -122,9 +119,6 @@ msgstr "Bu davrda hech qanday chaqiruv qayd etilmagan."
 msgid "OAuth grants"
 msgstr "OAuth ruxsatlari"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Faqat ushbu manzilni tanisangiz va unga ishonsangiz tasdiqlang."
-
 msgid "Read-only"
 msgstr "Faqat o'qish"
 
@@ -163,9 +157,6 @@ msgstr "MCP serveringizni MCP Inspector yordamida interaktiv sinovdan o'tkazing 
 
 msgid "The authorization session is invalid or expired."
 msgstr "Avtorizatsiya seansi yaroqsiz yoki muddati tugagan."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Ushbu ilova sizning nomingizdan Vendure MCP serveringizga kirish uchun ruxsat so'ramoqda."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Bu mijozning kirish huquqini darhol bekor qiladi. Qayta ulanish uchun mijoz qaytadan avtorizatsiyadan o'tishi kerak bo'ladi."
@@ -208,3 +199,21 @@ msgstr "Ruxsatni bekor qilib bo'lmadi; u allaqachon o'chirilgan bo'lishi mumkin"
 
 msgid "Request failed ({0})"
 msgstr "So'rov bajarilmadi ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Ilova Vendure MCP serveringizga administrator darajasidagi kirishni so'rayapti. Vendure ilovaning shaxsini tasdiqlay olmaydi, shuning uchun ilova bildirgan nomga emas, quyidagi manzilga qarab qaror qabul qiling."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Faqat aynan shu manzilni tanisangiz va unga ishonsangiz tasdiqlang."
+
+msgid "Authorize MCP access"
+msgstr "MCP kirishini avtorizatsiya qilish"
+
+msgid "Plugin"
+msgstr "Plagin"
+
+msgid "Reported by the application (unverified)"
+msgstr "Ilova tomonidan bildirilgan (tasdiqlanmagan)"
+
+msgid "The authorization code will be sent to"
+msgstr "Avtorizatsiya kodi quyidagi manzilga yuboriladi"

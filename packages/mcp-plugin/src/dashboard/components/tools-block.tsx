@@ -109,6 +109,15 @@ export function ToolsBlock() {
             cell: ({ row }) => <Badge variant="outline">{row.original.toolset}</Badge>,
         },
         {
+            accessorKey: 'pluginSource',
+            header: () => <Trans>Plugin</Trans>,
+            // The plugin that registered the tool, so operators can tell built-in tools apart
+            // from ones their own plugins contribute.
+            cell: ({ row }) => (
+                <span className="text-sm text-muted-foreground">{row.original.pluginSource}</span>
+            ),
+        },
+        {
             id: 'safety',
             header: () => <Trans>Safety</Trans>,
             cell: ({ row }) => <SafetyBadge tool={row.original} />,

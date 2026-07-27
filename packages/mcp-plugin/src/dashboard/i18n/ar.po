@@ -26,9 +26,6 @@ msgstr "نوع الفاعل"
 msgid "Admin endpoint"
 msgstr "نقطة نهاية الإدارة"
 
-msgid "After approving, you will be redirected to"
-msgstr "بعد الموافقة، ستتم إعادة توجيهك إلى"
-
 msgid "All toolsets"
 msgstr "جميع مجموعات الأدوات"
 
@@ -122,9 +119,6 @@ msgstr "لا توجد استدعاءات مسجّلة في هذه الفترة."
 msgid "OAuth grants"
 msgstr "منح OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "لا توافق إلا إذا كنت تعرف هذه الوجهة وتثق بها."
-
 msgid "Read-only"
 msgstr "للقراءة فقط"
 
@@ -163,9 +157,6 @@ msgstr "اختبر خادم MCP الخاص بك وصحّح أخطاءه بشكل
 
 msgid "The authorization session is invalid or expired."
 msgstr "جلسة التفويض غير صالحة أو منتهية الصلاحية."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "يطلب هذا التطبيق الإذن للوصول إلى خادم Vendure MCP نيابةً عنك."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "يؤدي هذا إلى إلغاء وصول العميل فورًا. سيحتاج العميل إلى التفويض مرة أخرى لإعادة الاتصال."
@@ -208,3 +199,21 @@ msgstr "تعذّر إلغاء المنح؛ ربما تمت إزالتها بال
 
 msgid "Request failed ({0})"
 msgstr "فشل الطلب ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "يطلب أحد التطبيقات وصولاً بنطاق المدير إلى خادم MCP الخاص بـ Vendure. لا يمكن لـ Vendure التحقق من هوية التطبيق، لذا اتخذ قرارك بناءً على الوجهة الموضّحة أدناه، وليس على الاسم الذي يعلنه."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "لا توافق إلا إذا كنت تعرف هذه الوجهة بالتحديد وتثق بها."
+
+msgid "Authorize MCP access"
+msgstr "تفويض الوصول إلى MCP"
+
+msgid "Plugin"
+msgstr "الإضافة"
+
+msgid "Reported by the application (unverified)"
+msgstr "مُعلن من التطبيق (غير مُتحقَّق منه)"
+
+msgid "The authorization code will be sent to"
+msgstr "سيتم إرسال رمز التفويض إلى"

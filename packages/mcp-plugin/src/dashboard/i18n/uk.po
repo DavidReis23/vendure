@@ -26,9 +26,6 @@ msgstr "Тип суб'єкта"
 msgid "Admin endpoint"
 msgstr "Адміністративна кінцева точка"
 
-msgid "After approving, you will be redirected to"
-msgstr "Після схвалення вас буде перенаправлено на"
-
 msgid "All toolsets"
 msgstr "Усі набори інструментів"
 
@@ -122,9 +119,6 @@ msgstr "За цей період викликів не зафіксовано."
 msgid "OAuth grants"
 msgstr "Дозволи OAuth"
 
-msgid "Only approve if you recognise and trust this destination."
-msgstr "Схвалюйте, лише якщо ви впізнаєте цей пункт призначення та довіряєте йому."
-
 msgid "Read-only"
 msgstr "Лише читання"
 
@@ -163,9 +157,6 @@ msgstr "Тестуйте та налагоджуйте ваш MCP-сервер �
 
 msgid "The authorization session is invalid or expired."
 msgstr "Сесія авторизації недійсна або її термін дії минув."
-
-msgid "This application is requesting permission to access your Vendure MCP server on your behalf."
-msgstr "Цей застосунок запитує дозвіл на доступ до вашого сервера Vendure MCP від вашого імені."
 
 msgid "This immediately revokes the client's access. The client will need to authorize again to reconnect."
 msgstr "Це негайно відкликає доступ клієнта. Клієнту потрібно буде авторизуватися знову, щоб повторно підключитися."
@@ -208,3 +199,21 @@ msgstr "Не вдалося відкликати дозвіл; можливо, �
 
 msgid "Request failed ({0})"
 msgstr "Не вдалося виконати запит ({0})"
+
+msgid "An application is requesting admin-scoped access to your Vendure MCP server. Vendure cannot verify the application's identity, so decide based on the destination below — not the name it reports."
+msgstr "Застосунок запитує доступ із правами адміністратора до вашого MCP-сервера Vendure. Vendure не може перевірити справжність застосунку, тому ухвалюйте рішення за вказаною нижче адресою призначення, а не за назвою, яку повідомляє застосунок."
+
+msgid "Approve only if you recognise and trust this exact destination."
+msgstr "Схвалюйте лише тоді, коли ви впізнаєте саму цю адресу призначення й довіряєте їй."
+
+msgid "Authorize MCP access"
+msgstr "Авторизувати доступ MCP"
+
+msgid "Plugin"
+msgstr "Плагін"
+
+msgid "Reported by the application (unverified)"
+msgstr "Повідомлено застосунком (не перевірено)"
+
+msgid "The authorization code will be sent to"
+msgstr "Код авторизації буде надіслано на"
