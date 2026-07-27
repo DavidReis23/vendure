@@ -1,9 +1,8 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { ColumnDef } from '@tanstack/react-table';
 import {
     api,
     Badge,
+    type ColumnDef,
     DataTable,
     Input,
     Select,
@@ -13,6 +12,9 @@ import {
     SelectValue,
     Switch,
     toast,
+    useMutation,
+    useQuery,
+    useQueryClient,
 } from '@vendure/dashboard';
 import { useMemo, useState } from 'react';
 

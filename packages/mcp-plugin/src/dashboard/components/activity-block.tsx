@@ -1,7 +1,5 @@
 import { Trans } from '@lingui/react/macro';
-import { useQuery } from '@tanstack/react-query';
-import type { ColumnDef } from '@tanstack/react-table';
-import { api, Badge, DataTable, DateTime } from '@vendure/dashboard';
+import { api, Badge, type ColumnDef, DataTable, DateTime, useQuery } from '@vendure/dashboard';
 import { useState } from 'react';
 
 import { MCP_TOOL_CALL_LOGS_QUERY, McpToolCallLog, McpToolCallLogList } from '../queries';

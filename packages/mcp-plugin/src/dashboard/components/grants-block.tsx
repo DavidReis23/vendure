@@ -1,7 +1,17 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { ColumnDef } from '@tanstack/react-table';
-import { api, Badge, Button, ConfirmationDialog, DataTable, DateTime, toast } from '@vendure/dashboard';
+import {
+    api,
+    Badge,
+    Button,
+    type ColumnDef,
+    ConfirmationDialog,
+    DataTable,
+    DateTime,
+    toast,
+    useMutation,
+    useQuery,
+    useQueryClient,
+} from '@vendure/dashboard';
 
 import { MCP_OAUTH_GRANTS_QUERY, McpOauthGrantInfo, REVOKE_MCP_OAUTH_GRANT } from '../queries';
 

@@ -1,5 +1,4 @@
 import { Trans, useLingui } from '@lingui/react/macro';
-import { useQuery } from '@tanstack/react-query';
 import {
     api,
     Badge,
@@ -9,6 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
     Skeleton,
+    useQuery,
 } from '@vendure/dashboard';
 import { useState } from 'react';
 

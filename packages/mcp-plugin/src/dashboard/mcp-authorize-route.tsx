@@ -11,10 +11,10 @@ import {
     CopyableText,
     DashboardRouteDefinition,
     PermissionGuard,
+    z,
 } from '@vendure/dashboard';
 import { AlertTriangleIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { z } from 'zod';
 
 /**
  * Shape returned by the `/mcp/oauth/authorization-request` REST endpoint. Mirrors
