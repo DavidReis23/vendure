@@ -4,6 +4,8 @@ import {
     mergeConfig,
     RequestContext,
     RequestContextService,
+    StockAdjustment,
+    StockLevel,
     TransactionalConnection,
 } from '@vendure/core';
 import { createTestEnvironment, SimpleGraphQLClient } from '@vendure/testing';
@@ -554,6 +556,9 @@ describe('MCP built-in admin tools (direct mode)', () => {
         };
 
         const before = await readOnHand();
+        const adjustmentsBefore = await connection
+            .getRepository(adminCtx, StockAdjustment)
+            .count({ where: { productVariant: { id: variantId } } });
         const delta = 7;
 
         const adjusted = await postMcp(
@@ -574,6 +579,47 @@ describe('MCP built-in admin tools (direct mode)', () => {
         expect(returnedAtLocation?.stockOnHand).toBe(before + delta);
         // A fresh read confirms the change persisted, not just that the response echoed it.
         expect(await readOnHand()).toBe(before + delta);
+
+        // The change is recorded as a stock movement, as it would be if an administrator made the same
+        // adjustment in the dashboard, so it does not bypass the inventory history.
+        const adjustments = await connection.getRepository(adminCtx, StockAdjustment).find({
+            where: { productVariant: { id: variantId } },
+            order: { id: 'ASC' },
+        });
+        expect(adjustments.length).toBe(adjustmentsBefore + 1);
+        expect(adjustments[adjustments.length - 1]).toMatchObject({
+            quantity: delta,
+            stockLocationId,
+        });
+    });
+
+    it('adjust_stock refuses a variant that is not in the active channel', async () => {
+        const token = await adminAccessToken();
+        // The seeded variant belongs to the default channel only, so once this grant is switched to the
+        // second channel the variant is out of scope for it.
+        const switched = await postMcp(
+            baseUrl(),
+            'admin',
+            callTool('set_active_channel', { channelToken: secondChannelToken }, 1),
+            { token },
+        );
+        expect(switched.body.result.isError).toBeUndefined();
+
+        const stockLevel = () =>
+            connection
+                .getRepository(adminCtx, StockLevel)
+                .findOneOrFail({ where: { productVariantId: variantId, stockLocationId } });
+        const before = await stockLevel();
+
+        const response = await postMcp(
+            baseUrl(),
+            'admin',
+            callTool('adjust_stock', { variantId, locationId: stockLocationId, delta: 5, confirm: true }, 2),
+            { token },
+        );
+
+        expect(response.body.result.isError).toBe(true);
+        expect((await stockLevel()).stockOnHand).toBe(before.stockOnHand);
     });
 });
 

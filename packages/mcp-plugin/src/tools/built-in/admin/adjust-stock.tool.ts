@@ -1,5 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { ID, Permission, RequestContext, StockLevelService } from '@vendure/core';
+import {
+    ID,
+    idsAreEqual,
+    Permission,
+    ProductVariantService,
+    RequestContext,
+    StockLevelService,
+} from '@vendure/core';
 import { McpTool } from '@vendure/mcp-sdk';
 
 import { McpPluginToolHandler } from '../../../types';
@@ -35,15 +42,25 @@ interface AdjustStockInput {
 })
 @Injectable()
 export class AdjustStockTool implements McpPluginToolHandler<AdjustStockInput> {
-    constructor(private stockLevelService: StockLevelService) {}
+    constructor(
+        private productVariantService: ProductVariantService,
+        private stockLevelService: StockLevelService,
+    ) {}
 
     async execute(ctx: RequestContext, input: AdjustStockInput) {
-        await this.stockLevelService.updateStockOnHandForLocation(
-            ctx,
-            input.variantId,
-            input.locationId,
-            input.delta,
-        );
+        const levels = await this.stockLevelService.getStockLevelsForVariant(ctx, input.variantId);
+        const current = levels.find(level => idsAreEqual(level.stockLocationId, input.locationId));
+        await this.productVariantService.update(ctx, [
+            {
+                id: input.variantId,
+                stockLevels: [
+                    {
+                        stockLocationId: input.locationId,
+                        stockOnHand: (current?.stockOnHand ?? 0) + input.delta,
+                    },
+                ],
+            },
+        ]);
         return {
             stockLevels: await this.stockLevelService.getStockLevelsForVariant(ctx, input.variantId),
         };
