@@ -155,7 +155,9 @@ the list.
 **`discovery` (opt-in)** replaces the full list with exactly two meta-tools:
 
 - `search_tools({ query, limit? })` — returns the tools whose name, title, description, or author-supplied
-  keywords best match the query (ranked with BM25), each with its input schema. An empty query lists everything.
+  keywords best match the query (ranked with BM25), each with its input schema. `query` is required; passing it as
+  an empty string skips ranking and returns the first `limit` tools by name (`limit` defaults to 10 and is clamped
+  to 50), so it is a sample of what is available rather than the full list.
 - `execute_tool({ name, arguments })` — runs a tool found via `search_tools`, validating `arguments` against that
   tool's schema exactly as a direct call would.
 
