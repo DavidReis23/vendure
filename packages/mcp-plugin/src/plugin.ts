@@ -174,7 +174,8 @@ export class McpPlugin implements OnApplicationBootstrap {
                     `McpPlugin: oauth.storefrontConsentUrl cannot be a loopback URL ("${
                         oauth.storefrontConsentUrl ?? ''
                     }") in production. ` +
-                        `Set it to your public storefront consent page URL, or disable the shop toolset.`,
+                        `Set it to your public storefront consent page URL, or to any real URL you control if ` +
+                        `this deployment never uses shop OAuth.`,
                 );
             }
         }

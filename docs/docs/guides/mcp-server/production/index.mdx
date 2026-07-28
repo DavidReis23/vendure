@@ -14,8 +14,9 @@ the operational choices, not the field lists.
 
 ### Token secret
 
-`oauth.tokenSecret` is the server secret used to HMAC-hash every OAuth token at rest — no token is ever stored in
-plaintext. Generate it once and keep it stable:
+`oauth.tokenSecret` is the server secret used to HMAC-hash every MCP OAuth token at rest — authorization request
+tokens, authorization codes, access tokens and refresh tokens are all stored as hashes, never as the plaintext the
+client holds. Generate it once and keep it stable:
 
 ```sh
 openssl rand -base64 32
@@ -24,13 +25,25 @@ openssl rand -base64 32
 Provide it via an environment variable, not source. **Rotating the secret invalidates every stored MCP OAuth
 token**, so all agents must re-authorize — rotate deliberately, not on a schedule.
 
+One credential sits outside that scheme. Each grant mints a dedicated Vendure session, and Vendure stores session
+tokens in the clear, so that row is a working bearer credential for the ordinary Admin and Shop GraphQL APIs, where
+the grant's own expiry check does not apply. It is a one-way hash of the access token and is never sent to the
+client, so reaching it means reading the database — treat the `session` table as secret material. Its lifetime is
+bounded by the grant: revoking a grant deletes the session immediately, and the OAuth cleanup job deletes it once
+the grant expires.
+
 ### The issuer guard
 
-To stop a misconfigured server from issuing tokens against a localhost URL, the plugin refuses to boot in
-production (`NODE_ENV=production` or a production `ProcessContext`) unless both `oauth.issuer` and
-`oauth.storefrontConsentUrl` are set to real, non-loopback URLs. The defaults (`http://localhost:3500` and a
-`localhost` storefront URL) are development-only. For an admin-only deployment that never uses shop OAuth, either
-set a real `storefrontConsentUrl` anyway or explicitly disable the shop toolset.
+To stop a misconfigured server from issuing tokens against a localhost URL, the plugin refuses to boot when
+`NODE_ENV=production` unless both `oauth.issuer` and `oauth.storefrontConsentUrl` are set to real, non-loopback
+URLs. The defaults (`http://localhost:3500` and a `localhost` storefront URL) are development-only.
+
+`NODE_ENV` is the only trigger, so a deployment that never sets it never gets the guard. The check also runs in the
+server process only, not the worker, and only when an `oauth` block is configured.
+
+For an admin-only deployment that never uses shop OAuth, set `storefrontConsentUrl` to a real URL you control
+anyway. It is read only when a shop authorization begins — admin authorization redirects to `oauth.adminConsentPath`
+on the issuer instead — so a real value satisfies the guard without you having to build a storefront consent page.
 
 ### DNS-rebinding protection
 

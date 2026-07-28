@@ -46,9 +46,10 @@ but the authenticated shop and admin endpoints do not. See [`McpOauthOptions`](/
 for every field and its default.
 
 :::info
-In production the plugin refuses to boot with the default `http://localhost:3500` issuer or a loopback
-`storefrontConsentUrl`. Set both to your real public URLs, or explicitly disable the shop toolset for an
-admin-only deployment. This is covered in the [Production & Observability](/guides/mcp-server/production/) guide.
+When `NODE_ENV=production` the plugin refuses to boot with the default `http://localhost:3500` issuer or a loopback
+`storefrontConsentUrl`. Set both to real public URLs — including on an admin-only deployment, where
+`storefrontConsentUrl` is still checked even though nothing visits it. This is covered in the
+[Production & Observability](/guides/mcp-server/production/) guide.
 :::
 
 ### Database migration
