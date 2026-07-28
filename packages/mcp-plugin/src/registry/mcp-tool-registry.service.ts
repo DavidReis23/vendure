@@ -371,7 +371,8 @@ export class McpToolRegistryService implements OnApplicationBootstrap {
                 tools: [],
                 hint:
                     `No ${toolset} tools matched "${query}". ` +
-                    `Try a broader query, or call search_tools with an empty query to list everything available.`,
+                    `Try a broader query, or call search_tools with an empty query to list tools by name ` +
+                    `(capped at limit — default 10, maximum 50, so raise limit to see more).`,
             });
         }
         return this.successResult({ tools: matches });

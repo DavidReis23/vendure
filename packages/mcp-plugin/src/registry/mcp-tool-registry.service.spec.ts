@@ -551,13 +551,36 @@ describe('McpToolRegistryService', () => {
             expect((result.structuredContent as any).hint).toContain('No shop tools matched');
         });
 
-        it('empty query still lists every visible tool', async () => {
+        it('empty query lists visible tools by name', async () => {
             const { service } = build([wrapper(shopTool()), wrapper(shopTool({ name: 'other_thing' }))], {
                 toolExposure: 'discovery',
             });
             service.onApplicationBootstrap();
             const result = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', { query: '' });
-            expect((result.structuredContent as any).tools).toHaveLength(2);
+            const names = (result.structuredContent as any).tools.map((t: any) => t.name);
+            expect(names).toEqual(['get_thing', 'other_thing']);
+        });
+
+        // An empty query does NOT list everything: it is clamped to `limit` like any other query.
+        // Nothing covered this, which is how the "lists everything" claim survived in the docs and
+        // in the zero-result hint.
+        it('empty query is clamped to limit rather than listing everything', async () => {
+            const many = Array.from({ length: 12 }, (_, i) =>
+                wrapper(shopTool({ name: `tool_${String(i).padStart(2, '0')}` })),
+            );
+            const { service } = build(many, { toolExposure: 'discovery' });
+            service.onApplicationBootstrap();
+
+            const defaulted = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: '',
+            });
+            expect((defaulted.structuredContent as any).tools).toHaveLength(10);
+
+            const raised = await service.callTool({ ctx: makeCtx() }, 'shop', 'search_tools', {
+                query: '',
+                limit: 50,
+            });
+            expect((raised.structuredContent as any).tools).toHaveLength(12);
         });
     });
 
