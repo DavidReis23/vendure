@@ -201,7 +201,8 @@ The MCP admin surface — the GraphQL API and the dashboard overview — runs un
 permission, not the general Settings permission:
 
 - **`ReadMcpServer`** grants read access: the tool registry, active grants, call logs, and stats.
-- **`UpdateMcpServer`** grants mutations: toggling tools on/off, revoking grants, and pruning logs.
+- **`UpdateMcpServer`** grants mutations: toggling tools on/off, revoking grants, pruning logs, and
+  [approving admin consent requests](/guides/mcp-server/oauth-consent/#admin-consent-ships-with-the-dashboard).
 
 Grant `ReadMcpServer`/`UpdateMcpServer` to operators who manage the AI integration without giving them full
 store-settings access. Two behaviours are intentional and worth knowing: the tool-registry query returns the full

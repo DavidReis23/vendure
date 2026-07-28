@@ -12,7 +12,8 @@ tokens. The one part that needs a human is **consent**: a person has to approve 
 ## What works out of the box, and what you build
 
 - **Admin OAuth works out of the box.** The plugin ships a consent page inside the dashboard. An administrator
-  approves an agent using their existing dashboard session — no extra build, no separate login.
+  holding the `UpdateMcpServer` permission approves an agent using their existing dashboard session — no extra
+  build, no separate login.
 - **Shop OAuth requires a storefront consent page you build.** Because your storefront owns customer login,
   the plugin cannot render the customer-facing consent screen. You build one page against the
   [storefront callback contract](#storefront-consent-contract) below; it also handles customer sign-in (the
@@ -90,8 +91,23 @@ When an agent requests the **admin** toolset, the authorize step redirects to th
 `adminConsentPath` (default `/dashboard/mcp/authorize`). The page reads the pending request, shows the client
 name, its redirect URI, and the requested toolset, and lets the signed-in administrator **Approve** or **Deny**.
 Approval uses the administrator's existing dashboard session — there is no second login. Under the hood the page
-`POST`s `{ session, approved }` to `/mcp/oauth/admin-consent`; the server verifies the admin session, mints the
+`POST`s `{ session, approved }` to `/mcp/oauth/admin-consent`; the server checks the session, mints the
 authorization code, and returns the client redirect URL.
+
+Two things are enforced on that endpoint beyond being signed in:
+
+- **The `UpdateMcpServer` permission.** Being an authenticated administrator is not enough — approving is a
+  mutation of who can reach your store, so it is gated on the same permission as the other MCP mutations. The
+  dashboard route is guarded too, so an administrator holding only `ReadMcpServer` never sees the page; the
+  server-side check is what stops the same approval being submitted directly to the endpoint.
+- **A same-origin check.** The approval rides the administrator's login cookie, which the browser attaches
+  automatically, so the request's `Origin` (or `Referer`, if `Origin` is absent) must match the origin of your
+  configured `oauth.issuer`, otherwise it is a `403`. This blocks a third-party page from forging an approval.
+  Requests carrying an `Authorization` header skip the check, since those cannot be forged cross-site — that is
+  what lets an API client approve programmatically.
+
+The practical consequence of the second rule is that **`oauth.issuer` must be the origin your dashboard is served
+from**. If the two differ, the consent page's own submission looks cross-origin and every approval fails.
 
 Nothing to build here — it works as soon as the plugin is installed and the dashboard extension is active.
 
