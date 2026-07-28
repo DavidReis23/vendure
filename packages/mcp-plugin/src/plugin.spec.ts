@@ -3,7 +3,28 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { DEFAULT_OAUTH_OPTIONS } from './constants';
 import { McpPlugin } from './plugin';
+import { mcpOauthRetentionTask } from './tasks/mcp-oauth-retention.task';
 import { McpPluginOptions } from './types';
+
+/** Runs the plugin's real `configuration` hook against a minimal config and returns it. */
+async function runConfiguration() {
+    const config = {
+        authOptions: { customPermissions: [] },
+        settingsStoreFields: {},
+        schedulerOptions: { tasks: [] },
+    } as any;
+    await getConfigurationFunction(McpPlugin)?.(config);
+    return config;
+}
+
+/** Resolves a ScheduledTask's (function-form) schedule to "H:M" without cron-time-generator. */
+function resolveDayTime(task: any): string {
+    const schedule = task.options.schedule as (cron: {
+        everyDayAt: (h: number, m: number) => string;
+    }) => string;
+    return schedule({ everyDayAt: (h, m) => `${h}:${m}` });
+}
+
 describe('McpPlugin production config guard', () => {
     let savedOptions: McpPluginOptions;
     let savedNodeEnv: string | undefined;
@@ -91,25 +112,6 @@ describe('McpPlugin logging options + retention task', () => {
         McpPlugin.options = savedOptions;
     });
 
-    /** Runs the plugin's real `configuration` hook against a minimal config and returns it. */
-    async function runConfiguration() {
-        const config = {
-            authOptions: { customPermissions: [] },
-            settingsStoreFields: {},
-            schedulerOptions: { tasks: [] },
-        } as any;
-        await getConfigurationFunction(McpPlugin)?.(config);
-        return config;
-    }
-
-    /** Resolves a ScheduledTask's (function-form) schedule to "H:M" without cron-time-generator. */
-    function resolveDayTime(task: any): string {
-        const schedule = task.options.schedule as (cron: {
-            everyDayAt: (h: number, m: number) => string;
-        }) => string;
-        return schedule({ everyDayAt: (h, m) => `${h}:${m}` });
-    }
-
     it("applies logging defaults (ttlDays 30, capture 'metadata', 02:30 retention) when omitted", async () => {
         McpPlugin.init({});
         expect(McpPlugin.options.logging?.ttlDays).toBe(30);
@@ -155,5 +157,62 @@ describe('McpPlugin logging options + retention task', () => {
         new McpPlugin({ isServer: true } as ProcessContext).onApplicationBootstrap();
         expect(warnSpy).not.toHaveBeenCalled();
         warnSpy.mockRestore();
+    });
+});
+
+describe('McpPlugin OAuth retention task', () => {
+    let savedOptions: McpPluginOptions;
+    let savedSchedule: (typeof mcpOauthRetentionTask)['options']['schedule'];
+
+    beforeEach(() => {
+        savedOptions = McpPlugin.options;
+        // `configure()` mutates the shared task instance, so a schedule set by one case would
+        // otherwise leak into the next.
+        savedSchedule = mcpOauthRetentionTask.options.schedule;
+    });
+    afterEach(() => {
+        McpPlugin.options = savedOptions;
+        mcpOauthRetentionTask.configure({ schedule: savedSchedule });
+    });
+
+    const oauthTask = (config: any) =>
+        config.schedulerOptions.tasks.find((t: any) => t.id === 'mcp-oauth-retention');
+
+    // 03:30 rather than 02:30, so the two sweeps do not contend on every Vendure instance.
+    it('registers the OAuth retention task at 03:30 when no schedule is given', async () => {
+        McpPlugin.init({});
+        const config = await runConfiguration();
+        expect(oauthTask(config)).toBeDefined();
+        expect(resolveDayTime(oauthTask(config))).toBe('3:30');
+    });
+
+    it('registers the OAuth retention task with the configured schedule', async () => {
+        McpPlugin.init({
+            oauth: { tokenSecret: 'x', retentionSchedule: cron => cron.everyDayAt(5, 45) },
+        });
+        const config = await runConfiguration();
+        expect(resolveDayTime(oauthTask(config))).toBe('5:45');
+    });
+
+    // The task owns the 03:30 default, so merging the OAuth defaults must not supply one.
+    it('falls back to 03:30 when oauth is configured without a schedule', async () => {
+        McpPlugin.init({ oauth: { tokenSecret: 'x' } });
+        expect(McpPlugin.options.oauth?.retentionSchedule).toBeUndefined();
+        expect(resolveDayTime(oauthTask(await runConfiguration()))).toBe('3:30');
+    });
+
+    it('resolves grantRetentionDays, defaulting to 30 days', () => {
+        McpPlugin.init({ oauth: { tokenSecret: 'x' } });
+        expect(McpPlugin.options.oauth?.grantRetentionDays).toBe(30);
+
+        McpPlugin.init({ oauth: { tokenSecret: 'x', grantRetentionDays: 7 } });
+        expect(McpPlugin.options.oauth?.grantRetentionDays).toBe(7);
+    });
+
+    // The sweep exists to bound tables that fill up whether or not OAuth was configured.
+    it('registers the task even when oauth is not configured', async () => {
+        McpPlugin.init({});
+        expect(McpPlugin.options.oauth).toBeUndefined();
+        expect(oauthTask(await runConfiguration())).toBeDefined();
     });
 });

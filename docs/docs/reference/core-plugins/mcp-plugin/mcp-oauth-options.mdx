@@ -16,6 +16,8 @@ interface McpOauthOptions {
     authorizationRequestTtlSeconds?: number;
     adminConsentPath?: string;
     storefrontConsentUrl?: string;
+    grantRetentionDays?: number;
+    retentionSchedule?: McpRetentionSchedule;
 }
 ```
 
@@ -67,6 +69,24 @@ admin-scoped authorization requests.
 
 Absolute URL of the storefront consent page that approves customer-scoped
 authorization requests.
+### grantRetentionDays
+
+<MemberInfo kind="property" type={`number`} default={`30 (days)`}   />
+
+How long to keep a grant after it dies, by expiry or revocation, before the row itself is
+deleted. The grant is the only OAuth record with anything to audit, so it outlives the
+authorization it recorded.
+
+Each tool-call log references the grant it was made under, and that link is nulled when the
+grant is deleted. Set this at or above `McpLoggingOptions.ttlDays` if every retained
+log should still be able to resolve its grant.
+### retentionSchedule
+
+<MemberInfo kind="property" type={`McpRetentionSchedule`} default={`cron => cron.everyDayAt(3, 30)`}   />
+
+Schedule for the cleanup job that prunes OAuth records which can no longer be used: the
+Vendure session minted for each expired grant, expired or spent authorization requests and
+codes, and grants dead for longer than `grantRetentionDays`.
 
 
 </div>

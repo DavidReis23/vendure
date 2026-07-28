@@ -23,6 +23,13 @@ export const RATE_LIMIT_CACHE_PREFIX = 'mcp:rate-limit';
 
 export const mcpServerPermission = new CrudPermissionDefinition('McpServer');
 
+/** Turns the day-valued retention options into a cutoff date. */
+export const MS_PER_DAY = 86_400_000;
+/** Rows deleted per statement by a retention sweep — small enough not to lock a large table. */
+export const RETENTION_DELETE_BATCH_SIZE = 500;
+/** Default retention window for tool-call logs, in days. */
+export const DEFAULT_LOG_TTL_DAYS = 30;
+
 export const DEFAULT_OAUTH_OPTIONS = {
     issuer: 'http://localhost:3500',
     accessTokenTtlSeconds: 15 * 60,
@@ -31,6 +38,7 @@ export const DEFAULT_OAUTH_OPTIONS = {
     authorizationRequestTtlSeconds: 10 * 60,
     adminConsentPath: '/dashboard/mcp/authorize',
     storefrontConsentUrl: 'http://localhost:3000/mcp/authorize',
+    grantRetentionDays: 30,
 } as const;
 
 /**

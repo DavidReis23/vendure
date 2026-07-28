@@ -19,8 +19,15 @@ import {
     UserService,
 } from '@vendure/core';
 import { McpToolset } from '@vendure/mcp-sdk';
+import { ObjectLiteral, ObjectType } from 'typeorm';
 
-import { MCP_PLUGIN_OPTIONS, mcpServerPermission } from '../constants';
+import {
+    DEFAULT_OAUTH_OPTIONS,
+    MCP_PLUGIN_OPTIONS,
+    mcpServerPermission,
+    MS_PER_DAY,
+    RETENTION_DELETE_BATCH_SIZE,
+} from '../constants';
 import { McpAuthorizationCode } from '../entities/mcp-authorization-code.entity';
 import { McpAuthorizationRequest } from '../entities/mcp-authorization-request.entity';
 import { McpOauthClient } from '../entities/mcp-oauth-client.entity';
@@ -43,6 +50,13 @@ import { deriveHashKey, hashToken } from './token-hash';
  * Name recorded against the dedicated Vendure session minted for an MCP grant.
  */
 const MCP_SESSION_STRATEGY = 'mcp-dedicated-session';
+
+export interface McpOauthRetentionResult {
+    deletedSessions: number;
+    deletedRequests: number;
+    deletedCodes: number;
+    deletedGrants: number;
+}
 
 /**
  * Implements the MCP OAuth 2.1 authorization server.
@@ -364,6 +378,105 @@ export class McpOauthService {
             isAuthorized: false,
             authorizedAsOwnerOnly: true,
         });
+    }
+
+    async deleteExpiredOauthRecords(ctx: RequestContext): Promise<McpOauthRetentionResult> {
+        const deletedSessions = await this.deleteSessionsOfExpiredGrants(ctx);
+        const deletedRequests = await this.deleteSpentRecords(ctx, McpAuthorizationRequest);
+        const deletedCodes = await this.deleteSpentRecords(ctx, McpAuthorizationCode);
+        const deletedGrants = await this.deleteDeadGrants(ctx);
+        return { deletedSessions, deletedRequests, deletedCodes, deletedGrants };
+    }
+
+    /**
+     * Deletes the Vendure session minted for every grant that has passed `expiresAt`. Expiry
+     * is only ever checked at lookup, so without this the grant stops working for MCP while the
+     * session it minted stays valid against the ordinary GraphQL APIs for `sessionDuration`.
+     */
+    private deleteSessionsOfExpiredGrants(ctx: RequestContext): Promise<number> {
+        return this.deleteInBatches(ctx, Session, () =>
+            this.connection
+                .getRepository(ctx, McpOauthGrant)
+                .createQueryBuilder('grant')
+                .select('grant.vendureSessionId', 'id')
+                .innerJoin(Session, 'session', 'session.id = grant.vendureSessionId')
+                .where('grant.expiresAt <= :now', { now: new Date() })
+                .limit(RETENTION_DELETE_BATCH_SIZE)
+                .getRawMany<{ id: ID }>(),
+        );
+    }
+
+    /**
+     * Deletes authorization requests or codes that have expired or already been consumed. Their
+     * lifetimes are 10 minutes and 60 seconds, and once spent there is nothing in them to audit,
+     * so they are removed without a grace window.
+     */
+    private deleteSpentRecords<T extends ObjectLiteral>(
+        ctx: RequestContext,
+        entity: ObjectType<T>,
+    ): Promise<number> {
+        return this.deleteInBatches(ctx, entity, () =>
+            this.connection
+                .getRepository(ctx, entity)
+                .createQueryBuilder('record')
+                .select('record.id', 'id')
+                .where('record.expiresAt <= :now', { now: new Date() })
+                .orWhere('record.consumedAt IS NOT NULL')
+                .limit(RETENTION_DELETE_BATCH_SIZE)
+                .getRawMany<{ id: ID }>(),
+        );
+    }
+
+    /**
+     * Deletes grants that have been dead — expired or revoked — for longer than
+     * `oauth.grantRetentionDays`. The row outlives the authorization it recorded because it is the
+     * only OAuth record with audit value; the option's default matches the tool-call log window so
+     * that, out of the box, every retained log can still resolve the grant it points at.
+     */
+    private deleteDeadGrants(ctx: RequestContext): Promise<number> {
+        const retentionDays =
+            this.options.oauth?.grantRetentionDays ?? DEFAULT_OAUTH_OPTIONS.grantRetentionDays;
+        const cutoff = new Date(Date.now() - retentionDays * MS_PER_DAY);
+        return this.deleteInBatches(ctx, McpOauthGrant, () =>
+            this.connection
+                .getRepository(ctx, McpOauthGrant)
+                .createQueryBuilder('grant')
+                .select('grant.id', 'id')
+                .where('grant.expiresAt < :cutoff', { cutoff })
+                .orWhere('grant.revokedAt < :cutoff', { cutoff })
+                .limit(RETENTION_DELETE_BATCH_SIZE)
+                .getRawMany<{ id: ID }>(),
+        );
+    }
+
+    /**
+     * Deletes rows from `entity` by id, one batch at a time: `selectBatch` returns at most a
+     * batch of ids, and the loop ends when a short batch comes back. Same shape as the tool-call
+     * log sweep, which keeps each statement small enough not to lock a large table.
+     */
+    private async deleteInBatches<T extends ObjectLiteral>(
+        ctx: RequestContext,
+        entity: ObjectType<T>,
+        selectBatch: () => Promise<Array<{ id: ID }>>,
+    ): Promise<number> {
+        const repository = this.connection.getRepository(ctx, entity);
+        let totalDeleted = 0;
+        for (;;) {
+            const rows = await selectBatch();
+            if (rows.length === 0) {
+                break;
+            }
+            const result = await repository
+                .createQueryBuilder()
+                .delete()
+                .where('id IN (:...ids)', { ids: rows.map(row => row.id) })
+                .execute();
+            totalDeleted += result.affected ?? rows.length;
+            if (rows.length < RETENTION_DELETE_BATCH_SIZE) {
+                break;
+            }
+        }
+        return totalDeleted;
     }
 
     private async completeAuthorizationRequest(

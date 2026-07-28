@@ -1,12 +1,16 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { EventBus, ID, Logger, RequestContext, TransactionalConnection } from '@vendure/core';
 
-import { loggerCtx, MCP_PLUGIN_OPTIONS } from '../constants';
+import {
+    DEFAULT_LOG_TTL_DAYS,
+    loggerCtx,
+    MCP_PLUGIN_OPTIONS,
+    MS_PER_DAY,
+    RETENTION_DELETE_BATCH_SIZE,
+} from '../constants';
 import { McpToolCallLog } from '../entities/mcp-tool-call-log.entity';
 import { McpToolCallEvent } from '../events/mcp-tool-call.event';
 import { McpExecutionContext, McpPluginOptions, McpRegisteredTool, McpToolCallStatus } from '../types';
-
-const RETENTION_DELETE_BATCH_SIZE = 500;
 
 /** Input to the (Phase-6) tool-call logger. */
 export interface LogToolCallInput {
@@ -78,8 +82,8 @@ export class McpToolCallLogService {
     }
 
     async deleteExpiredToolCallLogs(ctx: RequestContext, channelId?: ID | null): Promise<number> {
-        const ttlDays = this.options.logging?.ttlDays ?? 30;
-        const cutoff = new Date(Date.now() - ttlDays * 86_400_000);
+        const ttlDays = this.options.logging?.ttlDays ?? DEFAULT_LOG_TTL_DAYS;
+        const cutoff = new Date(Date.now() - ttlDays * MS_PER_DAY);
         const repository = this.connection.getRepository(ctx, McpToolCallLog);
         let totalDeleted = 0;
         for (;;) {

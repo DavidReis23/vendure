@@ -85,13 +85,38 @@ export interface McpOauthOptions {
      * @default 'http://localhost:3000/mcp/authorize'
      */
     storefrontConsentUrl?: string;
+    /**
+     * @description
+     * How long to keep a grant after it dies, by expiry or revocation, before the row itself is
+     * deleted. The grant is the only OAuth record with anything to audit, so it outlives the
+     * authorization it recorded.
+     *
+     * Each tool-call log references the grant it was made under, and that link is nulled when the
+     * grant is deleted. Set this at or above {@link McpLoggingOptions.ttlDays} if every retained
+     * log should still be able to resolve its grant.
+     *
+     * @default 30 (days)
+     */
+    grantRetentionDays?: number;
+    /**
+     * @description
+     * Schedule for the cleanup job that prunes OAuth records which can no longer be used: the
+     * Vendure session minted for each expired grant, expired or spent authorization requests and
+     * codes, and grants dead for longer than `grantRetentionDays`.
+     *
+     * @default cron => cron.everyDayAt(3, 30)
+     */
+    retentionSchedule?: McpRetentionSchedule;
 }
 
 /**
  * OAuth options with all optional fields resolved to their defaults. Built by
- * {@link McpPlugin.init} and consumed by the internal `McpOauthService`.
+ * {@link McpPlugin.init} and consumed by the internal `McpOauthService`. The retention schedule
+ * is excluded: it configures a scheduled task, not the runtime behaviour of the OAuth server, and
+ * its default lives in the task itself.
  */
-export type ResolvedMcpOauthOptions = Required<McpOauthOptions>;
+export type ResolvedMcpOauthOptions = Required<Omit<McpOauthOptions, 'retentionSchedule'>> &
+    Pick<McpOauthOptions, 'retentionSchedule'>;
 
 /**
  * @description

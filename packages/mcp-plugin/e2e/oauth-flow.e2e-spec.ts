@@ -1,6 +1,9 @@
+import { ModuleRef } from '@nestjs/core';
 import {
     ConfigService,
+    Injector,
     mergeConfig,
+    RequestContext,
     RequestContextService,
     Session,
     TransactionalConnection,
@@ -12,10 +15,14 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import { initialData } from '../../../e2e-common/e2e-initial-data';
 import { TEST_SETUP_TIMEOUT_MS, testConfig } from '../../../e2e-common/test-config';
+import { MS_PER_DAY } from '../src/constants';
+import { McpAuthorizationCode } from '../src/entities/mcp-authorization-code.entity';
+import { McpAuthorizationRequest } from '../src/entities/mcp-authorization-request.entity';
 import { McpOauthGrant } from '../src/entities/mcp-oauth-grant.entity';
-import { McpOauthService } from '../src/oauth/oauth.service';
+import { McpOauthRetentionResult, McpOauthService } from '../src/oauth/oauth.service';
 import { deriveHashKey, hashToken } from '../src/oauth/token-hash';
 import { McpPlugin } from '../src/plugin';
+import { mcpOauthRetentionTask } from '../src/tasks/mcp-oauth-retention.task';
 
 import { runAuthorizationCodeFlow } from './utils/oauth-test-client';
 
@@ -25,7 +32,9 @@ const ISSUER = 'http://localhost:3500';
 
 describe('McpPlugin OAuth end-to-end flow', () => {
     const config = mergeConfig(testConfig(), {
-        plugins: [McpPlugin.init({ oauth: { tokenSecret: TOKEN_SECRET } })],
+        // A deliberately short log retention: how long dead grants are kept is governed by
+        // `oauth.grantRetentionDays`, not by how long tool-call logs are kept.
+        plugins: [McpPlugin.init({ oauth: { tokenSecret: TOKEN_SECRET }, logging: { ttlDays: 1 } })],
     });
     const { server, adminClient } = createTestEnvironment(config);
 
@@ -53,6 +62,18 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     });
 
     const baseUrl = () => `http://localhost:${config.apiOptions.port}`;
+
+    /** The grant row backing an access token the flow issued. */
+    const grantFor = async (ctx: RequestContext, accessToken: string): Promise<McpOauthGrant> => {
+        const grant = await server.app
+            .get(TransactionalConnection)
+            .getRepository(ctx, McpOauthGrant)
+            .findOne({ where: { accessTokenHash: lookupHash(accessToken) } });
+        if (!grant) {
+            throw new Error('Expected a minted McpOauthGrant for the access token');
+        }
+        return grant;
+    };
 
     /** Runs the full admin authorization-code flow and returns the resulting tokens. */
     const runFlow = () =>
@@ -198,5 +219,116 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             throw new Error('Expected the McpOauthGrant to persist after re-mint');
         }
         expect(mcpSessionAfter.vendureSessionId).not.toBe(sessionIdBefore);
+    });
+
+    it('deletes the Vendure session behind a grant that has passed its expiry', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+
+        const { access_token } = await runFlow();
+        const grantRepo = connection.getRepository(ctx, McpOauthGrant);
+        const grant = await grantRepo.findOne({ where: { accessTokenHash: lookupHash(access_token) } });
+        if (!grant) {
+            throw new Error('Expected a minted McpOauthGrant for the access token');
+        }
+        const sessionRepo = connection.getRepository(ctx, Session);
+        expect(await sessionRepo.findOne({ where: { id: grant.vendureSessionId } })).toBeTruthy();
+
+        await grantRepo.update({ id: grant.id }, { expiresAt: new Date(Date.now() - MS_PER_DAY) });
+
+        await oauth.deleteExpiredOauthRecords(ctx);
+
+        expect(await sessionRepo.findOne({ where: { id: grant.vendureSessionId } })).toBeNull();
+        // Only sessions an expired grant points at are in scope — the administrator's own
+        // session is not referenced by any grant and must survive.
+        expect(await sessionRepo.findOne({ where: { token: superAdminToken } })).toBeTruthy();
+    });
+
+    // A completed flow leaves one consumed request and one consumed code behind. Both are spent
+    // protocol ephemera, and nothing ever removed them.
+    it('deletes the authorization request and code a completed flow consumed', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+
+        // Drain what the earlier tests' flows left behind, so the counts below are exact.
+        await oauth.deleteExpiredOauthRecords(ctx);
+
+        const { request_token, code } = await runFlow();
+        const requestRepo = connection.getRepository(ctx, McpAuthorizationRequest);
+        const codeRepo = connection.getRepository(ctx, McpAuthorizationCode);
+        const findRequest = () => requestRepo.findOne({ where: { requestToken: lookupHash(request_token) } });
+        const findCode = () => codeRepo.findOne({ where: { code: lookupHash(code) } });
+        expect(await findRequest()).toBeTruthy();
+        expect(await findCode()).toBeTruthy();
+
+        const result = await oauth.deleteExpiredOauthRecords(ctx);
+
+        expect(await findRequest()).toBeNull();
+        expect(await findCode()).toBeNull();
+        // The grant this flow minted is still live, so neither it nor its session is touched.
+        expect(result).toEqual({
+            deletedSessions: 0,
+            deletedRequests: 1,
+            deletedCodes: 1,
+            deletedGrants: 0,
+        });
+    });
+
+    // The grant row is the only OAuth record carrying audit value, so it outlives its own expiry
+    // and goes only once every tool-call log that could reference it has itself been pruned —
+    // i.e. once it has been dead longer than `logging.ttlDays` (30 by default here).
+    it('keeps a recently-dead grant and deletes one dead longer than the retention window', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+        const grantRepo = connection.getRepository(ctx, McpOauthGrant);
+
+        const recent = await grantFor(ctx, (await runFlow()).access_token);
+        const longDead = await grantFor(ctx, (await runFlow()).access_token);
+        await grantRepo.update({ id: recent.id }, { expiresAt: new Date(Date.now() - 2 * MS_PER_DAY) });
+        await grantRepo.update({ id: longDead.id }, { expiresAt: new Date(Date.now() - 31 * MS_PER_DAY) });
+
+        const result = await oauth.deleteExpiredOauthRecords(ctx);
+
+        expect(await grantRepo.findOne({ where: { id: recent.id } })).toBeTruthy();
+        expect(await grantRepo.findOne({ where: { id: longDead.id } })).toBeNull();
+        expect(result.deletedGrants).toBe(1);
+        // Both grants were past expiry, so both minted sessions go regardless of the window.
+        expect(result.deletedSessions).toBe(2);
+    });
+
+    // The scheduled task is the only production caller, so prove the wiring end to end.
+    it('prunes when driven through the scheduled task', async () => {
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+        const grantRepo = connection.getRepository(ctx, McpOauthGrant);
+
+        const grant = await grantFor(ctx, (await runFlow()).access_token);
+        await grantRepo.update({ id: grant.id }, { expiresAt: new Date(Date.now() - MS_PER_DAY) });
+
+        const injector = new Injector(server.app.get(ModuleRef));
+        const result = (await mcpOauthRetentionTask.execute(injector)) as McpOauthRetentionResult;
+
+        expect(result.deletedSessions).toBe(1);
+        expect(
+            await connection.getRepository(ctx, Session).findOne({ where: { id: grant.vendureSessionId } }),
+        ).toBeNull();
+    });
+
+    it('deletes a grant revoked longer ago than the retention window', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+        const grantRepo = connection.getRepository(ctx, McpOauthGrant);
+
+        const grant = await grantFor(ctx, (await runFlow()).access_token);
+        // Revocation already removed the session; only the row's own retention is at stake here.
+        await grantRepo.update({ id: grant.id }, { revokedAt: new Date(Date.now() - 31 * MS_PER_DAY) });
+
+        await oauth.deleteExpiredOauthRecords(ctx);
+
+        expect(await grantRepo.findOne({ where: { id: grant.id } })).toBeNull();
     });
 });

@@ -11,6 +11,7 @@ import {
 import { adminApiExtensions } from './api/api-extensions';
 import { McpAdminResolver } from './api/mcp-admin.resolver';
 import {
+    DEFAULT_LOG_TTL_DAYS,
     DEFAULT_OAUTH_OPTIONS,
     DEFAULT_RATE_LIMIT_OPTIONS,
     DEFAULT_TOOL_EXPOSURE,
@@ -32,6 +33,7 @@ import { McpOauthController } from './oauth/oauth.controller';
 import { McpOauthService } from './oauth/oauth.service';
 import { McpRateLimiterService } from './rate-limit/mcp-rate-limiter.service';
 import { McpToolRegistryService } from './registry/mcp-tool-registry.service';
+import { mcpOauthRetentionTask } from './tasks/mcp-oauth-retention.task';
 import { mcpToolCallLogRetentionTask } from './tasks/mcp-tool-call-log-retention.task';
 import { mcpBuiltInToolProviders } from './tools/built-in/providers';
 import { McpTransportController } from './transport/mcp-transport.controller';
@@ -95,6 +97,9 @@ import { McpPluginOptions, McpRateLimitOptions } from './types';
             mcpToolCallLogRetentionTask.configure({
                 schedule: McpPlugin.options.logging?.retentionSchedule,
             }),
+            mcpOauthRetentionTask.configure({
+                schedule: McpPlugin.options.oauth?.retentionSchedule,
+            }),
         );
         return config;
     },
@@ -112,7 +117,7 @@ export class McpPlugin implements OnApplicationBootstrap {
             rateLimits: McpPlugin.resolveRateLimits(options.rateLimits),
             dnsRebinding: options.dnsRebinding,
             logging: {
-                ttlDays: options.logging?.ttlDays ?? 30,
+                ttlDays: options.logging?.ttlDays ?? DEFAULT_LOG_TTL_DAYS,
                 capture: options.logging?.capture ?? 'metadata',
                 redact: options.logging?.redact,
                 retentionSchedule: options.logging?.retentionSchedule,
