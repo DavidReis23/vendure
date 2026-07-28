@@ -76,7 +76,33 @@ export class McpRateLimiterService {
      * without consuming. Otherwise increments every bucket and returns `undefined`.
      */
     async checkRateLimit(input: RateLimitInput): Promise<McpRateLimitExceeded | undefined> {
-        const checks = this.buildRateLimitChecks(input);
+        return this.runChecks(
+            this.buildRateLimitChecks(input),
+            input.subject ?? input.toolNames?.join(', ') ?? 'MCP request',
+        );
+    }
+
+    /**
+     * Charges the anonymous-IP bucket alone, without a resolved context. The transport calls this
+     * before it builds one for an anonymous shop request, because building it mints a Vendure session
+     * row — the write belongs inside the limit rather than behind it. This is the only place that
+     * bucket is charged; {@link buildSharedBucketChecks} deliberately leaves it out.
+     */
+    async enforceAnonymousIpRateLimit(endpoint: McpToolset, clientIp?: string): Promise<void> {
+        const check = this.buildAnonymousIpCheck(endpoint, this.ipKey(clientIp));
+        if (!check) {
+            return;
+        }
+        const exceeded = await this.runChecks([check], 'MCP request');
+        if (exceeded) {
+            throw new McpRateLimitExceededError(exceeded);
+        }
+    }
+
+    private async runChecks(
+        checks: RateLimitCheck[],
+        subject: string,
+    ): Promise<McpRateLimitExceeded | undefined> {
         if (checks.length === 0) {
             return undefined;
         }
@@ -87,7 +113,6 @@ export class McpRateLimiterService {
         const exceeded = bucketStates.find(({ check, state }) => state != null && state.count >= check.rpm);
         if (exceeded?.state) {
             const retryAfterSeconds = Math.max(1, Math.ceil((exceeded.state.resetAt - now) / 1000));
-            const subject = input.subject ?? input.toolNames?.join(', ') ?? 'MCP request';
             return {
                 message: `Rate limit exceeded for ${subject} (${exceeded.check.scope}). Retry after ${retryAfterSeconds} seconds.`,
                 retryAfterSeconds,
@@ -110,9 +135,11 @@ export class McpRateLimiterService {
     }
 
     /**
-     * Session, OAuth-client, and anonymous-IP buckets. These are shared across every tool call in a
-     * request, so callers that only want the per-tool buckets checked pass `includeSharedBuckets: false`
-     * to skip them.
+     * Session and OAuth-client buckets. These are shared across every tool call in a request, so
+     * callers that only want the per-tool buckets checked pass `includeSharedBuckets: false` to skip
+     * them. The anonymous-IP bucket is absent by design: it applies to exactly the requests the
+     * transport charges at the edge (see {@link enforceAnonymousIpRateLimit}), and charging it here
+     * too would count the same request twice.
      */
     private buildSharedBucketChecks(input: RateLimitInput): RateLimitCheck[] {
         if (input.includeSharedBuckets === false) {
@@ -138,16 +165,17 @@ export class McpRateLimiterService {
                 scope: 'OAuth client',
             });
         }
-        const anonymousIp = rateLimits.anonymousIp;
-        const anonymousIpRpm = anonymousIp === false ? 0 : (anonymousIp?.rpm ?? 0);
-        if (!clientKey && endpoint === 'shop' && anonymousIpRpm > 0) {
-            checks.push({
-                key: `anonymous-ip:${endpoint}:${this.ipKey(input.executionContext)}`,
-                rpm: anonymousIpRpm,
-                scope: 'anonymous IP',
-            });
-        }
         return checks;
+    }
+
+    /** The anonymous-IP bucket for an endpoint, or `undefined` when it does not apply. */
+    private buildAnonymousIpCheck(endpoint: McpToolset, ipKey: string): RateLimitCheck | undefined {
+        const anonymousIp = this.options.rateLimits?.anonymousIp;
+        const rpm = anonymousIp === false ? 0 : (anonymousIp?.rpm ?? 0);
+        if (endpoint !== 'shop' || rpm <= 0) {
+            return undefined;
+        }
+        return { key: `anonymous-ip:${endpoint}:${ipKey}`, rpm, scope: 'anonymous IP' };
     }
 
     /** One bucket per name in `input.toolNames`, keyed by actor+session (see {@link toolActorKey}). */
@@ -212,11 +240,11 @@ export class McpRateLimiterService {
         const sessionKey = this.sessionKey(executionContext);
         return clientKey
             ? `client:${clientKey}:session:${sessionKey}`
-            : `anonymous-ip:${this.ipKey(executionContext)}:session:${sessionKey}`;
+            : `anonymous-ip:${this.ipKey(executionContext.clientIp)}:session:${sessionKey}`;
     }
 
-    private ipKey(executionContext: McpExecutionContext): string {
-        return executionContext.clientIp ?? 'unknown';
+    private ipKey(clientIp?: string): string {
+        return clientIp ?? 'unknown';
     }
 
     private cacheKey(key: string): string {

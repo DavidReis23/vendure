@@ -81,8 +81,18 @@ Things to know before you tune these:
 - **Behind a reverse proxy, enable Vendure's `trustProxy`** so `req.ip` reports the real client address rather
   than the proxy's. There is no plugin-level proxy-header option — this is a core Vendure setting.
 
-When a request is rate-limited during the MCP handshake, the client receives JSON-RPC error `-32029` with a
-retry hint. In-tool rate-limit rejections arrive as a normal error result on the tool call.
+What a caller sees when it hits a limit depends on how far the request got.
+
+Most refusals happen before any tool runs. The anonymous-IP limit is checked first of all, so an anonymous
+caller is counted before Vendure creates a session for it, and the calls a client makes to set itself up
+(`initialize`, `tools/list` and the like) are checked straight after. Both refuse with JSON-RPC error `-32029`,
+which carries the number of seconds to wait before retrying.
+
+A request that already reached a tool is refused inside the tool call, so the client gets a failed tool result
+rather than a protocol error. That is what the MCP spec asks for.
+
+Notifications are the exception. A notification is a message the client sends without expecting an answer, so
+there is no reply to put an error into; those are refused with HTTP 429.
 
 ## Logging
 

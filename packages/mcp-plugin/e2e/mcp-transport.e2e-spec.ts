@@ -1,5 +1,5 @@
-import { mergeConfig } from '@vendure/core';
-import { createTestEnvironment } from '@vendure/testing';
+import { AnonymousSession, mergeConfig, TransactionalConnection } from '@vendure/core';
+import { createTestEnvironment, TestServer } from '@vendure/testing';
 import { gql } from 'graphql-tag';
 import path from 'path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
@@ -22,6 +22,10 @@ const CHANNEL_TOKEN_HEADER = 'vendure-token';
 
 const callTool = (name: string, args: Record<string, unknown> = {}, id = 1) =>
     rpc('tools/call', { name, arguments: args }, id);
+
+/** Anonymous session rows are the thing an unmetered public endpoint accumulates, so tests count them. */
+const countAnonymousSessions = (server: TestServer) =>
+    server.app.get(TransactionalConnection).rawConnection.getRepository(AnonymousSession).count();
 
 describe('MCP transport (auth, session, channel, destructive)', () => {
     const options: McpPluginOptions = { oauth: { tokenSecret: TOKEN_SECRET } };
@@ -184,12 +188,90 @@ describe('MCP transport rate limiting', () => {
         expect(tripped.body.error.data.scope).toBe('anonymous IP');
     });
 
+    it('refuses a request once the bucket is spent without minting a session for it', async () => {
+        // The anonymous-IP bucket is already spent by the previous test (60s window). The refusal has
+        // to come before the context is built, because building it writes an anonymous session row.
+        const before = await countAnonymousSessions(server);
+        const refused = await postMcp(baseUrl(), 'shop', rpc('ping', {}, 4));
+        expect(refused.body.error.code).toBe(-32029);
+        expect(await countAnonymousSessions(server)).toBe(before);
+    });
+});
+
+describe('MCP transport anonymous session metering', () => {
+    const options: McpPluginOptions = {
+        oauth: { tokenSecret: TOKEN_SECRET },
+        rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 3 } },
+    };
+    const config = mergeConfig(testConfig(), { plugins: [McpTestToolsPlugin, McpPlugin.init(options)] });
+    const { server } = createTestEnvironment(config);
+    const baseUrl = () => `http://localhost:${config.apiOptions.port}`;
+
+    beforeAll(async () => {
+        McpPlugin.init(options);
+        await server.init({ initialData, productsCsvPath, customerCount: 1 });
+    }, TEST_SETUP_TIMEOUT_MS);
+
+    afterAll(async () => {
+        await server.destroy();
+    });
+
+    it('meters a notification flood and stops minting anonymous sessions', async () => {
+        // A notification carries no id, so it never produces a JSON-RPC response — but it does reach
+        // the transport, which mints a session for it. anonymousIp rpm = 3, so at most three of these
+        // six posts may be served.
+        const notification = { jsonrpc: '2.0', method: 'notifications/initialized' };
+        const before = await countAnonymousSessions(server);
+
+        const statuses: number[] = [];
+        for (let i = 0; i < 6; i++) {
+            statuses.push((await postMcp(baseUrl(), 'shop', notification)).status);
+        }
+
+        expect((await countAnonymousSessions(server)) - before).toBeLessThanOrEqual(3);
+        expect(statuses.filter(status => status === 429).length).toBeGreaterThan(0);
+    });
+});
+
+describe('MCP transport per-tool rate limiting', () => {
+    const options: McpPluginOptions = {
+        oauth: { tokenSecret: TOKEN_SECRET },
+        rateLimits: {
+            perSession: { rpm: 0 },
+            perClient: { rpm: 0 },
+            anonymousIp: false,
+            perTool: { shop_echo: { rpm: 1 } },
+        },
+    };
+    const config = mergeConfig(testConfig(), { plugins: [McpTestToolsPlugin, McpPlugin.init(options)] });
+    const { server } = createTestEnvironment(config);
+    const baseUrl = () => `http://localhost:${config.apiOptions.port}`;
+
+    beforeAll(async () => {
+        McpPlugin.init(options);
+        await server.init({ initialData, productsCsvPath, customerCount: 1 });
+    }, TEST_SETUP_TIMEOUT_MS);
+
+    afterAll(async () => {
+        await server.destroy();
+    });
+
     it('a tool-path rate limit flattens to isError (no -32029 code)', async () => {
-        // The anonymous-IP bucket is already tripped from the previous test (60s window), so a
-        // tools/call from the same IP is rejected inside the registry and surfaces as isError.
-        const res = await postMcp(baseUrl(), 'shop', callTool('shop_echo', { text: 'x' }, 1));
-        expect(res.body.error).toBeUndefined();
-        expect(res.body.result.isError).toBe(true);
-        expect(res.body.result.content[0].text).toMatch(/Rate limit exceeded/);
+        // Per-tool buckets are keyed by session, so the second call threads the session token the
+        // first one issued — as a real client would — to land in the same bucket.
+        const first = await postMcp(baseUrl(), 'shop', callTool('shop_echo', { text: 'x' }, 1));
+        expect(first.body.result.isError).toBeUndefined();
+        const sessionToken = first.headers.get(AUTH_TOKEN_HEADER) as string;
+        expect(sessionToken).toBeTruthy();
+
+        // Per-tool limits are enforced inside the registry, after the SDK has dispatched the call, and
+        // the SDK strips custom error codes from anything thrown there — so exceeding one surfaces as
+        // isError content rather than as a -32029 JSON-RPC error.
+        const second = await postMcp(baseUrl(), 'shop', callTool('shop_echo', { text: 'x' }, 2), {
+            headers: { [AUTH_TOKEN_HEADER]: sessionToken },
+        });
+        expect(second.body.error).toBeUndefined();
+        expect(second.body.result.isError).toBe(true);
+        expect(second.body.result.content[0].text).toMatch(/Rate limit exceeded/);
     });
 });

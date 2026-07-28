@@ -38,9 +38,9 @@ interface JsonRpcError {
 
 /**
  * @description
- * HTTP transport for the MCP server. Owns authentication, anonymous shop context, the handshake
- * rate-limit pre-check (kept at controller altitude so the `-32029` `error.data` survives), and the
- * DNS-rebinding front guard. It then delegates JSON-RPC handling to the v2 SDK handler via
+ * HTTP transport for the MCP server. Owns authentication, anonymous shop context, the anonymous-IP
+ * gate and the handshake rate-limit pre-check (both kept at controller altitude so the `-32029`
+ * `error.data` survives), and the DNS-rebinding front guard. It then delegates JSON-RPC handling to the v2 SDK handler via
  * `toNodeHandler`, passing the resolved Vendure context through the SDK's pass-through `authInfo`.
  */
 @Controller('mcp')
@@ -121,8 +121,24 @@ export class McpTransportController {
             return;
         }
 
-        // 2. Authenticate and build the execution context.
         const token = this.getBearerToken(this.getHeader(headers, 'authorization'));
+
+        // 2. Meter anonymous shop traffic by IP before anything else touches the database. Building
+        // the context below mints a Vendure session row when the caller has no usable session, so the
+        // write has to sit inside the limit rather than behind it.
+        if (toolset === 'shop' && !token) {
+            try {
+                await this.rateLimiter.enforceAnonymousIpRateLimit(toolset, this.getClientIp(req));
+            } catch (e) {
+                if (!(e instanceof McpRateLimitExceededError)) {
+                    throw e;
+                }
+                this.sendRateLimitError(res, body, e);
+                return;
+            }
+        }
+
+        // 3. Authenticate and build the execution context.
         let executionContext: McpExecutionContext;
         if (toolset === 'admin') {
             if (!token) {
@@ -147,41 +163,37 @@ export class McpTransportController {
             executionContext = { ctx, clientIp: this.getClientIp(req) };
         }
 
-        // 3. Handshake rate-limit pre-check (only meaningful for JSON bodies we can parse).
+        // 4. Handshake rate-limit pre-check (only meaningful for JSON bodies we can parse).
         const contentType = this.getHeader(headers, 'content-type') ?? '';
         const isJson = contentType.includes('application/json');
         const parsedBody = isJson ? body : undefined;
         if (isJson) {
-            const rateLimitError = await this.preCheckHandshakeRateLimit(body, toolset, executionContext);
-            if (rateLimitError) {
-                res.status(200);
-                res.setHeader('Content-Type', 'application/json');
-                res.send(JSON.stringify(rateLimitError));
+            const exceeded = await this.preCheckHandshakeRateLimit(body, toolset, executionContext);
+            if (exceeded) {
+                this.sendRateLimitError(res, body, exceeded);
                 return;
             }
         }
 
-        // 4. Attach the resolved context as pass-through authInfo and delegate to the SDK handler.
+        // 5. Attach the resolved context as pass-through authInfo and delegate to the SDK handler.
         (req as Request & { auth?: AuthInfo }).auth = this.buildAuthInfo(executionContext, toolset, token);
         await this.nodeHandler(req, res, parsedBody);
     }
 
     /**
-     * Enforces the per-subject rate limit for handshake/protocol methods (everything except
-     * `tools/call` and notifications). Returns a JSON-RPC `-32029` error to send directly (preserving
-     * `error.data`) when a bucket is exceeded, or `undefined` to proceed.
+     * Enforces the per-subject rate limit for every method except `tools/call`, which the registry
+     * funnel owns. Notifications are charged too: they carry no id and get no reply, but they still
+     * reach the transport, so leaving them free left the endpoint hammerable for nothing.
      */
     private async preCheckHandshakeRateLimit(
         body: unknown,
         toolset: McpToolset,
         executionContext: McpExecutionContext,
-    ): Promise<JsonRpcError | undefined> {
+    ): Promise<McpRateLimitExceededError | undefined> {
         const messages = Array.isArray(body) ? body : [body];
         for (const message of messages) {
-            const request = message as { method?: unknown; id?: unknown } | null;
-            const method = request?.method;
-            // Skip non-requests, notifications (no id), and tool calls (rate-limited in the registry).
-            if (typeof method !== 'string' || request?.id === undefined || method === 'tools/call') {
+            const method = (message as { method?: unknown } | null)?.method;
+            if (typeof method !== 'string' || method === 'tools/call') {
                 continue;
             }
             try {
@@ -193,17 +205,45 @@ export class McpTransportController {
                 });
             } catch (e) {
                 if (e instanceof McpRateLimitExceededError) {
-                    return {
-                        jsonrpc: '2.0',
-                        id: (request?.id as string | number | null) ?? null,
-                        error: {
-                            code: RATE_LIMIT_ERROR_CODE,
-                            message: e.message,
-                            data: { retryAfterSeconds: e.details.retryAfterSeconds, scope: e.details.scope },
-                        },
-                    };
+                    return e;
                 }
                 throw e;
+            }
+        }
+        return undefined;
+    }
+
+    /**
+     * Writes the `-32029` refusal. A body that contains a request keeps HTTP 200 so that clients
+     * which discard non-2xx bodies still receive `error.data`; a body of only notifications expected
+     * no reply at all, so it is refused with an error status instead.
+     */
+    private sendRateLimitError(res: Response, body: unknown, error: McpRateLimitExceededError): void {
+        const id = this.firstRequestId(body);
+        res.status(id === undefined ? 429 : 200);
+        res.setHeader('Content-Type', 'application/json');
+        const payload: JsonRpcError = {
+            jsonrpc: '2.0',
+            id: id ?? null,
+            error: {
+                code: RATE_LIMIT_ERROR_CODE,
+                message: error.message,
+                data: {
+                    retryAfterSeconds: error.details.retryAfterSeconds,
+                    scope: error.details.scope,
+                },
+            },
+        };
+        res.send(JSON.stringify(payload));
+    }
+
+    /** The id of the first message that carries one, or `undefined` if the body is all notifications. */
+    private firstRequestId(body: unknown): string | number | null | undefined {
+        const messages = Array.isArray(body) ? body : [body];
+        for (const message of messages) {
+            const id = (message as { id?: unknown } | null)?.id;
+            if (id !== undefined) {
+                return id as string | number | null;
             }
         }
         return undefined;

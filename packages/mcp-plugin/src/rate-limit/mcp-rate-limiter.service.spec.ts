@@ -113,30 +113,34 @@ describe('McpRateLimiterService rate limiting', () => {
         const { service } = build({
             rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 2 } },
         });
-        const ctx = anonCtx('1.2.3.4');
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'shop', subject: 'tools/call' });
-        await service.enforceRateLimit({ executionContext: ctx, endpoint: 'shop', subject: 'tools/call' });
-        const exceeded = await service.checkRateLimit({
-            executionContext: ctx,
-            endpoint: 'shop',
-            subject: 'tools/call',
+        await service.enforceAnonymousIpRateLimit('shop', '1.2.3.4');
+        await service.enforceAnonymousIpRateLimit('shop', '1.2.3.4');
+        await expect(service.enforceAnonymousIpRateLimit('shop', '1.2.3.4')).rejects.toMatchObject({
+            details: { scope: 'anonymous IP' },
         });
-        expect(exceeded?.scope).toBe('anonymous IP');
+    });
+
+    it('charges the anonymous-IP bucket at the edge only, never again in the shared pass', async () => {
+        const { service } = build({
+            rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 2 } },
+        });
+        const ctx = anonCtx('1.2.3.4');
+        // The transport charges this bucket once per request, before the context exists. If the shared
+        // pass charged it again, an anonymous caller would get half the configured allowance.
+        await service.enforceAnonymousIpRateLimit('shop', '1.2.3.4');
+        await service.checkRateLimit({ executionContext: ctx, endpoint: 'shop', subject: 'tools/call' });
+        await service.enforceAnonymousIpRateLimit('shop', '1.2.3.4');
+        await expect(service.enforceAnonymousIpRateLimit('shop', '1.2.3.4')).rejects.toBeInstanceOf(
+            McpRateLimitExceededError,
+        );
     });
 
     it('does not apply the anonymous-IP limit when disabled (anonymousIp: false)', async () => {
         const { service } = build({
             rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: false },
         });
-        const ctx = anonCtx('1.2.3.4');
         for (let i = 0; i < 5; i++) {
-            expect(
-                await service.checkRateLimit({
-                    executionContext: ctx,
-                    endpoint: 'shop',
-                    subject: 'tools/call',
-                }),
-            ).toBeUndefined();
+            await expect(service.enforceAnonymousIpRateLimit('shop', '1.2.3.4')).resolves.toBeUndefined();
         }
     });
 
@@ -144,11 +148,8 @@ describe('McpRateLimiterService rate limiting', () => {
         const { service } = build({
             rateLimits: { perSession: { rpm: 0 }, perClient: { rpm: 0 }, anonymousIp: { rpm: 1 } },
         });
-        const ctx = anonCtx('1.2.3.4');
         for (let i = 0; i < 3; i++) {
-            expect(
-                await service.checkRateLimit({ executionContext: ctx, endpoint: 'admin', subject: 'ping' }),
-            ).toBeUndefined();
+            await expect(service.enforceAnonymousIpRateLimit('admin', '1.2.3.4')).resolves.toBeUndefined();
         }
     });
 });
