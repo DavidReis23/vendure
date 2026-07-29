@@ -175,6 +175,7 @@ msgid "Enter custom reason..."
 msgstr "Digite um motivo personalizado..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1100
+#: src/lib/components/shared/asset/asset-gallery.tsx:751
 msgid "Type"
 msgstr "Tipo"
 
@@ -188,6 +189,7 @@ msgstr ""
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:57
 #: src/lib/components/data-input/default-relation-input.tsx:674
 #: src/lib/components/shared/asset/asset-gallery.tsx:976
+#: src/lib/components/data-input/default-relation-input.tsx:679
 msgid "Select {0}"
 msgstr "Selecionar {0}"
 
@@ -219,6 +221,14 @@ msgid "No fulfillments"
 msgstr "Nenhum atendimento"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
+#. placeholder {0}: failed.length
+#. placeholder {1}: failed.length
+#. placeholder {2}: failed.length
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:116
+msgid "{0, plural, one {Failed to delete {1} stock location: {messages}} other {Failed to delete {2} stock locations: {messages}}}"
+msgstr "{0, plural, one {Falha ao excluir {1} local de estoque: {messages}} other {Falha ao excluir {2} locais de estoque: {messages}}}"
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "Quando isto estiver habilitado, os preços inseridos no catálogo de produtos incluirão o imposto para a zona fiscal padrão."
 
@@ -322,6 +332,7 @@ msgid "Fulfillment handler"
 msgstr "Manipulador de atendimento"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:252
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:251
 #: src/app/routes/_authenticated/_orders/orders.tsx:21
 #: src/app/routes/_authenticated/_orders/orders.tsx:37
 #: src/app/routes/_authenticated/_orders/utils/order-detail-loaders.tsx:48
@@ -393,6 +404,7 @@ msgstr "Digite pelo menos 2 caracteres para pesquisar..."
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
 #: src/app/routes/_authenticated/_profile/profile.tsx:151
+#: src/app/routes/_authenticated/_profile/profile.tsx:109
 msgid "Last name"
 msgstr "Sobrenome"
 
@@ -730,6 +742,7 @@ msgstr "Mover coleções"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:140
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:57
+#: src/app/routes/_authenticated/_administrators/administrators.tsx:55
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:170
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:32
 #: src/app/routes/_authenticated/_roles/roles.tsx:18
@@ -923,6 +936,7 @@ msgstr "Concluir rascunho"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates_.$id.tsx:113
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:93
 #: src/lib/components/shared/asset/asset-gallery.tsx:1088
+#: src/lib/components/shared/asset/asset-gallery.tsx:750
 msgid "Name"
 msgstr "Nome"
 
@@ -963,6 +977,7 @@ msgid "Found {0} eligible shipping method{1}"
 msgstr "Encontrado(s) {0} método(s) de envio elegível(eis)"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1132
+#: src/lib/components/shared/asset/asset-gallery.tsx:753
 #: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "Dimensoes"
@@ -1126,6 +1141,9 @@ msgstr "Falha ao atualizar zona"
 #: src/app/routes/_authenticated/_profile/profile.tsx:163
 #: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
+#: src/app/routes/_authenticated/_profile/profile.tsx:121
+#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/lib/components/login/login-form.tsx:93
 msgid "Password"
 msgstr "Senha"
 
@@ -1214,6 +1232,11 @@ msgid "Table settings"
 msgstr "Configurações da tabela"
 
 #: src/lib/components/layout/nav-user.tsx:93
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:191
+msgid "Select what to do with remaining stock"
+msgstr "Selecione o que fazer com o estoque restante"
+
+#: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
 msgstr "Explorar Plataforma e Cloud"
 
@@ -1440,6 +1463,7 @@ msgstr "Nenhum item selecionado"
 
 #. placeholder {0}: selected.length
 #: src/lib/components/shared/asset/asset-gallery.tsx:681
+#: src/lib/components/shared/asset/asset-gallery.tsx:476
 msgid ", {0} selected"
 msgstr ", {0} selecionado(s)"
 
@@ -1657,6 +1681,11 @@ msgstr ""
 msgid "Fulfillment details"
 msgstr "Detalhes do atendimento"
 
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:89
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:202
+msgid "Discard remaining stock"
+msgstr "Descartar o estoque restante"
+
 #: src/lib/components/data-input/datetime-input.tsx:181
 #~ msgid "Now"
 #~ msgstr "Agora"
@@ -1680,6 +1709,7 @@ msgid "Failed to set customer for order: {0}"
 msgstr "Falha ao definir o cliente para o pedido: {0}"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1109
+#: src/lib/components/shared/asset/asset-gallery.tsx:752
 msgid "Size"
 msgstr "Tamanho"
 
@@ -1717,6 +1747,12 @@ msgstr "Usar como endereço de cobrança padrão"
 #: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:40
 #: src/lib/components/data-table/use-generated-columns.tsx:419
 #: src/lib/components/data-table/use-generated-columns.tsx:449
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:41
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:337
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:217
+#: src/app/routes/_authenticated/_stock-locations/components/stock-location-bulk-actions.tsx:28
+#: src/lib/components/data-table/use-generated-columns.tsx:407
+#: src/lib/components/data-table/use-generated-columns.tsx:437
 #: src/lib/components/data-table/views-sheet.tsx:270
 #: src/lib/components/data-table/views-sheet.tsx:296
 msgid "Delete"
@@ -1813,6 +1849,9 @@ msgstr "Endereço atualizado com sucesso"
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
 #: src/lib/components/shared/asset/asset-gallery.tsx:1116
 #: src/lib/framework/layout-engine/page-layout.tsx:746
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:124
+#: src/lib/components/shared/asset/asset-gallery.tsx:754
+#: src/lib/framework/layout-engine/page-layout.tsx:733
 msgid "Created"
 msgstr "Criado"
 
@@ -1878,6 +1917,9 @@ msgstr "Inserir tabela de {row} por {col}"
 #: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:48
 #: src/app/routes/_authenticated/_system/settings-store.tsx:150
 #: src/lib/components/data-input/product-multi-selector-input.tsx:471
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:210
+#: src/app/routes/_authenticated/_system/settings-store.tsx:140
+#: src/lib/components/data-input/product-multi-selector-input.tsx:470
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:122
 #: src/lib/components/data-table/use-generated-columns.tsx:435
 #: src/lib/components/data-table/views-sheet.tsx:217
@@ -2078,6 +2120,10 @@ msgstr "Reembolso liquidado com sucesso"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:111
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:100
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:93
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:110
+#: src/app/routes/_authenticated/_facets/facets_.$id.tsx:99
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:102
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:177
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:163
@@ -2087,6 +2133,10 @@ msgstr "Reembolso liquidado com sucesso"
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
 #: src/app/routes/_authenticated/_profile/profile.tsx:135
+#: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:252
+#: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:279
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
+#: src/app/routes/_authenticated/_profile/profile.tsx:93
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2108,6 +2158,7 @@ msgid "Order placed"
 msgstr "Pedido realizado"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:114
+#: src/app/routes/_authenticated/_profile/profile.tsx:72
 msgid "Successfully updated profile"
 msgstr "Perfil atualizado com sucesso"
 
@@ -2170,6 +2221,11 @@ msgid "Column settings"
 msgstr "Configurações de coluna"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:137
+msgid "{count, plural, one {Failed to delete {count} stock location} other {Failed to delete {count} stock locations}}"
+msgstr "{count, plural, one {Falha ao excluir {count} local de estoque} other {Falha ao excluir {count} locais de estoque}}"
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2190,6 +2246,14 @@ msgstr "Falha ao remover grupos de opcoes"
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:97
 msgid "Order delivered"
 msgstr "Pedido entregue"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:47
+msgid "Transfer to {name}"
+msgstr "Transferir para {name}"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:174
+msgid "Remaining stock"
+msgstr "Estoque restante"
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx:49
 msgid "Remove from zone"
@@ -3129,6 +3193,7 @@ msgid "Force remove option group"
 msgstr "Forçar remoção do grupo de opções"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:223
+#: src/app/routes/_authenticated/_profile/profile.tsx:141
 msgid "Added"
 msgstr "Adicionado"
 
@@ -3199,6 +3264,10 @@ msgstr "Excluir visão global"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:111
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:100
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:93
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:110
+#: src/app/routes/_authenticated/_facets/facets_.$id.tsx:99
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:177
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:163
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
@@ -3603,6 +3672,7 @@ msgid "Password reset links are only valid for a limited time. Request a new one
 msgstr "Links de redefinição de senha são válidos apenas por um tempo limitado. Solicite um novo para redefinir sua senha."
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:212
+#: src/app/routes/_authenticated/_profile/profile.tsx:129
 msgid "Authentication methods"
 msgstr "Métodos de autenticação"
 
@@ -3648,6 +3718,10 @@ msgstr "Processando..."
 #: src/lib/components/shared/asset/asset-gallery.tsx:472
 #~ msgid "{totalItems} {0} found"
 #~ msgstr "{totalItems} {0} encontrado(s)"
+#. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
+#: src/lib/components/shared/asset/asset-gallery.tsx:472
+msgid "{totalItems} {0} found"
+msgstr "{totalItems} {0} encontrado(s)"
 
 #: src/lib/components/date-range-picker.tsx:122
 msgid "Select date range"
@@ -3722,6 +3796,12 @@ msgstr "Zonas"
 #: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:163
+msgid "Choose what to do with any stock remaining in the {count, plural, one {# stock location} other {# stock locations}} you are deleting. All selected locations transfer their remaining stock into the single location you choose, or discard it."
+msgstr "Escolha o que fazer com o estoque restante {count, plural, one {no # local de estoque} other {nos # locais de estoque}} que você está excluindo. Todos os locais selecionados transferem o estoque restante para o único local que você escolher, ou o descartam."
+
+#: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:170
+#: src/lib/components/shared/facet-value-selector.tsx:123
 msgid "Search facet values..."
 msgstr "Pesquisar valores de facetas..."
 
@@ -3827,6 +3907,10 @@ msgstr "Selecione um país"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to update shipping method"
 msgstr "Falha ao atualizar método de envio"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:103
+msgid "{deleted, plural, one {Deleted {deleted} stock location} other {Deleted {deleted} stock locations}}"
+msgstr "{deleted, plural, one {{deleted} local de estoque excluído} other {{deleted} locais de estoque excluídos}}"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:42
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:19
@@ -4060,6 +4144,10 @@ msgstr "Pesquisar variantes..."
 #~ msgid "Successfully created product options"
 #~ msgstr "Opções de produto criadas com sucesso"
 
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:190
+msgid "Loading locations…"
+msgstr "Carregando locais…"
+
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:110
 msgid "Failed to create payment method"
 msgstr "Falha ao criar método de pagamento"
@@ -4153,6 +4241,16 @@ msgstr "Nenhum endereço de cobrança"
 #: src/lib/components/data-table/data-table-views-tabs.tsx:124
 msgid "Unsaved view"
 msgstr "Visão não salva"
+#. placeholder {0}: failed.length
+#. placeholder {1}: failed.length
+#. placeholder {2}: failed.length
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:120
+msgid "{0, plural, one {Failed to delete {1} stock location} other {Failed to delete {2} stock locations}}"
+msgstr "{0, plural, one {Falha ao excluir {1} local de estoque} other {Falha ao excluir {2} locais de estoque}}"
+
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:119
+msgid "Facet"
+msgstr "Faceta"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:41
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -4285,6 +4383,7 @@ msgstr "Adicionar um preço em outra moeda"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
 #: src/app/routes/_authenticated/_profile/profile.tsx:157
+#: src/app/routes/_authenticated/_profile/profile.tsx:115
 msgid "Email Address or identifier"
 msgstr "Endereço de e-mail ou identificador"
 
@@ -4298,6 +4397,10 @@ msgstr "Reembolso #{0} transitado para {1}"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:62
 #: src/app/routes/_authenticated/_customers/customers.tsx:16
 #: src/app/routes/_authenticated/_customers/customers.tsx:23
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:110
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:62
+#: src/app/routes/_authenticated/_customers/customers.tsx:15
+#: src/app/routes/_authenticated/_customers/customers.tsx:21
 msgid "Customers"
 msgstr "Clientes"
 
@@ -5040,6 +5143,7 @@ msgid "e.g., Red, Large, Cotton"
 msgstr "ex. Vermelho, Grande, Algodão"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:118
+#: src/app/routes/_authenticated/_profile/profile.tsx:76
 msgid "Failed to update profile"
 msgstr "Falha ao atualizar perfil"
 
@@ -5061,6 +5165,7 @@ msgid "Regions"
 msgstr "Regiões"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:629
+#: src/lib/components/shared/asset/asset-gallery.tsx:445
 msgid "Drop files here to upload"
 msgstr "Solte os arquivos aqui para enviar"
 
@@ -5233,6 +5338,10 @@ msgstr "Campos personalizados"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:73
 msgid "New Shipping Method"
 msgstr "Novo método de envio"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:160
+msgid "Delete stock locations"
+msgstr "Excluir locais de estoque"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:47
 msgid "is greater than or equal to"
@@ -5436,6 +5545,7 @@ msgid "Enabled"
 msgstr "Habilitado"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:688
+#: src/lib/components/shared/asset/asset-gallery.tsx:483
 msgid "Items per page"
 msgstr "Itens por pagina"
 
@@ -5898,6 +6008,8 @@ msgstr "Editar nota"
 #: src/lib/components/shared/asset/asset-gallery.tsx:635
 #~ msgid "No assets found. Try adjusting your filters."
 #~ msgstr "Nenhum recurso encontrado. Tente ajustar seus filtros."
+msgid "No assets found. Try adjusting your filters."
+msgstr "Nenhum recurso encontrado. Tente ajustar seus filtros."
 
 #: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
@@ -5949,6 +6061,7 @@ msgstr "Idioma padrão"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:257
 #: src/app/routes/_authenticated/_customers/customers.tsx:47
+#: src/app/routes/_authenticated/_customers/customers.tsx:44
 msgid "Status"
 msgstr "Status"
 
@@ -6062,6 +6175,7 @@ msgstr ""
 
 #. placeholder {0}: entityName.toLowerCase()
 #: src/lib/components/data-input/default-relation-input.tsx:661
+#: src/lib/components/data-input/default-relation-input.tsx:666
 msgid "Select {0}s"
 msgstr "Selecionar {0}"
 
@@ -6077,6 +6191,7 @@ msgstr "Falha ao processar reembolso"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
 #: src/app/routes/_authenticated/_profile/profile.tsx:145
+#: src/app/routes/_authenticated/_profile/profile.tsx:103
 msgid "First name"
 msgstr "Nome"
 
@@ -6149,6 +6264,9 @@ msgstr "Categoria fiscal"
 #: src/app/routes/_authenticated/_profile/profile.tsx:51
 #: src/app/routes/_authenticated/_profile/profile.tsx:127
 #: src/lib/components/layout/nav-user.tsx:99
+#: src/app/routes/_authenticated/_profile/profile.tsx:39
+#: src/app/routes/_authenticated/_profile/profile.tsx:85
+#: src/lib/components/layout/nav-user.tsx:108
 msgid "Profile"
 msgstr "Perfil"
 
@@ -6944,6 +7062,7 @@ msgid "Payment method is required"
 msgstr "Método de pagamento é obrigatório"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:69
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:67
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:138
 msgid "Failed to add customer to group"
 msgstr "Falha ao adicionar cliente ao grupo"

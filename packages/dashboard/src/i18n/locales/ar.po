@@ -175,6 +175,7 @@ msgid "Enter custom reason..."
 msgstr "أدخل سببًا مخصصًا..."
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1100
+#: src/lib/components/shared/asset/asset-gallery.tsx:751
 msgid "Type"
 msgstr "النوع"
 
@@ -188,6 +189,7 @@ msgstr ""
 #: src/app/routes/_authenticated/_products/components/product-option-select.tsx:57
 #: src/lib/components/data-input/default-relation-input.tsx:674
 #: src/lib/components/shared/asset/asset-gallery.tsx:976
+#: src/lib/components/data-input/default-relation-input.tsx:679
 msgid "Select {0}"
 msgstr "تحديد {0}"
 
@@ -219,6 +221,14 @@ msgid "No fulfillments"
 msgstr "لا توجد تنفيذات"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:342
+#. placeholder {0}: failed.length
+#. placeholder {1}: failed.length
+#. placeholder {2}: failed.length
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:116
+msgid "{0, plural, one {Failed to delete {1} stock location: {messages}} other {Failed to delete {2} stock locations: {messages}}}"
+msgstr "{0, plural, zero {تعذر حذف {2} موقع مخزون: {messages}} one {تعذر حذف موقع مخزون واحد: {messages}} two {تعذر حذف موقعي مخزون: {messages}} few {تعذر حذف {2} مواقع مخزون: {messages}} many {تعذر حذف {2} موقع مخزون: {messages}} other {تعذر حذف {2} موقع مخزون: {messages}}}"
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:339
 msgid "When this is enabled, the prices entered in the product catalog will be included in the tax for the default tax zone."
 msgstr "عند تمكين هذا، ستكون الأسعار المدخلة في كتالوج المنتجات شاملة للضريبة للمنطقة الضريبية الافتراضية."
 
@@ -322,6 +332,7 @@ msgid "Fulfillment handler"
 msgstr "معالج التنفيذ"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:252
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:251
 #: src/app/routes/_authenticated/_orders/orders.tsx:21
 #: src/app/routes/_authenticated/_orders/orders.tsx:37
 #: src/app/routes/_authenticated/_orders/utils/order-detail-loaders.tsx:48
@@ -393,6 +404,7 @@ msgstr "اكتب حرفين على الأقل للبحث..."
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:122
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:186
 #: src/app/routes/_authenticated/_profile/profile.tsx:151
+#: src/app/routes/_authenticated/_profile/profile.tsx:109
 msgid "Last name"
 msgstr "اسم العائلة"
 
@@ -730,6 +742,7 @@ msgstr "نقل المجموعات"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:140
 #: src/app/routes/_authenticated/_administrators/administrators.tsx:57
+#: src/app/routes/_authenticated/_administrators/administrators.tsx:55
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:170
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:32
 #: src/app/routes/_authenticated/_roles/roles.tsx:18
@@ -923,6 +936,7 @@ msgstr "إكمال المسودة"
 #: src/app/routes/_authenticated/_tax-rates/tax-rates_.$id.tsx:113
 #: src/app/routes/_authenticated/_zones/zones_.$id.tsx:93
 #: src/lib/components/shared/asset/asset-gallery.tsx:1088
+#: src/lib/components/shared/asset/asset-gallery.tsx:750
 msgid "Name"
 msgstr "الاسم"
 
@@ -963,6 +977,7 @@ msgid "Found {0} eligible shipping method{1}"
 msgstr "تم العثور على {0} طريقة شحن مؤهلة"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1132
+#: src/lib/components/shared/asset/asset-gallery.tsx:753
 #: src/lib/components/shared/asset/asset-properties.tsx:39
 msgid "Dimensions"
 msgstr "الأبعاد"
@@ -1126,6 +1141,9 @@ msgstr "فشل تحديث المنطقة"
 #: src/app/routes/_authenticated/_profile/profile.tsx:163
 #: src/app/routes/_authenticated/_profile/profile.tsx:220
 #: src/lib/components/login/login-form.tsx:94
+#: src/app/routes/_authenticated/_profile/profile.tsx:121
+#: src/app/routes/_authenticated/_profile/profile.tsx:138
+#: src/lib/components/login/login-form.tsx:93
 msgid "Password"
 msgstr "كلمة المرور"
 
@@ -1214,6 +1232,11 @@ msgid "Table settings"
 msgstr "إعدادات الجدول"
 
 #: src/lib/components/layout/nav-user.tsx:93
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:191
+msgid "Select what to do with remaining stock"
+msgstr "اختر ما يجب فعله بالمخزون المتبقي"
+
+#: src/lib/components/layout/nav-user.tsx:102
 msgid "Explore Platform & Cloud"
 msgstr "استكشاف المنصة والسحابة"
 
@@ -1440,6 +1463,7 @@ msgstr "لم يتم تحديد عناصر"
 
 #. placeholder {0}: selected.length
 #: src/lib/components/shared/asset/asset-gallery.tsx:681
+#: src/lib/components/shared/asset/asset-gallery.tsx:476
 msgid ", {0} selected"
 msgstr "، {0} محدد"
 
@@ -1657,6 +1681,11 @@ msgstr ""
 msgid "Fulfillment details"
 msgstr "تفاصيل التنفيذ"
 
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:89
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:202
+msgid "Discard remaining stock"
+msgstr "التخلص من المخزون المتبقي"
+
 #: src/lib/components/data-input/datetime-input.tsx:181
 #~ msgid "Now"
 #~ msgstr "الآن"
@@ -1680,6 +1709,7 @@ msgid "Failed to set customer for order: {0}"
 msgstr "فشل تعيين العميل للطلب: {0}"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:1109
+#: src/lib/components/shared/asset/asset-gallery.tsx:752
 msgid "Size"
 msgstr "الحجم"
 
@@ -1717,6 +1747,12 @@ msgstr "استخدام كعنوان فوترة افتراضي"
 #: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:40
 #: src/lib/components/data-table/use-generated-columns.tsx:419
 #: src/lib/components/data-table/use-generated-columns.tsx:449
+#: src/app/routes/_authenticated/_assets/components/asset-bulk-actions.tsx:41
+#: src/app/routes/_authenticated/_products/products_.$id_.variants.tsx:337
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:217
+#: src/app/routes/_authenticated/_stock-locations/components/stock-location-bulk-actions.tsx:28
+#: src/lib/components/data-table/use-generated-columns.tsx:407
+#: src/lib/components/data-table/use-generated-columns.tsx:437
 #: src/lib/components/data-table/views-sheet.tsx:270
 #: src/lib/components/data-table/views-sheet.tsx:296
 msgid "Delete"
@@ -1813,6 +1849,9 @@ msgstr "تم تحديث العنوان بنجاح"
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
 #: src/lib/components/shared/asset/asset-gallery.tsx:1116
 #: src/lib/framework/layout-engine/page-layout.tsx:746
+#: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:124
+#: src/lib/components/shared/asset/asset-gallery.tsx:754
+#: src/lib/framework/layout-engine/page-layout.tsx:733
 msgid "Created"
 msgstr "تم الإنشاء"
 
@@ -1878,6 +1917,9 @@ msgstr "إدراج جدول {row} في {col}"
 #: src/app/routes/_authenticated/_products/components/force-remove-option-group-dialog.tsx:48
 #: src/app/routes/_authenticated/_system/settings-store.tsx:150
 #: src/lib/components/data-input/product-multi-selector-input.tsx:471
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:210
+#: src/app/routes/_authenticated/_system/settings-store.tsx:140
+#: src/lib/components/data-input/product-multi-selector-input.tsx:470
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:122
 #: src/lib/components/data-table/use-generated-columns.tsx:435
 #: src/lib/components/data-table/views-sheet.tsx:217
@@ -2078,6 +2120,10 @@ msgstr "تم تسوية الاسترداد بنجاح"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:111
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:100
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:93
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:110
+#: src/app/routes/_authenticated/_facets/facets_.$id.tsx:99
 #: src/app/routes/_authenticated/_global-settings/global-settings.tsx:102
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:177
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:163
@@ -2087,6 +2133,10 @@ msgstr "تم تسوية الاسترداد بنجاح"
 #: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:278
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:242
 #: src/app/routes/_authenticated/_profile/profile.tsx:135
+#: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx:252
+#: src/app/routes/_authenticated/_products/components/assign-facet-values-dialog.tsx:279
+#: src/app/routes/_authenticated/_products/products_.$id.tsx:212
+#: src/app/routes/_authenticated/_profile/profile.tsx:93
 #: src/app/routes/_authenticated/_promotions/promotions_.$id.tsx:144
 #: src/app/routes/_authenticated/_roles/roles_.$id.tsx:84
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:78
@@ -2108,6 +2158,7 @@ msgid "Order placed"
 msgstr "تم إنشاء الطلب"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:114
+#: src/app/routes/_authenticated/_profile/profile.tsx:72
 msgid "Successfully updated profile"
 msgstr "تم تحديث الملف الشخصي بنجاح"
 
@@ -2170,6 +2221,11 @@ msgid "Column settings"
 msgstr "إعدادات الأعمدة"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx:227
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:137
+msgid "{count, plural, one {Failed to delete {count} stock location} other {Failed to delete {count} stock locations}}"
+msgstr "{count, plural, zero {تعذر حذف {count} موقع مخزون} one {تعذر حذف موقع مخزون واحد} two {تعذر حذف موقعي مخزون} few {تعذر حذف {count} مواقع مخزون} many {تعذر حذف {count} موقع مخزون} other {تعذر حذف {count} موقع مخزون}}"
+
+#: src/app/routes/_authenticated/_channels/channels_.$id.tsx:224
 #: src/app/routes/_authenticated/_countries/countries_.$id.tsx:110
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:127
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:127
@@ -2190,6 +2246,14 @@ msgstr "فشل في إزالة مجموعات الخيارات"
 #: src/app/routes/_authenticated/_orders/components/order-history/order-history-utils.tsx:97
 msgid "Order delivered"
 msgstr "تم تسليم الطلب"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:47
+msgid "Transfer to {name}"
+msgstr "النقل إلى {name}"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:174
+msgid "Remaining stock"
+msgstr "المخزون المتبقي"
 
 #: src/app/routes/_authenticated/_zones/components/zone-bulk-actions.tsx:49
 msgid "Remove from zone"
@@ -3129,6 +3193,7 @@ msgid "Force remove option group"
 msgstr "إزالة مجموعة الخيارات إجبارياً"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:223
+#: src/app/routes/_authenticated/_profile/profile.tsx:141
 msgid "Added"
 msgstr "تمت الإضافة"
 
@@ -3199,6 +3264,10 @@ msgstr "حذف العرض العام"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
 #: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:111
 #: src/app/routes/_authenticated/_facets/facets_.$id.tsx:100
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:93
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:163
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:110
+#: src/app/routes/_authenticated/_facets/facets_.$id.tsx:99
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$groupId.options_.$id.tsx:177
 #: src/app/routes/_authenticated/_option-groups/option-groups_.$id.tsx:163
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:138
@@ -3603,6 +3672,7 @@ msgid "Password reset links are only valid for a limited time. Request a new one
 msgstr "روابط إعادة تعيين كلمة المرور صالحة لفترة محدودة فقط. اطلب رابطًا جديدًا لإعادة تعيين كلمة المرور."
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:212
+#: src/app/routes/_authenticated/_profile/profile.tsx:129
 msgid "Authentication methods"
 msgstr "طرق المصادقة"
 
@@ -3648,6 +3718,10 @@ msgstr "جاري المعالجة..."
 #: src/lib/components/shared/asset/asset-gallery.tsx:472
 #~ msgid "{totalItems} {0} found"
 #~ msgstr "تم العثور على {totalItems} {0}"
+#. placeholder {0}: totalItems === 1 ? 'asset' : 'assets'
+#: src/lib/components/shared/asset/asset-gallery.tsx:472
+msgid "{totalItems} {0} found"
+msgstr "تم العثور على {totalItems} {0}"
 
 #: src/lib/components/date-range-picker.tsx:122
 msgid "Select date range"
@@ -3722,6 +3796,12 @@ msgstr "المناطق"
 #: src/app/routes/_authenticated/_facets/components/facet-values-table.tsx:111
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:151
 #: src/lib/components/shared/facet-value-selector.tsx:124
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:163
+msgid "Choose what to do with any stock remaining in the {count, plural, one {# stock location} other {# stock locations}} you are deleting. All selected locations transfer their remaining stock into the single location you choose, or discard it."
+msgstr "اختر ما يجب فعله بالمخزون المتبقي في {count, plural, zero {# موقع مخزون} one {موقع مخزون واحد} two {موقعي مخزون} few {# مواقع مخزون} many {# موقع مخزون} other {# موقع مخزون}} التي تحذفها. تنقل جميع المواقع المحددة مخزونها المتبقي إلى الموقع الوحيد الذي تختاره، أو يتم التخلص منه."
+
+#: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:170
+#: src/lib/components/shared/facet-value-selector.tsx:123
 msgid "Search facet values..."
 msgstr "البحث في قيم الفئات..."
 
@@ -3827,6 +3907,10 @@ msgstr "حدد بلدًا"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:100
 msgid "Failed to update shipping method"
 msgstr "فشل تحديث طريقة الشحن"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:103
+msgid "{deleted, plural, one {Deleted {deleted} stock location} other {Deleted {deleted} stock locations}}"
+msgstr "{deleted, plural, zero {تم حذف {deleted} موقع مخزون} one {تم حذف موقع مخزون واحد} two {تم حذف موقعي مخزون} few {تم حذف {deleted} مواقع مخزون} many {تم حذف {deleted} موقع مخزون} other {تم حذف {deleted} موقع مخزون}}"
 
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx:42
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:19
@@ -4060,6 +4144,10 @@ msgstr "البحث في الأشكال..."
 #~ msgid "Successfully created product options"
 #~ msgstr "تم إنشاء خيارات المنتج بنجاح"
 
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:190
+msgid "Loading locations…"
+msgstr "جارٍ تحميل المواقع…"
+
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx:110
 msgid "Failed to create payment method"
 msgstr "فشل إنشاء طريقة الدفع"
@@ -4153,6 +4241,16 @@ msgstr "لا يوجد عنوان فوترة"
 #: src/lib/components/data-table/data-table-views-tabs.tsx:124
 msgid "Unsaved view"
 msgstr "عرض غير محفوظ"
+#. placeholder {0}: failed.length
+#. placeholder {1}: failed.length
+#. placeholder {2}: failed.length
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:120
+msgid "{0, plural, one {Failed to delete {1} stock location} other {Failed to delete {2} stock locations}}"
+msgstr "{0, plural, zero {تعذر حذف {2} موقع مخزون} one {تعذر حذف موقع مخزون واحد} two {تعذر حذف موقعي مخزون} few {تعذر حذف {2} مواقع مخزون} many {تعذر حذف {2} موقع مخزون} other {تعذر حذف {2} موقع مخزون}}"
+
+#: src/app/routes/_authenticated/_facets/facets_.$facetId.values_.$id.tsx:119
+msgid "Facet"
+msgstr "الخاصية"
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx:41
 #~ msgid "{rejected, plural, one {{0}} other {{1}}}"
@@ -4285,6 +4383,7 @@ msgstr "إضافة سعر بعملة أخرى"
 
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:128
 #: src/app/routes/_authenticated/_profile/profile.tsx:157
+#: src/app/routes/_authenticated/_profile/profile.tsx:115
 msgid "Email Address or identifier"
 msgstr "عنوان البريد الإلكتروني أو المعرف"
 
@@ -4298,6 +4397,10 @@ msgstr "تم نقل الاسترداد #{0} إلى {1}"
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:62
 #: src/app/routes/_authenticated/_customers/customers.tsx:16
 #: src/app/routes/_authenticated/_customers/customers.tsx:23
+#: src/app/routes/_authenticated/_customer-groups/customer-groups_.$id.tsx:110
+#: src/app/routes/_authenticated/_customers/customers_.$id.tsx:62
+#: src/app/routes/_authenticated/_customers/customers.tsx:15
+#: src/app/routes/_authenticated/_customers/customers.tsx:21
 msgid "Customers"
 msgstr "العملاء"
 
@@ -5040,6 +5143,7 @@ msgid "e.g., Red, Large, Cotton"
 msgstr "مثل أحمر، كبير، قطن"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:118
+#: src/app/routes/_authenticated/_profile/profile.tsx:76
 msgid "Failed to update profile"
 msgstr "فشل تحديث الملف الشخصي"
 
@@ -5061,6 +5165,7 @@ msgid "Regions"
 msgstr "المناطق"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:629
+#: src/lib/components/shared/asset/asset-gallery.tsx:445
 msgid "Drop files here to upload"
 msgstr "أفلت الملفات هنا للتحميل"
 
@@ -5233,6 +5338,10 @@ msgstr "الحقول المخصصة"
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods.tsx:73
 msgid "New Shipping Method"
 msgstr "طريقة شحن جديدة"
+
+#: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx:160
+msgid "Delete stock locations"
+msgstr "حذف مواقع المخزون"
 
 #: src/lib/components/data-table/human-readable-operator.tsx:47
 msgid "is greater than or equal to"
@@ -5436,6 +5545,7 @@ msgid "Enabled"
 msgstr "ممكّن"
 
 #: src/lib/components/shared/asset/asset-gallery.tsx:688
+#: src/lib/components/shared/asset/asset-gallery.tsx:483
 msgid "Items per page"
 msgstr "العناصر في الصفحة"
 
@@ -5898,6 +6008,8 @@ msgstr "تحرير الملاحظة"
 #: src/lib/components/shared/asset/asset-gallery.tsx:635
 #~ msgid "No assets found. Try adjusting your filters."
 #~ msgstr "لم يتم العثور على ملفات. حاول تعديل عوامل التصفية."
+msgid "No assets found. Try adjusting your filters."
+msgstr "لم يتم العثور على ملفات. حاول تعديل عوامل التصفية."
 
 #: src/app/routes/_authenticated/_products/components/option-groups-editor.tsx:161
 msgid "Add Option"
@@ -5949,6 +6061,7 @@ msgstr "اللغة الافتراضية"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:257
 #: src/app/routes/_authenticated/_customers/customers.tsx:47
+#: src/app/routes/_authenticated/_customers/customers.tsx:44
 msgid "Status"
 msgstr "الحالة"
 
@@ -6062,6 +6175,7 @@ msgstr ""
 
 #. placeholder {0}: entityName.toLowerCase()
 #: src/lib/components/data-input/default-relation-input.tsx:661
+#: src/lib/components/data-input/default-relation-input.tsx:666
 msgid "Select {0}s"
 msgstr "تحديد {0}"
 
@@ -6077,6 +6191,7 @@ msgstr "فشل في معالجة الاسترداد"
 #: src/app/routes/_authenticated/_administrators/administrators_.$id.tsx:116
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:180
 #: src/app/routes/_authenticated/_profile/profile.tsx:145
+#: src/app/routes/_authenticated/_profile/profile.tsx:103
 msgid "First name"
 msgstr "الاسم الأول"
 
@@ -6149,6 +6264,9 @@ msgstr "الفئة الضريبية"
 #: src/app/routes/_authenticated/_profile/profile.tsx:51
 #: src/app/routes/_authenticated/_profile/profile.tsx:127
 #: src/lib/components/layout/nav-user.tsx:99
+#: src/app/routes/_authenticated/_profile/profile.tsx:39
+#: src/app/routes/_authenticated/_profile/profile.tsx:85
+#: src/lib/components/layout/nav-user.tsx:108
 msgid "Profile"
 msgstr "الملف الشخصي"
 
@@ -6944,6 +7062,7 @@ msgid "Payment method is required"
 msgstr "طريقة الدفع مطلوبة"
 
 #: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:69
+#: src/app/routes/_authenticated/_customer-groups/components/customer-group-members-table.tsx:67
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:138
 msgid "Failed to add customer to group"
 msgstr "فشل إضافة العميل إلى المجموعة"
