@@ -124,7 +124,7 @@ export class McpTransportController {
         const token = this.getBearerToken(this.getHeader(headers, 'authorization'));
 
         // 2. Meter anonymous shop traffic by IP before anything else touches the database. Building
-        // the context below mints a Vendure session row when the caller has no usable session, so the
+        // the context below creates a Vendure session row when the caller has no usable session, so the
         // write has to sit inside the limit rather than behind it.
         if (toolset === 'shop' && !token) {
             try {

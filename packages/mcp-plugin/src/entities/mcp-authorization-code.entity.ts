@@ -31,7 +31,7 @@ export class McpAuthorizationCode extends VendureEntity {
     @EntityId()
     oauthClientId: ID;
 
-    // Identity columns used by the token-exchange step to mint a Vendure session.
+    // Identity columns used by the token-exchange step to create a Vendure session.
     @Index()
     @EntityId()
     userId: ID;

@@ -96,7 +96,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
             vendureAuthToken: customerAuthToken,
         });
 
-    // Drives DCR + authorize + admin-consent and stops at the freshly minted code, so a
+    // Drives DCR + authorize + admin-consent and stops at the freshly created code, so a
     // test can craft its own token-exchange request. The code has not yet been consumed.
     const authorizeAdminToCode = async (overrides?: { redirectUri?: string; resource?: string }) => {
         const redirectUri = overrides?.redirectUri ?? 'https://example.com/cb';
@@ -431,7 +431,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
     });
 
     // Relates to OSS-575 — the same cookie-authenticated consent from the issuer's own
-    // origin (the real consent page) is allowed and mints an authorization code.
+    // origin (the real consent page) is allowed and creates an authorization code.
     it('allows cookie-authenticated admin consent from the consent page origin', async () => {
         const oauth = server.app.get(McpOauthService);
         const flow = await authorizeAdminToCodePreConsent();
@@ -453,7 +453,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
     });
 
     // Relates to OSS-575 — admin consent with a falsey `approved` returns an access_denied
-    // redirect and mints no authorization code.
+    // redirect and creates no authorization code.
     it('returns access_denied (and no code) when admin consent is not approved', async () => {
         const flow = await authorizeAdminToCodePreConsent();
 
@@ -470,7 +470,7 @@ describe('McpPlugin OAuth edge & security cases', () => {
         expect(url.searchParams.get('code')).toBeNull();
     });
 
-    // Relates to OSS-575 — the string `'false'` is also treated as a denial (no code minted).
+    // Relates to OSS-575 — the string `'false'` is also treated as a denial (no code created).
     it('treats a string "false" approved value as a denial', async () => {
         const flow = await authorizeAdminToCodePreConsent();
 

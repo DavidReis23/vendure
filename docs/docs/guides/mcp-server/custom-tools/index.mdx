@@ -24,9 +24,9 @@ plugin can *declare* tools without pulling in the whole server. The server (`@ve
 installed and `McpPlugin` added to your config for the tools to actually be served.
 
 :::warning Keep a single copy of `@vendure/mcp-sdk`
-The `@McpTool` decorator is created with NestJS's `DiscoveryService.createDecorator()`, which mints its metadata
+The `@McpTool` decorator is created with NestJS's `DiscoveryService.createDecorator()`, which creates its metadata
 key once, at module load. If two different versions of `@vendure/mcp-sdk` resolve in your `node_modules`, they
-mint two different keys, and tools decorated via one copy are **invisible** to a registry scanning with the other
+create two different keys, and tools decorated via one copy are **invisible** to a registry scanning with the other
 — they silently never appear. Vendure's fixed versioning and your package manager's deduplication normally
 prevent this; the rule for plugin authors is simply: **do not pin a divergent `@vendure/mcp-sdk` version**.
 :::

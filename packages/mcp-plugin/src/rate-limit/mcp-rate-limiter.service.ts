@@ -84,7 +84,7 @@ export class McpRateLimiterService {
 
     /**
      * Charges the anonymous-IP bucket alone, without a resolved context. The transport calls this
-     * before it builds one for an anonymous shop request, because building it mints a Vendure session
+     * before it builds one for an anonymous shop request, because building it creates a Vendure session
      * row — the write belongs inside the limit rather than behind it. This is the only place that
      * bucket is charged; {@link buildSharedBucketChecks} deliberately leaves it out.
      */

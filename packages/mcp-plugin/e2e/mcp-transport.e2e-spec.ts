@@ -188,7 +188,7 @@ describe('MCP transport rate limiting', () => {
         expect(tripped.body.error.data.scope).toBe('anonymous IP');
     });
 
-    it('refuses a request once the bucket is spent without minting a session for it', async () => {
+    it('refuses a request once the bucket is spent without creating a session for it', async () => {
         // The anonymous-IP bucket is already spent by the previous test (60s window). The refusal has
         // to come before the context is built, because building it writes an anonymous session row.
         const before = await countAnonymousSessions(server);
@@ -216,9 +216,9 @@ describe('MCP transport anonymous session metering', () => {
         await server.destroy();
     });
 
-    it('meters a notification flood and stops minting anonymous sessions', async () => {
+    it('meters a notification flood and stops creating anonymous sessions', async () => {
         // A notification carries no id, so it never produces a JSON-RPC response — but it does reach
-        // the transport, which mints a session for it. anonymousIp rpm = 3, so at most three of these
+        // the transport, which creates a session for it. anonymousIp rpm = 3, so at most three of these
         // six posts may be served.
         const notification = { jsonrpc: '2.0', method: 'notifications/initialized' };
         const before = await countAnonymousSessions(server);

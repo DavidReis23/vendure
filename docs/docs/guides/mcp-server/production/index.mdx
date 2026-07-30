@@ -25,7 +25,7 @@ openssl rand -base64 32
 Provide it via an environment variable, not source. **Rotating the secret invalidates every stored MCP OAuth
 token**, so all agents must re-authorize — rotate deliberately, not on a schedule.
 
-One credential sits outside that scheme. Each grant mints a dedicated Vendure session, and Vendure stores session
+One credential sits outside that scheme. Each grant creates a dedicated Vendure session, and Vendure stores session
 tokens in the clear, so that row is a working bearer credential for the ordinary Admin and Shop GraphQL APIs, where
 the grant's own expiry check does not apply. It is a one-way hash of the access token and is never sent to the
 client, so reaching it means reading the database — treat the `session` table as secret material. Its lifetime is

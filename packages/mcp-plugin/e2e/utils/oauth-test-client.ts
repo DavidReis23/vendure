@@ -22,9 +22,9 @@ export interface AuthorizationCodeFlowResult {
     request_token: string;
     /** The plaintext authorization code extracted from the consent redirect. */
     code: string;
-    /** The minted access token (plaintext). */
+    /** The created access token (plaintext). */
     access_token: string;
-    /** The minted refresh token (plaintext). */
+    /** The created refresh token (plaintext). */
     refresh_token: string;
 }
 
