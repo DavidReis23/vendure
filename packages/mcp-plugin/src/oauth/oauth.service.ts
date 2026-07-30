@@ -870,9 +870,10 @@ export class McpOauthService {
     }
 
     /**
-     * Derives (once) and returns the HMAC key used to hash MCP tokens — both the
-     * `lookup:`-prefixed values stored in the token/code/request columns and the
-     * unprefixed session-token derivation for the Option-D session bridge.
+     * Derives (once) and returns the HMAC key used to hash MCP tokens. Two different
+     * hashes come from this one key: the `lookup:`-prefixed values stored in the
+     * token/code/request columns, and the unprefixed hash that becomes the token of
+     * the Vendure session minted for a grant.
      */
     private getHashKey(): Buffer {
         if (!this.cachedHashKey) {
