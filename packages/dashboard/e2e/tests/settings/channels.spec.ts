@@ -2,6 +2,7 @@ import { type Page, expect, test } from '@playwright/test';
 
 import { BaseDetailPage } from '../../page-objects/detail-page.base.js';
 import { BaseListPage } from '../../page-objects/list-page.base.js';
+import { VendureAdminClient } from '../../utils/vendure-admin-client.js';
 
 // Channels have dependent selectors: available languages/currencies must be set
 // before their respective defaults. Zone selectors are standard Base UI Selects.
@@ -55,41 +56,26 @@ test.describe('Channels CRUD', () => {
 
         // Available languages — MultiSelect popover (few items, no search input)
         await dp.formItem('Available languages').getByRole('combobox').click();
-        // Popover renders options as plain <button> inside [data-slot="popover-content"]
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /English/ })
-            .click();
+        await page.getByRole('option', { name: /English/ }).click();
         // Click outside to close the popover and let form state propagate
         await page.locator('body').click({ position: { x: 0, y: 0 } });
         await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
 
         // Default language — single-select filtered by available languages
         await dp.formItem('Default language').getByRole('combobox').click();
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /English/ })
-            .click();
+        await page.getByRole('option', { name: /English/ }).click();
 
         // Available currencies — MultiSelect popover (100+ items, search shows)
-        await dp.formItem('Available currencies').getByRole('combobox').click();
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByPlaceholder('Search currencies...')
-            .fill('Dollar');
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /Dollar/ })
-            .first()
-            .click();
-        await page.locator('body').click({ position: { x: 0, y: 0 } });
-        await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
+        const availableCurrencies = dp.formItem('Available currencies').getByRole('combobox');
+        await availableCurrencies.fill('Dollar');
+        await page.getByRole('option', { name: 'Australian Dollar (A$)', exact: true }).click();
+        await page.keyboard.press('Escape');
 
         // Default currency — single-select filtered by available currencies
         await dp.formItem('Default currency').getByRole('combobox').click();
         await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /Dollar/ })
+            .locator('[data-slot="select-content"]')
+            .getByRole('option', { name: 'Australian Dollar (A$)', exact: true })
             .click();
 
         // Default tax zone — Base UI Select
@@ -131,6 +117,67 @@ test.describe('Channels CRUD', () => {
         await dp.expectSuccessToast(/Successfully updated channel/);
     });
 
+    // #4995 — the Appearance PageBlock must be a direct PageLayout child or it is silently omitted.
+    test('should update the channel color from the appearance card', async ({ page }) => {
+        let channelColors: Record<string, string> = {};
+
+        await page.route('**/admin-api**', async route => {
+            const body = route.request().postData() ?? '';
+            if (body.includes('GetSettingsStoreValue')) {
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({ data: { getSettingsStoreValue: channelColors } }),
+                });
+            } else if (body.includes('SetSettingsStoreValue')) {
+                const request = route.request().postDataJSON();
+                channelColors = request.variables.input.value;
+                await route.fulfill({
+                    status: 200,
+                    contentType: 'application/json',
+                    body: JSON.stringify({
+                        data: {
+                            setSettingsStoreValue: {
+                                key: request.variables.input.key,
+                                result: true,
+                                error: null,
+                            },
+                        },
+                    }),
+                });
+            } else {
+                await route.fallback();
+            }
+        });
+
+        const lp = listPage(page);
+        await lp.goto();
+        await lp.expectLoaded();
+        await lp.clickEntity('Default channel');
+
+        const appearanceCard = page
+            .getByText('Appearance', { exact: true })
+            .locator('xpath=ancestor::*[@data-slot="card"]');
+        await expect(appearanceCard).toBeVisible();
+        const colorSelect = appearanceCard.getByRole('combobox');
+        await colorSelect.click();
+        await page.getByRole('option', { name: 'Color 2' }).click();
+        await expect(colorSelect).toContainText('Color 2');
+        await expect.poll(() => Object.values(channelColors)).toContain('viz-2');
+    });
+
+    test('should hide channel color controls without DashboardPlugin', async ({ page }) => {
+        const lp = listPage(page);
+        await lp.goto();
+        await lp.expectLoaded();
+        await lp.clickEntity('Default channel');
+
+        await expect(page.getByText('Appearance')).toHaveCount(0);
+
+        await page.locator('[data-slot="sidebar"] [data-sidebar="menu-button"]').first().click();
+        await expect(page.getByRole('menuitem', { name: 'Customize channel colors' })).toHaveCount(0);
+    });
+
     test('should show updated channel in the list', async ({ page }) => {
         const lp = listPage(page);
         await lp.goto();
@@ -160,6 +207,7 @@ test.describe('Channels CRUD', () => {
 // payload and blew up during server-side variable coercion. `defaultCurrencyCode` is nullable in
 // the schema but still required by ChannelService.create, which throws a raw UserInputError
 // ("Either a defaultCurrencyCode or currencyCode must be provided").
+
 test.describe('Channel required-field validation', () => {
     const detailPage = (page: Page) =>
         new BaseDetailPage(page, {
@@ -167,6 +215,35 @@ test.describe('Channel required-field validation', () => {
             pathPrefix: '/channels/',
             newTitle: 'New channel',
         });
+
+    // Select popups are portalled to the document, and several of them are mounted at once on
+    // this form, so scope option queries to the one that is actually open.
+    const openSelect = (page: Page) =>
+        page.locator('[data-slot="select-content"]').filter({ visible: true });
+
+    // A DS v2 multi-select shows its value as chips, not as text inside the input, so assertions
+    // about what is selected have to read the chip rather than the form item as a whole.
+    const currencyChip = (dp: BaseDetailPage, currency: string) =>
+        dp
+            .formItem('Available currencies')
+            .locator('[data-slot="combobox-chip"]')
+            .filter({ hasText: currency });
+
+    // These tests create channels; without this they only pass against a cold database.
+    test.afterAll(async ({ browser }) => {
+        const page = await browser.newPage();
+        const client = new VendureAdminClient(page);
+        await client.login();
+        const { channels } = await client.gql(`query { channels { items { id code } } }`);
+        for (const channel of channels.items.filter((c: { code: string }) =>
+            c.code.startsWith('e2e-default-'),
+        )) {
+            await client.gql(`mutation ($id: ID!) { deleteChannel(id: $id) { result } }`, {
+                id: channel.id,
+            });
+        }
+        await page.close();
+    });
 
     test('should show inline errors instead of a raw GraphQL toast when required fields are missing', async ({
         page,
@@ -213,32 +290,27 @@ test.describe('Channel required-field validation', () => {
         await dp.fillInput('Code', 'e2e-default-source-channel');
         await dp.fillInput('Token', 'e2e-default-source-token');
 
-        // Nothing is available, so there is nothing to make the default. The popover has no search
-        // input either — MultiSelect only shows it above 10 items.
-        await dp.formItem('Default currency').getByRole('combobox').click();
-        await expect(page.locator('[data-slot="popover-content"]').getByRole('button')).toHaveCount(0);
-        await page.locator('body').click({ position: { x: 0, y: 0 } });
-        await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
+        // Nothing is available, so there is nothing to make the default. Base UI does not mount
+        // the popup at all for an empty list, so anchor on the trigger still offering its
+        // placeholder — otherwise a field that failed to render would pass this just as happily.
+        const defaultCurrency = dp.formItem('Default currency').getByRole('combobox');
+        await defaultCurrency.click();
+        await expect(page.getByRole('option')).toHaveCount(0);
+        await expect(defaultCurrency).toContainText('Select a currency');
+        await dp.closeDropdown();
 
         // Marking one currency available makes it — and only it — a candidate default.
         await dp.formItem('Available currencies').getByRole('combobox').click();
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByPlaceholder('Search currencies...')
-            .fill('Euro');
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /Euro/ })
-            .first()
-            .click();
-        await page.locator('body').click({ position: { x: 0, y: 0 } });
-        await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
+        await page.getByRole('option', { name: /Euro/ }).first().click();
+        await dp.closeDropdown();
+        await expect(currencyChip(dp, 'Euro')).toBeVisible();
 
-        await dp.formItem('Default currency').getByRole('combobox').click();
-        await expect(page.locator('[data-slot="popover-content"]').getByRole('button')).toHaveCount(1);
-        await page.locator('[data-slot="popover-content"]').getByRole('button', { name: /Euro/ }).click();
+        await defaultCurrency.click();
+        await expect(openSelect(page)).toBeVisible();
+        await expect(openSelect(page).getByRole('option')).toHaveCount(1);
+        await openSelect(page).getByRole('option', { name: /Euro/ }).click();
         // A single-select closes itself once a value is picked.
-        await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
+        await expect(page.getByRole('listbox').filter({ visible: true })).toHaveCount(0);
         await expect(dp.formItem('Default currency').getByRole('combobox')).toContainText('Euro');
 
         await dp.selectOption('Default tax zone', 'Europe');
@@ -250,7 +322,7 @@ test.describe('Channel required-field validation', () => {
 
         // The default is among the saved channel's available currencies, because it came from them.
         await page.reload();
-        await expect(dp.formItem('Available currencies').getByRole('combobox')).toContainText('Euro');
+        await expect(currencyChip(dp, 'Euro')).toBeVisible();
         await expect(dp.formItem('Default currency').getByRole('combobox')).toContainText('Euro');
     });
 
@@ -268,34 +340,24 @@ test.describe('Channel required-field validation', () => {
         await dp.selectOption('Default shipping zone', 'Europe');
 
         // Two available currencies...
+        // Pick both from one open list: a multi-select only closes on selection when a filter is
+        // active, so selecting unfiltered keeps the dropdown open for the next one.
         await dp.formItem('Available currencies').getByRole('combobox').click();
         for (const currency of ['US Dollar', 'Euro']) {
             await page
-                .locator('[data-slot="popover-content"]')
-                .getByPlaceholder('Search currencies...')
-                .fill(currency);
-            await page
-                .locator('[data-slot="popover-content"]')
-                .getByRole('button', { name: new RegExp(currency) })
+                .getByRole('option', { name: new RegExp(currency) })
                 .first()
                 .click();
         }
-        await page.locator('body').click({ position: { x: 0, y: 0 } });
-        await expect(page.locator('[data-slot="popover-content"]')).not.toBeVisible();
+        await dp.closeDropdown();
 
         // ...one of which becomes the default...
         await dp.formItem('Default currency').getByRole('combobox').click();
-        await page
-            .locator('[data-slot="popover-content"]')
-            .getByRole('button', { name: /US Dollar/ })
-            .click();
+        await openSelect(page).getByRole('option', { name: /US Dollar/ }).click();
         await expect(dp.formItem('Default currency').getByRole('combobox')).toContainText('US Dollar');
 
-        // ...and is then taken back off the available list via its badge.
-        await dp
-            .formItem('Available currencies')
-            .getByRole('button', { name: /Remove US Dollar/ })
-            .click();
+        // ...and is then taken back off the available list via its chip.
+        await currencyChip(dp, 'US Dollar').locator('[data-slot="combobox-chip-remove"]').click();
 
         await dp.clickCreate();
         await expect(
