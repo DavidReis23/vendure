@@ -8,8 +8,10 @@ import {
 import {
     AuthenticatedSession,
     ChannelService,
+    ConfigService,
     ID,
     idsAreEqual,
+    Logger,
     RequestContext,
     RequestContextService,
     Session,
@@ -23,6 +25,7 @@ import { ObjectLiteral, ObjectType } from 'typeorm';
 
 import {
     DEFAULT_OAUTH_OPTIONS,
+    loggerCtx,
     MCP_PLUGIN_OPTIONS,
     mcpServerPermission,
     MS_PER_DAY,
@@ -47,7 +50,7 @@ import { addSeconds, appendOAuthParams, randomToken, verifyPkceChallenge } from 
 import { deriveHashKey, hashToken } from './token-hash';
 
 /**
- * Name recorded against the dedicated Vendure session minted for an MCP grant.
+ * Name recorded against the dedicated Vendure session created for an MCP grant.
  */
 const MCP_SESSION_STRATEGY = 'mcp-dedicated-session';
 
@@ -66,10 +69,11 @@ export interface McpOauthRetentionResult {
  * - Supports authorization-code and refresh-token grants.
  *
  * Session & Security Mechanics:
- * - Dedicated Sessions: Each grant mints a new, isolated Vendure session instead of copying the user's session token.
- * - Token Hashing: Uses an unprefixed hash of the access token.
- *   This intentionally differs from Vendure's `lookup:`-prefixed database entries so a compromised column value cannot be weaponized as a session.
- * - Lifecycle: Tracks the session via {@link McpOauthGrant.vendureSessionId} to handle automated lookups, re-minting on expiration, and cleanup on revocation.
+ * - Each grant owns one isolated Vendure session with a random generated token.
+ * - OAuth access and refresh tokens rotate independently of that session.
+ * - Bearer authentication validates the grant first, then resolves its session by
+ *   {@link McpOauthGrant.vendureSessionId}; the session token is never returned to authenticated MCP clients.
+ * - Revocation and expired-grant retention delete the session row and evict its cache entry.
  */
 @Injectable()
 export class McpOauthService {
@@ -81,6 +85,7 @@ export class McpOauthService {
         private sessionService: SessionService,
         private channelService: ChannelService,
         private userService: UserService,
+        private configService: ConfigService,
         @Inject(MCP_PLUGIN_OPTIONS) private options: McpPluginOptions,
     ) {}
 
@@ -297,18 +302,19 @@ export class McpOauthService {
     }
 
     private async revokeGrant(ctx: RequestContext, grant: McpOauthGrant): Promise<void> {
-        await this.deleteVendureSession(ctx, grant.vendureSessionId);
-        await this.connection
-            .getRepository(ctx, McpOauthGrant)
-            .update({ id: grant.id }, { revokedAt: new Date() });
+        const sessionToken = await this.connection.withTransaction(ctx, async txCtx => {
+            await this.connection
+                .getRepository(txCtx, McpOauthGrant)
+                .update({ id: grant.id }, { revokedAt: new Date() });
+            return this.deleteVendureSessionRow(txCtx, grant.vendureSessionId);
+        });
+        await this.deleteCachedVendureSession(sessionToken);
     }
 
     async authenticateBearerToken(token: string, apiType: McpToolset): Promise<McpAuthenticatedContext> {
         const adminCtx = await this.createAdminCtx();
-        const grant = await this.connection.getRepository(adminCtx, McpOauthGrant).findOne({
-            where: { accessTokenHash: this.hashLookup(token) },
-            relations: ['oauthClient'],
-        });
+        const resolved = await this.findGrantAndSessionToken(adminCtx, token);
+        const grant = resolved?.grant;
         if (!grant || grant.revokedAt || grant.accessTokenExpiresAt <= new Date()) {
             throw new UnauthorizedException('Invalid or expired access token');
         }
@@ -325,20 +331,29 @@ export class McpOauthService {
             throw new UnauthorizedException('MCP grant is expired');
         }
 
-        const sessionToken = hashToken(token, this.getHashKey());
-        let vendureSession = await this.sessionService.getSessionFromToken(sessionToken);
+        let vendureSession = resolved.sessionToken
+            ? await this.sessionService.getSessionFromToken(resolved.sessionToken)
+            : undefined;
         if (!vendureSession) {
             const user = await this.userService.getUserById(adminCtx, grant.userId);
             if (!user) {
                 throw new UnauthorizedException('Vendure user no longer exists');
             }
             // The lapsed session row may still be in the table — Vendure clears expired
-            // sessions with a background job, not on read — and it holds the same unique
-            // token we are about to mint, so we delete.
-            await this.deleteVendureSession(adminCtx, grant.vendureSessionId);
-            const minted = await this.mintVendureSession(adminCtx, user, token);
-            grant.vendureSessionId = minted.id;
-            vendureSession = await this.sessionService.getSessionFromToken(sessionToken);
+            // sessions with a background job, not on read — so remove it, and its cache
+            // entry, before creating the replacement the grant will point at.
+            const staleSessionToken = await this.deleteVendureSessionRow(adminCtx, grant.vendureSessionId);
+            await this.deleteCachedVendureSession(staleSessionToken);
+            const createdSession = await this.createVendureSession(adminCtx, user);
+            // Two deliberate writes of the new session id: mutating the entity keeps the
+            // save() at the end of this method from putting the stale id back, and the
+            // targeted update makes it durable on its own — it must survive that save()
+            // being narrowed to a lastActivityAt-only update later.
+            grant.vendureSessionId = createdSession.id;
+            await this.connection
+                .getRepository(adminCtx, McpOauthGrant)
+                .update({ id: grant.id }, { vendureSessionId: createdSession.id });
+            vendureSession = await this.sessionService.getSessionFromToken(createdSession.token);
             if (!vendureSession) {
                 throw new UnauthorizedException('Failed to establish Vendure session');
             }
@@ -357,6 +372,30 @@ export class McpOauthService {
         grant.lastActivityAt = new Date();
         await this.connection.getRepository(adminCtx, McpOauthGrant).save(grant);
         return { ctx, grant };
+    }
+
+    /**
+     * Loads the grant for an access token together with its session's token in one query.
+     * The session token is raw-selected through a LEFT JOIN rather than a mapped relation:
+     * `Session.token` must never be duplicated onto the grant entity, and a missing session
+     * (cleaned up or lapsed) must not hide a live grant from the re-creation path above.
+     */
+    private async findGrantAndSessionToken(
+        ctx: RequestContext,
+        accessToken: string,
+    ): Promise<{ grant: McpOauthGrant; sessionToken: string | null } | undefined> {
+        const result = await this.connection
+            .getRepository(ctx, McpOauthGrant)
+            .createQueryBuilder('grant')
+            .leftJoinAndSelect('grant.oauthClient', 'oauthClient')
+            .leftJoin(Session, 'vendureSession', 'vendureSession.id = grant.vendureSessionId')
+            .addSelect('vendureSession.token', 'vendureSessionToken')
+            .where('grant.accessTokenHash = :accessTokenHash', {
+                accessTokenHash: this.hashLookup(accessToken),
+            })
+            .getRawAndEntities<{ vendureSessionToken: string | null }>();
+        const grant = result.entities[0];
+        return grant ? { grant, sessionToken: result.raw[0]?.vendureSessionToken ?? null } : undefined;
     }
 
     async createAnonymousShopContext(sessionToken?: string, channelToken?: string): Promise<RequestContext> {
@@ -389,20 +428,29 @@ export class McpOauthService {
     }
 
     /**
-     * Deletes the Vendure session minted for every grant that has passed `expiresAt`. Expiry
+     * Deletes the Vendure session created for every grant that has passed `expiresAt`. Expiry
      * is only ever checked at lookup, so without this the grant stops working for MCP while the
-     * session it minted stays valid against the ordinary GraphQL APIs for `sessionDuration`.
+     * session it created stays valid against the ordinary GraphQL APIs for `sessionDuration`.
      */
     private deleteSessionsOfExpiredGrants(ctx: RequestContext): Promise<number> {
-        return this.deleteInBatches(ctx, Session, () =>
-            this.connection
-                .getRepository(ctx, McpOauthGrant)
-                .createQueryBuilder('grant')
-                .select('grant.vendureSessionId', 'id')
-                .innerJoin(Session, 'session', 'session.id = grant.vendureSessionId')
-                .where('grant.expiresAt <= :now', { now: new Date() })
-                .limit(RETENTION_DELETE_BATCH_SIZE)
-                .getRawMany<{ id: ID }>(),
+        return this.deleteInBatches(
+            ctx,
+            Session,
+            () =>
+                this.connection
+                    .getRepository(ctx, McpOauthGrant)
+                    .createQueryBuilder('grant')
+                    .select('session.id', 'id')
+                    .addSelect('session.token', 'token')
+                    .innerJoin(Session, 'session', 'session.id = grant.vendureSessionId')
+                    .where('grant.expiresAt <= :now', { now: new Date() })
+                    .limit(RETENTION_DELETE_BATCH_SIZE)
+                    .getRawMany<{ id: ID; token: string }>(),
+            async sessions => {
+                for (const session of sessions) {
+                    await this.deleteCachedVendureSession(session.token);
+                }
+            },
         );
     }
 
@@ -454,10 +502,11 @@ export class McpOauthService {
      * batch of ids, and the loop ends when a short batch comes back. Same shape as the tool-call
      * log sweep, which keeps each statement small enough not to lock a large table.
      */
-    private async deleteInBatches<T extends ObjectLiteral>(
+    private async deleteInBatches<T extends ObjectLiteral, R extends { id: ID }>(
         ctx: RequestContext,
         entity: ObjectType<T>,
-        selectBatch: () => Promise<Array<{ id: ID }>>,
+        selectBatch: () => Promise<R[]>,
+        afterDelete?: (rows: R[]) => Promise<void>,
     ): Promise<number> {
         const repository = this.connection.getRepository(ctx, entity);
         let totalDeleted = 0;
@@ -471,6 +520,7 @@ export class McpOauthService {
                 .delete()
                 .where('id IN (:...ids)', { ids: rows.map(row => row.id) })
                 .execute();
+            await afterDelete?.(rows);
             totalDeleted += result.affected ?? rows.length;
             if (rows.length < RETENTION_DELETE_BATCH_SIZE) {
                 break;
@@ -593,14 +643,14 @@ export class McpOauthService {
         }
         const { resource } = this.resolveResource(input.resource);
         const ctx = await this.createAdminCtx();
-        const sessionRepo = this.connection.getRepository(ctx, McpOauthGrant);
+        const grantRepo = this.connection.getRepository(ctx, McpOauthGrant);
         const refreshTokenHash = this.hashLookup(input.refresh_token);
-        const grant = await sessionRepo.findOne({
+        const grant = await grantRepo.findOne({
             where: { refreshTokenHash },
             relations: ['oauthClient'],
         });
         if (!grant) {
-            const reused = await sessionRepo.findOne({
+            const reused = await grantRepo.findOne({
                 where: { previousRefreshTokenHash: refreshTokenHash },
             });
             if (reused && !reused.revokedAt) {
@@ -621,41 +671,34 @@ export class McpOauthService {
         const now = new Date();
         const accessPlaintext = randomToken();
         const refreshPlaintext = randomToken();
-        // Atomically claim the rotation by swapping the token hashes in place. If two
-        // requests race with the same refresh token, only one UPDATE matches; the loser
-        // sees affected=0 and is rejected. The old refresh hash is kept so a later
-        // replay of it is recognized as reuse (above) rather than an unknown token.
-        const claim = await sessionRepo
-            .createQueryBuilder()
-            .update(McpOauthGrant)
-            .set({
-                accessTokenHash: this.hashLookup(accessPlaintext),
-                refreshTokenHash: this.hashLookup(refreshPlaintext),
-                previousRefreshTokenHash: refreshTokenHash,
-                accessTokenExpiresAt: addSeconds(now, this.resolvedOauth().accessTokenTtlSeconds),
-                expiresAt: addSeconds(now, this.resolvedOauth().refreshTokenTtlSeconds),
-                lastActivityAt: now,
-            })
-            .where('id = :id', { id: grant.id })
-            .andWhere('refreshTokenHash = :refreshTokenHash', { refreshTokenHash })
-            .andWhere('revokedAt IS NULL')
-            .execute();
-        if (!claim.affected) {
-            throw new BadRequestException('Refresh token invalid or expired');
-        }
-
-        // The minted Vendure session is keyed by the access-token plaintext hash, so
-        // the new access token needs a freshly minted session.
-        const user = await this.userService.getUserById(ctx, grant.userId);
-        if (!user) {
-            throw new BadRequestException('Vendure user no longer exists');
-        }
-        await this.deleteVendureSession(ctx, grant.vendureSessionId);
-        const minted = await this.mintVendureSession(ctx, user, accessPlaintext);
-        await sessionRepo.update({ id: grant.id }, { vendureSessionId: minted.id });
-
-        grant.oauthClient.lastUsedAt = now;
-        await this.connection.getRepository(ctx, McpOauthClient).save(grant.oauthClient);
+        await this.connection.withTransaction(ctx, async txCtx => {
+            // Atomically claim the rotation by swapping the token hashes in place. If two
+            // requests race with the same refresh token, only one UPDATE matches; the loser
+            // sees affected=0 and is rejected. The old refresh hash is kept so a later
+            // replay of it is recognized as reuse (above) rather than an unknown token.
+            const claim = await this.connection
+                .getRepository(txCtx, McpOauthGrant)
+                .createQueryBuilder()
+                .update(McpOauthGrant)
+                .set({
+                    accessTokenHash: this.hashLookup(accessPlaintext),
+                    refreshTokenHash: this.hashLookup(refreshPlaintext),
+                    previousRefreshTokenHash: refreshTokenHash,
+                    accessTokenExpiresAt: addSeconds(now, this.resolvedOauth().accessTokenTtlSeconds),
+                    expiresAt: addSeconds(now, this.resolvedOauth().refreshTokenTtlSeconds),
+                    lastActivityAt: now,
+                })
+                .where('id = :id', { id: grant.id })
+                .andWhere('refreshTokenHash = :refreshTokenHash', { refreshTokenHash })
+                .andWhere('revokedAt IS NULL')
+                .execute();
+            if (!claim.affected) {
+                throw new BadRequestException('Refresh token invalid or expired');
+            }
+            await this.connection
+                .getRepository(txCtx, McpOauthClient)
+                .update({ id: grant.oauthClientId }, { lastUsedAt: now });
+        });
         return this.tokenResponse(accessPlaintext, refreshPlaintext);
     }
 
@@ -674,7 +717,7 @@ export class McpOauthService {
         const now = new Date();
         const accessPlaintext = randomToken();
         const refreshPlaintext = randomToken();
-        const mintedSession = await this.mintVendureSession(ctx, user, accessPlaintext);
+        const createdSession = await this.createVendureSession(ctx, user);
         await this.connection.getRepository(ctx, McpOauthGrant).save(
             new McpOauthGrant({
                 accessTokenHash: this.hashLookup(accessPlaintext),
@@ -688,7 +731,7 @@ export class McpOauthService {
                 accessTokenExpiresAt: addSeconds(now, this.resolvedOauth().accessTokenTtlSeconds),
                 expiresAt: addSeconds(now, this.resolvedOauth().refreshTokenTtlSeconds),
                 revokedAt: null,
-                vendureSessionId: mintedSession.id,
+                vendureSessionId: createdSession.id,
                 channelId,
                 lastActivityAt: now,
             }),
@@ -709,30 +752,42 @@ export class McpOauthService {
     }
 
     /**
-     * Mints a dedicated Vendure session whose token is the unprefixed hash of the
-     * access-token plaintext. This is NOT the `lookup:`-prefixed hash stored in the
-     * token column, so a stored column value can't be replayed as a session token.
+     * Creates the dedicated Vendure session for a grant. No token is supplied, so Core
+     * generates an ordinary random one — nothing about the session is derivable from
+     * the OAuth tokens that reach it.
      */
-    private mintVendureSession(
-        ctx: RequestContext,
-        user: User,
-        accessTokenPlaintext: string,
-    ): Promise<AuthenticatedSession> {
-        return this.sessionService.createNewAuthenticatedSession(
-            ctx,
-            user,
-            MCP_SESSION_STRATEGY,
-            hashToken(accessTokenPlaintext, this.getHashKey()),
-        );
+    private createVendureSession(ctx: RequestContext, user: User): Promise<AuthenticatedSession> {
+        return this.sessionService.createNewAuthenticatedSession(ctx, user, MCP_SESSION_STRATEGY);
     }
 
-    /** Removes a Vendure session row by id, if it still exists. */
-    private async deleteVendureSession(ctx: RequestContext, sessionId: ID): Promise<void> {
+    /**
+     * Removes a Vendure session row by id, if it still exists, and returns the token it
+     * held so the caller can evict the cache entry. Deleting the row alone is not enough:
+     * a cached session is served without touching the database until its entry ages out.
+     */
+    private async deleteVendureSessionRow(ctx: RequestContext, sessionId: ID): Promise<string | undefined> {
         const session = await this.connection
             .getRepository(ctx, Session)
             .findOne({ where: { id: sessionId } });
-        if (session) {
-            await this.connection.getRepository(ctx, Session).remove(session);
+        if (!session) {
+            return;
+        }
+        await this.connection.getRepository(ctx, Session).remove(session);
+        return session.token;
+    }
+
+    private async deleteCachedVendureSession(token: string | undefined): Promise<void> {
+        if (!token) {
+            return;
+        }
+        try {
+            await this.configService.authOptions.sessionCacheStrategy.delete(token);
+        } catch (error) {
+            Logger.error(
+                'Failed to evict a deleted MCP session from the session cache',
+                loggerCtx,
+                error instanceof Error ? error.stack : undefined,
+            );
         }
     }
 
@@ -870,10 +925,9 @@ export class McpOauthService {
     }
 
     /**
-     * Derives (once) and returns the HMAC key used to hash MCP tokens. Two different
-     * hashes come from this one key: the `lookup:`-prefixed values stored in the
-     * token/code/request columns, and the unprefixed hash that becomes the token of
-     * the Vendure session minted for a grant.
+     * Derives (once) and returns the HMAC key used to hash the OAuth credentials —
+     * access tokens, refresh tokens, authorization codes and request tokens — stored
+     * in the token/code/request columns.
      */
     private getHashKey(): Buffer {
         if (!this.cachedHashKey) {
@@ -883,9 +937,9 @@ export class McpOauthService {
     }
 
     /**
-     * Hashes a credential for storage and lookup in a token/code lookup column. The
-     * 'lookup:' prefix keeps this distinct from the session-token derivation (plain
-     * hashToken), so a stored column value can never be reused as a Vendure session token.
+     * Hashes a plaintext OAuth credential for indexed storage and lookup.
+     * The `lookup:` namespace keeps these values separate from any other
+     * keyed hashes introduced in the future.
      */
     private hashLookup(value: string): string {
         return hashToken(`lookup:${value}`, this.getHashKey());

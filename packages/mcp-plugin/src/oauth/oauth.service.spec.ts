@@ -1,4 +1,4 @@
-import { BadRequestException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException } from '@nestjs/common';
 import { describe, expect, it, vi } from 'vitest';
 
 import { DEFAULT_OAUTH_OPTIONS } from '../constants';
@@ -21,6 +21,7 @@ function createService(oauth?: McpPluginOptions['oauth']): McpOauthService {
         undefined as any,
         undefined as any,
         undefined as any,
+        { authOptions: { sessionCacheStrategy: { delete: vi.fn() } } } as any,
         options,
     );
 }
@@ -106,46 +107,14 @@ describe('McpOauthService PKCE / grant gating', () => {
     });
 });
 
-describe('McpOauthService bearer-token lookup hashing', () => {
-    it('hashes the incoming bearer with domain separation before lookup', async () => {
-        const tokenSecret = 'test-secret';
-        let capturedWhere: { accessTokenHash?: string } | undefined;
-        // findOne returns null so authenticateBearerToken throws right after the
-        // first lookup, after recording the where-clause it built.
-        const connection = {
-            getRepository: () => ({
-                findOne: (findOneArgs: { where?: { accessTokenHash?: string } }) => {
-                    capturedWhere = findOneArgs.where;
-                    return Promise.resolve(null);
-                },
-            }),
-        };
-        const requestContextService = {
-            create: () => Promise.resolve({} as any),
-        };
-        const options: McpPluginOptions = {
-            oauth: { ...DEFAULT_OAUTH_OPTIONS, issuer: ISSUER, tokenSecret },
-        };
-        const service = new McpOauthService(
-            connection as any,
-            requestContextService as any,
-            undefined as any,
-            undefined as any,
-            undefined as any,
-            options,
-        );
+describe('McpOauthService OAuth credential lookup hashing', () => {
+    it('hashes an OAuth credential with domain separation before storage and lookup', () => {
+        const service = createService({ tokenSecret: 'test-secret' });
+        const hashKey = deriveHashKey('test-secret');
+        const storedHash = (service as any).hashLookup('plain-token');
 
-        await expect(service.authenticateBearerToken('plain-token', 'admin')).rejects.toThrow(
-            UnauthorizedException,
-        );
-
-        const hashKey = deriveHashKey(tokenSecret);
-        // Stored/looked-up value is the domain-separated 'lookup:' hash...
-        expect(capturedWhere?.accessTokenHash).toBe(hashToken('lookup:plain-token', hashKey));
-        // ...never the plaintext...
-        expect(capturedWhere?.accessTokenHash).not.toBe('plain-token');
-        // ...and distinct from the unprefixed session-token derivation.
-        expect(capturedWhere?.accessTokenHash).not.toBe(hashToken('plain-token', hashKey));
+        expect(storedHash).toBe(hashToken('lookup:plain-token', hashKey));
+        expect(storedHash).not.toBe('plain-token');
     });
 });
 
@@ -164,6 +133,7 @@ describe('McpOauthService storefront channel selection', () => {
             sessionService as any,
             channelService as any,
             undefined as any,
+            { authOptions: { sessionCacheStrategy: { delete: vi.fn() } } } as any,
             { oauth: { ...DEFAULT_OAUTH_OPTIONS, issuer: ISSUER, tokenSecret: 's' } },
         );
         const completeAuthorizationRequest = vi

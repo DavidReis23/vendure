@@ -8,7 +8,7 @@ import { McpOauthClient } from './mcp-oauth-client.entity';
 /**
  * @description
  * Represents one MCP OAuth grant: the hashed access + refresh token pair issued to a
- * client, the granting user, and the dedicated Vendure session minted for the grant.
+ * client, the granting user, and the dedicated Vendure session created for the grant.
  *
  * @docsCategory core plugins/McpPlugin
  * @since 3.8.0
@@ -66,7 +66,6 @@ export class McpOauthGrant extends VendureEntity {
     @Column({ type: Date, nullable: true })
     revokedAt: Date | null;
 
-    /** ID of the dedicated Vendure session minted for this grant. */
     @Index()
     @EntityId()
     vendureSessionId: ID;

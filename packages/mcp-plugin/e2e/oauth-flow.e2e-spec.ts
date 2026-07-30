@@ -6,6 +6,7 @@ import {
     RequestContext,
     RequestContextService,
     Session,
+    SessionService,
     TransactionalConnection,
     User,
 } from '@vendure/core';
@@ -25,6 +26,7 @@ import { McpPlugin } from '../src/plugin';
 import { mcpOauthRetentionTask } from '../src/tasks/mcp-oauth-retention.task';
 
 import { runAuthorizationCodeFlow } from './utils/oauth-test-client';
+import { withFailingUpdate } from './utils/oauth-test-fixtures';
 
 const TOKEN_SECRET = 'test-secret';
 // The plugin's default issuer (see src/constants.ts), from which the resource is derived.
@@ -38,8 +40,8 @@ describe('McpPlugin OAuth end-to-end flow', () => {
     });
     const { server, adminClient } = createTestEnvironment(config);
 
-    // Hash helpers mirroring the McpOauthService: the `lookup:`-prefixed hash is what's
-    // stored in the token column; the unprefixed hash is the minted session's token.
+    // Hash helper mirroring the McpOauthService: the `lookup:`-prefixed hash is what's
+    // stored in the token column.
     const hashKey = deriveHashKey(TOKEN_SECRET);
     const lookupHash = (value: string) => hashToken(`lookup:${value}`, hashKey);
 
@@ -70,9 +72,18 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(accessToken) } });
         if (!grant) {
-            throw new Error('Expected a minted McpOauthGrant for the access token');
+            throw new Error('Expected an McpOauthGrant for the access token');
         }
         return grant;
+    };
+
+    /** The Vendure session token carried by a context that bearer auth just built. */
+    const sessionTokenOf = (authenticatedCtx: RequestContext): string => {
+        const token = authenticatedCtx.session?.token;
+        if (!token) {
+            throw new Error('Expected the authenticated context to carry a Vendure session');
+        }
+        return token;
     };
 
     /** Runs the full admin authorization-code flow and returns the resulting tokens. */
@@ -108,6 +119,21 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         }
         expect(authenticated.ctx.activeUserId).toBe(superadmin.id);
         expect(authenticated.grant.userId).toBe(superadmin.id);
+    });
+
+    // The grant's Vendure session is an ordinary Core session: a 32-byte random token
+    // (64 hex chars), with no relationship to the OAuth access token that reaches it.
+    it('creates an ordinary random Vendure session token for a grant', async () => {
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+        const { access_token } = await runFlow();
+        const grant = await grantFor(ctx, access_token);
+        const session = await connection
+            .getRepository(ctx, Session)
+            .findOneByOrFail({ id: grant.vendureSessionId });
+
+        expect(session.token).toHaveLength(64);
+        expect(session.token).not.toBe(hashToken(access_token, hashKey));
     });
 
     it('stores the access token hashed, never in plaintext', async () => {
@@ -171,9 +197,9 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         ).rejects.toThrow(/invalid or expired/i);
     });
 
-    // T7 regression — when the minted Vendure session lapses, re-authenticating the same
-    // access token must re-mint a fresh session rather than fail.
-    it('re-mints the dedicated Vendure session after it lapses', async () => {
+    // T7 regression — when the grant's Vendure session lapses, re-authenticating the same
+    // access token must create a fresh session rather than fail.
+    it('re-creates the dedicated Vendure session after it lapses', async () => {
         const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
         const configService = server.app.get(ConfigService);
@@ -188,26 +214,24 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionBefore) {
-            throw new Error('Expected a minted McpOauthGrant for the access token');
+            throw new Error('Expected an McpOauthGrant for the access token');
         }
         const sessionIdBefore = mcpSessionBefore.vendureSessionId;
 
-        // Simulate the Vendure session lapsing. Its token is the unprefixed hash of the
-        // access-token plaintext. Expire the DB row and clear the cache entry so the next
-        // lookup misses (Vendure clears expired sessions lazily, not on read), forcing the
-        // re-mint path.
-        const sessionToken = hashToken(access_token, hashKey);
+        // Simulate the Vendure session lapsing: expire the DB row and clear its cache entry
+        // so the next lookup misses (Vendure clears expired sessions lazily, not on read),
+        // forcing the re-creation path.
         const vendureSession = await connection
             .getRepository(ctx, Session)
             .findOne({ where: { id: sessionIdBefore } });
         if (!vendureSession) {
-            throw new Error('Expected the minted Vendure session to exist');
+            throw new Error('Expected the Vendure session to exist');
         }
         vendureSession.expires = new Date(Date.now() - 60 * 1000);
         await connection.getRepository(ctx, Session).save(vendureSession);
-        await configService.authOptions.sessionCacheStrategy.delete(sessionToken);
+        await configService.authOptions.sessionCacheStrategy.delete(vendureSession.token);
 
-        // Re-authenticating succeeds by re-minting a new session, and the McpOauthGrant now
+        // Re-authenticating succeeds by creating a new session, and the McpOauthGrant now
         // points at a different Vendure session id.
         const reauthenticated = await oauth.authenticateBearerToken(access_token, 'admin');
         expect(reauthenticated.ctx.activeUserId).toBe(mcpSessionBefore.userId);
@@ -216,30 +240,84 @@ describe('McpPlugin OAuth end-to-end flow', () => {
             .getRepository(ctx, McpOauthGrant)
             .findOne({ where: { accessTokenHash: lookupHash(access_token) } });
         if (!mcpSessionAfter) {
-            throw new Error('Expected the McpOauthGrant to persist after re-mint');
+            throw new Error('Expected the McpOauthGrant to persist after re-creation');
         }
         expect(mcpSessionAfter.vendureSessionId).not.toBe(sessionIdBefore);
+    });
+
+    // Revoking must take the session with it — row and cache entry both. Leaving the cache
+    // entry behind would keep the revoked credential working against the ordinary GraphQL
+    // APIs until the entry aged out.
+    it('deletes and evicts the Vendure session when a grant is revoked', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const sessionService = server.app.get(SessionService);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+
+        const { access_token } = await runFlow();
+        // Authenticating first puts the session in the cache, so the assertions below
+        // cover the cache entry and not just the row.
+        const authenticated = await oauth.authenticateBearerToken(access_token, 'admin');
+        const sessionToken = sessionTokenOf(authenticated.ctx);
+
+        await oauth.revoke(access_token);
+
+        expect(
+            await connection
+                .getRepository(ctx, Session)
+                .findOne({ where: { id: authenticated.grant.vendureSessionId } }),
+        ).toBeNull();
+        expect(await sessionService.getSessionFromToken(sessionToken)).toBeUndefined();
+    });
+
+    // Revocation writes two rows. A half-applied revocation is the dangerous outcome:
+    // the session gone but the grant still live, which the re-creation path would silently
+    // paper over on the next request.
+    it('leaves the grant and its session untouched when revocation fails midway', async () => {
+        const oauth = server.app.get(McpOauthService);
+        const connection = server.app.get(TransactionalConnection);
+        const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
+        const grantRepo = connection.getRepository(ctx, McpOauthGrant);
+
+        const { access_token } = await runFlow();
+        const grant = await grantFor(ctx, access_token);
+
+        await withFailingUpdate(connection, McpOauthGrant, 'forced revocation update failure', async () => {
+            await expect(oauth.revoke(access_token)).rejects.toThrow('forced revocation update failure');
+        });
+
+        const grantAfter = await grantRepo.findOneByOrFail({ id: grant.id });
+        expect(grantAfter.revokedAt).toBeNull();
+        expect(
+            await connection.getRepository(ctx, Session).findOneBy({ id: grant.vendureSessionId }),
+        ).toBeTruthy();
+        expect((await oauth.authenticateBearerToken(access_token, 'admin')).grant.id).toBe(grant.id);
     });
 
     it('deletes the Vendure session behind a grant that has passed its expiry', async () => {
         const oauth = server.app.get(McpOauthService);
         const connection = server.app.get(TransactionalConnection);
+        const sessionService = server.app.get(SessionService);
         const ctx = await server.app.get(RequestContextService).create({ apiType: 'admin' });
 
         const { access_token } = await runFlow();
+        // Authenticating first puts the session in the cache, so the assertions below
+        // cover the cache entry and not just the row.
+        const authenticated = await oauth.authenticateBearerToken(access_token, 'admin');
+        const sessionToken = sessionTokenOf(authenticated.ctx);
         const grantRepo = connection.getRepository(ctx, McpOauthGrant);
-        const grant = await grantRepo.findOne({ where: { accessTokenHash: lookupHash(access_token) } });
-        if (!grant) {
-            throw new Error('Expected a minted McpOauthGrant for the access token');
-        }
         const sessionRepo = connection.getRepository(ctx, Session);
-        expect(await sessionRepo.findOne({ where: { id: grant.vendureSessionId } })).toBeTruthy();
+        expect(await sessionRepo.findOneBy({ id: authenticated.grant.vendureSessionId })).toBeTruthy();
 
-        await grantRepo.update({ id: grant.id }, { expiresAt: new Date(Date.now() - MS_PER_DAY) });
+        await grantRepo.update(
+            { id: authenticated.grant.id },
+            { expiresAt: new Date(Date.now() - MS_PER_DAY) },
+        );
 
         await oauth.deleteExpiredOauthRecords(ctx);
 
-        expect(await sessionRepo.findOne({ where: { id: grant.vendureSessionId } })).toBeNull();
+        expect(await sessionRepo.findOneBy({ id: authenticated.grant.vendureSessionId })).toBeNull();
+        expect(await sessionService.getSessionFromToken(sessionToken)).toBeUndefined();
         // Only sessions an expired grant points at are in scope — the administrator's own
         // session is not referenced by any grant and must survive.
         expect(await sessionRepo.findOne({ where: { token: superAdminToken } })).toBeTruthy();
@@ -267,7 +345,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
 
         expect(await findRequest()).toBeNull();
         expect(await findCode()).toBeNull();
-        // The grant this flow minted is still live, so neither it nor its session is touched.
+        // The grant this flow created is still live, so neither it nor its session is touched.
         expect(result).toEqual({
             deletedSessions: 0,
             deletedRequests: 1,
@@ -295,7 +373,7 @@ describe('McpPlugin OAuth end-to-end flow', () => {
         expect(await grantRepo.findOne({ where: { id: recent.id } })).toBeTruthy();
         expect(await grantRepo.findOne({ where: { id: longDead.id } })).toBeNull();
         expect(result.deletedGrants).toBe(1);
-        // Both grants were past expiry, so both minted sessions go regardless of the window.
+        // Both grants were past expiry, so both of their sessions go regardless of the window.
         expect(result.deletedSessions).toBe(2);
     });
 

@@ -27,10 +27,12 @@ interface McpOauthOptions {
 
 <MemberInfo kind="property" type={`string`}   />
 
-Server secret used to HMAC-hash OAuth tokens at rest. Generate once via
-`openssl rand -base64 32`. Required to enable OAuth. Supply via an
-environment variable. Rotating the secret invalidates all stored MCP OAuth
-tokens.
+Server secret used to HMAC-hash OAuth tokens at rest. Required to enable OAuth.
+Must be supplied via an environment variable. Generate it once via `openssl rand -base64 32`.
+
+Rotating this secret invalidates all active OAuth tokens, forcing clients to re-authorize.
+The Vendure sessions behind existing grants cannot be reached through the old tokens; the
+retention task deletes them once their grants expire.
 ### issuer
 
 <MemberInfo kind="property" type={`string`} default={`'http://localhost:3500'`}   />
@@ -46,7 +48,10 @@ Lifetime of an issued access token, in seconds.
 
 <MemberInfo kind="property" type={`number`} default={`2592000`}   />
 
-Lifetime of an issued refresh token, in seconds.
+Lifetime of an issued refresh token, in seconds. Every refresh resets it, so in
+practice this is how long a client may go without refreshing before its grant dies
+and the retention task deletes the Vendure session behind it. Refreshing rotates
+the OAuth token pair only; it never replaces that session.
 ### authorizationCodeTtlSeconds
 
 <MemberInfo kind="property" type={`number`} default={`60`}   />
@@ -85,7 +90,7 @@ log should still be able to resolve its grant.
 <MemberInfo kind="property" type={`McpRetentionSchedule`} default={`cron => cron.everyDayAt(3, 30)`}   />
 
 Schedule for the cleanup job that prunes OAuth records which can no longer be used: the
-Vendure session minted for each expired grant, expired or spent authorization requests and
+Vendure session created for each expired grant, expired or spent authorization requests and
 codes, and grants dead for longer than `grantRetentionDays`.
 
 

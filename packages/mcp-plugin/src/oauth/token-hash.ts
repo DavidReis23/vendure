@@ -6,7 +6,8 @@ const HASH_KEY_SALT = 'mcp-oauth-hash-key-v1';
 /**
  * Derives a stable 32-byte HMAC key from the operator-supplied `oauth.tokenSecret`
  * via scrypt. Call once at startup and reuse the returned key for all
- * {@link hashToken} calls.
+ * {@link hashToken} calls. Rotating the secret makes every stored OAuth credential
+ * unresolvable, since the same plaintext then hashes to a different value.
  */
 export function deriveHashKey(secret: string): Buffer {
     return scryptSync(secret, HASH_KEY_SALT, KEY_LENGTH);

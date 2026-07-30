@@ -27,10 +27,12 @@ export type McpToolExposureMode = 'direct' | 'discovery';
 export interface McpOauthOptions {
     /**
      * @description
-     * Server secret used to HMAC-hash OAuth tokens at rest. Generate once via
-     * `openssl rand -base64 32`. Required to enable OAuth. Supply via an
-     * environment variable. Rotating the secret invalidates all stored MCP OAuth
-     * tokens.
+     * Server secret used to HMAC-hash OAuth tokens at rest. Required to enable OAuth.
+     * Must be supplied via an environment variable. Generate it once via `openssl rand -base64 32`.
+     *
+     * Rotating this secret invalidates all active OAuth tokens, forcing clients to re-authorize.
+     * The Vendure sessions behind existing grants cannot be reached through the old tokens; the
+     * retention task deletes them once their grants expire.
      */
     tokenSecret: string;
     /**
@@ -50,7 +52,10 @@ export interface McpOauthOptions {
     accessTokenTtlSeconds?: number;
     /**
      * @description
-     * Lifetime of an issued refresh token, in seconds.
+     * Lifetime of an issued refresh token, in seconds. Every refresh resets it, so in
+     * practice this is how long a client may go without refreshing before its grant dies
+     * and the retention task deletes the Vendure session behind it. Refreshing rotates
+     * the OAuth token pair only; it never replaces that session.
      *
      * @default 2592000
      */
@@ -101,7 +106,7 @@ export interface McpOauthOptions {
     /**
      * @description
      * Schedule for the cleanup job that prunes OAuth records which can no longer be used: the
-     * Vendure session minted for each expired grant, expired or spent authorization requests and
+     * Vendure session created for each expired grant, expired or spent authorization requests and
      * codes, and grants dead for longer than `grantRetentionDays`.
      *
      * @default cron => cron.everyDayAt(3, 30)
