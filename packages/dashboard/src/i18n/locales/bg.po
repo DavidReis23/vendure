@@ -121,7 +121,7 @@ msgstr "Заглавие 5"
 msgid "Failed to add payment"
 msgstr "Неуспешно добавяне на плащане"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:759
+#: src/lib/framework/layout-engine/page-layout.tsx:760
 msgid "Updated"
 msgstr "Актуализиран"
 
@@ -466,10 +466,9 @@ msgstr "Виж подробности"
 #~ msgid "Month to date"
 #~ msgstr "Месец до днес"
 
-#. placeholder {0}: entityIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:95
-msgid "Select a channel to assign {0} {entityType} to"
-msgstr "Изберете канал, към който да присвоите {0} {entityType}"
+#~ msgid "Select a channel to assign {0} {entityType} to"
+#~ msgstr "Изберете канал, към който да присвоите {0} {entityType}"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:100
 msgid "Successfully created customer"
@@ -1654,7 +1653,6 @@ msgstr "{rejected, plural, one {Неуспешно отменяне на {reject
 msgid "We couldn't load these metrics"
 msgstr "Не успяхме да заредим тези метрики"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
 msgid "Select a channel"
 msgstr "Изберете канал"
@@ -1840,7 +1838,7 @@ msgstr "Адресът е актуализиран успешно"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
 #: src/lib/components/shared/asset/asset-gallery.tsx:1116
-#: src/lib/framework/layout-engine/page-layout.tsx:746
+#: src/lib/framework/layout-engine/page-layout.tsx:747
 msgid "Created"
 msgstr "Създаден"
 
@@ -1916,7 +1914,7 @@ msgstr "Вмъкни таблица {row} на {col}"
 #: src/lib/components/data-table/views-sheet.tsx:293
 #: src/lib/components/layout/manage-languages-dialog.tsx:379
 #: src/lib/components/shared/asset/asset-focal-point-editor.tsx:93
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:126
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:145
 #: src/lib/components/shared/confirmation-dialog.tsx:27
 #: src/lib/components/shared/customer-address-form.tsx:253
 #: src/lib/components/shared/navigation-confirmation.tsx:55
@@ -3088,6 +3086,11 @@ msgstr "Топ продукти"
 msgid "All types"
 msgstr "Всички типове"
 
+#. placeholder {0}: entityIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:121
+msgid "Select channels to assign {0} {entityType} to"
+msgstr ""
+
 #: src/app/routes/_authenticated/_collections/collections.tsx:403
 msgid "Collapse"
 msgstr "Свиване"
@@ -3117,7 +3120,7 @@ msgstr "Добавете стойности на аспекти"
 msgid "after"
 msgstr "след"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:103
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
 msgid "Channel"
 msgstr "Канал"
 
@@ -3450,6 +3453,11 @@ msgstr "Неизвестен продукт"
 msgid "Address updated"
 msgstr "Адресът е актуализиран"
 
+#. placeholder {0}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:95
+msgid "Successfully assigned {entityIdsLength} {entityType} to {0} channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:299
 msgid "Refund processed successfully"
 msgstr "Възстановяването е обработено успешно"
@@ -3730,13 +3738,19 @@ msgstr "Категория"
 msgid "Moving..."
 msgstr "Преместване..."
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:148
 msgid "Assign"
 msgstr "Присвояване"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "Успешно създаден продавач"
+
+#. placeholder {0}: failedChannelIds.length
+#. placeholder {1}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:104
+msgid "Failed to assign {entityIdsLength} {entityType} to {0} of {1} channels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:77
 msgid "Failed to update profile picture"
@@ -4764,7 +4778,7 @@ msgstr "Изпратена"
 #~ msgid "Monitored Resources"
 #~ msgstr "Наблюдавани ресурси"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:718
+#: src/lib/framework/layout-engine/page-layout.tsx:719
 msgid "Entity Information"
 msgstr "Информация за обекта"
 
@@ -4952,6 +4966,10 @@ msgstr ""
 msgid "Height"
 msgstr "Височина"
 
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:118
+msgid "Assign {entityType} to channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:180
 msgid "A refund of {formattedDiff} is required. Select payment amounts and enter a note to proceed."
 msgstr "Изисква се възстановяване на сума от {formattedDiff}. Изберете суми за плащане и въведете бележка, за да продължите."
@@ -4987,6 +5005,7 @@ msgstr "Добави канал"
 #~ msgstr "Неуспешно актуализиране на групата опции за продукти"
 
 #: src/app/routes/_authenticated/_channels/channels.tsx:35
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:137
 #: src/lib/components/shared/channel-selector.tsx:48
 msgid "Search channels..."
 msgstr "Търсене на канали..."
@@ -5031,6 +5050,10 @@ msgstr "Неуспешно преобразуване на изгледа в г�
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
 msgstr "Избери проверка за допустимост на плащане"
+
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:136
+msgid "Select one or more channels"
+msgstr ""
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
@@ -5905,8 +5928,8 @@ msgid "Please wait"
 msgstr "Моля, изчакайте"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
-msgid "Failed to assign {entityIdsLength} {entityType} to channel"
-msgstr "Неуспешно присвояване на {entityIdsLength} {entityType} към канал"
+#~ msgid "Failed to assign {entityIdsLength} {entityType} to channel"
+#~ msgstr "Неуспешно присвояване на {entityIdsLength} {entityType} към канал"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
@@ -6396,8 +6419,8 @@ msgid "New registrations in the selected period"
 msgstr "Нови регистрации за избрания период"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
-msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
-msgstr "{entityIdsLength} {entityType} успешно присвоен на канал"
+#~ msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
+#~ msgstr "{entityIdsLength} {entityType} успешно присвоен на канал"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:253
 msgid "Global Languages"
@@ -6475,7 +6498,7 @@ msgstr "Стойност"
 msgid "Customer updated"
 msgstr "Клиентът е актуализиран"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:146
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:165
 msgid "Price conversion factor"
 msgstr "Коефициент на преобразуване на цената"
 
@@ -6651,8 +6674,8 @@ msgid "New Facet"
 msgstr "Нов аспект"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:92
-msgid "Assign {entityType} to channel"
-msgstr "Присвоете {entityType} към канала"
+#~ msgid "Assign {entityType} to channel"
+#~ msgstr "Присвоете {entityType} към канала"
 
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:125
 #: src/lib/components/shared/confirmation-dialog.tsx:26

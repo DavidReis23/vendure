@@ -121,7 +121,7 @@ msgstr "5. fejléc"
 msgid "Failed to add payment"
 msgstr "Fizetés hozzáadása sikertelen"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:759
+#: src/lib/framework/layout-engine/page-layout.tsx:760
 msgid "Updated"
 msgstr "Frissítve"
 
@@ -460,10 +460,9 @@ msgstr "A visszatérítés összege nem lehet negatív"
 msgid "View details"
 msgstr "Részletek megtekintése"
 
-#. placeholder {0}: entityIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:95
-msgid "Select a channel to assign {0} {entityType} to"
-msgstr "Válasszon csatornát, amelyhez hozzárendeli a következőt: {0} {entityType}"
+#~ msgid "Select a channel to assign {0} {entityType} to"
+#~ msgstr "Válasszon csatornát, amelyhez hozzárendeli a következőt: {0} {entityType}"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:100
 msgid "Successfully created customer"
@@ -1648,7 +1647,6 @@ msgstr "{rejected, plural, one {Nem sikerült megszakítani {rejected} feladatot
 msgid "We couldn't load these metrics"
 msgstr "Nem sikerült betölteni ezeket a mutatókat"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
 msgid "Select a channel"
 msgstr "Csatorna kiválasztása"
@@ -1831,7 +1829,7 @@ msgstr "Cím sikeresen frissítve"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
 #: src/lib/components/shared/asset/asset-gallery.tsx:1116
-#: src/lib/framework/layout-engine/page-layout.tsx:746
+#: src/lib/framework/layout-engine/page-layout.tsx:747
 msgid "Created"
 msgstr "Létrehozva"
 
@@ -1904,7 +1902,7 @@ msgstr "{row} x {col} méretű táblázat beszúrása"
 #: src/lib/components/data-table/views-sheet.tsx:293
 #: src/lib/components/layout/manage-languages-dialog.tsx:379
 #: src/lib/components/shared/asset/asset-focal-point-editor.tsx:93
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:126
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:145
 #: src/lib/components/shared/confirmation-dialog.tsx:27
 #: src/lib/components/shared/customer-address-form.tsx:253
 #: src/lib/components/shared/navigation-confirmation.tsx:55
@@ -3061,6 +3059,11 @@ msgstr "Legnépszerűbb termékek"
 msgid "All types"
 msgstr "Minden típus"
 
+#. placeholder {0}: entityIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:121
+msgid "Select channels to assign {0} {entityType} to"
+msgstr ""
+
 #: src/app/routes/_authenticated/_collections/collections.tsx:403
 msgid "Collapse"
 msgstr "Összecsukás"
@@ -3090,7 +3093,7 @@ msgstr "Tulajdonságértékek hozzáadása"
 msgid "after"
 msgstr "után"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:103
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
 msgid "Channel"
 msgstr "Csatorna"
 
@@ -3420,6 +3423,11 @@ msgstr "Ismeretlen termék"
 msgid "Address updated"
 msgstr "Cím frissítve"
 
+#. placeholder {0}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:95
+msgid "Successfully assigned {entityIdsLength} {entityType} to {0} channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:299
 msgid "Refund processed successfully"
 msgstr "A visszatérítés sikeresen feldolgozva"
@@ -3700,13 +3708,19 @@ msgstr "Kategória"
 msgid "Moving..."
 msgstr "Áthelyezés..."
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:148
 msgid "Assign"
 msgstr "Hozzárendelés"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "Az eladó sikeresen létrehozva"
+
+#. placeholder {0}: failedChannelIds.length
+#. placeholder {1}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:104
+msgid "Failed to assign {entityIdsLength} {entityType} to {0} of {1} channels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:77
 msgid "Failed to update profile picture"
@@ -4731,7 +4745,7 @@ msgstr "Kiszállítva"
 #~ msgid "Monitored Resources"
 #~ msgstr "Figyelt erőforrások"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:718
+#: src/lib/framework/layout-engine/page-layout.tsx:719
 msgid "Entity Information"
 msgstr "Entitás adatai"
 
@@ -4916,6 +4930,10 @@ msgstr ""
 msgid "Height"
 msgstr "Magasság"
 
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:118
+msgid "Assign {entityType} to channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:180
 msgid "A refund of {formattedDiff} is required. Select payment amounts and enter a note to proceed."
 msgstr "{formattedDiff} összegű visszatérítés szükséges. A folytatáshoz válassza ki a fizetési összegeket és adjon meg egy megjegyzést."
@@ -4951,6 +4969,7 @@ msgstr "Csatorna hozzáadása"
 #~ msgstr "Termékopció-csoport frissítése sikertelen"
 
 #: src/app/routes/_authenticated/_channels/channels.tsx:35
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:137
 #: src/lib/components/shared/channel-selector.tsx:48
 msgid "Search channels..."
 msgstr "Csatornák keresése..."
@@ -4995,6 +5014,10 @@ msgstr "Nézet globálissá alakítása sikertelen"
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
 msgstr "Fizetési jogosultság-ellenőrző kiválasztása"
+
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:136
+msgid "Select one or more channels"
+msgstr ""
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
@@ -5863,8 +5886,8 @@ msgid "Please wait"
 msgstr "Kérjük, várjon"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
-msgid "Failed to assign {entityIdsLength} {entityType} to channel"
-msgstr "{entityIdsLength} {entityType} csatornához rendelése sikertelen"
+#~ msgid "Failed to assign {entityIdsLength} {entityType} to channel"
+#~ msgstr "{entityIdsLength} {entityType} csatornához rendelése sikertelen"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
@@ -6351,8 +6374,8 @@ msgid "New registrations in the selected period"
 msgstr "Új regisztrációk a kiválasztott időszakban"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
-msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
-msgstr "{entityIdsLength} {entityType} sikeresen hozzárendelve a csatornához"
+#~ msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
+#~ msgstr "{entityIdsLength} {entityType} sikeresen hozzárendelve a csatornához"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:253
 msgid "Global Languages"
@@ -6430,7 +6453,7 @@ msgstr "Érték"
 msgid "Customer updated"
 msgstr "Vásárló frissítve"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:146
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:165
 msgid "Price conversion factor"
 msgstr "Árátváltási tényező"
 
@@ -6606,8 +6629,8 @@ msgid "New Facet"
 msgstr "Új tulajdonság"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:92
-msgid "Assign {entityType} to channel"
-msgstr "{entityType} hozzárendelése csatornához"
+#~ msgid "Assign {entityType} to channel"
+#~ msgstr "{entityType} hozzárendelése csatornához"
 
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:125
 #: src/lib/components/shared/confirmation-dialog.tsx:26

@@ -121,7 +121,7 @@ msgstr "כותרת 5"
 msgid "Failed to add payment"
 msgstr "הוספת התשלום נכשלה"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:759
+#: src/lib/framework/layout-engine/page-layout.tsx:760
 msgid "Updated"
 msgstr "עודכן"
 
@@ -460,10 +460,9 @@ msgstr "סך ההחזר לא יכול להיות שלילי"
 msgid "View details"
 msgstr "צפה בפרטים"
 
-#. placeholder {0}: entityIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:95
-msgid "Select a channel to assign {0} {entityType} to"
-msgstr "בחר ערוץ להקצאת {0} {entityType} אליו"
+#~ msgid "Select a channel to assign {0} {entityType} to"
+#~ msgstr "בחר ערוץ להקצאת {0} {entityType} אליו"
 
 #: src/app/routes/_authenticated/_customers/customers_.$id.tsx:100
 msgid "Successfully created customer"
@@ -1648,7 +1647,6 @@ msgstr "{rejected, plural, one {ביטול {rejected} משימה נכשל} other
 msgid "We couldn't load these metrics"
 msgstr "לא הצלחנו לטעון את המדדים האלה"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:111
 #: src/lib/components/shared/channel-selector.tsx:47
 msgid "Select a channel"
 msgstr "בחר ערוץ"
@@ -1831,7 +1829,7 @@ msgstr "הכתובת עודכנה בהצלחה"
 #: src/app/routes/_authenticated/_api-keys/api-keys_.$id.tsx:226
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:141
 #: src/lib/components/shared/asset/asset-gallery.tsx:1116
-#: src/lib/framework/layout-engine/page-layout.tsx:746
+#: src/lib/framework/layout-engine/page-layout.tsx:747
 msgid "Created"
 msgstr "נוצר"
 
@@ -1904,7 +1902,7 @@ msgstr "הוסף טבלה של {row} על {col}"
 #: src/lib/components/data-table/views-sheet.tsx:293
 #: src/lib/components/layout/manage-languages-dialog.tsx:379
 #: src/lib/components/shared/asset/asset-focal-point-editor.tsx:93
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:126
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:145
 #: src/lib/components/shared/confirmation-dialog.tsx:27
 #: src/lib/components/shared/customer-address-form.tsx:253
 #: src/lib/components/shared/navigation-confirmation.tsx:55
@@ -3071,6 +3069,11 @@ msgstr "מוצרים מובילים"
 msgid "All types"
 msgstr "כל הסוגים"
 
+#. placeholder {0}: entityIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:121
+msgid "Select channels to assign {0} {entityType} to"
+msgstr ""
+
 #: src/app/routes/_authenticated/_collections/collections.tsx:403
 msgid "Collapse"
 msgstr "כיווץ"
@@ -3100,7 +3103,7 @@ msgstr "הוסף ערכי מאפיינים"
 msgid "after"
 msgstr "אחרי"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:103
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
 msgid "Channel"
 msgstr "ערוץ"
 
@@ -3430,6 +3433,11 @@ msgstr "מוצר לא ידוע"
 msgid "Address updated"
 msgstr "הכתובת עודכנה"
 
+#. placeholder {0}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:95
+msgid "Successfully assigned {entityIdsLength} {entityType} to {0} channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts:299
 msgid "Refund processed successfully"
 msgstr "ההחזר עובד בהצלחה"
@@ -3710,13 +3718,19 @@ msgstr "קטגוריה"
 msgid "Moving..."
 msgstr "מעביר..."
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:129
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:148
 msgid "Assign"
 msgstr "הקצה"
 
 #: src/app/routes/_authenticated/_sellers/sellers_.$id.tsx:56
 msgid "Successfully created seller"
 msgstr "המוכר נוצר בהצלחה"
+
+#. placeholder {0}: failedChannelIds.length
+#. placeholder {1}: selectedChannelIds.length
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:104
+msgid "Failed to assign {entityIdsLength} {entityType} to {0} of {1} channels"
+msgstr ""
 
 #: src/app/routes/_authenticated/_profile/profile.tsx:77
 msgid "Failed to update profile picture"
@@ -4744,7 +4758,7 @@ msgstr "נשלח"
 #~ msgid "Monitored Resources"
 #~ msgstr "משאבים מנוטרים"
 
-#: src/lib/framework/layout-engine/page-layout.tsx:718
+#: src/lib/framework/layout-engine/page-layout.tsx:719
 msgid "Entity Information"
 msgstr "מידע ישות"
 
@@ -4929,6 +4943,10 @@ msgstr ""
 msgid "Height"
 msgstr "גובה"
 
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:118
+msgid "Assign {entityType} to channels"
+msgstr ""
+
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx:180
 msgid "A refund of {formattedDiff} is required. Select payment amounts and enter a note to proceed."
 msgstr "נדרש החזר כספי של {formattedDiff}. בחר סכומי תשלום והזן הערה כדי להמשיך."
@@ -4964,6 +4982,7 @@ msgstr "הוסף ערוץ"
 #~ msgstr "עדכון קבוצת אפשרויות מוצר נכשל"
 
 #: src/app/routes/_authenticated/_channels/channels.tsx:35
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:137
 #: src/lib/components/shared/channel-selector.tsx:48
 msgid "Search channels..."
 msgstr "חפש ערוצים..."
@@ -5008,6 +5027,10 @@ msgstr "המרת התצוגה לגלובלית נכשלה"
 #: src/app/routes/_authenticated/_payment-methods/components/payment-eligibility-checker-selector.tsx:37
 msgid "Select Payment Eligibility Checker"
 msgstr "בחר בודק זכאות תשלום"
+
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:136
+msgid "Select one or more channels"
+msgstr ""
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx:53
 msgid "Select operator"
@@ -5876,8 +5899,8 @@ msgid "Please wait"
 msgstr "אנא המתן"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:73
-msgid "Failed to assign {entityIdsLength} {entityType} to channel"
-msgstr "נכשל בהקצאת {entityIdsLength} {entityType} לערוץ"
+#~ msgid "Failed to assign {entityIdsLength} {entityType} to channel"
+#~ msgstr "נכשל בהקצאת {entityIdsLength} {entityType} לערוץ"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:351
 msgid "Default Language"
@@ -6364,8 +6387,8 @@ msgid "New registrations in the selected period"
 msgstr "הרשמות חדשות בתקופה שנבחרה"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:68
-msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
-msgstr "{entityIdsLength} {entityType} הוקצו לערוץ בהצלחה"
+#~ msgid "Successfully assigned {entityIdsLength} {entityType} to channel"
+#~ msgstr "{entityIdsLength} {entityType} הוקצו לערוץ בהצלחה"
 
 #: src/lib/components/layout/manage-languages-dialog.tsx:253
 msgid "Global Languages"
@@ -6443,7 +6466,7 @@ msgstr "ערך"
 msgid "Customer updated"
 msgstr "הלקוח עודכן"
 
-#: src/lib/components/shared/assign-to-channel-dialog.tsx:146
+#: src/lib/components/shared/assign-to-channel-dialog.tsx:165
 msgid "Price conversion factor"
 msgstr "מקדם המרת מחיר"
 
@@ -6619,8 +6642,8 @@ msgid "New Facet"
 msgstr "מאפיין חדש"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx:92
-msgid "Assign {entityType} to channel"
-msgstr "הקצה {entityType} לערוץ"
+#~ msgid "Assign {entityType} to channel"
+#~ msgstr "הקצה {entityType} לערוץ"
 
 #: src/lib/components/data-table/data-table-bulk-action-item.tsx:125
 #: src/lib/components/shared/confirmation-dialog.tsx:26
