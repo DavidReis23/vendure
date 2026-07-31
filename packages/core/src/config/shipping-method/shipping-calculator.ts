@@ -6,6 +6,7 @@ import {
     ConfigArgValues,
     ConfigurableOperationDef,
     ConfigurableOperationDefOptions,
+    ConfigurableOperationDefType,
 } from '../../common/configurable-operation';
 import { ShippingMethod, Order } from '../../entity';
 
@@ -46,6 +47,8 @@ export interface ShippingCalculatorConfig<T extends ConfigArgs> extends Configur
  * @docsPage ShippingCalculator
  */
 export class ShippingCalculator<T extends ConfigArgs = ConfigArgs> extends ConfigurableOperationDef<T> {
+    protected readonly defType: ConfigurableOperationDefType = 'ShippingCalculator';
+
     private readonly calculateFn: CalculateShippingFn<T>;
 
     constructor(config: ShippingCalculatorConfig<T>) {

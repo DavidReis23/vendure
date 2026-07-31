@@ -6,6 +6,7 @@ import {
     ConfigArgValues,
     ConfigurableOperationDef,
     ConfigurableOperationDefOptions,
+    ConfigurableOperationDefType,
 } from '../../common/configurable-operation';
 import { ProductVariant } from '../../entity/product-variant/product-variant.entity';
 
@@ -63,6 +64,8 @@ export interface CollectionFilterConfig<T extends ConfigArgs> extends Configurab
  */
 export class CollectionFilter<T extends ConfigArgs = ConfigArgs> extends ConfigurableOperationDef<T> {
     /* eslint-enable max-len */
+    protected readonly defType: ConfigurableOperationDefType = 'CollectionFilter';
+
     private readonly applyFn: ApplyCollectionFilterFn<T>;
     constructor(config: CollectionFilterConfig<T>) {
         super(config);

@@ -69,4 +69,89 @@ describe('I18nService', () => {
         await i18next.loadLanguages('yy');
         expect(i18next.options.preload).toContain('yy');
     });
+
+    describe('getConfigurableOperationTranslation', () => {
+        beforeAll(() => {
+            i18nService.addTranslation('aa', {
+                configurableOperation: {
+                    ShippingCalculator: {
+                        'acme.flat-rate': {
+                            description: 'Flat rate of { rate }',
+                            args: {
+                                rate: {
+                                    label: 'Rate',
+                                    options: { auto: { label: 'Automatic' } },
+                                },
+                            },
+                        },
+                    },
+                },
+            });
+        });
+
+        it('reads a value from the catalog for the given language', () => {
+            expect(
+                i18nService.getConfigurableOperationTranslation('aa', [
+                    'ShippingCalculator',
+                    'acme.flat-rate',
+                    'args',
+                    'rate',
+                    'label',
+                ]),
+            ).toBe('Rate');
+        });
+
+        it('treats dots in a code as part of the key rather than as path separators', () => {
+            expect(
+                i18nService.getConfigurableOperationTranslation('aa', [
+                    'ShippingCalculator',
+                    'acme.flat-rate',
+                    'description',
+                ]),
+            ).toBe('Flat rate of { rate }');
+        });
+
+        it('returns ICU-style placeholders verbatim', () => {
+            const result = i18nService.getConfigurableOperationTranslation('aa', [
+                'ShippingCalculator',
+                'acme.flat-rate',
+                'description',
+            ]);
+            expect(result).toContain('{ rate }');
+        });
+
+        it('resolves a nested select option label', () => {
+            expect(
+                i18nService.getConfigurableOperationTranslation('aa', [
+                    'ShippingCalculator',
+                    'acme.flat-rate',
+                    'args',
+                    'rate',
+                    'options',
+                    'auto',
+                    'label',
+                ]),
+            ).toBe('Automatic');
+        });
+
+        it('does not fall back to another language', () => {
+            expect(
+                i18nService.getConfigurableOperationTranslation('en', [
+                    'ShippingCalculator',
+                    'acme.flat-rate',
+                    'description',
+                ]),
+            ).toBeUndefined();
+        });
+
+        it('returns undefined for an unknown key, an unknown language, and a non-leaf path', () => {
+            const path = ['ShippingCalculator', 'acme.flat-rate'];
+            expect(i18nService.getConfigurableOperationTranslation('aa', [...path, 'nope'])).toBeUndefined();
+            expect(i18nService.getConfigurableOperationTranslation('qq', [...path, 'description'])).toBe(
+                undefined,
+            );
+            // `args` is an object, not a string, so it is not a usable translation.
+            expect(i18nService.getConfigurableOperationTranslation('aa', [...path, 'args'])).toBeUndefined();
+        });
+    });
 });

@@ -7,6 +7,7 @@ import {
     ConfigArgValues,
     ConfigurableOperationDef,
     ConfigurableOperationDefOptions,
+    ConfigurableOperationDefType,
 } from '../../common/configurable-operation';
 import { Promotion, PromotionState } from '../../entity';
 import { Order } from '../../entity/order/order.entity';
@@ -282,6 +283,8 @@ export abstract class PromotionAction<
     T extends ConfigArgs = ConfigArgs,
     U extends PromotionCondition[] | undefined = any,
 > extends ConfigurableOperationDef<T> {
+    protected readonly defType: ConfigurableOperationDefType = 'PromotionAction';
+
     /**
      * @description
      * Used to determine the order of application of multiple Promotions

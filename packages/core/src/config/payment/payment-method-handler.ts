@@ -6,6 +6,7 @@ import {
     ConfigArgValues,
     ConfigurableOperationDef,
     ConfigurableOperationDefOptions,
+    ConfigurableOperationDefType,
 } from '../../common/configurable-operation';
 import { OnTransitionStartFn, StateMachineConfig } from '../../common/finite-state-machine/types';
 import { PaymentMetadata } from '../../common/types/common-types';
@@ -352,6 +353,8 @@ export interface PaymentMethodConfigOptions<T extends ConfigArgs> extends Config
  * @docsCategory payment
  */
 export class PaymentMethodHandler<T extends ConfigArgs = ConfigArgs> extends ConfigurableOperationDef<T> {
+    protected readonly defType: ConfigurableOperationDefType = 'PaymentMethodHandler';
+
     private readonly createPaymentFn: CreatePaymentFn<T>;
     private readonly settlePaymentFn: SettlePaymentFn<T>;
     private readonly cancelPaymentFn?: CancelPaymentFn<T>;

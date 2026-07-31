@@ -3,7 +3,6 @@ import {
     ConfigArg,
     ConfigArgDefinition,
     ConfigurableOperationDefinition,
-    LanguageCode,
     LocalizedString,
     Maybe,
     StringFieldOption,
@@ -19,7 +18,7 @@ import { assertNever } from '@vendure/common/lib/shared-utils';
 import { RequestContext } from '../api/common/request-context';
 import type { EncryptionStrategy } from '../config/system/encryption-strategy';
 
-import { DEFAULT_LANGUAGE_CODE } from './constants';
+import { CONFIGURABLE_OPERATION_TRANSLATOR, DEFAULT_LANGUAGE_CODE } from './constants';
 import { InternalServerError } from './error/errors';
 import { Injector } from './injector';
 import { InjectableStrategy } from './types/injectable-strategy';
@@ -42,6 +41,68 @@ import { InjectableStrategy } from './types/injectable-strategy';
  * @docsCategory ConfigurableOperationDef
  */
 export type LocalizedStringArray = Array<Omit<LocalizedString, '__typename'>>;
+
+/**
+ * @description
+ * The registries into which a {@link ConfigurableOperationDef} may be placed. A `code` is only
+ * unique within a single registry — `buy_x_get_y_free`, for instance, is used by both a
+ * PromotionCondition and a PromotionAction — so the registry name forms part of the key under
+ * which translated strings are looked up.
+ *
+ * @docsCategory ConfigurableOperationDef
+ * @since 3.8.0
+ */
+export type ConfigurableOperationDefType =
+    | 'CollectionFilter'
+    | 'EntityDuplicator'
+    | 'FulfillmentHandler'
+    | 'PaymentMethodEligibilityChecker'
+    | 'PaymentMethodHandler'
+    | 'PromotionAction'
+    | 'PromotionCondition'
+    | 'ShippingCalculator'
+    | 'ShippingEligibilityChecker';
+
+/**
+ * @description
+ * Supplies translations for {@link ConfigurableOperationDef} descriptions and arg labels from the
+ * server-side message catalogs. Implemented by the `I18nService` and provided under the
+ * `CONFIGURABLE_OPERATION_TRANSLATOR` token.
+ *
+ * @docsCategory ConfigurableOperationDef
+ * @since 3.8.0
+ */
+export interface ConfigurableOperationTranslator {
+    /**
+     * @description
+     * Returns the string stored at the given path within the `configurableOperation` namespace of
+     * the catalog for `languageCode`, or `undefined` if there is no entry there. The value is
+     * returned verbatim, without ICU formatting, since operation descriptions contain
+     * `{ argName }` placeholders which are interpolated by the client.
+     */
+    getConfigurableOperationTranslation(languageCode: string, keyPath: string[]): string | undefined;
+}
+
+/**
+ * @description
+ * A single translatable string belonging to a {@link ConfigurableOperationDef}, as returned by
+ * {@link ConfigurableOperationDef.getTranslationKeys}.
+ *
+ * @docsCategory ConfigurableOperationDef
+ * @since 3.8.0
+ */
+export interface ConfigurableOperationTranslationKey {
+    /**
+     * @description
+     * The path to this string within the `configurableOperation` namespace of a message catalog.
+     */
+    keyPath: string[];
+    /**
+     * @description
+     * The string as defined inline on the operation, in the default (English) language.
+     */
+    sourceValue?: string;
+}
 
 export interface ConfigArgCommonDef<T extends ConfigArgType> {
     type: T;
@@ -342,9 +403,37 @@ export interface ConfigurableOperationDefOptions<T extends ConfigArgs> extends I
  * });
  * ```
  *
+ * ## Translations
+ *
+ * The `description` of the operation, plus the `label` and `description` of each arg, may be
+ * defined inline as a {@link LocalizedStringArray}. They may also be supplied from the server-side
+ * message catalogs, under the `configurableOperation` namespace, using keys of the form:
+ *
+ * ```text
+ * configurableOperation.<type>.<code>.description
+ * configurableOperation.<type>.<code>.args.<argName>.label
+ * configurableOperation.<type>.<code>.args.<argName>.description
+ * configurableOperation.<type>.<code>.args.<argName>.options.<optionValue>.label
+ * ```
+ *
+ * where `<type>` is one of {@link ConfigurableOperationDefType}. Call
+ * {@link ConfigurableOperationDef.getTranslationKeys} to see the exact keys for a given operation.
+ * Catalog entries take precedence over the inline arrays for the same language, which means the
+ * strings of a third-party operation can be overridden by registering translations for its keys
+ * via `I18nService.addTranslation()`. A key which does not match any operation is simply never
+ * read, so a typo produces no error — the inline string is used instead.
+ *
  * @docsCategory ConfigurableOperationDef
  */
 export class ConfigurableOperationDef<T extends ConfigArgs = ConfigArgs> {
+    /**
+     * The registry this operation belongs to, set by each subclass. Combined with the `code` it
+     * forms the key prefix under which translated strings are looked up. An operation with no
+     * defType resolves its strings from the inline arrays only.
+     */
+    protected readonly defType?: ConfigurableOperationDefType;
+    private translator?: ConfigurableOperationTranslator;
+
     get code(): string {
         return this.options.code;
     }
@@ -359,6 +448,7 @@ export class ConfigurableOperationDef<T extends ConfigArgs = ConfigArgs> {
     constructor(protected options: ConfigurableOperationDefOptions<T>) {}
 
     async init(injector: Injector) {
+        this.translator = injector.get<ConfigurableOperationTranslator>(CONFIGURABLE_OPERATION_TRANSLATOR);
         if (typeof this.options.init === 'function') {
             await this.options.init(injector);
         }
@@ -387,7 +477,7 @@ export class ConfigurableOperationDef<T extends ConfigArgs = ConfigArgs> {
     toGraphQlType(ctx: RequestContext): ConfigurableOperationDefinition {
         return {
             code: this.code,
-            description: localizeString(this.description, ctx.languageCode, ctx.channel.defaultLanguageCode),
+            description: this.localizeString(this.description, ctx, ['description']) ?? '',
             args: Object.entries(this.args).map(
                 ([name, arg]) =>
                     ({
@@ -396,20 +486,118 @@ export class ConfigurableOperationDef<T extends ConfigArgs = ConfigArgs> {
                         list: arg.list ?? false,
                         required: arg.required ?? true,
                         defaultValue: arg.defaultValue,
-                        ui: arg.ui,
+                        ui: this.localizeUiOptions(arg.ui, ctx, name),
                         secret: arg.secret ?? false,
-                        label:
-                            arg.label &&
-                            localizeString(arg.label, ctx.languageCode, ctx.channel.defaultLanguageCode),
-                        description:
-                            arg.description &&
-                            localizeString(
-                                arg.description,
-                                ctx.languageCode,
-                                ctx.channel.defaultLanguageCode,
-                            ),
+                        label: this.localizeString(arg.label, ctx, ['args', name, 'label']),
+                        description: this.localizeString(arg.description, ctx, [
+                            'args',
+                            name,
+                            'description',
+                        ]),
                     } as Required<ConfigArgDefinition>),
             ),
+        };
+    }
+
+    /**
+     * @description
+     * Lists every string on this operation which can be translated via the message catalogs,
+     * along with the paths under which the translations must be stored in the
+     * `configurableOperation` namespace. Intended for translation tooling and for plugin authors
+     * checking which keys they need to define.
+     *
+     * @since 3.8.0
+     */
+    getTranslationKeys(): ConfigurableOperationTranslationKey[] {
+        if (!this.defType) {
+            return [];
+        }
+        const prefix = [this.defType, this.code];
+        const sourceOf = (strings: LocalizedStringArray | undefined) =>
+            strings?.find(x => x.languageCode === DEFAULT_LANGUAGE_CODE)?.value;
+        const keys: ConfigurableOperationTranslationKey[] = [
+            { keyPath: [...prefix, 'description'], sourceValue: sourceOf(this.description) },
+        ];
+        for (const [name, arg] of Object.entries(this.args)) {
+            keys.push({ keyPath: [...prefix, 'args', name, 'label'], sourceValue: sourceOf(arg.label) });
+            keys.push({
+                keyPath: [...prefix, 'args', name, 'description'],
+                sourceValue: sourceOf(arg.description),
+            });
+            for (const option of getUiOptions(arg.ui)) {
+                keys.push({
+                    keyPath: [...prefix, 'args', name, 'options', option.value, 'label'],
+                    sourceValue: sourceOf(option.label),
+                });
+            }
+        }
+        return keys;
+    }
+
+    /**
+     * Resolves a single localized string, checking the message catalogs before the inline
+     * definition for each language in turn. Preferring the catalog allows a user to override the
+     * strings of a third-party operation without forking it, while checking both sources per
+     * language (rather than exhausting the catalogs first) means an operation which ships only
+     * inline translations still resolves to its own language rather than to the English catalog.
+     */
+    private localizeString(
+        inline: LocalizedStringArray | undefined,
+        ctx: RequestContext,
+        keyPath: string[],
+    ): string | undefined {
+        for (const languageCode of [
+            ctx.languageCode,
+            ctx.channel.defaultLanguageCode,
+            DEFAULT_LANGUAGE_CODE,
+        ]) {
+            if (this.defType) {
+                const fromCatalog = this.translator?.getConfigurableOperationTranslation(languageCode, [
+                    this.defType,
+                    this.code,
+                    ...keyPath,
+                ]);
+                if (fromCatalog) {
+                    return fromCatalog;
+                }
+            }
+            const fromInline = inline?.find(x => x.languageCode === languageCode);
+            if (fromInline) {
+                return fromInline.value;
+            }
+        }
+        return inline?.[0]?.value;
+    }
+
+    /**
+     * Returns a copy of the arg's `ui` config with any select option labels resolved down to a
+     * single localized string. Copying is essential: `ui` belongs to the long-lived config object
+     * shared by every request, so resolving labels in place would pin all later requests to
+     * whichever language happened to arrive first.
+     */
+    private localizeUiOptions(
+        ui: UiComponentConfig<string> | undefined,
+        ctx: RequestContext,
+        argName: string,
+    ): UiComponentConfig<string> | undefined {
+        const options = getUiOptions(ui);
+        if (!options.length) {
+            return ui;
+        }
+        return {
+            ...(ui as any),
+            options: options.map(option => {
+                const label = this.localizeString(option.label, ctx, [
+                    'args',
+                    argName,
+                    'options',
+                    option.value,
+                    'label',
+                ]);
+                return label === undefined
+                    ? option
+                    : { ...option, label: [{ languageCode: ctx.languageCode, value: label }] };
+            }),
         };
     }
 
@@ -445,22 +633,15 @@ export class ConfigurableOperationDef<T extends ConfigArgs = ConfigArgs> {
     }
 }
 
-function localizeString(
-    stringArray: LocalizedStringArray,
-    languageCode: LanguageCode,
-    channelLanguageCode: LanguageCode,
-): string {
-    let match = stringArray.find(x => x.languageCode === languageCode);
-    if (!match) {
-        match = stringArray.find(x => x.languageCode === channelLanguageCode);
-    }
-    if (!match) {
-        match = stringArray.find(x => x.languageCode === DEFAULT_LANGUAGE_CODE);
-    }
-    if (!match) {
-        match = stringArray[0];
-    }
-    return match.value;
+/**
+ * The `select-form-input` component is the only one which defines localizable option labels, but
+ * the `ui` config of a custom component is untyped, so the options are read defensively.
+ */
+function getUiOptions(
+    ui: UiComponentConfig<string> | undefined,
+): Array<{ value: string; label?: LocalizedStringArray }> {
+    const options = (ui as any)?.options;
+    return Array.isArray(options) ? options : [];
 }
 
 function coerceValueToType<T extends ConfigArgs>(
