@@ -180,7 +180,7 @@ msgstr "タイプ"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "The default currency is chosen from this list."
-msgstr ""
+msgstr "デフォルト通貨はこのリストから選択されます。"
 
 #. placeholder {0}: asset.name
 #. placeholder {0}: entityName.toLowerCase()
@@ -194,7 +194,7 @@ msgstr "{0}を選択"
 #. placeholder {0}: selectedItems.length
 #: src/lib/components/data-input/relation-selector.tsx
 msgid "Add more ({0} selected)"
-msgstr "さらに追加（{0}件選択中）"
+msgstr "さらに追加（{0} 件選択中）"
 
 #: src/app/routes/_authenticated/_facets/facets.tsx
 #~ msgid "View values"
@@ -647,7 +647,7 @@ msgstr "注文数"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "You must first select an available currency to set a default currency"
-msgstr ""
+msgstr "デフォルト通貨を設定するには、まず利用可能な通貨を選択する必要があります"
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx
 msgid "Fulfilled items"
@@ -972,7 +972,7 @@ msgstr "{0}個の適格な配送方法が見つかりました"
 #: src/lib/components/shared/asset/asset-gallery.tsx
 #: src/lib/components/shared/asset/asset-properties.tsx
 msgid "Dimensions"
-msgstr "サイズ"
+msgstr "寸法"
 
 #: src/lib/components/ui/password-input.tsx
 msgid "Show password"
@@ -1214,7 +1214,7 @@ msgstr "割り当て済み"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Failed to set coupon code for order: {0}"
-msgstr "注文へのクーポンコードの設定に失敗しました: {0}"
+msgstr "注文のクーポンコードの設定に失敗しました: {0}"
 
 #: src/app/routes/_authenticated/_stock-locations/components/delete-stock-locations-dialog.tsx
 msgid "Select what to do with remaining stock"
@@ -1430,7 +1430,7 @@ msgstr "価格はデフォルト税ゾーンの税を含みます"
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "This field is required"
-msgstr ""
+msgstr "このフィールドは必須です"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx
 msgid "Total refund:"
@@ -1521,7 +1521,7 @@ msgstr "アカウントに割り当てられたロールのみ使用可能です
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 msgid "{cancellableCount, plural, one {Cancel {cancellableCount} job} other {Cancel {cancellableCount} jobs}}"
-msgstr "{cancellableCount, plural, one {{cancellableCount}件のジョブをキャンセル} other {{cancellableCount}件のジョブをキャンセル}}"
+msgstr "{cancellableCount, plural, other {{cancellableCount} 件のジョブをキャンセル}}"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx
 msgid "{buttonText}"
@@ -1799,7 +1799,7 @@ msgstr "顧客"
 
 #: src/app/routes/_authenticated/_shipping-methods/components/shipping-calculator-selector.tsx
 msgid "Select Shipping Calculator"
-msgstr "配送料計算機を選択"
+msgstr "配送料の計算方法を選択"
 
 #: src/lib/components/layout/language-dialog.tsx
 msgid "Sample Formatting"
@@ -1914,7 +1914,7 @@ msgstr "キャンセル"
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
 msgid "Failed to update order custom fields: {0}"
-msgstr "注文のカスタムフィールドの更新に失敗しました: {0}"
+msgstr "注文カスタムフィールドの更新に失敗しました: {0}"
 
 #: src/app/routes/_authenticated/_product-variants/product-variants_.$id.tsx
 #: src/app/routes/_authenticated/_products/components/add-product-variant-dialog.tsx
@@ -2318,7 +2318,7 @@ msgstr "テーマ"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "You must select at least one available currency"
-msgstr ""
+msgstr "利用可能な通貨を少なくとも1つ選択する必要があります"
 
 #. placeholder {0}: value.totalItems
 #: src/app/routes/_authenticated/_customer-groups/customer-groups.tsx
@@ -3072,7 +3072,7 @@ msgstr "すべてのタイプ"
 #. placeholder {0}: entityIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select channels to assign {0} {entityType} to"
-msgstr ""
+msgstr "{0}件の{entityType}を割り当てるチャネルを選択"
 
 #: src/app/routes/_authenticated/_collections/collections.tsx
 msgid "Collapse"
@@ -3436,7 +3436,7 @@ msgstr "住所を更新しました"
 #. placeholder {0}: selectedChannelIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Successfully assigned {entityIdsLength} {entityType} to {0} channels"
-msgstr ""
+msgstr "{entityIdsLength} 件の{entityType}を {0} 件のチャネルに割り当てました"
 
 #: src/app/routes/_authenticated/_orders/hooks/use-refund-order.ts
 msgid "Refund processed successfully"
@@ -3730,7 +3730,7 @@ msgstr "販売者を作成しました"
 #. placeholder {1}: selectedChannelIds.length
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Failed to assign {entityIdsLength} {entityType} to {0} of {1} channels"
-msgstr ""
+msgstr "{entityIdsLength} 件の{entityType}を {1} 件中 {0} 件のチャネルに割り当てられませんでした"
 
 #: src/app/routes/_authenticated/_profile/profile.tsx
 msgid "Failed to update profile picture"
@@ -4949,7 +4949,7 @@ msgstr "高さ"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Assign {entityType} to channels"
-msgstr ""
+msgstr "{entityType}をチャネルに割り当て"
 
 #: src/app/routes/_authenticated/_orders/components/order-modification-preview-dialog.tsx
 msgid "A refund of {formattedDiff} is required. Select payment amounts and enter a note to proceed."
@@ -5034,7 +5034,7 @@ msgstr "支払い適格性チェッカーを選択"
 
 #: src/lib/components/shared/assign-to-channel-dialog.tsx
 msgid "Select one or more channels"
-msgstr ""
+msgstr "1つ以上のチャネルを選択"
 
 #: src/lib/components/data-table/filters/data-table-enum-filter.tsx
 msgid "Select operator"
@@ -5209,7 +5209,7 @@ msgstr "OR"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "You must select a default currency from the list of available currencies"
-msgstr ""
+msgstr "利用可能な通貨のリストからデフォルト通貨を選択する必要があります"
 
 #: src/app/routes/_authenticated/_assets/components/asset-tags-editor.tsx
 msgid "Manage tags"
@@ -5240,7 +5240,7 @@ msgstr "注文をフルフィルメントしました"
 
 #: src/lib/components/data-input/product-multi-selector-input.tsx
 msgid "Loading selected items..."
-msgstr "選択した項目を読み込み中..."
+msgstr "選択したアイテムを読み込み中..."
 
 #. placeholder {0}: error.message
 #: src/app/routes/_authenticated/_orders/orders_.draft.$id.tsx
@@ -6164,7 +6164,7 @@ msgstr "名"
 
 #: src/lib/components/shared/product-variant-selector.tsx
 msgid "Add item to order"
-msgstr "注文に商品を追加"
+msgstr "注文にアイテムを追加"
 
 #: src/lib/components/data-table/human-readable-operator.tsx
 msgid "contains"
@@ -6317,7 +6317,7 @@ msgstr "最初のプロモーションを作成しましょう"
 
 #: src/app/routes/_authenticated/_channels/channels_.$id.tsx
 msgid "Defaults to the default language."
-msgstr ""
+msgstr "デフォルト言語が使用されます。"
 
 #: src/lib/components/data-input/custom-field-list-input.tsx
 msgid "Remove item"
@@ -6516,7 +6516,7 @@ msgstr "すべての可能なバリアントの組み合わせは既に存在し
 
 #: src/app/routes/_authenticated/_system/components/cancel-jobs-bulk-action.tsx
 msgid "{cancellableCount, plural, one {Are you sure you want to cancel {cancellableCount} job? This action cannot be undone.} other {Are you sure you want to cancel {cancellableCount} jobs? This action cannot be undone.}}"
-msgstr "{cancellableCount, plural, one {{cancellableCount}件のジョブをキャンセルしてもよろしいですか？この操作は元に戻せません。} other {{cancellableCount}件のジョブをキャンセルしてもよろしいですか？この操作は元に戻せません。}}"
+msgstr "{cancellableCount, plural, other {{cancellableCount} 件のジョブをキャンセルしてもよろしいですか？この操作は取り消せません。}}"
 
 #: src/app/routes/_authenticated/_product-variants/components/variant-option-select.tsx
 msgid "Go to option group"
@@ -6610,7 +6610,7 @@ msgstr "エントリーを検索..."
 #: src/app/routes/_authenticated/_payment-methods/payment-methods_.$id.tsx
 #: src/app/routes/_authenticated/_shipping-methods/shipping-methods_.$id.tsx
 msgid "Calculator"
-msgstr "計算機"
+msgstr "計算方法"
 
 #: src/app/routes/_authenticated/_option-groups/components/option-group-bulk-actions.tsx
 msgid "Failed to remove option group from channel: {message}"
