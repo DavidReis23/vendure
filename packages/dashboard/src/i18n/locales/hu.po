@@ -370,7 +370,7 @@ msgstr "Rendszergazda létrehozása sikertelen"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:402
 #: src/lib/components/data-display/boolean.tsx:12
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:98
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:100
 msgid "No"
 msgstr "Nem"
 
@@ -1079,7 +1079,7 @@ msgstr "Egyetlen variáns, opciók nélkül"
 msgid "Select the next state for the order"
 msgstr "Válassza ki a megrendelés következő állapotát"
 
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:334
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:336
 msgid "{count} selected"
 msgstr "{count} kijelölve"
 
@@ -2741,7 +2741,7 @@ msgid "Browse facets"
 msgstr "Tulajdonságok böngészése"
 
 #. placeholder {0}: summary.count
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:178
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:180
 msgid "{0} items"
 msgstr ""
 
@@ -2787,7 +2787,7 @@ msgstr "Nézet mentése"
 #: src/lib/components/data-table/data-table-bulk-actions.tsx:91
 #: src/lib/components/data-table/data-table-facet-value-faceted-filter.tsx:137
 #: src/lib/components/data-table/data-table-faceted-filter.tsx:139
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:94
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:96
 msgid "{0} selected"
 msgstr "{0} kijelölve"
 
@@ -3170,7 +3170,7 @@ msgstr "{entityIdsLength} {entityType} tulajdonságértékei sikeresen frissítv
 msgid "Failed to remove customer from group"
 msgstr "Vásárló eltávolítása a csoportból sikertelen"
 
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:181
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:183
 msgid "1 property"
 msgstr ""
 
@@ -3884,7 +3884,7 @@ msgstr "Válasszon egy címet"
 
 #: src/app/routes/_authenticated/_system/settings-store.tsx:401
 #: src/lib/components/data-display/boolean.tsx:12
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:98
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:100
 msgid "Yes"
 msgstr "Igen"
 
@@ -4247,6 +4247,10 @@ msgstr "Szerepkör létrehozása sikertelen"
 #: src/app/routes/_authenticated/_products/products_.$id.tsx:253
 msgid "Product name"
 msgstr "Terméknév"
+
+#: src/lib/components/data-input/password-form-input.tsx:34
+msgid "Hidden — you do not have permission to view this value"
+msgstr ""
 
 #: src/app/routes/_authenticated/_orders/components/fulfillment-details.tsx:57
 msgid "Fulfillment state updated successfully"
@@ -5514,7 +5518,7 @@ msgid "Stock on hand"
 msgstr "Aktuális készlet"
 
 #. placeholder {0}: summary.count
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:181
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:183
 msgid "{0} properties"
 msgstr ""
 
@@ -6332,7 +6336,7 @@ msgstr "Mutatók"
 msgid "Language"
 msgstr "Nyelv"
 
-#: src/lib/components/shared/configurable-operation-arg-summary.tsx:178
+#: src/lib/components/shared/configurable-operation-arg-summary.tsx:180
 msgid "1 item"
 msgstr ""
 

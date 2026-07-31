@@ -523,6 +523,36 @@ export function hasPermissionRequirement(input: ConfigurableFieldDef): boolean {
 }
 
 /**
+ * Resolves the id of the input component to render for a field. An explicit `ui.component`
+ * always wins; otherwise secret fields default to the masked, revealable password input so it is
+ * visually clear the value is sensitive even to a user permitted to read it.
+ */
+export function resolveInputComponentId(input: ConfigurableFieldDef): string | undefined {
+    const explicit = input.ui?.component as string | undefined;
+    if (explicit) {
+        return explicit;
+    }
+    return input.secret === true ? 'password-form-input' : undefined;
+}
+
+/**
+ * Mirrors `SECRET_PLACEHOLDER_PREFIX` from `@vendure/common`. It is inlined rather than imported
+ * because the dashboard is a browser bundle and importing the CommonJS build of `@vendure/common`
+ * as a runtime value fails under Vite. The prefix is version-independent by design, and a unit test
+ * asserts it against the real constant so the two cannot drift apart.
+ */
+const SECRET_PLACEHOLDER_PREFIX = '__vendure_secret_unchanged_';
+
+/**
+ * Returns true when a value is a secret redaction placeholder returned by the API in place of a
+ * secret the current user is not permitted to read. Matches any Vendure version's placeholder by
+ * prefix, so the internal sentinel is never surfaced to the user.
+ */
+export function isRedactedSecretValue(value: unknown): value is string {
+    return typeof value === 'string' && value.startsWith(SECRET_PLACEHOLDER_PREFIX);
+}
+
+/**
  * Determines if a field is nullable
  */
 export function isNullableField(input: ConfigurableFieldDef): boolean {

@@ -4,10 +4,14 @@ import { describe, expect, it } from 'vitest';
 import { FieldInfo, getOperationVariablesFields } from '../document-introspection/get-document-structure.js';
 
 import { ConfigurableFieldDef } from './form-engine-types.js';
+import { REDACTED_SECRET_PLACEHOLDER, SECRET_PLACEHOLDER_PREFIX } from '@vendure/common/lib/shared-constants';
+
 import {
     convertEmptyStringsToNull,
     isFieldNullable,
+    isRedactedSecretValue,
     removeEmptyIdFields,
+    resolveInputComponentId,
     stripNullNullableFields,
     stripUntouchedTranslations,
     transformRelationFields,
@@ -924,5 +928,60 @@ describe('isFieldNullable', () => {
                 ui: { options: [{ value: 'a' }] },
             } as ConfigurableFieldDef),
         ).toBe(false);
+    });
+});
+
+describe('resolveInputComponentId', () => {
+    it('returns undefined for a plain field', () => {
+        expect(
+            resolveInputComponentId({ name: 'note', type: 'string' } as ConfigurableFieldDef),
+        ).toBeUndefined();
+    });
+
+    it('defaults secret fields to the masked password input', () => {
+        expect(
+            resolveInputComponentId({ name: 'apiKey', type: 'string', secret: true } as ConfigurableFieldDef),
+        ).toBe('password-form-input');
+    });
+
+    it('does not mask when secret is false', () => {
+        expect(
+            resolveInputComponentId({
+                name: 'apiKey',
+                type: 'string',
+                secret: false,
+            } as ConfigurableFieldDef),
+        ).toBeUndefined();
+    });
+
+    it('lets an explicit ui.component win over the secret default', () => {
+        expect(
+            resolveInputComponentId({
+                name: 'apiKey',
+                type: 'string',
+                secret: true,
+                ui: { component: 'my-custom-input' },
+            } as ConfigurableFieldDef),
+        ).toBe('my-custom-input');
+    });
+});
+
+describe('isRedactedSecretValue', () => {
+    it('detects the current redaction placeholder', () => {
+        expect(isRedactedSecretValue(REDACTED_SECRET_PLACEHOLDER)).toBe(true);
+    });
+
+    it('detects a placeholder from another version by prefix', () => {
+        expect(isRedactedSecretValue(`${SECRET_PLACEHOLDER_PREFIX}v99`)).toBe(true);
+    });
+
+    it('does not treat a real value as redacted', () => {
+        expect(isRedactedSecretValue('sk_live_abc123')).toBe(false);
+    });
+
+    it('is false for non-string values', () => {
+        expect(isRedactedSecretValue(undefined)).toBe(false);
+        expect(isRedactedSecretValue(null)).toBe(false);
+        expect(isRedactedSecretValue(42)).toBe(false);
     });
 });

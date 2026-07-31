@@ -22,6 +22,7 @@ import { Logger } from '../config/logger/vendure-logger';
 import { VendureConfig } from '../config/vendure-config';
 
 import { EntityId } from './entity-id.decorator';
+import { EncryptedFieldTransformer } from './value-transformers';
 
 /**
  * The maximum length of the "length" argument of a MySQL varchar column.
@@ -98,6 +99,29 @@ function registerCustomFieldsForEntity(
     if (customFields) {
         for (const customField of customFields) {
             const { name, list, defaultValue, nullable } = customField;
+            if (customField.secret === true) {
+                // Validate secret-field constraints that apply regardless of the underlying storage,
+                // before branching on the field type. Otherwise an unsupported type such as
+                // `relation` is silently registered without encryption or redaction.
+                if (customField.type !== 'string' && customField.type !== 'text') {
+                    throw new Error(
+                        `ERROR: The custom field "${customField.name}" has "secret: true", which ` +
+                            'is only supported on "string" and "text" fields.',
+                    );
+                }
+                if (list) {
+                    throw new Error(
+                        `ERROR: The custom field "${customField.name}" cannot combine "secret: true" ` +
+                            'with "list: true".',
+                    );
+                }
+                if (defaultValue !== undefined) {
+                    throw new Error(
+                        `ERROR: The custom field "${customField.name}" cannot combine "secret: true" ` +
+                            'with a "defaultValue", because a column default would be stored unencrypted.',
+                    );
+                }
+            }
             const instance = new ctor();
             const registerColumn = () => {
                 if (customField.type === 'relation') {
@@ -155,6 +179,28 @@ function registerCustomFieldsForEntity(
                         !list
                     ) {
                         options.precision = 6;
+                    }
+                    if (customField.secret === true) {
+                        if (customField.unique === true) {
+                            throw new Error(
+                                `ERROR: The custom field "${customField.name}" cannot combine "secret: true" ` +
+                                    'with "unique: true", because encrypted values cannot be uniquely indexed.',
+                            );
+                        }
+                        if (customField.type === 'string' && customField.length != null) {
+                            throw new Error(
+                                `ERROR: The custom field "${customField.name}" cannot combine "secret: true" ` +
+                                    'with an explicit "length", because encrypted values are stored as unbounded text.',
+                            );
+                        }
+                        // Ciphertext is longer than the plaintext and variable in size, so it is
+                        // stored as unbounded text and encrypted/decrypted via the configured strategy.
+                        options.type = getColumnType(dbEngine, 'text', false);
+                        delete options.length;
+                        delete options.default;
+                        options.transformer = new EncryptedFieldTransformer(
+                            () => config.systemOptions?.encryptionStrategy,
+                        );
                     }
                     Column(options)(instance, name);
                     if ((dbEngine === 'mysql' || dbEngine === 'mariadb') && customField.unique === true) {
