@@ -1,5 +1,4 @@
 import type { ConfigurableOperationDefType } from '../common/configurable-operation';
-
 import type { CollectionFilter } from './catalog/collection-filter';
 import type { ConfigService } from './config.service';
 import type { EntityDuplicator } from './entity/entity-duplicator';
