@@ -44,11 +44,11 @@ import { PaymentMethodService } from './payment-method.service';
 @Instrument()
 export class PaymentService {
     constructor(
-        private connection: TransactionalConnection,
-        private paymentStateMachine: PaymentStateMachine,
-        private refundStateMachine: RefundStateMachine,
-        private paymentMethodService: PaymentMethodService,
-        private eventBus: EventBus,
+        private readonly  connection: TransactionalConnection,
+        private readonly  paymentStateMachine: PaymentStateMachine,
+        private readonly  refundStateMachine: RefundStateMachine,
+        private readonly  paymentMethodService: PaymentMethodService,
+        private readonly  eventBus: EventBus,
     ) {}
 
     async create(ctx: RequestContext, input: DeepPartial<Payment>): Promise<Payment> {
@@ -521,7 +521,7 @@ export class PaymentService {
         }
         const merged = { ...m1, ...m2 };
         if (m1.public && m2.public) {
-            merged.public = { ...m1.public, ...m2.public };
+        merged.public = { ...m1.public, ...m2.public };
     }
         return merged;
     }
