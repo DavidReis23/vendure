@@ -73,9 +73,9 @@ const QB_TERMINAL_METHODS = new Set([
 @Injectable()
 export class TransactionalConnection {
     constructor(
-        @InjectDataSource() private dataSource: DataSource,
-        private transactionWrapper: TransactionWrapper,
-        private configService: ConfigService,
+        @InjectDataSource() private readonly dataSource: DataSource,
+        private readonly transactionWrapper: TransactionWrapper,
+        private readonly configService: ConfigService,
     ) {}
 
     /**
