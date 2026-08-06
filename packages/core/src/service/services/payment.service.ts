@@ -520,9 +520,9 @@ export class PaymentService {
             return m1;
         }
         const merged = { ...m1, ...m2 };
-        if (m1.public && m1.public) {
+        if (m1.public && m2.public) {
             merged.public = { ...m1.public, ...m2.public };
-        }
+    }
         return merged;
     }
 }
