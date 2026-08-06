@@ -58,6 +58,9 @@ const QB_TERMINAL_METHODS = new Set([
     'stream',
 ]);
 
+type RepositoryTarget<Entity> =
+    ObjectType<Entity> | EntitySchema<Entity> | string;
+
 /**
  * @description
  * The TransactionalConnection is a wrapper around the TypeORM `Connection` object which works in conjunction
@@ -97,7 +100,7 @@ export class TransactionalConnection {
      * @deprecated since 1.7.0: Use {@link TransactionalConnection.rawConnection rawConnection.getRepository()} function instead.
      */
     getRepository<Entity extends ObjectLiteral>(
-        target: ObjectType<Entity> | EntitySchema<Entity> | string,
+        target: RepositoryTarget<Entity>,
     ): Repository<Entity>;
     /**
      * @description
@@ -116,7 +119,7 @@ export class TransactionalConnection {
      */
     getRepository<Entity extends ObjectLiteral>(
         ctx: RequestContext | undefined,
-        target: ObjectType<Entity> | EntitySchema<Entity> | string,
+        target: RepositoryTarget<Entity>,
         options?: {
             replicationMode?: ReplicationMode;
         },
@@ -134,8 +137,8 @@ export class TransactionalConnection {
      * @returns A TypeORM repository for the specified entity type.
      */
     getRepository<Entity extends ObjectLiteral>(
-        ctxOrTarget: RequestContext | ObjectType<Entity> | EntitySchema<Entity> | string | undefined,
-        maybeTarget?: ObjectType<Entity> | EntitySchema<Entity> | string,
+        ctxOrTarget: RequestContext | RepositoryTarget<Entity> | undefined,
+        maybeTarget?: RepositoryTarget<Entity>,
         options?: {
             replicationMode?: ReplicationMode;
         },
