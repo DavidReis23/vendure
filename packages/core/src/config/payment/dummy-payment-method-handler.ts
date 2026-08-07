@@ -1,7 +1,7 @@
 import { LanguageCode } from '@vendure/common/lib/generated-types';
+import { randomUUID } from 'node:crypto';
 
-import { CreatePaymentResult, PaymentMethodHandler } from './payment-method-handler';
-
+import { PaymentMethodHandler } from './payment-method-handler';
 /**
  * @description
  * A dummy PaymentMethodHandler which simply creates a Payment without any integration
@@ -73,7 +73,7 @@ export const dummyPaymentHandler = new PaymentMethodHandler({
             return {
                 amount,
                 state: args.automaticSettle ? 'Settled' : 'Authorized',
-                transactionId: Math.random().toString(36).substr(3),
+                transactionId: randomUUID(),
                 metadata,
             };
         }
