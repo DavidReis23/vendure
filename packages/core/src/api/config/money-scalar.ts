@@ -64,7 +64,7 @@ export const GraphQLMoney = new GraphQLScalarType<number>({
                 nodes: valueNode,
             });
         }
-        return parseFloat(valueNode.value);
+        return Number.parseFloat(valueNode.value);
     },
     extensions: {
         codegenScalarType: 'number',
