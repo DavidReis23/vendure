@@ -20,7 +20,10 @@ import { IdCodecService } from './id-codec.service';
 
 @Injectable()
 export class ConfigurableOperationCodec {
-    constructor(private configService: ConfigService, private idCodecService: IdCodecService) {}
+    constructor(
+        private readonly configService: ConfigService,
+        private readonly idCodecService: IdCodecService,
+    ) {}
 
     /**
      * Decodes any ID type arguments of a ConfigurableOperationDef
