@@ -73,13 +73,15 @@ import { TranslateErrorResultInterceptor } from './middleware/translate-error-re
     ],
 })
 export class ApiModule implements NestModule {
-    constructor(private configService: ConfigService) {}
+    constructor(private readonly configService: ConfigService) {}
 
     async configure(consumer: MiddlewareConsumer) {
         const { adminApiPath, shopApiPath } = this.configService.apiOptions;
         const { uploadMaxFileSize } = this.configService.assetOptions;
+
         // @ts-ignore
         const { default: graphqlUploadExpress } = await import('graphql-upload/graphqlUploadExpress.mjs');
+
         consumer
             .apply(graphqlUploadExpress({ maxFileSize: uploadMaxFileSize }))
             .forRoutes(adminApiPath, shopApiPath);
