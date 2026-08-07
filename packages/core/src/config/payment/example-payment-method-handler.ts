@@ -1,4 +1,5 @@
 import { LanguageCode } from '@vendure/common/lib/generated-types';
+import { randomUUID } from 'node:crypto';
 
 import { CreatePaymentResult, PaymentMethodHandler } from './payment-method-handler';
 
@@ -9,7 +10,7 @@ const gripeSDK = {
     charges: {
         create: (options: any) => {
             return Promise.resolve({
-                id: Math.random().toString(36).substr(3),
+                id: randomUUID(),
             });
         },
         capture: async (transactionId: string) => {
