@@ -487,36 +487,40 @@ function disableSynchronize(userConfig: Readonly<RuntimeVendureConfig>): Readonl
  */
 async function validateDbTablesForWorker(worker: INestApplicationContext) {
     const connection: Connection = worker.get(getConnectionToken());
-    await new Promise<void>(async (resolve, reject) => {
-        const checkForTables = async (): Promise<boolean> => {
-            try {
-                const adminCount = await connection.getRepository(Administrator).count();
-                return 0 < adminCount;
-            } catch (e: any) {
-                return false;
-            }
-        };
 
-        const pollIntervalMs = 5000;
-        let attempts = 0;
-        const maxAttempts = 10;
-        let validTableStructure = false;
-        Logger.verbose('Checking for expected DB table structure...');
-        while (!validTableStructure && attempts < maxAttempts) {
-            attempts++;
-            validTableStructure = await checkForTables();
-            if (validTableStructure) {
-                Logger.verbose('Table structure verified');
-                resolve();
-                return;
-            }
-            Logger.verbose(
-                `Table structure could not be verified, trying again after ${pollIntervalMs}ms (attempt ${attempts} of ${maxAttempts})`,
-            );
-            await new Promise(resolve1 => setTimeout(resolve1, pollIntervalMs));
+    const checkForTables = async (): Promise<boolean> => {
+        try {
+            const adminCount = await connection.getRepository(Administrator).count();
+            return 0 < adminCount;
+        } catch (e: any) {
+            return false;
         }
-        reject('Could not validate DB table structure. Aborting bootstrap.');
-    });
+    };
+
+    const pollIntervalMs = 5000;
+    let attempts = 0;
+    const maxAttempts = 10;
+    let validTableStructure = false;
+
+    Logger.verbose('Checking for expected DB table structure...');
+
+    while (!validTableStructure && attempts < maxAttempts) {
+        attempts++;
+        validTableStructure = await checkForTables();
+
+        if (validTableStructure) {
+            Logger.verbose('Table structure verified');
+            return;
+        }
+
+        Logger.verbose(
+            `Table structure could not be verified, trying again after ${pollIntervalMs}ms (attempt ${attempts} of ${maxAttempts})`,
+        );
+
+        await new Promise(resolve => setTimeout(resolve, pollIntervalMs));
+    }
+
+    return Promise.reject('Could not validate DB table structure. Aborting bootstrap.');
 }
 
 export function configureSessionCookies(
