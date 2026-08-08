@@ -205,7 +205,18 @@ export class EntityHydrator {
         options: HydrateOptions<Entity>,
     ) {
         const missingRelations: string[] = [];
-        for (const relation of options.relations.slice().sort()) {
+        for (const relation of options.relations.slice().sort((a, b) => {
+            const aValue = String(a);
+            const bValue = String(b);
+
+            if (aValue < bValue) {
+                return -1;
+            }
+            if (aValue > bValue) {
+                return 1;
+            }
+            return 0;
+        })) {
             if (typeof relation === 'string') {
                 const parts = relation.split('.');
                 // The entities found at the current depth of the relation path. An array-valued
