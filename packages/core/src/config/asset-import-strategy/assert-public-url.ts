@@ -150,7 +150,17 @@ export async function assertPublicUrl(
     // them so `isIP` and the BlockList can parse the address. Also drop any
     // zone-id suffix (e.g. `fe80::1%eth0`) since BlockList does not accept
     // zone-tagged addresses.
-    const hostname = url.hostname.replace(/^\[|\]$/g, '').replace(/%.*$/, '');
+    let hostname = url.hostname;
+    if (hostname.startsWith('[')) {
+        hostname = hostname.slice(1);
+    }
+    if (hostname.endsWith(']')) {
+        hostname = hostname.slice(0, -1);
+    }
+    const zoneIdIndex = hostname.indexOf('%');
+    if (zoneIdIndex !== -1) {
+        hostname = hostname.slice(0, zoneIdIndex);
+    }
     const resolve = options.resolver ?? defaultResolver;
 
     let addresses: Array<{ address: string; family: number }>;
