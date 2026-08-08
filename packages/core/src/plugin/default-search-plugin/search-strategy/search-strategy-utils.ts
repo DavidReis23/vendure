@@ -9,9 +9,10 @@ import {
 } from '@vendure/common/lib/generated-types';
 import { ID } from '@vendure/common/lib/shared-types';
 import { unique } from '@vendure/common/lib/unique';
-import { Brackets, QueryBuilder, SelectQueryBuilder } from 'typeorm';
+import { Brackets, SelectQueryBuilder } from 'typeorm';
 
 import { SearchIndexItem } from '../entities/search-index-item.entity';
+import { SearchInput } from '../types';
 
 /**
  * Maps a raw database result to a SearchResult.
@@ -84,6 +85,24 @@ export function createFacetIdCountMap(facetValuesResult: Array<{ facetValues: st
     return result;
 }
 
+export async function getSearchIdCountMap<T>(
+    queryBuilder: SelectQueryBuilder<SearchIndexItem>,
+    input: SearchInput,
+    enabledOnly: boolean,
+    createCountMap: (results: T[]) => Map<ID, number>,
+): Promise<Map<ID, number>> {
+    if (!input.groupByProduct) {
+        queryBuilder.groupBy('si.productVariantId');
+    }
+
+    if (enabledOnly) {
+        queryBuilder.andWhere('si.enabled = :enabled', { enabled: true });
+    }
+
+    const results = await queryBuilder.getRawMany<T>();
+
+    return createCountMap(results);
+}
 /**
  * Given the raw query results containing rows with a `collections` property line "1,2,1,2",
  * this function returns a map of Collection ids => count of how many times they occur.

@@ -16,6 +16,7 @@ import {
     createCollectionIdCountMap,
     createFacetIdCountMap,
     createPlaceholderFromId,
+    getSearchIdCountMap,
     mapToSearchResult,
 } from './search-strategy-utils';
 
@@ -49,14 +50,8 @@ export class SqliteSearchStrategy implements SearchStrategy {
             .addSelect('GROUP_CONCAT(si.facetValueIds)', 'facetValues');
 
         this.applyTermAndFilters(ctx, facetValuesQb, input);
-        if (!input.groupByProduct) {
-            facetValuesQb.groupBy('si.productVariantId');
-        }
-        if (enabledOnly) {
-            facetValuesQb.andWhere('si.enabled = :enabled', { enabled: true });
-        }
-        const facetValuesResult = await facetValuesQb.getRawMany();
-        return createFacetIdCountMap(facetValuesResult);
+
+        return getSearchIdCountMap(facetValuesQb, input, enabledOnly, createFacetIdCountMap);
     }
 
     async getCollectionIds(
@@ -71,14 +66,8 @@ export class SqliteSearchStrategy implements SearchStrategy {
             .addSelect('GROUP_CONCAT(si.collectionIds)', 'collections');
 
         this.applyTermAndFilters(ctx, collectionsQb, input);
-        if (!input.groupByProduct) {
-            collectionsQb.groupBy('si.productVariantId');
-        }
-        if (enabledOnly) {
-            collectionsQb.andWhere('si.enabled = :enabled', { enabled: true });
-        }
-        const collectionsResult = await collectionsQb.getRawMany();
-        return createCollectionIdCountMap(collectionsResult);
+
+        return getSearchIdCountMap(collectionsQb, input, enabledOnly, createCollectionIdCountMap);
     }
 
     async getSearchResults(
