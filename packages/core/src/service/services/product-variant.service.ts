@@ -1092,7 +1092,18 @@ export class ProductVariantService {
     private sortJoin<T>(arr: T[], glue: string, prop?: keyof T): string {
         return arr
             .map(x => (prop ? x[prop] : x))
-            .sort()
+            .sort((a, b) => {
+                const aValue = String(a);
+                const bValue = String(b);
+
+                if (aValue < bValue) {
+                    return -1;
+                }
+                if (aValue > bValue) {
+                    return 1;
+                }
+                return 0;
+            })
             .join(glue);
     }
 
