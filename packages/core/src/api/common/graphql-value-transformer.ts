@@ -286,31 +286,52 @@ export class GraphqlValueTransformer {
 
     private getTypeNodeByPath(typeTree: TypeTree, path: Array<string | number>): TypeTreeNode | undefined {
         let targetNode: TypeTreeNode | undefined = typeTree.operation;
+
         for (const segment of path) {
-            if (Number.isNaN(Number.parseInt(segment as string, 10))) {
-                if (targetNode) {
-                    let children: { [name: string]: TypeTreeNode } = targetNode.children;
-                    if (targetNode.fragmentRefs.length) {
-                        const fragmentRefs = targetNode.fragmentRefs.slice();
-                        while (fragmentRefs.length) {
-                            const ref = fragmentRefs.pop();
-                            if (ref) {
-                                const fragment = typeTree.fragments[ref];
-                                if (fragment) {
-                                    // Deeply merge the children
-                                    children = this.deepMergeChildren(children, fragment.children);
-                                    if (fragment.fragmentRefs) {
-                                        fragmentRefs.push(...fragment.fragmentRefs);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    targetNode = children[segment];
-                }
+            if (!Number.isNaN(Number.parseInt(segment as string, 10)) || !targetNode) {
+                continue;
+            }
+
+            const children = this.getChildrenWithFragments(typeTree, targetNode);
+            targetNode = children[segment];
+        }
+
+        return targetNode;
+    }
+
+    private getChildrenWithFragments(
+        typeTree: TypeTree,
+        targetNode: TypeTreeNode,
+    ): { [name: string]: TypeTreeNode } {
+        let children = targetNode.children;
+
+        if (targetNode.fragmentRefs.length === 0) {
+            return children;
+        }
+
+        const fragmentRefs = targetNode.fragmentRefs.slice();
+
+        while (fragmentRefs.length) {
+            const ref = fragmentRefs.pop();
+
+            if (!ref) {
+                continue;
+            }
+
+            const fragment = typeTree.fragments[ref];
+
+            if (!fragment) {
+                continue;
+            }
+
+            children = this.deepMergeChildren(children, fragment.children);
+
+            if (fragment.fragmentRefs) {
+                fragmentRefs.push(...fragment.fragmentRefs);
             }
         }
-        return targetNode;
+
+        return children;
     }
 
     private traverse(
