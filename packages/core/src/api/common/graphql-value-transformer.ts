@@ -241,30 +241,47 @@ export class GraphqlValueTransformer {
         source: { [name: string]: TypeTreeNode },
     ): { [name: string]: TypeTreeNode } {
         const merged = { ...target };
+
         for (const key in source) {
-            if (source.hasOwnProperty(key)) {
-                if (merged[key]) {
-                    // If the key already exists, merge recursively
-                    if (source[key].children && Object.keys(source[key].children).length > 0) {
-                        merged[key].children = this.deepMergeChildren(
-                            merged[key].children,
-                            source[key].children,
-                        );
-                    }
-                    // Merge fragmentRefs from both nodes, avoiding duplicates
-                    if (source[key].fragmentRefs && source[key].fragmentRefs.length > 0) {
-                        const existingRefs = new Set(merged[key].fragmentRefs);
-                        const newRefs = source[key].fragmentRefs.filter(ref => !existingRefs.has(ref));
-                        if (newRefs.length > 0) {
-                            merged[key].fragmentRefs = [...merged[key].fragmentRefs, ...newRefs];
-                        }
-                    }
-                } else {
-                    merged[key] = source[key];
-                }
+            if (!source.hasOwnProperty(key)) {
+                continue;
             }
+
+            const sourceNode = source[key];
+            const targetNode = merged[key];
+
+            if (!targetNode) {
+                merged[key] = sourceNode;
+                continue;
+            }
+
+            this.mergeTypeTreeNode(targetNode, sourceNode);
         }
+
         return merged;
+    }
+
+    private mergeTypeTreeNode(target: TypeTreeNode, source: TypeTreeNode): void {
+        if (Object.keys(source.children).length > 0) {
+            target.children = this.deepMergeChildren(target.children, source.children);
+        }
+
+        target.fragmentRefs = this.mergeFragmentRefs(target.fragmentRefs, source.fragmentRefs);
+    }
+
+    private mergeFragmentRefs(target: string[], source: string[]): string[] {
+        if (source.length === 0) {
+            return target;
+        }
+
+        const existingRefs = new Set(target);
+        const newRefs = source.filter(ref => !existingRefs.has(ref));
+
+        if (newRefs.length === 0) {
+            return target;
+        }
+
+        return [...target, ...newRefs];
     }
 
     private getTypeNodeByPath(typeTree: TypeTree, path: Array<string | number>): TypeTreeNode | undefined {
