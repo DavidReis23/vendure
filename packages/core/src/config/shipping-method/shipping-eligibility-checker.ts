@@ -101,7 +101,7 @@ export class ShippingEligibilityChecker<
                     this.argsArrayToHash(args),
                     method,
                 );
-                const checkResultHash = createHash('sha1')
+                const checkResultHash = createHash('sha256')
                     .update(JSON.stringify(checkResult))
                     .digest('base64');
                 const lastResultHash = await this.cacheService.get(cacheKey);
