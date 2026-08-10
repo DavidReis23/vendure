@@ -118,7 +118,7 @@ export class FacetService {
                       this.connection.getRepository(ctxOrFacetCode, Facet),
                       facetCodeOrLang,
                       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                      lang!,
+                      lang,
                       ctxOrFacetCode.channel.defaultLanguageCode,
                   ]
                 : [

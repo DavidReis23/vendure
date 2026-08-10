@@ -1,5 +1,4 @@
 import { Args, Info, Query, Resolver } from '@nestjs/graphql';
-import { LogicalOperator } from '@vendure/common/lib/generated-types';
 import {
     QueryCollectionArgs,
     QueryCollectionsArgs,
@@ -9,6 +8,7 @@ import {
     QueryProductsArgs,
     SearchResponse,
 } from '@vendure/common/lib/generated-shop-types';
+import { LogicalOperator } from '@vendure/common/lib/generated-types';
 import { Omit } from '@vendure/common/lib/omit';
 import { PaginatedList } from '@vendure/common/lib/shared-types';
 import { GraphQLResolveInfo } from 'graphql';

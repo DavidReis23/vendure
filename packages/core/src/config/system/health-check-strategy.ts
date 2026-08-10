@@ -1,5 +1,5 @@
-import { HealthIndicatorFunction } from '../../health-check/terminus-compat';
 import { InjectableStrategy } from '../../common/types/injectable-strategy';
+import { HealthIndicatorFunction } from '../../health-check/terminus-compat';
 
 /**
  * @description

@@ -95,6 +95,4 @@ describe('containsProducts', () => {
             expect(await check(order, args)).toBe(false);
         });
     });
-
-
 });

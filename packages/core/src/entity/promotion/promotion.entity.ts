@@ -68,10 +68,7 @@ export class Promotion
     private readonly allConditions: { [code: string]: PromotionCondition } = {};
     private readonly allActions: {
         [code: string]:
-            | PromotionItemAction
-            | PromotionLineAction
-            | PromotionOrderAction
-            | PromotionShippingAction;
+            PromotionItemAction | PromotionLineAction | PromotionOrderAction | PromotionShippingAction;
     } = {};
 
     constructor(

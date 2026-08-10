@@ -10,9 +10,10 @@ vi.mock('typeorm/find-options/FindOptionsUtils', () => ({
     },
 }));
 
-import { RequestContext } from './request-context';
 import { RequestContextCacheService } from '../../cache/request-context-cache.service';
+
 import { CustomFieldRelationResolverService } from './custom-field-relation-resolver.service';
+import { RequestContext } from './request-context';
 
 /**
  * A minimal stand-in for a TypeORM SelectQueryBuilder, just deep enough to satisfy
@@ -54,7 +55,10 @@ describe('CustomFieldRelationResolverService', () => {
                     const raw: RawRow[] = Object.entries(mapping).flatMap(
                         ([entityId, relationIds]): RawRow[] =>
                             relationIds.length
-                                ? relationIds.map(relationId => ({ entity_id: entityId, relation_id: relationId }))
+                                ? relationIds.map(relationId => ({
+                                      entity_id: entityId,
+                                      relation_id: relationId,
+                                  }))
                                 : [{ entity_id: entityId, relation_id: null }],
                     );
                     return createQueryBuilderStub({ raw });

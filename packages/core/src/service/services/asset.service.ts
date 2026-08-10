@@ -565,8 +565,7 @@ export class AssetService {
         const { assetImportStrategy } = this.configService.importExportOptions;
         const filePathFromArgs =
             maybeFilePathOrCtx instanceof RequestContext ? undefined : maybeFilePathOrCtx;
-        const filePath =
-            stream instanceof ReadStream ? stream.path : filePathFromArgs;
+        const filePath = stream instanceof ReadStream ? stream.path : filePathFromArgs;
         if (typeof filePath === 'string') {
             const filename = path.basename(filePath).split('?')[0];
             const mimetype = this.getMimeType(stream, filename);

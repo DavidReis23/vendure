@@ -266,19 +266,14 @@ export class Job<T extends JobData<T> = any> {
                 output = data.toJSON();
             } else {
                 for (const key of Object.keys(data)) {
-                    output[key] = this.ensureDataIsSerializable(
-                        (data as any)[key],
-                        depth,
-                        seen,
-                        path.concat(key),
-                    );
+                    output[key] = this.ensureDataIsSerializable(data[key], depth, seen, path.concat(key));
                 }
                 if (isClassInstance(data)) {
                     const descriptors = Object.getOwnPropertyDescriptors(Object.getPrototypeOf(data));
                     for (const name of Object.keys(descriptors)) {
                         const descriptor = descriptors[name];
                         if (typeof descriptor.get === 'function') {
-                            output[name] = (data as any)[name];
+                            output[name] = data[name];
                         }
                     }
                 }
