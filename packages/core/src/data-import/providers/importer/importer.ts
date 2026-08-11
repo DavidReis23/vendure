@@ -312,7 +312,7 @@ export class Importer {
                         );
                         if (!productTranslation) {
                             throw new InternalServerError(
-                                `No translation '${translation.languageCode}' for product with slug '${productMainTranslation.slug}'`,
+                                `No translation '${String(translation.languageCode)}' for product with slug '${productMainTranslation.slug}'`,
                             );
                         }
                         return {
@@ -362,12 +362,7 @@ export class Importer {
                 );
                 if (existing) {
                     facetEntity = existing;
-                    await this.channelService.assignToChannels(
-                        ctx,
-                        Facet,
-                        facetEntity.id,
-                        [ctx.channelId],
-                    );
+                    await this.channelService.assignToChannels(ctx, Facet, facetEntity.id, [ctx.channelId]);
                 } else {
                     facetEntity = await this.facetService.create(ctx, {
                         isPrivate: false,
@@ -392,12 +387,9 @@ export class Importer {
                 const existing = facetEntity.values.find(v => v.name === valueName);
                 if (existing) {
                     facetValueEntity = existing;
-                    await this.channelService.assignToChannels(
-                        ctx,
-                        FacetValue,
-                        facetValueEntity.id,
-                        [ctx.channelId],
-                    );
+                    await this.channelService.assignToChannels(ctx, FacetValue, facetValueEntity.id, [
+                        ctx.channelId,
+                    ]);
                 } else {
                     facetValueEntity = await this.facetValueService.create(ctx, facetEntity, {
                         code: normalizeString(valueName, '-'),

@@ -45,7 +45,8 @@ export class DefaultOrderTaxCalculationStrategy implements OrderTaxCalculationSt
             string,
             { rate: number; base: number; tax: number; description: string }
         >();
-        const taxId = (taxLine: TaxLine): string => `${taxLine.description}:${taxLine.taxRate}`;
+        const taxId = (taxLine: TaxLine): string =>
+            `${String(taxLine.description)}:${String(taxLine.taxRate)}`;
         const taxableLines = [
             ...(order.lines ?? []),
             ...(order.shippingLines ?? []),

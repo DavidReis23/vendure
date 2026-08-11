@@ -39,12 +39,15 @@ export class ProductOptionEntityResolver {
         if (option.group) {
             return option.group;
         }
-        return this.requestContextCache.get(ctx, `ProductOptionEntityResolver.group(${option.groupId})`, () =>
-            assertFound(
-                this.productOptionGroupService.findOne(ctx, option.groupId, undefined, {
-                    includeSoftDeleted: true,
-                }),
-            ),
+        return this.requestContextCache.get(
+            ctx,
+            `ProductOptionEntityResolver.group(${String(option.groupId)})`,
+            () =>
+                assertFound(
+                    this.productOptionGroupService.findOne(ctx, option.groupId, undefined, {
+                        includeSoftDeleted: true,
+                    }),
+                ),
         );
     }
 }

@@ -502,13 +502,11 @@ export class ProductVariantService {
                 const optionIds = input.optionIds || [];
                 let optionGroupIds: ID[] = [];
                 if (optionIds.length) {
-                    const variantOptions = await this.connection
-                        .getRepository(ctx, ProductOption)
-                        .find({
-                            where: { id: In(optionIds) },
-                            relations: ['group'],
-                            loadEagerRelations: false,
-                        });
+                    const variantOptions = await this.connection.getRepository(ctx, ProductOption).find({
+                        where: { id: In(optionIds) },
+                        relations: ['group'],
+                        loadEagerRelations: false,
+                    });
                     optionGroupIds = unique(variantOptions.map(o => o.group.id));
                 }
 
@@ -523,20 +521,14 @@ export class ProductVariantService {
                     if (optionIds.length) {
                         await Promise.all([
                             ...optionGroupIds.map(id =>
-                                this.channelService.assignToChannels(
-                                    ctx,
-                                    ProductOptionGroup,
-                                    id,
-                                    [additionalChannelId],
-                                ),
+                                this.channelService.assignToChannels(ctx, ProductOptionGroup, id, [
+                                    additionalChannelId,
+                                ]),
                             ),
                             ...optionIds.map(id =>
-                                this.channelService.assignToChannels(
-                                    ctx,
-                                    ProductOption,
-                                    id,
-                                    [additionalChannelId],
-                                ),
+                                this.channelService.assignToChannels(ctx, ProductOption, id, [
+                                    additionalChannelId,
+                                ]),
                             ),
                         ]);
                     }
@@ -801,7 +793,7 @@ export class ProductVariantService {
         variant: ProductVariant,
         priceField: F,
     ): Promise<ProductVariant[F]> {
-        const cacheKey = `hydrate-variant-price-fields-${variant.id}`;
+        const cacheKey = `hydrate-variant-price-fields-${String(variant.id)}`;
         let populatePricesPromise = this.requestCache.get<Promise<ProductVariant>>(ctx, cacheKey);
 
         if (!populatePricesPromise) {

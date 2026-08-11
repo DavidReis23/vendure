@@ -133,7 +133,7 @@ export class EventBus implements OnModuleDestroy {
             filter(e => e.constructor === type),
             mergeMap(event => this.awaitActiveTransactions(event)),
             filter(notNullOrUndefined),
-        ) as Observable<T>;
+        );
     }
 
     /**
@@ -151,7 +151,7 @@ export class EventBus implements OnModuleDestroy {
             filter(e => predicate(e)),
             mergeMap(event => this.awaitActiveTransactions(event)),
             filter(notNullOrUndefined),
-        ) as Observable<T>;
+        );
     }
 
     /**
@@ -193,7 +193,7 @@ export class EventBus implements OnModuleDestroy {
             const handlerWithIdAlreadyExists = handlers?.some(h => h.id === handlerOptions.id);
             if (handlerWithIdAlreadyExists) {
                 throw new Error(
-                    `A handler with the id "${handlerOptions.id}" is already registered for the event ${event.name}`,
+                    `A handler with the id "${handlerOptions.id}" is already registered for the event ${String(event.name)}`,
                 );
             }
 

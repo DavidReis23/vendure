@@ -298,9 +298,9 @@ export class OrderModifier {
                 .where('orderLine.id = :orderLineId', { orderLineId: lineInput.orderLineId })
                 .getMany();
             const totalAllocated =
-                summate(allocationsForLine, 'quantity') +
-                summate(salesForLine, 'quantity') -
-                summate(releasesForLine, 'quantity');
+                Number(summate(allocationsForLine, 'quantity')) +
+                Number(summate(salesForLine, 'quantity')) -
+                Number(summate(releasesForLine, 'quantity'));
             if (0 < totalAllocated) {
                 allocatedLines.push({
                     orderLineId: lineInput.orderLineId,
@@ -397,7 +397,7 @@ export class OrderModifier {
             return new NoChangesSpecifiedError();
         }
         const { orderItemsLimit } = this.configService.orderOptions;
-        let currentItemsCount = summate(order.lines, 'quantity');
+        let currentItemsCount = Number(summate(order.lines, 'quantity'));
         const updatedOrderLineIds: ID[] = [];
         const refundInputArray = Array.isArray(input.refunds)
             ? input.refunds
@@ -454,7 +454,7 @@ export class OrderModifier {
                 throw new UserInputError('error.order-does-not-contain-line-with-id', { id: orderLineId });
             }
             const initialLineQuantity = orderLine.quantity;
-            let correctedQuantity = quantity;
+            let correctedQuantity: number = quantity;
             if (initialLineQuantity < quantity) {
                 const additionalQuantity = await this.constrainQuantityToSaleable(
                     ctx,
@@ -463,7 +463,9 @@ export class OrderModifier {
                 );
                 correctedQuantity = initialLineQuantity + additionalQuantity;
             }
-            const resultingOrderTotalQuantity = currentItemsCount + correctedQuantity - orderLine.quantity;
+            const resultingOrderTotalQuantity =
+                Number(currentItemsCount) + Number(correctedQuantity) - Number(orderLine.quantity);
+
             if (orderItemsLimit < resultingOrderTotalQuantity) {
                 return new OrderLimitError({ maxItems: orderItemsLimit });
             } else {
@@ -583,9 +585,7 @@ export class OrderModifier {
                 );
                 if (isGraphQlErrorResult(validationResult)) {
                     return validationResult as
-                        | CouponCodeExpiredError
-                        | CouponCodeInvalidError
-                        | CouponCodeLimitError;
+                        CouponCodeExpiredError | CouponCodeInvalidError | CouponCodeLimitError;
                 }
                 const canonicalCode = validationResult.couponCode;
                 if (!canonicalCouponCodes.some(cc => couponCodesMatch(cc, canonicalCode))) {
@@ -794,18 +794,19 @@ export class OrderModifier {
         delta: number,
         refundInput: RefundOrderInput,
     ): Promise<number> {
-        const existingAdjustment = refundInput.adjustment ?? 0;
+        const existingAdjustment = Number(refundInput.adjustment ?? 0);
 
-        let itemAmount = 0; // TODO: figure out what this should be
+        let itemAmount = 0;
         for (const lineInput of refundInput.lines ?? []) {
             const orderLine = await this.connection.getEntityOrThrow(ctx, OrderLine, lineInput.orderLineId);
-            itemAmount += orderLine.proratedUnitPriceWithTax * lineInput.quantity;
+            itemAmount += Number(orderLine.proratedUnitPriceWithTax) * Number(lineInput.quantity);
         }
-        const calculatedDelta = itemAmount + (refundInput.shipping ?? 0) + existingAdjustment;
+
+        const calculatedDelta = itemAmount + Number(refundInput.shipping ?? 0) + existingAdjustment;
+
         const absDelta = Math.abs(delta);
         return absDelta !== calculatedDelta ? absDelta - calculatedDelta : 0;
     }
-
     private getOrderPayments(ctx: RequestContext, orderId: ID): Promise<Payment[]> {
         return this.connection.getRepository(ctx, Payment).find({
             relations: ['refunds'],
@@ -851,7 +852,7 @@ export class OrderModifier {
                 .getRepository(ctx, OrderLine)
                 .findOne({
                     where: { id: orderLine.id },
-                    relations: customFieldRelations.map(r => `customFields.${r.name}`),
+                    relations: customFieldRelations.map(r => `customFields.${String(r.name)}`),
                 })
                 .then(result => result ?? undefined);
         }

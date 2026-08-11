@@ -1673,7 +1673,7 @@ export class OrderService {
             const outstandingModificationsTotal = summate(unsettledModifications, 'priceChange');
             if (outstandingModificationsTotal !== amount) {
                 throw new InternalServerError(
-                    `The outstanding order amount (${amount}) should equal the unsettled OrderModifications total (${outstandingModificationsTotal})`,
+                    `The outstanding order amount (${amount}) should equal the unsettled OrderModifications total (${String(outstandingModificationsTotal)})`,
                 );
             }
         }
@@ -2156,7 +2156,7 @@ export class OrderService {
                         if (!isForeignKeyViolationError(e)) throw e;
                         if (!order)
                             throw new Error(
-                                `Cannot complete order merge: active order not found, while cancelling order ${orderToDelete.id}`,
+                                `Cannot complete order merge: active order not found, while cancelling order ${String(orderToDelete.id)}`,
                             );
 
                         // If the order has a foreign key violation (e.g. with cancelled payments),
@@ -2284,7 +2284,7 @@ export class OrderService {
      * maximum limit specified in the config.
      */
     private assertNotOverOrderItemsLimit(order: Order, quantityToAdd: number) {
-        const currentItemsCount = summate(order.lines, 'quantity');
+        const currentItemsCount = Number(summate(order.lines, 'quantity'));
         const { orderItemsLimit } = this.configService.orderOptions;
         if (orderItemsLimit < currentItemsCount + quantityToAdd) {
             return new OrderLimitError({ maxItems: orderItemsLimit });
