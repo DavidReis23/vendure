@@ -28,7 +28,7 @@ import { WorkerHealthService } from './worker-health.service';
     providers: [WorkerHealthService],
 })
 export class WorkerModule implements OnApplicationShutdown {
-    async onApplicationShutdown(signal?: string) {
+    onApplicationShutdown(signal?: string): void {
         if (signal) {
             Logger.info('Received shutdown signal:' + signal);
         }
