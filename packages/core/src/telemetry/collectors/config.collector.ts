@@ -274,7 +274,7 @@ export class ConfigCollector {
     private getStrategyNames(strategy: object | object[]): string[] | undefined {
         const strategies = Array.isArray(strategy) ? strategy : [strategy];
         const names = strategies.map(item => getStrategyName(item));
-        return names.some(name => name === 'unknown') ? undefined : names;
+        return names.includes('unknown') ? undefined : names;
     }
 
     private getDefaultLanguage(): string | undefined {
