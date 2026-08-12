@@ -82,7 +82,7 @@ export class AuthResolver extends BaseAuthResolver {
 
     protected requireNativeAuthStrategy() {
         const { adminAuthenticationStrategy } = this.configService.authOptions;
-        const nativeAuthStrategyIsConfigured = !!adminAuthenticationStrategy.find(
+        const nativeAuthStrategyIsConfigured = adminAuthenticationStrategy.some(
             strategy => strategy.name === NATIVE_AUTH_STRATEGY_NAME,
         );
         if (!nativeAuthStrategyIsConfigured) {
