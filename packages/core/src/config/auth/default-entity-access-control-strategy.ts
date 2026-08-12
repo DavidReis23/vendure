@@ -46,14 +46,14 @@ export class DefaultEntityAccessControlStrategy implements EntityAccessControlSt
      * - `Permission.Public` → allow
      * - Otherwise, check `ctx.userHasPermissions()` or `ctx.authorizedAsOwnerOnly`
      */
-    async canAccess(ctx: RequestContext, permissions: Permission[]): Promise<boolean> {
+    canAccess(ctx: RequestContext, permissions: Permission[]): Promise<boolean> {
         if (permissions.length === 0) {
-            return true;
+            return Promise.resolve(true);
         }
         if (permissions.includes(Permission.Public)) {
-            return true;
+            return Promise.resolve(true);
         }
-        return ctx.userHasPermissions(permissions) || ctx.authorizedAsOwnerOnly;
+        return Promise.resolve(ctx.userHasPermissions(permissions) || ctx.authorizedAsOwnerOnly);
     }
 
     // No prepareAccessControl — no pre-loading needed
