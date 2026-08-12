@@ -180,7 +180,7 @@ export class ApiKeyService {
         );
 
         Logger.verbose(
-            `Created ApiKey (${newEntity.id}) for User (${userIdOwner}) with ApiKeyUser (${apiKeyUser.id}, ${apiKeyUser.identifier})`,
+            `Created ApiKey (${String(newEntity.id)}) for User (${String(userIdOwner)}) with ApiKeyUser (${String(apiKeyUser.id)}, ${String(apiKeyUser.identifier)})`,
         );
         await this.eventBus.publish(new ApiKeyEvent(ctx, newEntity, 'created', input));
 
@@ -222,7 +222,7 @@ export class ApiKeyService {
         });
         await this.customFieldRelationService.updateRelations(ctx, ApiKey, input, apiKey);
 
-        Logger.verbose(`Updated ApiKey (${apiKey.id}) by User (${String(ctx.activeUserId)})`);
+        Logger.verbose(`Updated ApiKey (${String(apiKey.id)}) by User (${String(ctx.activeUserId)})`);
         await this.eventBus.publish(new ApiKeyEvent(ctx, apiKey, 'updated', input));
 
         return assertFound(this.findOne(ctx, input.id, relations));
@@ -258,7 +258,7 @@ export class ApiKeyService {
             .getRepository(ctx, ApiKey)
             .update({ id: apiKey.id }, { deletedAt: apiKey.deletedAt });
 
-        Logger.verbose(`Deleted ApiKey (${id}) by User (${String(ctx.activeUserId)})`);
+        Logger.verbose(`Deleted ApiKey (${String(id)}) by User (${String(ctx.activeUserId)})`);
         await this.eventBus.publish(new ApiKeyEvent(ctx, apiKey, 'deleted', id));
 
         return { result: DeletionResult.DELETED };
@@ -297,7 +297,7 @@ export class ApiKeyService {
         entity.apiKeyHash = hash;
         await this.connection.getRepository(ctx, ApiKey).save(entity, { reload: false });
 
-        Logger.verbose(`Rotated ApiKey (${entity.id}) by User (${String(ctx.activeUserId)})`);
+        Logger.verbose(`Rotated ApiKey (${String(entity.id)}) by User (${String(ctx.activeUserId)})`);
         await this.eventBus.publish(new ApiKeyEvent(ctx, entity, 'updated', id));
 
         return { apiKey };
