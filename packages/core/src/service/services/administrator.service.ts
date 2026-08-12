@@ -253,7 +253,7 @@ export class AdministratorService {
             }
             const removeIds = administrator.user.roles
                 .map(role => role.id)
-                .filter(roleId => (input.roleIds as ID[]).indexOf(roleId) === -1);
+                .filter(roleId => !(input.roleIds as ID[]).includes(roleId));
 
             const addIds = (input.roleIds as ID[]).filter(
                 roleId => !administrator.user.roles.some(role => role.id === roleId),
