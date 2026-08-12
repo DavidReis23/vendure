@@ -173,7 +173,7 @@ export class PromotionService {
             input,
             entityType: Promotion,
             translationType: PromotionTranslation,
-            beforeSave: async p => {
+            beforeSave: p => {
                 p.priorityScore = this.calculatePriorityScore(input);
                 if (input.conditions) {
                     p.conditions = input.conditions.map(c =>
@@ -520,7 +520,8 @@ export class PromotionService {
         const actions = input.actions
             ? input.actions.map(c => this.configArgService.getByCode('PromotionAction', c.code))
             : [];
-        return [...conditions, ...actions].reduce((score, op) => score + op.priorityValue, 0);
+
+        return [...conditions, ...actions].reduce<number>((score, op) => score + Number(op.priorityValue), 0);
     }
 
     private validateRequiredConditions(
