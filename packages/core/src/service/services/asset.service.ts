@@ -15,12 +15,12 @@ import { omit } from '@vendure/common/lib/omit';
 import { ID, PaginatedList, Type } from '@vendure/common/lib/shared-types';
 import { notNullOrUndefined } from '@vendure/common/lib/shared-utils';
 import { unique } from '@vendure/common/lib/unique';
-import { ReadStream } from 'fs';
-import { IncomingMessage } from 'http';
 import { imageSize } from 'image-size';
 import mime from 'mime-types';
-import path from 'path';
-import { Readable, Stream } from 'stream';
+import { ReadStream } from 'node:fs';
+import { IncomingMessage } from 'node:http';
+import path from 'node:path';
+import { Readable, Stream } from 'node:stream';
 import { IsNull } from 'typeorm';
 import { FindOneOptions } from 'typeorm/find-options/FindOneOptions';
 import { camelCase } from 'typeorm/util/StringUtils';
@@ -565,8 +565,7 @@ export class AssetService {
         const { assetImportStrategy } = this.configService.importExportOptions;
         const filePathFromArgs =
             maybeFilePathOrCtx instanceof RequestContext ? undefined : maybeFilePathOrCtx;
-        const filePath =
-            stream instanceof ReadStream ? stream.path : filePathFromArgs;
+        const filePath = stream instanceof ReadStream ? stream.path : filePathFromArgs;
         if (typeof filePath === 'string') {
             const filename = path.basename(filePath).split('?')[0];
             const mimetype = this.getMimeType(stream, filename);
