@@ -10,7 +10,7 @@ type RequestHandlerLike = (req: Request, res: Response, next: NextFunction) => v
  * handler function's name and ignores the mount path, and the `json()`/`urlencoded()` functions
  * from body-parser (used by `express.json()` and friends) are named exactly these.
  */
-const NEST_PARSER_MIDDLEWARE_NAMES = ['jsonParser', 'urlencodedParser'];
+const NEST_PARSER_MIDDLEWARE_NAMES = new Set(['jsonParser', 'urlencodedParser']);
 
 /**
  * @description
@@ -31,7 +31,7 @@ const NEST_PARSER_MIDDLEWARE_NAMES = ['jsonParser', 'urlencodedParser'];
 export function wrapEarlyMiddlewareHandler(mid: Middleware): MiddlewareHandler {
     const { handler, route } = mid;
     const collidesWithNestParserName =
-        typeof handler === 'function' && NEST_PARSER_MIDDLEWARE_NAMES.includes(handler.name);
+        typeof handler === 'function' && NEST_PARSER_MIDDLEWARE_NAMES.has(handler.name);
     if (collidesWithNestParserName && !isGlobalRoute(route)) {
         const parserHandler = handler as RequestHandlerLike;
         const scopedHandler: RequestHandlerLike = (req, res, next) => parserHandler(req, res, next);
