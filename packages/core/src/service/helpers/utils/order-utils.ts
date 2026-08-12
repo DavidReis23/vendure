@@ -13,7 +13,6 @@ import { OrderLine } from '../../../entity/order-line/order-line.entity';
 import { Order } from '../../../entity/order/order.entity';
 import { FulfillmentState } from '../fulfillment-state-machine/fulfillment-state';
 import { PaymentState } from '../payment-state-machine/payment-state';
-
 /**
  * Returns true if the Order total is covered by Payments in the specified state.
  */
@@ -58,7 +57,7 @@ export function orderItemsAreDelivered(order: Order) {
 export function orderItemsArePartiallyDelivered(order: Order) {
     const states = getOrderLinesFulfillmentStates(order);
     return (
-        states.some(state => state === 'Delivered') &&
+        states.includes('Delivered') &&
         (!states.every(state => state === 'Delivered') || isOrderPartiallyFulfilled(order))
     );
 }
@@ -90,7 +89,7 @@ function getOrderLinesFulfillmentStates(order: Order): Array<FulfillmentState | 
 export function orderItemsArePartiallyShipped(order: Order) {
     const states = getOrderLinesFulfillmentStates(order);
     return (
-        states.some(state => state === 'Shipped') &&
+        states.includes('Shipped') &&
         (!states.every(state => state === 'Shipped') || isOrderPartiallyFulfilled(order))
     );
 }
