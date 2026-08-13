@@ -50,7 +50,7 @@ export const facetDuplicator = new EntityDuplicator({
         });
         const translations: FacetTranslationInput[] = facet.translations.map(translation => {
             return {
-                name: translation.name + ' (copy)',
+                name: String(translation.name) + ' (copy)',
                 languageCode: translation.languageCode,
                 customFields: translation.customFields,
             };
@@ -59,7 +59,7 @@ export const facetDuplicator = new EntityDuplicator({
             isPrivate: true,
             translations,
             customFields: facet.customFields,
-            code: facet.code + '-copy',
+            code: String(facet.code) + '-copy',
         };
 
         const duplicatedFacet = await facetService.create(ctx, facetInput);
@@ -67,9 +67,9 @@ export const facetDuplicator = new EntityDuplicator({
             if (facet.values.length) {
                 for (const value of facet.values) {
                     const newValue = await facetValueService.create(ctx, duplicatedFacet, {
-                        code: value.code + '-copy',
+                        code: String(value.code) + '-copy',
                         translations: value.translations.map(translation => ({
-                            name: translation.name + ' (copy)',
+                            name: String(translation.name) + ' (copy)',
                             languageCode: translation.languageCode,
                             customFields: translation.customFields,
                         })),
