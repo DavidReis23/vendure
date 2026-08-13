@@ -182,20 +182,20 @@ export const SettingsStoreScopes = {
      * @description
      * User-specific scoping - separate values per user.
      */
-    user: ({ ctx }: { ctx: RequestContext }): string => `user:${ctx.activeUserId || 'unknown'}`,
+    user: ({ ctx }: { ctx: RequestContext }): string => `user:${String(ctx.activeUserId || 'unknown')}`,
 
     /**
      * @description
      * Channel-specific scoping - separate values per channel.
      */
-    channel: ({ ctx }: { ctx: RequestContext }): string => `channel:${ctx.channelId || 'unknown'}`,
+    channel: ({ ctx }: { ctx: RequestContext }): string => `channel:${String(ctx.channelId || 'unknown')}`,
 
     /**
      * @description
      * User and channel specific scoping - separate values per user per channel.
      */
     userAndChannel: ({ ctx }: { ctx: RequestContext }): string =>
-        `user:${ctx.activeUserId || ''}:channel:${ctx.channelId || ''}`,
+        `user:${String(ctx.activeUserId || '')}:channel:${String(ctx.channelId || '')}`,
 };
 
 /**
