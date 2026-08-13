@@ -19,11 +19,11 @@ import { Logger } from '../../config/logger/vendure-logger';
 import { PaymentMethodHandler } from '../../config/payment/payment-method-handler';
 import { TransactionalConnection } from '../../connection/transactional-connection';
 import { Fulfillment } from '../../entity/fulfillment/fulfillment.entity';
-import { Order } from '../../entity/order/order.entity';
-import { OrderLine } from '../../entity/order-line/order-line.entity';
 import { RefundLine } from '../../entity/order-line-reference/refund-line.entity';
-import { Payment } from '../../entity/payment/payment.entity';
+import { OrderLine } from '../../entity/order-line/order-line.entity';
+import { Order } from '../../entity/order/order.entity';
 import { PaymentMethod } from '../../entity/payment-method/payment-method.entity';
+import { Payment } from '../../entity/payment/payment.entity';
 import { Refund } from '../../entity/refund/refund.entity';
 import { EventBus } from '../../event-bus/event-bus';
 import { PaymentStateTransitionEvent } from '../../event-bus/events/payment-state-transition-event';
@@ -44,11 +44,11 @@ import { PaymentMethodService } from './payment-method.service';
 @Instrument()
 export class PaymentService {
     constructor(
-        private readonly  connection: TransactionalConnection,
-        private readonly  paymentStateMachine: PaymentStateMachine,
-        private readonly  refundStateMachine: RefundStateMachine,
-        private readonly  paymentMethodService: PaymentMethodService,
-        private readonly  eventBus: EventBus,
+        private readonly connection: TransactionalConnection,
+        private readonly paymentStateMachine: PaymentStateMachine,
+        private readonly refundStateMachine: RefundStateMachine,
+        private readonly paymentMethodService: PaymentMethodService,
+        private readonly eventBus: EventBus,
     ) {}
 
     async create(ctx: RequestContext, input: DeepPartial<Payment>): Promise<Payment> {
@@ -286,12 +286,7 @@ export class PaymentService {
                     state: initialState,
                 }),
             );
-            const { finalize } = await this.paymentStateMachine.transition(
-                txCtx,
-                order,
-                payment,
-                endState,
-            );
+            const { finalize } = await this.paymentStateMachine.transition(txCtx, order, payment, endState);
             await this.connection.getRepository(txCtx, Payment).save(payment, { reload: false });
             await this.connection
                 .getRepository(txCtx, Order)
@@ -350,7 +345,7 @@ export class PaymentService {
         const refundMax =
             orderWithRefunds.payments
                 ?.map(p => p.amount - this.getPaymentRefundTotal(p))
-                .reduce((sum, amount) => sum + amount, 0) ?? 0;
+                .reduce<number>((sum, amount) => Number(sum) + Number(amount), 0) ?? 0;
         let refundOutstanding = Math.min(total, refundMax);
         do {
             const paymentToRefund =
@@ -385,7 +380,7 @@ export class PaymentService {
             } catch (e) {
                 Logger.warn(
                     'Could not find a corresponding PaymentMethodHandler ' +
-                        `when creating a refund for the Payment with method "${paymentToRefund.method}"`,
+                        `when creating a refund for the Payment with method "${String(paymentToRefund.method)}"`,
                 );
             }
             const createRefundResult =
@@ -511,7 +506,7 @@ export class PaymentService {
                 refundOrderLinesTotal += line.quantity * orderLine.proratedUnitPriceWithTax;
             }
         }
-        const total = refundOrderLinesTotal + (input.shipping ?? 0) + (input.adjustment ?? 0);
+        const total = refundOrderLinesTotal + Number(input.shipping ?? 0) + Number(input.adjustment ?? 0);
         return { orderLinesTotal: refundOrderLinesTotal, total };
     }
 
@@ -521,8 +516,8 @@ export class PaymentService {
         }
         const merged = { ...m1, ...m2 };
         if (m1.public && m2.public) {
-        merged.public = { ...m1.public, ...m2.public };
-    }
+            merged.public = { ...m1.public, ...m2.public };
+        }
         return merged;
     }
 }
