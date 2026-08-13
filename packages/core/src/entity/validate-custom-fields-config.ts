@@ -26,7 +26,7 @@ function assertValidFieldNames(entityName: string, customFields: CustomFieldConf
     const validNameRe = /^[a-zA-Z_]+[a-zA-Z0-9_]*$/;
     for (const field of customFields) {
         if (!validNameRe.test(field.name)) {
-            errors.push(`${entityName} entity has an invalid custom field name: "${field.name}"`);
+            errors.push(`${entityName} entity has an invalid custom field name: "${String(field.name)}"`);
         }
     }
     return errors;
@@ -40,7 +40,7 @@ function assertNoNameConflictsWithEntity(entity: Type<any>, customFields: Custom
         };
         const translation = getEntityTranslation(entity);
         if (conflicts(entity) || (translation && conflicts(translation))) {
-            errors.push(`${entity.name} entity already has a field named "${field.name}"`);
+            errors.push(`${String(entity.name)} entity already has a field named "${String(field.name)}"`);
         }
     }
     return errors;
@@ -87,7 +87,7 @@ function assetNonNullablesHaveDefaults(entityName: string, customFields: CustomF
     for (const field of customFields) {
         if (field.nullable === false && field.defaultValue === undefined) {
             errors.push(
-                `${entityName} entity custom field "${field.name}" is non-nullable and must have a defaultValue`,
+                `${entityName} entity custom field "${String(field.name)}" is non-nullable and must have a defaultValue`,
             );
         }
     }
