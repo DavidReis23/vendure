@@ -66,7 +66,7 @@ function registerCustomFieldsForEntity(
                         const length = customField.length || 255;
                         if (MAX_STRING_LENGTH < length) {
                             throw new Error(
-                                `ERROR: The "length" property of the custom field "${customField.name}" is ` +
+                                `ERROR: The "length" property of the custom field "${String(customField.name)}" is ` +
                                     `greater than the maximum allowed value of ${MAX_STRING_LENGTH}`,
                             );
                         }
@@ -224,7 +224,7 @@ function getDefault(customField: CustomFieldConfig, dbEngine: DataSourceOptions[
             // MySQL does not support defaults on TEXT fields, which is what "simple-json" uses
             // internally. See https://stackoverflow.com/q/3466872/772859
             Logger.warn(
-                `MySQL does not support default values on list fields (${name}). No default will be set.`,
+                `MySQL does not support default values on list fields (${String(name)}). Nodefault will be set.`,
             );
             return undefined;
         }
@@ -239,7 +239,7 @@ function assertLocaleFieldsNotSpecified(config: VendureConfig, entityName: keyof
         for (const customField of customFields) {
             if (customField.type === 'localeString' || customField.type === 'localeText') {
                 Logger.error(
-                    `Custom field "${customField.name}" on entity "${entityName}" cannot be of type "localeString" or "localeText". ` +
+                    `Custom field "${String(customField.name)}" on entity "${entityName}" cannot be of type "localeString" or "localeText". ` +
                         `This entity does not support localization.`,
                 );
             }
