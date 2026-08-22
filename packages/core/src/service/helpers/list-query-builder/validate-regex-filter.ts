@@ -152,10 +152,7 @@ function skipCharacterClass(pattern: string, i: number): number {
  * can match two or more times (`*`, `+`, `{n,}`, `{n,m}` with max >= 2) and false for
  * bounded-to-one quantifiers (`?`, `{0,1}`, `{1}`). A trailing lazy `?` is consumed.
  */
-function readQuantifier(
-    pattern: string,
-    i: number,
-): { present: boolean; amplifying: boolean; next: number } {
+function readQuantifier(pattern: string, i: number): { present: boolean; amplifying: boolean; next: number } {
     const char = pattern[i];
     if (char === '*' || char === '+') {
         const next = pattern[i + 1] === '?' ? i + 2 : i + 1;
@@ -168,9 +165,9 @@ function readQuantifier(
     if (char === '{') {
         const match = /^\{(\d*)(,(\d*))?\}/.exec(pattern.slice(i));
         if (match) {
-            const min = match[1] === '' ? 0 : parseInt(match[1], 10);
+            const min = match[1] === '' ? 0 : Number.parseInt(match[1], 10);
             const hasComma = match[2] !== undefined;
-            const max = !hasComma ? min : match[3] === '' ? Infinity : parseInt(match[3], 10);
+            const max = !hasComma ? min : match[3] === '' ? Infinity : Number.parseInt(match[3], 10);
             let next = i + match[0].length;
             if (pattern[next] === '?') {
                 next++;
