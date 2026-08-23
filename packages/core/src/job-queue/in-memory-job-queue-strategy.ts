@@ -9,6 +9,7 @@ import {
 } from '@vendure/common/lib/generated-types';
 import { ID, PaginatedList } from '@vendure/common/lib/shared-types';
 import { notNullOrUndefined } from '@vendure/common/lib/shared-utils';
+import { randomInt } from 'node:crypto';
 
 import { Injector } from '../common';
 import { InspectableJobQueueStrategy } from '../config/job-queue/inspectable-job-queue-strategy';
@@ -60,9 +61,7 @@ export class InMemoryJobQueueStrategy extends PollingJobQueueStrategy implements
 
     async add<Data extends JobData<Data> = object>(job: Job<Data>): Promise<Job<Data>> {
         if (!job.id) {
-            (job as any).id = Math.floor(Math.random() * 1000000000)
-                .toString()
-                .padEnd(10, '0');
+            (job as any).id = randomInt(0, 1_000_000_000).toString().padEnd(10, '0');
         }
         (job as any).retries = this.setRetries(job.queueName, job);
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
