@@ -1,5 +1,6 @@
 import { CurrencyCode, LanguageCode } from '@vendure/common/lib/generated-types';
 import { DeepPartial, ID } from '@vendure/common/lib/shared-types';
+import { randomBytes } from 'node:crypto';
 import { Column, Entity, Index, ManyToMany, ManyToOne } from 'typeorm';
 
 import { Customer, PaymentMethod, Promotion, Role, ShippingMethod, StockLocation } from '..';
@@ -155,7 +156,6 @@ export class Channel extends VendureEntity {
     apiKeys: ApiKey[];
 
     private generateToken(): string {
-        const randomString = () => Math.random().toString(36).substr(3, 10);
-        return `${randomString()}${randomString()}`;
+        return randomBytes(10).toString('hex');
     }
 }
