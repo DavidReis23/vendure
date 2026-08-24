@@ -63,8 +63,8 @@ function isBlocked(address: string, family: 4 | 6): boolean {
         // 16-bit groups to dotted-quad and re-check.
         const hexMatch = embedded.match(/^([0-9a-f]{1,4}):([0-9a-f]{1,4})$/i);
         if (hexMatch) {
-            const high = parseInt(hexMatch[1], 16);
-            const low = parseInt(hexMatch[2], 16);
+            const high = Number.parseInt(hexMatch[1], 16);
+            const low = Number.parseInt(hexMatch[2], 16);
             if (Number.isFinite(high) && Number.isFinite(low) && high <= 0xffff && low <= 0xffff) {
                 /* eslint-disable no-bitwise */
                 const dotted = [(high >> 8) & 0xff, high & 0xff, (low >> 8) & 0xff, low & 0xff].join('.');
