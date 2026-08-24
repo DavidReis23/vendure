@@ -18,10 +18,10 @@ describe('EventBus', () => {
         eventBus = new EventBus(new MockTransactionSubscriber() as any);
     });
 
-    it('can publish without subscribers', () => {
+    it('can publish without subscribers', async () => {
         const event = new TestEvent('foo');
 
-        expect(async () => await eventBus.publish(event)).not.toThrow();
+        await expect(eventBus.publish(event)).resolves.toBeUndefined();
     });
 
     describe('ofType()', () => {
