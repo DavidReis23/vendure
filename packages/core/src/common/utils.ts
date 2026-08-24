@@ -81,7 +81,21 @@ export function isEmailAddressLike(input: string): boolean {
         // See https://github.com/vendurehq/vendure/security/code-scanning/43
         throw new Error('Input too long');
     }
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.trim());
+    const trimmedInput = input.trim();
+
+    if (/\s/.test(trimmedInput)) {
+        return false;
+    }
+
+    const atIndex = trimmedInput.indexOf('@');
+    if (atIndex <= 0 || atIndex !== trimmedInput.lastIndexOf('@')) {
+        return false;
+    }
+
+    const domain = trimmedInput.slice(atIndex + 1);
+    const dotIndex = domain.indexOf('.', 1);
+
+    return dotIndex !== -1 && dotIndex < domain.length - 1;
 }
 
 /**
