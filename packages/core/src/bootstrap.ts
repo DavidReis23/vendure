@@ -520,7 +520,7 @@ async function validateDbTablesForWorker(worker: INestApplicationContext) {
         await new Promise(resolve => setTimeout(resolve, pollIntervalMs));
     }
 
-    return Promise.reject('Could not validate DB table structure. Aborting bootstrap.');
+    throw new Error('Could not validate DB table structure. Aborting bootstrap.');
 }
 
 export function configureSessionCookies(
