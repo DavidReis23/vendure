@@ -85,7 +85,7 @@ export class ProductVariantEntityResolver {
 
         return this.requestContextCache.get(
             ctx,
-            `ProductVariantEntityResolver.product(${productVariant.productId})`,
+            `ProductVariantEntityResolver.product(${String(productVariant.productId)})`,
             () => this.productVariantService.getProductForVariant(ctx, productVariant),
         );
     }
