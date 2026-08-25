@@ -38,7 +38,7 @@ export const promotionDuplicator = new EntityDuplicator({
         const promotion = await connection.getEntityOrThrow(ctx, Promotion, id);
         const translations: PromotionTranslationInput[] = promotion.translations.map(translation => {
             return {
-                name: translation.name + ' (copy)',
+                name: String(translation.name) + ' (copy)',
                 description: translation.description,
                 languageCode: translation.languageCode,
                 customFields: translation.customFields,
