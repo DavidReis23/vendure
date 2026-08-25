@@ -9,7 +9,7 @@ export abstract class AdjustmentSource extends VendureEntity {
     type: AdjustmentType;
 
     getSourceId(): string {
-        return `${this.type}:${this.id}`;
+        return `${String(this.type)}:${String(this.id)}`;
     }
 
     static decodeSourceId(sourceId: string): { type: AdjustmentType; id: ID } {
