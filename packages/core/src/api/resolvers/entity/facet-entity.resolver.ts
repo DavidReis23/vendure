@@ -3,8 +3,8 @@ import { FacetValueListOptions } from '@vendure/common/lib/generated-types';
 import { PaginatedList } from '@vendure/common/lib/shared-types';
 
 import { RequestContextCacheService } from '../../../cache/request-context-cache.service';
-import { Facet } from '../../../entity/facet/facet.entity';
 import { FacetValue } from '../../../entity/facet-value/facet-value.entity';
+import { Facet } from '../../../entity/facet/facet.entity';
 import { LocaleStringHydrator } from '../../../service/helpers/locale-string-hydrator/locale-string-hydrator';
 import { FacetValueService } from '../../../service/services/facet-value.service';
 import { RequestContext } from '../../common/request-context';
@@ -34,7 +34,7 @@ export class FacetEntityResolver {
         if (facet.values) {
             return facet.values;
         }
-        return this.requestContextCache.get(ctx, `FacetEntityResolver.values(${facet.id})`, () =>
+        return this.requestContextCache.get(ctx, `FacetEntityResolver.values(${String(facet.id)})`, () =>
             this.facetValueService.findByFacetId(ctx, facet.id),
         );
     }
