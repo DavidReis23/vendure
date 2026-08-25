@@ -1,8 +1,8 @@
-import type { GlobalSettingsService } from '../../service/index';
 import { GlobalFlag } from '@vendure/common/lib/generated-types';
 import { ID } from '@vendure/common/lib/shared-types';
 import ms from 'ms';
 import { filter } from 'rxjs/operators';
+import type { GlobalSettingsService } from '../../service/index';
 
 import { RequestContext } from '../../api/common/request-context';
 import { Cache, CacheService, RequestContextCacheService } from '../../cache/index';
@@ -43,7 +43,7 @@ export class MultiChannelStockLocationStrategy extends BaseStockLocationStrategy
 
     /** @internal */
     async init(injector: Injector) {
-        super.init(injector);
+        await super.init(injector);
         this.eventBus = injector.get(EventBus);
         this.cacheService = injector.get(CacheService);
         this.requestContextCache = injector.get(RequestContextCacheService);
@@ -63,7 +63,9 @@ export class MultiChannelStockLocationStrategy extends BaseStockLocationStrategy
         this.eventBus
             .ofType(StockLocationEvent)
             .pipe(filter(event => event.type !== 'created'))
-            .subscribe(({ entity }) => this.channelIdCache.delete(this.getCacheKey(entity.id)));
+            .subscribe(({ entity }) => {
+                void this.channelIdCache.delete(this.getCacheKey(entity.id));
+            });
     }
 
     /**
@@ -161,13 +163,13 @@ export class MultiChannelStockLocationStrategy extends BaseStockLocationStrategy
     }
 
     private getCacheKey(stockLocationId: ID) {
-        return `MultiChannelStockLocationStrategy:StockLocationChannelIds:${stockLocationId}`;
+        return `MultiChannelStockLocationStrategy:StockLocationChannelIds:${String(stockLocationId)}`;
     }
 
     private getStockLevelsForVariant(ctx: RequestContext, productVariantId: ID): Promise<StockLevel[]> {
         return this.requestContextCache.get(
             ctx,
-            `MultiChannelStockLocationStrategy.stockLevels.${productVariantId}`,
+            `MultiChannelStockLocationStrategy.stockLevels.${String(productVariantId)}`,
             () =>
                 this.connection.getRepository(ctx, StockLevel).find({
                     where: {
