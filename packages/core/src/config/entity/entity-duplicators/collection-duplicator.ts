@@ -43,8 +43,8 @@ export const collectionDuplicator = new EntityDuplicator({
         });
         const translations: CreateCollectionTranslationInput[] = collection.translations.map(translation => {
             return {
-                name: translation.name + ' (copy)',
-                slug: translation.slug + '-copy',
+                name: String(translation.name) + ' (copy)',
+                slug: String(translation.slug) + '-copy',
                 description: translation.description,
                 languageCode: translation.languageCode,
                 customFields: translation.customFields,
