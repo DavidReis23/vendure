@@ -82,9 +82,9 @@ export function getAllPermissionsMetadata(customPermissions: PermissionDefinitio
 export const CacheKey = {
     GlobalSettings: 'GlobalSettings',
     AllZones: 'AllZones',
-    ActiveTaxZone: (channelId: ID) => `ActiveTaxZone:${channelId}`,
-    ActiveTaxZone_PPA: (channelId: ID) => `ActiveTaxZone_PPA:${channelId}`,
+    ActiveTaxZone: (channelId: ID) => `ActiveTaxZone:${String(channelId)}`,
+    ActiveTaxZone_PPA: (channelId: ID) => `ActiveTaxZone_PPA:${String(channelId)}`,
     CollectionVariantCounts: 'CollectionService.getProductVariantCounts',
     ExhaustedPromotions: (channelId: ID, customerId: ID | undefined) =>
-        `ExhaustedPromotions:${channelId}:${customerId ?? 'guest'}`,
+        `ExhaustedPromotions:${String(channelId)}:${String(customerId ?? 'guest')}`,
 };
