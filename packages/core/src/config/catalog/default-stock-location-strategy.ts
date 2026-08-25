@@ -103,8 +103,8 @@ export abstract class BaseStockLocationStrategy implements StockLocationStrategy
  * @since 2.0.0
  */
 export class DefaultStockLocationStrategy extends BaseStockLocationStrategy {
-    init(injector: Injector) {
-        super.init(injector);
+    async init(injector: Injector): Promise<void> {
+        await super.init(injector);
     }
 
     getAvailableStock(ctx: RequestContext, productVariantId: ID, stockLevels: StockLevel[]): AvailableStock {
