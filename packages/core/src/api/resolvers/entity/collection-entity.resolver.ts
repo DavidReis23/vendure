@@ -154,9 +154,9 @@ export class CollectionEntityResolver {
             );
         } catch (e: any) {
             Logger.error(
-                `Could not decode the collection filter arguments for "${collection.name}" (id: ${
-                    collection.id
-                }). Error message: ${JSON.stringify(e.message)}`,
+                `Could not decode the collection filter arguments for "${collection.name}" (id: ${String(
+                    collection.id,
+                )}). Error message: ${JSON.stringify(e.message)}`,
             );
             return [];
         }
