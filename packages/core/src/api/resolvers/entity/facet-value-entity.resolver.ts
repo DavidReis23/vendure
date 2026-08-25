@@ -1,8 +1,8 @@
 import { Parent, ResolveField, Resolver } from '@nestjs/graphql';
 
 import { RequestContextCacheService } from '../../../cache/request-context-cache.service';
-import { Facet } from '../../../entity/facet/facet.entity';
 import { FacetValue } from '../../../entity/facet-value/facet-value.entity';
+import { Facet } from '../../../entity/facet/facet.entity';
 import { LocaleStringHydrator } from '../../../service/helpers/locale-string-hydrator/locale-string-hydrator';
 import { FacetService } from '../../../service/services/facet.service';
 import { RequestContext } from '../../common/request-context';
@@ -31,8 +31,10 @@ export class FacetValueEntityResolver {
         if (facetValue.facet) {
             return facetValue.facet;
         }
-        return this.requestContextCache.get(ctx, `FacetValueEntityResolver.facet(${facetValue.id})`, () =>
-            this.facetService.findByFacetValueId(ctx, facetValue.id),
+        return this.requestContextCache.get(
+            ctx,
+            `FacetValueEntityResolver.facet(${String(facetValue.id)})`,
+            () => this.facetService.findByFacetValueId(ctx, facetValue.id),
         );
     }
 }
