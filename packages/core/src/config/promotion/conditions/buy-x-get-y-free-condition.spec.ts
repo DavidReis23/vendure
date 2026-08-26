@@ -28,9 +28,9 @@ import { buyXGetYFreeCondition } from './buy-x-get-y-free-condition';
 /** Build the serialized `ConfigArg[]` the way the framework passes them to `check()`. */
 function buildArgs(input: {
     amountX: number;
-    variantIdsX: Array<ID>;
+    variantIdsX: ID[];
     amountY: number;
-    variantIdsY: Array<ID>;
+    variantIdsY: ID[];
 }): ConfigArg[] {
     return [
         { name: 'amountX', value: String(input.amountX) },
