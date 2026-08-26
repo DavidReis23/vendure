@@ -1,10 +1,4 @@
-import {
-    FieldNode,
-    FragmentDefinitionNode,
-    GraphQLResolveInfo,
-    OperationDefinitionNode,
-    parse,
-} from 'graphql';
+import { FieldNode, GraphQLResolveInfo, OperationDefinitionNode, parse } from 'graphql';
 import { describe, expect, it } from 'vitest';
 
 import { graphqlFields } from './graphql-fields';
@@ -18,14 +12,12 @@ import { graphqlFields } from './graphql-fields';
  */
 function buildInfo(source: string, variableValues: Record<string, unknown> = {}): GraphQLResolveInfo {
     const doc = parse(source);
-    const operation = doc.definitions.find(
-        d => d.kind === 'OperationDefinition',
-    ) as OperationDefinitionNode;
+    const operation = doc.definitions.find(d => d.kind === 'OperationDefinition') as OperationDefinitionNode;
     const fragments = Object.fromEntries(
         doc.definitions
             .filter(d => d.kind === 'FragmentDefinition')
             .map(d => {
-                const f = d as FragmentDefinitionNode;
+                const f = d;
                 return [f.name.value, f];
             }),
     );
