@@ -23,7 +23,7 @@ function validateCustomFieldsForEntity(
  */
 function assertValidFieldNames(entityName: string, customFields: CustomFieldConfig[]): string[] {
     const errors: string[] = [];
-    const validNameRe = /^[a-zA-Z_]+[a-zA-Z0-9_]*$/;
+    const validNameRe = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
     for (const field of customFields) {
         if (!validNameRe.test(field.name)) {
             errors.push(`${entityName} entity has an invalid custom field name: "${String(field.name)}"`);
