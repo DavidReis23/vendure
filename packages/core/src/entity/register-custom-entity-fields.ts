@@ -137,20 +137,11 @@ function registerCustomFieldsForEntity(
     }
 }
 
-function formatDefaultDatetime(dbEngine: DataSourceOptions['type'], datetime: any): Date | string {
+function formatDefaultDatetime(datetime: any): Date | string {
     if (!datetime) {
         return datetime;
     }
-    switch (dbEngine) {
-        case 'sqlite':
-        case 'sqljs':
-            return DateUtils.mixedDateToUtcDatetimeString(datetime);
-        case 'mysql':
-        case 'postgres':
-        default:
-            return DateUtils.mixedDateToUtcDatetimeString(datetime);
-        // return DateUtils.mixedDateToDate(datetime, true, true);
-    }
+    return DateUtils.mixedDateToUtcDatetimeString(datetime);
 }
 
 function getColumnType(
@@ -230,7 +221,7 @@ function getDefault(customField: CustomFieldConfig, dbEngine: DataSourceOptions[
         }
         return JSON.stringify(defaultValue);
     }
-    return type === 'datetime' ? formatDefaultDatetime(dbEngine, defaultValue) : defaultValue;
+    return type === 'datetime' ? formatDefaultDatetime(defaultValue) : defaultValue;
 }
 
 function assertLocaleFieldsNotSpecified(config: VendureConfig, entityName: keyof CustomFields) {
