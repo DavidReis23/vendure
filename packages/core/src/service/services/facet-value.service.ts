@@ -64,8 +64,7 @@ export class FacetValueService {
             ctxOrLang instanceof RequestContext
                 ? [
                       this.connection.getRepository(ctxOrLang, FacetValue),
-                      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                      lang!,
+                      lang,
                       ctxOrLang.channel.defaultLanguageCode,
                   ]
                 : [this.connection.rawConnection.getRepository(FacetValue), ctxOrLang, undefined];
