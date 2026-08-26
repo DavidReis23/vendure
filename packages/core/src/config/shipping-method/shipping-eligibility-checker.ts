@@ -20,8 +20,9 @@ import { Order, ShippingMethod } from '../../entity';
  *
  * @docsCategory shipping
  */
-export interface ShippingEligibilityCheckerConfig<T extends ConfigArgs>
-    extends ConfigurableOperationDefOptions<T> {
+export interface ShippingEligibilityCheckerConfig<
+    T extends ConfigArgs,
+> extends ConfigurableOperationDefOptions<T> {
     check: CheckShippingEligibilityCheckerFn<T>;
     shouldRunCheck?: ShouldRunCheckFn<T>;
 }
@@ -93,7 +94,8 @@ export class ShippingEligibilityChecker<
     ): Promise<boolean> {
         if (typeof this.shouldRunCheckFn === 'function') {
             const cacheKey =
-                ctx.session?.id && `ShippingEligibilityChecker:shouldRunCheck:${this.code}:${ctx.session.id}`;
+                ctx.session?.id &&
+                `ShippingEligibilityChecker:shouldRunCheck:${this.code}:${String(ctx.session.id)}`;
             if (cacheKey) {
                 const checkResult = await this.shouldRunCheckFn(
                     ctx,
