@@ -47,7 +47,7 @@ export class LocaleStringHydrator {
     ): Promise<Translated<T>> {
         const entityType = entity.constructor.name;
         if (!entity.translations?.length) {
-            const cacheKey = `hydrate-${entityType}-${entity.id}`;
+            const cacheKey = `hydrate-${entityType}-${String(entity.id)}`;
             let dbCallPromise = this.requestCache.get<Promise<T | null>>(ctx, cacheKey);
 
             if (!dbCallPromise) {
