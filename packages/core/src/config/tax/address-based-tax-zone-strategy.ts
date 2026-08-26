@@ -45,7 +45,7 @@ export class AddressBasedTaxZoneStrategy implements TaxZoneStrategy {
                 return zone;
             }
             Logger.debug(
-                `No tax zone found for country ${countryCode}. Returning default ${channel.defaultTaxZone.name} for order ${order.code}`,
+                `No tax zone found for country ${String(countryCode)}. Returning default ${channel.defaultTaxZone.name} for order ${order.code}`,
                 loggerCtx,
             );
         }
