@@ -150,7 +150,7 @@ function validateStringField(
             throw new UserInputError('error.field-invalid-string-option', {
                 name: config.name,
                 value,
-                validOptions: validOptions.map(o => `'${o}'`).join(', '),
+                validOptions: validOptions.map(o => `'${String(o)}'`).join(', '),
             });
         }
     }
