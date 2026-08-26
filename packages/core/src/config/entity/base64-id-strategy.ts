@@ -10,6 +10,8 @@ export class Base64IdStrategy implements EntityIdStrategy<'increment'> {
         return Number.isNaN(asNumber) ? -1 : asNumber;
     }
     encodeId(primaryKey: number): string {
-        return Buffer.from(primaryKey.toString()).toString('base64').replace(/=+$/, '');
+        return Buffer.from(primaryKey.toString())
+            .toString('base64')
+            .replace(/={1,2}$/, '');
     }
 }
