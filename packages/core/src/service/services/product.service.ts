@@ -155,7 +155,7 @@ export class ProductService {
         const qb = this.connection
             .getRepository(ctx, Product)
             .createQueryBuilder('product')
-            .setFindOptions({ relations: (relations && false) || this.relations });
+            .setFindOptions({ relations: relations ?? this.relations });
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         FindOptionsUtils.joinEagerRelations(qb, qb.alias, qb.expressionMap.mainAlias!.metadata);
         return qb
