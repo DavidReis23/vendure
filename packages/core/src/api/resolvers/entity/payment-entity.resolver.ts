@@ -24,8 +24,10 @@ export class PaymentEntityResolver {
         if (payment.refunds) {
             return payment.refunds;
         } else {
-            return this.requestContextCache.get(ctx, `PaymentEntityResolver.refunds(${payment.id})`, () =>
-                this.orderService.getPaymentRefunds(ctx, payment.id),
+            return this.requestContextCache.get(
+                ctx,
+                `PaymentEntityResolver.refunds(${String(payment.id)})`,
+                () => this.orderService.getPaymentRefunds(ctx, payment.id),
             );
         }
     }
@@ -41,7 +43,7 @@ export class PaymentAdminEntityResolver {
     constructor(private paymentService: PaymentService) {}
 
     @ResolveField()
-    async nextStates(@Parent() payment: Payment) {
+    nextStates(@Parent() payment: Payment) {
         return this.paymentService.getNextStates(payment);
     }
 }
