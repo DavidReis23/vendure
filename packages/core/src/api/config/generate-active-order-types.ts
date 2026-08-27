@@ -9,7 +9,7 @@ import {
 } from 'graphql';
 
 import { InternalServerError } from '../../common/error/errors';
-import { ActiveOrderStrategy, ACTIVE_ORDER_INPUT_FIELD_NAME } from '../../config/order/active-order-strategy';
+import { ACTIVE_ORDER_INPUT_FIELD_NAME, ActiveOrderStrategy } from '../../config/order/active-order-strategy';
 
 /**
  * This function is responsible for constructing the `ActiveOrderInput` GraphQL input type.
@@ -89,7 +89,7 @@ export function generateActiveOrderTypes(
             : queryType?.getFields()[operation.name];
         if (!field) {
             throw new InternalServerError(
-                `Could not find a GraphQL type definition for the field ${operation.name}`,
+                `Could not find a GraphQL type definition for the field ${String(operation.name)}`,
             );
         }
 
